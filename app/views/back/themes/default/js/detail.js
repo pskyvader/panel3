@@ -10,7 +10,7 @@ var url_list = '';
 var timestamp = 5;
 
 function inicio_detail() {
-    if($('div.form-group.image').length>0){
+    if ($('div.form-group.image').length > 0) {
         inicio_image();
     }
     url_list = $('form#formulario').data('list');
@@ -46,13 +46,30 @@ function inicio_detail() {
             templateSelection: formato_icono
         });
     }
-    if($('div.form-group.multiple').length>0){
+    if ($('div.form-group.multiple').length > 0) {
         inicio_multiple();
     }
-    
-    if($('div.form-group.map').length>0){
+
+    if ($('div.form-group.map').length > 0) {
         inicio_map();
     }
+
+    if ($('form#formulario input.url').length > 0) {
+        $('body').on('keyup', 'form#formulario input.url', function() {
+            $($(this)).val(urlamigable($(this).val()));
+        });
+
+        $('body').on('keyup', 'form#formulario input[name=titulo]', function() {
+            $('form#formulario input.url').val(urlamigable($(this).val()));
+        });
+
+        $('body').on('blur', 'form#formulario input[name=titulo]', function() {
+            $('form#formulario input.url').val(urlamigable($(this).val()));
+        });
+
+    }
+
+
 }
 
 function generar(longitud) {
@@ -63,10 +80,12 @@ function generar(longitud) {
     }
     return pass;
 }
-$(document).on('click', 'form#formulario a.generar_pass', function() {
+$('body').on('click', 'form#formulario a.generar_pass', function() {
     var pass = generar(8);
     $(this).siblings('input').val(pass).attr('type', 'text');
 });
+
+
 
 function formato_icono(icono) {
     if (!icono.id) {
@@ -109,10 +128,10 @@ $(document).on('click', '#cancelar', function() {
     go_url(url_list);
 });
 var after_guardar = function(data) {
-    if (permanecer && typeof(data.id)!='undefined') {
-        id=data.id;
+    if (permanecer && typeof(data.id) != 'undefined') {
+        id = data.id;
         if ($('form#formulario input[name=id]').val() == "") {
-            go_url(create_url(null,id));
+            go_url(create_url(null, id));
         } else {
             go_url(create_url(null));
         }

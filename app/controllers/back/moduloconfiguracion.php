@@ -30,6 +30,7 @@ class moduloconfiguracion extends base
         'number' => array('text' => 'Numero', 'value' => 'number'),
         'text' => array('text' => 'Texto', 'value' => 'text'),
         'token' => array('text' => 'Token', 'value' => 'token'),
+        'url' => array('text' => 'URL', 'value' => 'url'),
     );
     public function __construct()
     {
