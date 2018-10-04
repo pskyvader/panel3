@@ -9,8 +9,5 @@ class texto extends base
     protected $url = array('texto');
     protected $metadata = array('title' => 'texto','modulo'=>'texto');
     protected $breadcrumb = array();
-    public function __construct()
-    {
-        parent::__construct(new texto_model);
-    }
+    public function __construct() { parent::__construct(new texto_model); }
 }
