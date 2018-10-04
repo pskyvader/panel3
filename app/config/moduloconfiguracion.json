@@ -1,0 +1,2236 @@
+[
+    {
+        "icono": "equalizer",
+        "module": "seo",
+        "titulo": "SEO",
+        "mostrar": [
+            {
+                "field": "0",
+                "titulo": "ID",
+                "tipo": "text"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "text"
+            },
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            },
+            {
+                "field": "delete",
+                "titulo": "Eliminar",
+                "tipo": "delete"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "keywords",
+                "titulo": "Palabras clave",
+                "tipo": "token"
+            },
+            {
+                "field": "descripcion",
+                "titulo": "Descripion",
+                "tipo": "editor"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "number"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            }
+        ],
+        "orden": "1",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "0",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "1",
+                "tipo": "0",
+                "titulo": "SEO",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "keywords",
+                        "tipo": "token",
+                        "titulo": "Palabras clave",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripion",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1"
+            }
+        ]
+    },
+    {
+        "icono": "format_color_text",
+        "module": "texto",
+        "titulo": "Textos",
+        "mostrar": [
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "text"
+            },
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "texto",
+                "titulo": "Texto",
+                "tipo": "text"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            },
+            {
+                "field": "copy",
+                "titulo": "Copiar",
+                "tipo": "action"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            },
+            {
+                "field": "delete",
+                "titulo": "Eliminar",
+                "tipo": "delete"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "descripcion",
+                "titulo": "Descripcion",
+                "tipo": "editor"
+            },
+            {
+                "field": "texto",
+                "titulo": "Texto",
+                "tipo": "text"
+            },
+            {
+                "field": "mapa",
+                "titulo": "Mapa",
+                "tipo": "map"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "number"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            }
+        ],
+        "orden": "2",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "1",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "2",
+                "tipo": "1",
+                "titulo": "Datos de contacto",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripcion",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "mapa",
+                        "tipo": "map",
+                        "titulo": "Mapa",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1"
+            },
+            {
+                "idmoduloconfiguracion": "2",
+                "tipo": "2",
+                "titulo": "Redes sociales",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripcion",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "mapa",
+                        "tipo": "map",
+                        "titulo": "Mapa",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "2",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1"
+            },
+            {
+                "idmoduloconfiguracion": "2",
+                "tipo": "3",
+                "titulo": "Textos administrables",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripcion",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "mapa",
+                        "tipo": "text",
+                        "titulo": "Mapa",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "3",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1"
+            },
+            {
+                "idmoduloconfiguracion": "2",
+                "tipo": "4",
+                "titulo": "Mapas",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripcion",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "texto",
+                        "tipo": "text",
+                        "titulo": "Texto",
+                        "texto_ayuda": "",
+                        "required": "",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "mapa",
+                        "tipo": "map",
+                        "titulo": "Mapa",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "4",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1"
+            }
+        ]
+    },
+    {
+        "icono": "3d_rotation",
+        "module": "separador",
+        "titulo": "Administrador",
+        "mostrar": "",
+        "detalle": "",
+        "orden": "3",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "0",
+        "hijo": []
+    },
+    {
+        "icono": "copyright",
+        "module": "logo",
+        "titulo": "Logos",
+        "mostrar": [
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "text"
+            },
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "foto",
+                "titulo": "Foto",
+                "tipo": "image"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "foto",
+                "titulo": "Foto",
+                "tipo": "image"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "number"
+            }
+        ],
+        "orden": "4",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "0",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "4",
+                "tipo": "0",
+                "titulo": "Logos",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen formato jpg o png",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": [
+                    {
+                        "tag": "login",
+                        "titulo": "Login",
+                        "ancho": "360",
+                        "alto": "200",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "panel_max",
+                        "titulo": "Panel grande",
+                        "ancho": "240",
+                        "alto": "64",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "panel_min",
+                        "titulo": "Panel Pequeño",
+                        "ancho": "64",
+                        "alto": "64",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "favicon",
+                        "titulo": "Favicon",
+                        "ancho": "32",
+                        "alto": "32",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "icono50",
+                        "titulo": "Manifest 50x50",
+                        "ancho": "50",
+                        "alto": "50",
+                        "calidad": "90",
+                        "tipo": "rellenar"
+                    },
+                    {
+                        "tag": "icono100",
+                        "titulo": "Manifest 100x100",
+                        "ancho": "100",
+                        "alto": "100",
+                        "calidad": "90",
+                        "tipo": "rellenar"
+                    },
+                    {
+                        "tag": "icono200",
+                        "titulo": "Manifest 200x200",
+                        "ancho": "200",
+                        "alto": "200",
+                        "calidad": "90",
+                        "tipo": "rellenar"
+                    },
+                    {
+                        "tag": "icono600",
+                        "titulo": "Manifest 600x600",
+                        "ancho": "600",
+                        "alto": "600",
+                        "calidad": "90",
+                        "tipo": "rellenar"
+                    }
+                ],
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "aside": "1"
+            }
+        ]
+    },
+    {
+        "icono": "people",
+        "module": "profile",
+        "titulo": "Perfiles",
+        "mostrar": [
+            {
+                "field": "0",
+                "titulo": "ID",
+                "tipo": "text"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "text"
+            },
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            },
+            {
+                "field": "delete",
+                "titulo": "Eliminar",
+                "tipo": "delete"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "tipo",
+                "titulo": "Tipo",
+                "tipo": "number"
+            },
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "number"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            }
+        ],
+        "orden": "5",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "0",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "5",
+                "tipo": "0",
+                "titulo": "Perfiles",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "tipo",
+                        "tipo": "number",
+                        "titulo": "Tipo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "aside": "1"
+            }
+        ]
+    },
+    {
+        "icono": "account_box",
+        "module": "administrador",
+        "titulo": "Administradores",
+        "mostrar": [
+            {
+                "field": "0",
+                "titulo": "ID",
+                "tipo": "text"
+            },
+            {
+                "field": "nombre",
+                "titulo": "Nombre",
+                "tipo": "text"
+            },
+            {
+                "field": "email",
+                "titulo": "Email",
+                "tipo": "text"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            },
+            {
+                "field": "foto",
+                "titulo": "Foto",
+                "tipo": "image"
+            },
+            {
+                "field": "copy",
+                "titulo": "Copiar",
+                "tipo": "action"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            },
+            {
+                "field": "delete",
+                "titulo": "Eliminar",
+                "tipo": "delete"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "foto",
+                "titulo": "Foto",
+                "tipo": "image"
+            },
+            {
+                "field": "nombre",
+                "titulo": "Nombre",
+                "tipo": "text"
+            },
+            {
+                "field": "email",
+                "titulo": "Email",
+                "tipo": "email"
+            },
+            {
+                "field": "pass",
+                "titulo": "Contraseña",
+                "tipo": "password"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            }
+        ],
+        "orden": "6",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "1",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "6",
+                "tipo": "1",
+                "titulo": "Super Admin",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Nombre",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "text",
+                        "titulo": "Email",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen 50x50 px, formato jpg o png",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Nombre",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "email",
+                        "titulo": "Email",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "pass",
+                        "tipo": "password",
+                        "titulo": "Contraseña",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": [
+                    {
+                        "tag": "profile",
+                        "titulo": "Foto de perfil",
+                        "ancho": "50",
+                        "alto": "50",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    }
+                ],
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "aside": "1"
+            },
+            {
+                "idmoduloconfiguracion": "6",
+                "tipo": "2",
+                "titulo": "Administradores",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Nombre",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "text",
+                        "titulo": "Email",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen 50x50 px, formato jpg o png",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Nombre",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "email",
+                        "titulo": "Email",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "pass",
+                        "tipo": "password",
+                        "titulo": "Contraseña",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": [
+                    {
+                        "tag": "profile",
+                        "titulo": "Foto de perfil",
+                        "ancho": "50",
+                        "alto": "50",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    }
+                ],
+                "orden": "2",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "aside": "1"
+            },
+            {
+                "idmoduloconfiguracion": "6",
+                "tipo": "3",
+                "titulo": "Admin Limitado",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Nombre",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "text",
+                        "titulo": "Email",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen 50x50 px, formato jpg o png",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Nombre",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "email",
+                        "titulo": "Email",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "pass",
+                        "tipo": "password",
+                        "titulo": "Contraseña",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": [
+                    {
+                        "tag": "profile",
+                        "titulo": "Foto de perfil",
+                        "ancho": "50",
+                        "alto": "50",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    }
+                ],
+                "orden": "3",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "aside": "1"
+            }
+        ]
+    },
+    {
+        "icono": "history",
+        "module": "log",
+        "titulo": "Logs",
+        "mostrar": [
+            {
+                "field": "0",
+                "titulo": "ID",
+                "tipo": "text"
+            },
+            {
+                "field": "tabla",
+                "titulo": "Tabla",
+                "tipo": "text"
+            },
+            {
+                "field": "accion",
+                "titulo": "Accion",
+                "tipo": "text"
+            },
+            {
+                "field": "administrador",
+                "titulo": "Administrador",
+                "tipo": "text"
+            },
+            {
+                "field": "fecha",
+                "titulo": "Fecha",
+                "tipo": "text"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "tabla",
+                "titulo": "Tabla",
+                "tipo": "text"
+            },
+            {
+                "field": "accion",
+                "titulo": "Accion",
+                "tipo": "text"
+            },
+            {
+                "field": "fecha",
+                "titulo": "Fecha",
+                "tipo": "text"
+            }
+        ],
+        "orden": "7",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "0",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "7",
+                "tipo": "0",
+                "titulo": "Logs",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "tabla",
+                        "tipo": "text",
+                        "titulo": "Tabla",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "accion",
+                        "tipo": "text",
+                        "titulo": "Accion",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "administrador",
+                        "tipo": "text",
+                        "titulo": "Administrador",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "fecha",
+                        "tipo": "text",
+                        "titulo": "Fecha",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "tabla",
+                        "tipo": "text",
+                        "titulo": "Tabla",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "accion",
+                        "tipo": "text",
+                        "titulo": "Accion",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "fecha",
+                        "tipo": "text",
+                        "titulo": "Fecha",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "aside": "1"
+            }
+        ]
+    }
+]

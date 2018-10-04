@@ -1,0 +1,145 @@
+<div class="page-content">
+    <ol class="breadcrumb">
+        {foreach breadcrumb}
+        <li class="{active}">
+            <a href="{url}">{title}</a>
+        </li>
+        {/foreach breadcrumb}
+    </ol>
+    <div class="page-heading">
+        <h1>{title} </h1>
+    </div>
+    <div class="container-fluid">
+        <div data-widget-group="group1">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default no-animate">
+                        <div class="panel-heading">
+                            <div class="panel-ctrls pull-left">
+                                <label class="panel-ctrls-center">
+                                    <select name="limit" aria-controls="example" class="form-control">
+                                        {foreach limits}
+                                        <option value="{value}" {active}>{value}</option>
+                                        {/foreach limits}
+                                    </select>
+                                </label>
+                                <i class="separator"></i>
+                                <div class="pull-right">
+                                    <label class="panel-ctrls-center">
+                                        <form action="" class="search">
+                                        <input name='search' type="search" class="form-control" placeholder="Buscar..." aria-controls="example" value='{search}'>
+                                        </form>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                            <div class="btn-group mt-sm">
+                                {if new}
+                                <a class="btn btn-default new" href="{new_url}">
+                                    <i class="fa fa-plus"></i>
+                                    <span>Nuevo</span>
+                                </a>{/if new}
+                            </div>
+                        </div>
+                        <div class="panel-body no-padding table-responsive">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-hover table-bordered m-n {if order_class}sorted_table{/if order_class}"
+                                id="tabla">
+                                <thead>
+                                    <tr>
+                                        {if order_head} <th width="30"></th>{/if order_head} 
+                                        
+                                        {foreach th}
+                                        <th>{title_th}</th>
+                                        {/foreach th}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {foreach row}
+                                    <tr class="{if even} even {else even} odd {/if even} gradeX tooltips" data-id="{id}" data-order="{order}" data-placement="top"
+                                        data-trigger="hover" data-original-title="ID: {id}">
+                                        {if order_body}
+                                        <td class="move">
+                                            <i class="fa fa-arrows fa-lg"></i>
+                                        </td>
+                                        {/if order_body} 
+                                        
+                                        {foreach td}
+                                        <td class="center" data-field="{content_field}">
+                                            {content}
+                                        </td>
+                                        {/foreach td}
+                                    </tr>
+                                    {/foreach row}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer">
+                            <ul class="pagination pull-right m-n">
+                                {foreach pagination}
+                                <li class="{class_page}">
+                                    <a href="{url_page}">{text_page}</a>
+                                </li>
+                                {/foreach pagination}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- .container-fluid -->
+</div>
+<!-- #page-content -->
+
+
+{if delete}
+<!--MODAL para eliminacion de elementos-->
+<div class="modal fade modal-eliminar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Confirmación</h2>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de eliminar este elemento? <span id="nombre_elemento"></span></p>
+                <input type="hidden" name="id_eliminar" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-raised btn-danger" onclick="eliminar_elemento();" data-dismiss="modal">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{/if delete}
+
+
+<div class="modal fade modal-foto" tabindex="-1">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <a href="" target="_blank">
+                <img class="vista-previa" alt="Imagen" style="width:100%;">
+            </a>
+    
+            <!--
+            <div class="cambiar-foto">
+            <div class="fileinput fileinput-new" style="width: 100%;" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail mb20 fileinput-exists" data-trigger="fileinput" style="width: 100%; height: 150px;"></div>
+                <div>
+                    <span class="btn btn-default btn-file"><span class="fileinput-new">Cambiar Imagen</span><span class="fileinput-exists" onclick="cancelar_archivo();">Cambiar</span><input data-tipo="subir_imagen" type="file" name="..."></span>
+                    <a href="#" class="btn btn-default fileinput-exists guardar_modal" data-dismiss="fileinput" data-tipo="subir_imagen">Guardar</a>
+                </div>
+            </div>
+            </div>
+            <input name="foto" type="hidden">
+            -->
+    
+        </div>
+    </div>
+    </div>
+    </div>

@@ -1,0 +1,49 @@
+<div class="form-group image_multiple image">
+    <label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
+    <div class="col-sm-8">
+        <div class="multiple_image"></div>
+        <div class="alert alert-info">{help}</div>
+        <div class="image_list sorted_multiple row"> 
+            {foreach fields} 
+            <div class="campo fields col-sm-2">
+                <div class="move"><i class="fa fa-arrows fa-lg"></i>
+                    <div class="portada_container">
+                        <button data-field="{field}" data-active="{active}" data-id="0" class="btn btn-raised active tooltips btn-md {class}" data-original-title="Portada">
+                            <i class="fa {icon}"></i>
+                        </button>
+                        <input class="portada" name="multiple[image][{field}][portada][]" type="hidden" value="{active}">
+                    </div>
+                    <img class="image" src="{image}" alt="{title_field}">
+                    <input type="hidden" class="id" name="multiple[image][{field}][id][]" value="{id}">
+                    <input type="hidden" class="url" name="multiple[image][{field}][url][]" value="{url}">
+                    <input type="hidden" class="parent" name="multiple[image][{field}][parent][]" value="{parent}">
+                    <input type="hidden" class="folder" name="multiple[image][{field}][folder][]" value="{folder}">
+                    <input type="hidden" class="tmp" name="multiple[image][{field}][tmp][]" value="">
+                    <button class="btn btn-raised eliminar btn-danger btn-md" onclick="$(this).parent().parent().remove();">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+            </div> 
+            {/foreach fields} 
+        </div>
+        <div class="campo new_line col-sm-2">
+            <div class="move"><i class="fa fa-arrows fa-lg"></i>
+                <div class="portada_container">
+                    <button data-field="{field}" data-active="false" data-id="0" class="btn btn-raised active tooltips btn-md btn-danger" data-original-title="Portada">
+                        <i class="fa fa-close"></i>
+                    </button>
+                    <input class="portada" name="multiple[image][{field}][portada][]" type="hidden" value="false">
+                </div>
+                <img class="image" src="" alt="{title_field}">
+                <input type="hidden" class="id" name="multiple[image][{field}][id][]" value="">
+                <input type="hidden" class="url" name="multiple[image][{field}][url][]" value="">
+                <input type="hidden" class="parent" name="multiple[image][{field}][parent][]" value="">
+                <input type="hidden" class="folder" name="multiple[image][{field}][folder][]" value="">
+                <input type="hidden" class="tmp" name="multiple[image][{field}][tmp][]" value="">
+                <button class="btn btn-raised eliminar btn-danger btn-md" onclick="$(this).parent().parent().remove();">
+                    <i class="material-icons">delete</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

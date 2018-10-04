@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{favicon}" /> {if keywords}
+    <meta name="keywords" content="{keywords_text}"> {/if keywords} {if description}
+    <meta name="description" content="{description_text}">
+    <meta property="og:description" content="{description_text}"> {/if description} <title>{title}</title>
+    <meta property="og:site_name" content="{title}">
+    <meta property="og:title" content="{title}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{current_url}">
+    <meta property="path" content="{path}"> 
+    <meta property="modulo" content="{modulo}"> 
+    <meta property="googlemaps_key" content="{googlemaps_key}"> 
+    {if image}
+    <meta property="og:image" content="{image_url}"> 
+    {else image}
+    <meta property="og:image" content="{logo}" /> 
+    {/if image}
+    <meta name="theme-color" content="{color_primario}" />
+    <link rel="manifest" href="{manifest_url}">
+    <meta name="author" content="Pablo R.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex,nofollow" />
+    {css}
+</head>
+<div id="page-progress-loader"></div>
+
+<body class="animated-content infobar-overlay sidebar-scroll sidebar-collapsed">

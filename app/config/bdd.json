@@ -1,0 +1,277 @@
+[
+    {
+        "tablename": "table",
+        "idname": "idtable",
+        "fields": [
+            {
+                "titulo": "tablename",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "idname",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "fields",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "truncate",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "0"
+    },
+    {
+        "tablename": "administrador",
+        "idname": "idadministrador",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "email",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "pass",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "nombre",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "cookie",
+                "tipo": "char(255)"
+            }
+        ],
+        "truncate": "0"
+    },
+    {
+        "tablename": "seo",
+        "idname": "idseo",
+        "fields": [
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "keywords",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "descripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "profile",
+        "idname": "idprofile",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "0"
+    },
+    {
+        "tablename": "moduloconfiguracion",
+        "idname": "idmoduloconfiguracion",
+        "fields": [
+            {
+                "titulo": "icono",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "module",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "mostrar",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "detalle",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "aside",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "tipos",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "0"
+    },
+    {
+        "tablename": "modulo",
+        "idname": "idmodulo",
+        "fields": [
+            {
+                "titulo": "idmoduloconfiguracion",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "menu",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "mostrar",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "detalle",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "recortes",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "aside",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "0"
+    },
+    {
+        "tablename": "log",
+        "idname": "idlog",
+        "fields": [
+            {
+                "titulo": "administrador",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "tabla",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "accion",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "fecha",
+                "tipo": "datetime"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "logo",
+        "idname": "idlogo",
+        "fields": [
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            }
+        ],
+        "truncate": "0"
+    },
+    {
+        "tablename": "texto",
+        "idname": "idtexto",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "descripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "texto",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "mapa",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    }
+]
