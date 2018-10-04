@@ -14,7 +14,7 @@ class sw
         $config = app::getConfig();
 
         $lista_cache = array();
-        //$lista_cache[] = functions::generar_url(array("aplication"), false);
+        $lista_cache[] = functions::generar_url(array("aplication"), false);
 
         $css = view::css(false, true, true); //array(css,fecha modificacion mas reciente)
         $js = view::js(true, true); //array(js,fecha modificacion mas reciente)
