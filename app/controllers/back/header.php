@@ -11,7 +11,6 @@ use \app\models\logo as logo_model;
 class header
 {
     private $data = array(
-        'favicon' => '',
         'logo' => '',
         'url_exit' => '',
     );

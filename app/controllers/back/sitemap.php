@@ -15,7 +15,7 @@ class sitemap extends base
     protected $breadcrumb = array();
     public function __construct()
     {
-
+        parent::__construct(null);
     }
     public function index()
     {
@@ -32,9 +32,7 @@ class sitemap extends base
         $aside = new aside();
         $aside->normal();
 
-        $breadcrumb = array(
-            array('url' => functions::generar_url($this->url), 'title' => $this->metadata['title'], 'active' => 'active'),
-        );
+       
         $row = sitemap_model::getAll(array('ready' => true, 'valid' => ''), array('order' => 'idsitemap DESC'));
         $log = array();
         foreach ($row as $key => $r) {
@@ -64,7 +62,7 @@ class sitemap extends base
         }
         $is_error=($mensaje_error!='');
 
-        view::set('breadcrumb', $breadcrumb);
+        view::set('breadcrumb', $this->breadcrumb);
         view::set('log', $log);
         view::set('title', $this->metadata['title']);
         view::set('progreso', $total);
@@ -152,7 +150,11 @@ class sitemap extends base
         $row = sitemap_model::getAll(array('ready' => true), array(), 'COUNT(url) as count');
         $listos = (int) $row[0]['count'];
         $row = sitemap_model::getAll(array('ready' => true, 'valid' => ''), array('limit' => 1, 'order' => 'idsitemap DESC'));
-        $respuesta['ultimo'] = $row[0];
+        if(count($row)==1){
+            $respuesta['ultimo'] = $row[0];
+        }else{
+            $respuesta['ultimo'] = null;
+        }
         $row = sitemap_model::getAll(array('ready' => false), array(), 'COUNT(url) as count');
         $pendientes = (int) $row[0]['count'];
         if ($listos == 0 && $pendientes == 0) {

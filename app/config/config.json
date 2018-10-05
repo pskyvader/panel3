@@ -10,10 +10,10 @@
     "dir": "panel3",
     "title": "Proyecto sitio",
     "short_title": "Proyecto",
-    "debug": "0",
-    "domain": "sitioejemplo.cl",
-    "color_primario": "#000",
-    "color_secundario": "#000",
+    "debug": "1",
+    "domain": "mysitio.cl",
+    "color_primario": "#278c90",
+    "color_secundario": "#fff",
     "googlemaps_key": "AIzaSyAds-T67iR5yO23aQkDN3qKJhApRrZerPI",
     "admin": "admin",
     "theme_back": "default",
@@ -23,6 +23,6 @@
     "email_smtp": "",
     "email_user": "",
     "email_pass": "",
-    "main_email": "ejemplo@sitioejemplo.cl",
-    "email_from": "noreply@sitioejemplo.cl"
+    "main_email": "ejemplo@mysitio.cl",
+    "email_from": "noreply@mysitio.cl"
 }

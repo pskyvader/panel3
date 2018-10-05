@@ -1,0 +1,35 @@
+var version = "version{version}";
+var urlsToCache = {lista_cache};
+self.addEventListener("install", function(event) {
+    event.waitUntil(caches.open(version).then(function(cache) {
+        return cache.addAll(urlsToCache);
+    }).then((r) => {
+        self.skipWaiting();
+        return r;
+    }).catch(console.error));
+}); 
+{if cache}
+self.addEventListener('fetch', function(event) {
+    event.respondWith(caches.match(event.request).then(function(response) {
+        if(response){
+            if(response['url'].split('.').pop()!=''){
+                return response;
+            }else{
+                console.log(response);
+            }
+        }
+        return fetch(event.request);
+    }));
+}); 
+{/if cache}
+    
+self.addEventListener('activate', function(event) {
+    event.waitUntil(caches.keys().then(function(cacheNames) {
+        return Promise.all(cacheNames.filter(function(cacheName) {
+            if (cacheName != version) return true;
+            else return false;
+        }).map(function(cacheName) {
+            return caches.delete(cacheName);
+        }));
+    }));
+});

@@ -1,0 +1,34 @@
+<section class="seccion-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                {if is_subtitulo}
+                    <h1>
+                        {titulo}
+                    </h1>
+                    <h4>
+                        {subtitulo}
+                    </h4>
+                {else is_subtitulo}
+                    <h1>
+                        {titulo}
+                    </h1>
+                {/if is_subtitulo}
+            </div>
+            <div class="col-md">
+                <ol class="breadcrumb float-md-right">
+                    {foreach breadcrumb}
+                    <li class="breadcrumb-item {active}">
+                        {if is_active}
+                            <a href="{url}">{title}</a>
+                            <i class="fa fa-angle-right mx-2" aria-hidden="true"></i>
+                        {else is_active}
+                            {title}
+                        {/if is_active}
+                    </li>
+                    {/foreach breadcrumb}
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>

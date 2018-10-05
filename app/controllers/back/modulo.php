@@ -13,6 +13,7 @@ class modulo extends base
     protected $url = array('modulo');
     protected $metadata = array('title' => 'Modulos', 'modulo' => 'modulo');
     protected $parent_class = null;
+    protected $parent = null;
     protected $tipos_recortes = array(
         'recortar' => array('text' => 'Recortar', 'value' => 'recortar'),
         'rellenar' => array('text' => 'Rellenar', 'value' => 'rellenar'),
@@ -26,24 +27,24 @@ class modulo extends base
     {
         parent::__construct(new modulo_model);
         $this->parent_class = new moduloconfiguracion_model;
-        $this->breadcrumb = array(
-            array('url' => functions::generar_url(array("home"), false), 'title' => 'Home', 'active' => ''),
-        );
+        $parent_class=$this->parent_class;
+        $this->parent = $parent_class::getById($_GET['idmoduloconfiguracion']);
+
+        if (!isset($_GET['idmoduloconfiguracion'])) {
+            $this->url = array('home');
+        } else {
+            array_pop($this->breadcrumb);
+            $this->breadcrumb[] = array('url' => functions::generar_url(array('moduloconfiguracion')), 'title' => $this->parent['titulo'], 'active' => '');
+            $this->metadata['title'] = $this->parent['titulo'] . ' - ' . $this->metadata['title'];
+            $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active');
+        }
     }
     public function index()
     {
         $class = $this->class; // Clase para enviar a controlador de lista
         $parent_class = $this->parent_class; // Clase Padre
-        if (!isset($_GET['idmoduloconfiguracion'])) {
-            $this->url = array('home');
-        } else {
-            $parent = $parent_class::getById($_GET['idmoduloconfiguracion']);
-            $this->breadcrumb[] = array('url' => functions::generar_url(array('moduloconfiguracion')), 'title' => $parent['titulo'], 'active' => '');
-            $this->metadata['title'] = $parent['titulo'] . ' - ' . $this->metadata['title'];
-        }
-
-        $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active');
-
+        $parent=$this->parent;
+        
         if (!administrador_model::verificar_sesion()) {
             $this->url = array_merge(array('login', 'index'), $this->url);
         }
@@ -87,17 +88,10 @@ class modulo extends base
     {
         $class = $this->class; // Clase para enviar a controlador de detalle
         $parent_class = $this->parent_class; // Clase Padre
+        $parent = $this->parent; // Clase Padre
 
         $url_save = $url_list = $this->url;
         $url_save[] = 'guardar';
-        if (!isset($_GET['idmoduloconfiguracion'])) {
-            $this->url = array('home');
-        } else {
-            $parent = $parent_class::getById($_GET['idmoduloconfiguracion']);
-            $this->breadcrumb[] = array('url' => functions::generar_url(array('moduloconfiguracion')), 'title' => $parent['titulo'], 'active' => '');
-        }
-
-        $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active');
         $this->url[] = 'detail';
         if (isset($var[0])) {
             $id = (int) $var[0];

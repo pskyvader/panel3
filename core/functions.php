@@ -42,7 +42,7 @@ class functions
         }
     }
 
-    public static function generar_url($url, $extra = null,$front_auto=true,$front=true)
+    public static function generar_url($url, $extra = null, $front_auto = true, $front = true)
     {
         $url = implode('/', $url);
         if (is_array($extra) && count($extra) > 0) {
@@ -52,7 +52,7 @@ class functions
                 $url .= "?" . http_build_query($_GET);
             }
         }
-        $url=(($front_auto)?(app::get_url()):(app::get_url($front))) . $url;
+        $url = (($front_auto) ? (app::get_url()) : (app::get_url($front))) . $url;
 
         return $url;
     }
@@ -73,9 +73,9 @@ class functions
         $pass = strtoupper(substr(str_shuffle(md5(uniqid())), -10, 8));
         return $pass;
     }
-
+    // formatea texto como url amigables
     public static function url_amigable($url)
-    { // formatea texto como url amigables
+    {
         $url = str_replace(array('á', 'à', 'â', 'ã', 'ª', 'ä'), "a", $url);
         $url = str_replace(array('Á', 'À', 'Â', 'Ã', 'Ä'), "A", $url);
         $url = str_replace(array('Í', 'Ì', 'Î', 'Ï'), "I", $url);
@@ -96,10 +96,10 @@ class functions
         $url = strtolower($url);
         return $url;
     }
-
+    //agrega la fecha del archivo como variable al nombre del archivo: style.css=> style.css?time=23426421
     public static function fecha_archivo($archivo, $only_fecha = false)
     {
-        //agrega la fecha del archivo como variable al nombre del archivo: style.css=> style.css?time=23426421
+
         $c = (strpos($archivo, '?') === false) ? '?time=' : '&time=';
         $ac = explode("?", $archivo);
         $ac = $ac[0];
@@ -109,8 +109,9 @@ class functions
             return file_exists($ac) ? $archivo . $c . filemtime($ac) : "";
         }
     }
+    //formato de url
     public static function ruta($texto)
-    { //formato de url
+    {
         $texto = trim($texto);
         $texto = trim($texto, ' ');
         $pos = strpos($texto, 'http');
@@ -121,8 +122,20 @@ class functions
         } else {
             $ruta = "http://" . $texto;
         }
-
         return $ruta;
+    }
+    //comprueba si la url actual es la misma que la url enviada
+    public static function active($string)
+    {
+        $pagina = $_SERVER['REQUEST_URI'];
+        $url = self::current_url();
+        if (strpos($pagina, $string) !== false) {
+            return true;
+        } else if ($url == $string) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function encode_json($array, $pretty = false)
@@ -143,7 +156,6 @@ class functions
         return $json;
     }
 
-    
     public static function decode_json($json)
     {
         $array = json_decode(html_entity_decode($json), true);
