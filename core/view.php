@@ -38,7 +38,7 @@ class view
      * @param  [String]  [template name]
      * @return [html]    [render html]
      */
-    public static function render($template,$minify=true)
+    public static function render($template,$minify=true,$return=false)
     {
         $theme = self::get_theme();
         $template_url = $theme . $template . "." . self::EXTENSION_TEMPLATES;
@@ -46,15 +46,20 @@ class view
             throw new \Exception("Error: El archivo " . $template_url . " no existe", 1);
         }
 
-        ob_start();
         $content = file_get_contents($template_url);
         $str = self::render_template(self::$data, $content);
         if($minify) $str = minify::minify_html($str);
-        echo $str;
-        $str = ob_get_contents();
-        ob_end_clean();
-        echo $str;
-        self::reset();
+        if($return){
+            self::reset();
+            return $str;
+        }else{
+            ob_start();
+            echo $str;
+            $str = ob_get_contents();
+            ob_end_clean();
+            echo $str;
+            self::reset();
+        }
     }
 
     public static function render_template($data, $content)
@@ -76,8 +81,9 @@ class view
                     }
                     $content = str_replace($subcontent1, $sub, $content);
                     $content = str_replace($array_close, "", $content);
-                } elseif (error_reporting()) {echo "no encontrado" . $array_open;
-                    print_r($d);}
+                } elseif (error_reporting()) {
+                    throw new \Exception("Array no encontrado {$array_open}", 1);
+                }
 
             } else {
                 $if_open = "{if " . $key . "}";
@@ -285,10 +291,10 @@ class view
         if ($array_only) {
             return array($css,$nuevo);
         } else {
+            self::set('js', array());
             self::set('is_content', true);
             self::set('is_css', true);
             self::set('css', $css);
-            self::set('js', array());
 
             if ($return) {
                 $theme = self::get_theme();

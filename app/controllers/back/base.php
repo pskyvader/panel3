@@ -19,14 +19,17 @@ class base
     public function __construct($class)
     {
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($this->metadata['modulo']);
-        $this->contiene_tipos = (isset($moduloconfiguracion['tipos']))?$moduloconfiguracion['tipos']:false;
-        if ($this->contiene_tipos && isset($_GET['tipo'])) {
-            $tipo=$_GET['tipo'];
-        }else{
-            $tipo=0;
+        if(isset($moduloconfiguracion[0])){
+            $this->contiene_tipos = (isset($moduloconfiguracion['tipos']))?$moduloconfiguracion['tipos']:false;
+            if ($this->contiene_tipos && isset($_GET['tipo'])) {
+                $tipo=$_GET['tipo'];
+            }else{
+                $tipo=0;
+            }
+            $modulo = modulo_model::getAll(array('idmoduloconfiguracion'=>$moduloconfiguracion[0],'tipo'=>$tipo));
+            $this->metadata['title']=$modulo[0]['titulo'];
         }
-        $modulo = modulo_model::getAll(array('idmoduloconfiguracion'=>$moduloconfiguracion[0],'tipo'=>$tipo));
-        $this->metadata['title']=$modulo[0]['titulo'];
+        
         $this->class = $class;
         $this->breadcrumb = array(
             array('url' => functions::generar_url(array("home")), 'title' => 'Home', 'active' => ''),

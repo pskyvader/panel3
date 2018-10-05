@@ -1,38 +1,38 @@
 <?php
 namespace app\controllers\front;
-defined("APPPATH") OR die("Acceso denegado");
-use core\functions,
-\core\view,
-\app\models\user;
+
+defined("APPPATH") or die("Acceso denegado");
+use \core\functions;
+use \core\view;
+use \app\models\seo;
 
 class home
 {
-    private $url=array('home');
-    public function index(){
-        functions::url_redirect($this->url);
-        echo "hola";
-        return 'aaaa';
-    }
-    public function saludo($nombre)
+    protected $url = array('log');
+    protected $metadata = array('title' => 'log');
+    protected $breadcrumb = array();
+    public function __construct()
     {
-        $this->url[]='saludo';
-        $this->url[]=$nombre;
+        $seo=seo::getById(1);
+        $this->url=array($seo['url']);
+        $this->metadata['title']=$seo['titulo'];
+    }
+    public function index()
+    {
         functions::url_redirect($this->url);
 
-        $var=array(
-            'name'=>$nombre,
-            'title'=>'Custom MVC'
-        );
-        view::set_array($var);
-        view::render("home");
-    }
-    public function users($params=array()){
-        $this->url[]='users';
-        $this->url=array_merge($this->url,$params);
-        functions::url_redirect($this->url);
-        $users = User::getAll();
-        View::set("users", $users);
-        View::set("title", 'usuarios');
-        view::render("users");
+        $head = new head($this->metadata);
+        $head->normal();
+
+        $header = new header();
+        $header->normal();
+        
+        $breadcrumb = new breadcrumb();
+        $breadcrumb->normal($this->breadcrumb);
+
+        view::render('home');
+
+        $footer = new footer();
+        $footer->normal();
     }
 }

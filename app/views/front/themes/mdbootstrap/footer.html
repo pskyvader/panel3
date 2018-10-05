@@ -1,0 +1,83 @@
+</div>
+<!--#contenido-principal empieza en header-->
+<div id="cargando" class="d-none">
+    <div class="progress mb-0 position-absolute" style="z-index:1001;">
+        <div class="indeterminate"></div>
+    </div>
+    <div class="mask flex-center" style="opacity:1;z-index:1000;">
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="text-left d-print-none">
+    <div class="before-footer"></div>
+    <div class="container pt-5 pb-4">
+        <div class="row">
+            <div class="col-lg pt-lg-4 pb-4 pb-lg-0 text-center">
+                <a href="{path}">
+                    <img src="{logo}" alt="{title}" class="img-fluid">
+                </a>
+            </div>
+            <div class="col-sm">
+                <h3 class="btn-desplegable">Contáctanos
+                    <div class="icono"><span></span><span></span></div>
+                </h3>
+                <ul class="list-unstyled desplegable" style='display:none;'>
+                    <li>
+                        <i class="fas fa-home2 fa-lg mr-1"></i>
+                        {direccion}
+                    </li>
+                    <li>
+                        <a href="tel:{telefono}">
+                            <i class="fas fa-mobile-alt fa-lg mr-1"></i>
+                            {telefono}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:{email}">
+                            <i class="far fa-envelope fa-lg mr-1"></i>
+                            {email}
+                        </a>
+                    </li>
+                    <li>
+                        {if is_social}
+                        <div class="social">
+                            <ul class="list-inline d-inline-block mr-4 mb-0">
+                                {foreach social}
+                                <li class="list-inline-item">
+                                    <a href="{url}" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="bottom" title="{title}">
+                                        <i class="fab {icon} mr-2"></i>
+                                        <span class="d-none">{title}</span>
+                                    </a>
+                                </li>
+                                {/foreach social}
+                            </ul>
+                        </div>
+                        {/if is_social}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <hr>
+    </div>
+    <div class="after-footer col">
+        <div class="pt-2 pb-4 text-center">
+            <span> &copy; Todos los derechos reservados. {title} 2018</span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

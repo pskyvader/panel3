@@ -12,13 +12,13 @@ use \core\database;
 use \core\functions;
 use \core\view;
 
-class configuracion_administrador
+class configuracion_administrador extends base
 {
     protected $url = array('configuracion_administrador');
     protected $metadata = array('title' => 'Configuracion de administrador', 'modulo' => 'configuracion_administrador');
-    protected $breadcrumb = array();
     public function __construct()
     {
+        parent::__construct(null);
 
     }
     public function index()
@@ -36,12 +36,9 @@ class configuracion_administrador
         $aside = new aside();
         $aside->normal();
 
-        $breadcrumb = array(
-            array('url' => functions::generar_url($this->url), 'title' => $this->metadata['title'], 'active' => 'active'),
-        );
         $vaciar = table_model::getAll(array('truncate' => true), array(), 'tablename');
         view::set('vaciar', $vaciar);
-        view::set('breadcrumb', $breadcrumb);
+        view::set('breadcrumb', $this->breadcrumb);
         view::set('title', $this->metadata['title']);
         view::set('save_url', functions::generar_url(array_merge($this->url, array('vaciar'))));
         view::set('list_url', functions::generar_url($this->url));
