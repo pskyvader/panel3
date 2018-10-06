@@ -257,7 +257,11 @@ class database
     { //consulta modificar campo
         $valor_primario = "";
         $sql = "ALTER TABLE " . self::$_prefix . $table;
-        $sql .= " MODIFY " . $column . " " . $type . " NOT NULL";
+        $sql .= " MODIFY " . $column . " " . $type . " NOT NULL ";
+        if ($type == 'tinyint(1)') {
+            $sql .= " DEFAULT '1' ";
+        }
+
         $row = $this->consulta($sql, false);
         return $row;
     }
@@ -267,6 +271,10 @@ class database
         $valor_primario = "";
         $sql = "ALTER TABLE " . self::$_prefix . $table;
         $sql .= " ADD " . $column . " " . $type . " NOT NULL ";
+        if ($type == 'tinyint(1)') {
+            $sql .= " DEFAULT '1' ";
+        }
+
         if ($primary) {
             $sql .= " AUTO_INCREMENT ";
         }
@@ -292,6 +300,11 @@ class database
             }
 
             $sql .= $column['titulo'] . " " . $column['tipo'] . " NOT NULL ";
+
+            if ($column['tipo'] == 'tinyint(1)') {
+                $sql .= " DEFAULT '1' ";
+            }
+
             if ($column['primary']) {
                 $sql .= " AUTO_INCREMENT PRIMARY KEY ";
             }
@@ -303,9 +316,9 @@ class database
     public function truncate($tables)
     { //consulta crear tabla
         $valor_primario = "";
-        $sql="";
+        $sql = "";
         foreach ($tables as $key => $table) {
-            $sql.="TRUNCATE TABLE ".self::$_prefix . $table ." ;";
+            $sql .= "TRUNCATE TABLE " . self::$_prefix . $table . " ;";
         }
         $row = $this->consulta($sql, false);
         return $row;
@@ -326,7 +339,11 @@ class database
             if (isset($data[$key])) {
                 $m[$key] = $data[$key];
             } else {
-                $m[$key] = '';
+                if($value['tipo']=='tinyint(1)'){
+                    $m[$key] = 'true';
+                }else{
+                    $m[$key] = '';
+                }
             }
         }
         if (isset($data['image'])) {
