@@ -2,7 +2,6 @@
  * December Admin HTML (c) by KaijuThemes
  * Powered by Bootstrap
  */
-#wrapper,header{display:table}
 .block{display:block!important}
 .inline{display:inline!important}
 .page-tabs{background:#f5f5f5!important;padding:0 20px!important}
@@ -3911,7 +3910,7 @@ body.sidebar-collapsed #topnav .navbar-brand img:not(.show-on-collapse){opacity:
 .sidebar .widget .widget-body .userinfo .user-dropdown .dropdown-menu li span,.sidebar .widget .widget-body .userinfo .user-dropdown .tt-dropdown-menu li span{padding-left:8px}
 .sidebar .widget .widget-body .mini-progressbar{padding:16px;font-size:11px}
 .sidebar .widget .widget-body .mini-progressbar .progress{height:4px;margin-bottom:0}
-.sidebar nav.widget-body>ul.acc-menu{white-space:normal;margin:0;padding-left:0!important;list-style-type:none}
+.sidebar nav.widget-body>ul.acc-menu{white-space:normal;margin:0;padding-left:0!important;list-style-type:none;opacity: 1;}
 .sidebar nav.widget-body>ul.acc-menu>li:first-child>a{border-top:0}
 .sidebar nav.widget-body>ul.acc-menu .divider{height:0;width:100%;margin:0;overflow:hidden}
 .sidebar nav.widget-body>ul.acc-menu a{text-decoration:none}
@@ -5940,3 +5939,7 @@ table .tooltip.top{left:0!important;margin-top:15px}
 .image_list .campo:hover .move .image{opacity:.5}
 .mapa{min-height:350px;margin-bottom:15px}
 .centeredcontainer{width:180px;margin:0 auto 25px}
+
+#wrapper,header{display:table}
+#contenido-principal{display: block;}
+i{opacity: 1;}

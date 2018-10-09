@@ -244,7 +244,7 @@ class view
                         }
                         $locales[] = $c;
                     } else {
-                        $c['content_css'] = file_get_contents($c['url']);
+                        //$c['content_css'] = file_get_contents($c['url']);
                         $c['url'] = app::$_path . functions::fecha_archivo($c['url']);
                         $no_combinados[] = $c;
                     }
@@ -292,7 +292,7 @@ class view
             return array($css,$nuevo);
         } else {
             self::set('js', array());
-            self::set('is_content', true);
+            self::set('is_content', false);
             self::set('is_css', true);
             self::set('css', $css);
 

@@ -13,6 +13,7 @@ class manifest
 {
     public function index()
     {
+        $version_application=101;
         $config=app::getConfig();
         $logo=logo_model::getById(7);
         $manifest = array(
@@ -37,8 +38,8 @@ class manifest
                     'sizes' => '600x600',
                 )
             ),
-            "start_url" => functions::generar_url(array("aplication"), false),
-            "background_color" => $config['color_primario'],
+            "start_url" => functions::generar_url(array("application","index",$version_application), false),
+            "background_color" => $config['color_secundario'],
             "display" => "standalone",
             "theme_color" => $config['color_primario'],
         );
