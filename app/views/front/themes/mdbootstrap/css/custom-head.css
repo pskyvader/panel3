@@ -65,6 +65,27 @@ header .navbar-nav>.nav-item>.dropdown-menu{min-width:100%;margin-left:0;positio
 }
 /*!HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER */
 /*!BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER */
+#banner-principal .carousel-inner .blur{
+    content: "";
+    position: fixed;
+    left: -20px;
+    right: -20px;
+    top: -20px;
+    bottom: -20px;
+    z-index: -1;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(15px);
+
+}
+
 #banner-principal .texto{position:absolute;z-index:999;width:100%;top:25%;color:#fff;text-shadow:2px 2px 5px #1a1a1a}
 #banner-principal .texto .texto1{text-transform:uppercase;font-size:2.2rem;font-weight:900}
 #banner-principal .texto .texto2{font-size:1.6rem;font-weight:600}

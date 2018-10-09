@@ -1,0 +1,57 @@
+
+<div id="banner-principal" class="carousel slide carousel-fade d-print-none" data-ride="carousel" data-interval="5000">
+    <ol class="carousel-indicators">
+        {foreach thumb}
+        <li data-target="#banner-principal" data-slide-to="{id}" class="{active}"></li>
+        {/foreach thumb}
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        {foreach banner}
+        <div role="option" class="carousel-item {active}">
+            <div class="blur" data-background="{background}"></div>
+            
+            <div class="texto" >
+                <div class="container">
+                    <div class="px-2">
+                    {if is_texto1}
+                    <div class="texto1">
+                        {texto1}
+                    </div>
+                    {/if is_texto1}
+                    {if is_texto2}
+                    <div class="texto2">
+                        {texto2}
+                    </div>
+                    {/if is_texto2}
+
+                    {if is_link}
+                    <div class="link">
+                        <a href="{link}" class="btn" target="_blank" rel="noopener noreferrer">{title}</a>
+                    </div>
+                    {/if is_link}
+                </div>
+                </div>
+            </div>
+            
+            <div class="container p-0">
+                <picture class="imagen">
+                    <source media="(min-width: 1200px)" {data}srcset="{foto1}">
+                    <source media="(min-width: 991px)" {data}srcset="{foto2}">
+                    <source media="(min-width: 768px)" {data}srcset="{foto3}">
+                    <source media="(min-width: 0px)" {data}srcset="{foto4}">
+                    <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto1}" alt="{title}">
+                </picture>
+            </div>
+        </div>
+        {/foreach banner}
+    </div>
+
+    <a class="carousel-control-prev" href="#banner-principal" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#banner-principal" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

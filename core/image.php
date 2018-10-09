@@ -90,6 +90,7 @@ class image
         $recortes = array();
         $recortes[] = array('tag' => 'thumb', 'titulo' => 'Thumb', 'ancho' => 200, 'alto' => 200, 'calidad' => 90, 'tipo' => 'centrar');
         $recortes[] = array('tag' => 'zoom', 'titulo' => 'Zoom', 'ancho' => 600, 'alto' => 600, 'calidad' => 90, 'tipo' => 'centrar');
+        $recortes[] = array('tag' => 'color', 'titulo' => 'Color', 'ancho' => 30, 'alto' => null, 'calidad' => 100, 'tipo' => 'recortar');
         if (isset($modulo[0]['recortes'])) {
             foreach ($modulo[0]['recortes'] as $key => $recorte) {
                 $recorte['ancho'] = (int) $recorte['ancho'];
@@ -241,11 +242,22 @@ class image
         $ancho = $info_imagen[0];
         $alto = $info_imagen[1];
         $imagen_tipo = $info_imagen['mime'];
-        $tamano_final = self::proporcion_foto($ancho_maximo, $alto_maximo, $ancho, $alto, $tipo);
-        $x = $tamano_final['x'];
-        $y = $tamano_final['y'];
-        $miniatura_ancho = $tamano_final['miniatura_ancho'];
-        $miniatura_alto = $tamano_final['miniatura_alto'];
+
+        $proporcion_imagen = $ancho / $alto;
+        if($ancho_maximo==null){
+            $ancho_maximo=$alto_maximo/$proporcion_imagen;
+        }
+        if($alto_maximo==null){
+            $alto_maximo=$ancho_maximo/$proporcion_imagen;
+        }
+
+            $tamano_final = self::proporcion_foto($ancho_maximo, $alto_maximo, $ancho, $alto, $tipo);
+            $x = $tamano_final['x'];
+            $y = $tamano_final['y'];
+            $miniatura_ancho = $tamano_final['miniatura_ancho'];
+            $miniatura_alto = $tamano_final['miniatura_alto'];
+       
+
         switch ($imagen_tipo) {
             case "image/jpg":
             case "image/jpeg":

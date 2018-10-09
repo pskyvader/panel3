@@ -5,6 +5,7 @@ defined("APPPATH") or die("Acceso denegado");
 use \core\functions;
 use \core\view;
 use \app\models\seo;
+use \app\models\banner as banner_model;
 
 class home
 {
@@ -29,6 +30,10 @@ class home
         
         $breadcrumb = new breadcrumb();
         $breadcrumb->normal($this->breadcrumb);
+
+        $row_banner=banner_model::getAll(array('tipo'=>1));
+        $banner = new banner();
+        $banner->normal($row_banner);
 
         view::render('home');
 

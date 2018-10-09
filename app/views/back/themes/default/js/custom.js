@@ -22,6 +22,17 @@ function inicio() {
     url = $("meta[property='og:url']").prop("content");
     Utility.animateContent();
     $('body').scrollSidebar();
+    enquire.register("screen and (max-width: 1199px)", {
+        match: function() { //smallscreen
+            $('body').addClass('sidebar-collapsed');
+        },
+        unmatch: function() { //bigscreen
+            $('body').removeClass('sidebar-collapsed');
+            $('.static-content').css('width', '');
+        }
+    });
+
+    $('body').sidebarAccordion();
     $(window).trigger('resize');
     $.wijets.make();
     prettyPrint();
@@ -119,22 +130,10 @@ function habilitar_online() {
     timer_online = setTimeout(online, tiempo);
 }
 
-function activar_imagen() {
-    $('img').each(function() {
-        if (typeof($(this).data('src')) != 'undefined' && $(this).data('src') != '') {
-            if (isInViewport($(this)[0])) {
-                var src = $(this).data('src');
-                $(this).attr('src', src).on('load', function() {
-                    $(this).fadeIn();
-                    $(this).data('src', '');
-                });
-            }
-        }
-    });
-}
 
 function register_sw() {
     if ('serviceWorker' in navigator) {
+        //console.log('sw');
         navigator.serviceWorker.register(path + 'sw.js').then(function(registration) {
             // Registration was successful
             //console.log('ServiceWorker registration successful with scope: ', registration.scope);
@@ -142,5 +141,7 @@ function register_sw() {
             // registration failed :(
             console.log('ServiceWorker registration failed: ', err);
         });
+    }else{
+        //console.log('no sw');
     }
 }

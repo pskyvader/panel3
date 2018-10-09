@@ -334,7 +334,7 @@ $(document).ready(function() {
     // ------------------------------
     // Sidebar Accordion
     // ------------------------------
-    $('body').sidebarAccordion();
+    
     // ------------------------------
     // Toggling Search
     // ------------------------------
@@ -419,15 +419,7 @@ $(document).ready(function() {
     // ---------------------------------
     // Collapse on small screen
     // ---------------------------------
-    enquire.register("screen and (max-width: 1199px)", {
-        match: function() { //smallscreen
-            $('body').addClass('sidebar-collapsed');
-        },
-        unmatch: function() { //bigscreen
-            $('body').removeClass('sidebar-collapsed');
-            $('.static-content').css('width', '');
-        }
-    });
+    
     // -------------------------------
     // Search on Top
     // -------------------------------

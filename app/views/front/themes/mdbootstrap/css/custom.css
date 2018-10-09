@@ -18,7 +18,7 @@ p{font-size:.875rem}
 .sidebar ul li a{display:block;color:#1a1a1a;padding:.5rem 0;font-size:.875rem;font-weight:500;text-transform:uppercase}
 .sidebar ul li a.active{color:#e5ad2a}
 .sidebar ul li a:focus,.sidebar ul li a:hover{text-decoration:underline}
-.bg-dot:after{content:"";width:43px;background:url(../imgsitio/dot.png);height:5px;display:block;text-align:center;margin:15px auto}
+.bg-dot:after{content:"";width:43px;background:url(../img/dot.png);height:5px;display:block;text-align:center;margin:15px auto}
 .bg-dot.text-left:after{text-align:left;margin:15px 0}
 .list-square{list-style:square;color:#f4a812}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
@@ -62,7 +62,7 @@ p{font-size:.875rem}
 .socios .carousel-multi-item .carousel-item img{margin:0 auto}
 /*!HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME*/
 /*!FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER */
-footer{color:#6e6e6e;font-size:.875rem;background-image:url(../imgsitio/fondo-footer.jpg)}
+footer{color:#6e6e6e;font-size:.875rem;background-image:url(../img/fondo-footer.jpg)}
 footer h3{font-size:1.25rem;font-weight:700;text-transform:uppercase}
 footer a{color:#6e6e6e}
 footer a:focus,footer a:hover{color:#f4a812;text-decoration:none}

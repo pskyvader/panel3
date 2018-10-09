@@ -10,6 +10,7 @@
         {"url": "js/mdb.min.js","local":true,"defer":false,"combine":true},
         {"url": "js/fontawesome-all.min.js","local":true,"defer":false,"combine":true},
         {"url": "js/jquery.fancybox.min.js","local":true,"defer":false,"combine":true},
-        {"url": "js/custom.js","local":true,"defer":false,"combine":true}
+        {"url": "js/custom.js","local":true,"defer":false,"combine":true},
+        {"url": "js/functions.js","local":true,"defer":false,"combine":true}
     ]
 }

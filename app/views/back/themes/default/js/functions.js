@@ -66,7 +66,7 @@ function notificacion(titulo, mensaje, tipo, callback) {
         styling: 'fontawesome'
     }
     if (callback) {
-        options.hide= false;
+        options.hide = false;
         options.confirm = {
             confirm: true,
             buttons: [{
@@ -75,9 +75,9 @@ function notificacion(titulo, mensaje, tipo, callback) {
                 click: function(notice) {
                     callback.function();
                 }
-            },null]
+            }, null]
         };
-        options.buttons= {
+        options.buttons = {
             closer: false,
             sticker: false
         };
@@ -119,7 +119,18 @@ function notificacion_footer(mensaje) {
 }
 
 function urlamigable(uri) {
-    return String(uri).toLowerCase().replace(/\s/g, '-').split(/[ÃÀÁÄÂãàáäâ]/).join("a").split(/[ÈÉËÊèéëê]/).join("e").split(/[ÌÍÏÎìíïî]/).join("i").split(/[ÒÓÖÔòóöô]/).join("o").split(/[ÙÚÜÛùúüû]/).join("u").split(/[Çç]/).join("c").split(/[Ññ]/).join("n").split(/[\W_]+/).join("-").split(/-+/).join("-");
+    return String(uri).toLowerCase().replace(/\s/g, '-')
+        .split(/[ÃÀÁÄÂãàáäâ]/).join("a")
+        .split(/[ÈÉËÊèéëê]/).join("e")
+        .split(/[ÌÍÏÎìíïî]/).join("i")
+        .split(/[ÒÓÖÔòóöô]/).join("o")
+        .split(/[ÙÚÜÛùúüû]/).join("u")
+        .split(/[Çç]/).join("c")
+        .split(/[Ññ]/).join("n")
+        .split(/[^a-z0-9.\-]/).join("-")
+        .split(/-+/).join("-")
+        .replace(/^-*/, '')
+        .replace(/-*$/, '');
 }
 
 function go_url(url) {
@@ -213,7 +224,7 @@ function cargar_ajax(href, push, data_form) {
             }
             if (push) history.pushState(data.current_url, data.title, data.current_url);
             actualizado_head = true;
-            iniciar(actualizado, actualizado_head);
+            iniciar(actualizado, actualizado_head,data_form);
         }
     }).fail(function(jqXHR) {
         console.log(jqXHR.responseText);
@@ -224,7 +235,7 @@ function cargar_ajax(href, push, data_form) {
         if (valido) {
             actualizado = true;
             $('#contenido-principal').html(data);
-            iniciar(actualizado, actualizado_head);
+            iniciar(actualizado, actualizado_head,data_form);
         }
     }).fail(function(jqXHR) {
         console.log(jqXHR.responseText);
@@ -233,19 +244,71 @@ function cargar_ajax(href, push, data_form) {
     });
 }
 
-function iniciar(body, head) {
+function iniciar(body, head,data_form) {
     if (body && head) {
         $('#contenido-principal').css('opacity', 1);
         if (typeof inicio === "function") {
             inicio();
         }
         activar_imagen();
-        /*lazyload();
          if (data_form == '') {
              mover('body', 0);
-         }*/
-        /*$('#navbarCollapse').removeClass('show');*/
+         }
         barra(100);
+    }
+}
+
+
+function activar_imagen() {
+    $('img[data-src]').each(function() {
+        if (typeof($(this).data('src')) != 'undefined' && $(this).data('src') != '') {
+            if (isInViewport($(this)[0])) {
+                var src = $(this).data('src');
+                $(this)[0].removeAttribute('data-src');
+                $(this).attr('src', src).on('load', function() {
+                    $(this).fadeIn();
+                });
+                
+            }
+        }
+    });
+    $('source[data-srcset]').each(function() {
+        if (typeof($(this).data('srcset')) != 'undefined' && $(this).data('srcset') != '') {
+            if (isInViewport($(this)[0])) {
+                var srcset = $(this).data('srcset');
+                $(this)[0].removeAttribute('data-srcset');
+                $(this).attr('srcset', srcset).on('load', function() {
+                    $(this).fadeIn();
+                });
+            }
+        }
+    });
+    
+    $('.blur[data-background]').each(function() {
+        if (typeof($(this).data('background')) != 'undefined' && $(this).data('background') != '') {
+            if (isInViewport($(this)[0])) {
+                var background = $(this).data('background');
+                $(this).css('background-image', 'url('+background+')');
+                $(this)[0].removeAttribute('data-background');
+            }
+        }
+    });
+}
+
+
+
+function mover(elemento, tiempo, delay) {
+    var alto = 0;
+    if (delay != 0) {
+        setTimeout(function() {
+            $('html, body').animate({
+                scrollTop: ($(elemento).first().offset().top - alto)
+            }, tiempo);
+        }, delay);
+    } else {
+        $('html, body').animate({
+            scrollTop: ($(elemento).first().offset().top - alto)
+        }, tiempo);
     }
 }
 
