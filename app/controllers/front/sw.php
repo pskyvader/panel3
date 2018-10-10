@@ -26,7 +26,6 @@ class sw
             $lista_cache[] = $j['url'];
         }
         
-        
         view::set('lista_cache',functions::encode_json($lista_cache));
         view::set('cache',true);
         view::set('version',$js[1].'-'.$css[1]);

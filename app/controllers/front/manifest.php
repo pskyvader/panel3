@@ -13,7 +13,7 @@ class manifest
 {
     public function index()
     {
-        $version_application=101;
+        $version_application=1;
         $config=app::getConfig();
         $logo=logo_model::getById(7);
         $manifest = array(

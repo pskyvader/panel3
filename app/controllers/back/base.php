@@ -89,10 +89,10 @@ class base
         if (isset($var[0])) {
             $id = (int) $var[0];
             $this->url[] = $id;
-            $this->metadata['title'] = 'Editar';
+            $this->metadata['title'] = 'Editar '.$this->metadata['title'] ;
         } else {
             $id = 0;
-            $this->metadata['title'] = 'Nuevo';
+            $this->metadata['title'] .= 'Nuevo '.$this->metadata['title'] ;
         }
 
         $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active');

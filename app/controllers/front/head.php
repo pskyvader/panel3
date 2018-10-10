@@ -23,7 +23,7 @@ class head
         'logo' => '',
         'color_primario' => '',
         'manifest_url' => '',
-        'path' => ''
+        'path' => '',
     );
 
     public function __construct($metadata)
@@ -53,7 +53,9 @@ class head
             $titulo = substr($this->data['title'], 0, 75);
         }
         $this->data['title'] = $titulo;
-
+        $this->data['description_text'] = strip_tags($this->data['description_text']);
+        $this->data['keywords'] = ($this->data['keywords_text'] != '');
+        $this->data['description'] = ($this->data['description_text'] != '');
         $logo = logo_model::getById(5);
         $this->data['logo'] = image::generar_url($logo['foto'][0], 'social');
         if (isset($metadata['image'])) {
@@ -62,9 +64,7 @@ class head
         }
         $logo = logo_model::getById(1);
         $this->data['favicon'] = image::generar_url($logo['foto'][0], 'favicon');
-
         $this->data['manifest_url'] = app::get_url() . 'manifest.js';
-
     }
     public function normal()
     {
@@ -78,12 +78,10 @@ class head
             }
         }
     }
-
     public function ajax()
     {
         header('Content-Type: application/json');
         echo json_encode($this->data);
         exit;
     }
-
 }

@@ -66,6 +66,10 @@
                 "tipo": "char(255)"
             },
             {
+                "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
                 "titulo": "keywords",
                 "tipo": "char(255)"
             },
@@ -261,6 +265,76 @@
             },
             {
                 "titulo": "mapa",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "sitemap",
+        "idname": "idsitemap",
+        "fields": [
+            {
+                "titulo": "idpadre",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "depth",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "valid",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "ready",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "banner",
+        "idname": "idbanner",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "texto1",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "texto2",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "texto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "link",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
                 "tipo": "longtext"
             },
             {

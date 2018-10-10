@@ -11,7 +11,7 @@ class sw
 {
     public function index()
     {
-        $version_application=101;
+        $version_application=1;
         $config = app::getConfig();
 
         $lista_cache = array();
