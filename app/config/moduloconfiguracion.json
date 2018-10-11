@@ -91,6 +91,7 @@
         "estado": "1",
         "aside": "1",
         "tipos": "1",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "9",
@@ -336,6 +337,342 @@
         ]
     },
     {
+        "icono": "widgets",
+        "module": "seccioncategoria",
+        "titulo": "Categorias de seccion",
+        "mostrar": [
+            {
+                "field": "0",
+                "titulo": "ID",
+                "tipo": "text"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "text"
+            },
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            },
+            {
+                "field": "destacado",
+                "titulo": "Destacado",
+                "tipo": "active"
+            },
+            {
+                "field": "copy",
+                "titulo": "Copiar",
+                "tipo": "action"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            },
+            {
+                "field": "url_children",
+                "titulo": "Subcategorias",
+                "tipo": "link"
+            },
+            {
+                "field": "delete",
+                "titulo": "Eliminar",
+                "tipo": "delete"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "titulo",
+                "titulo": "Titulo",
+                "tipo": "text"
+            },
+            {
+                "field": "url",
+                "titulo": "URL",
+                "tipo": "url"
+            },
+            {
+                "field": "descripcion",
+                "titulo": "Descripcion",
+                "tipo": "editor"
+            },
+            {
+                "field": "idpadre",
+                "titulo": "Padre",
+                "tipo": "recursive_radio"
+            },
+            {
+                "field": "keywords",
+                "titulo": "Palabras clave",
+                "tipo": "token"
+            },
+            {
+                "field": "metadescripcion",
+                "titulo": "Meta Descripción",
+                "tipo": "editor"
+            },
+            {
+                "field": "orden",
+                "titulo": "Orden",
+                "tipo": "number"
+            },
+            {
+                "field": "estado",
+                "titulo": "Estado",
+                "tipo": "active"
+            },
+            {
+                "field": "destacado",
+                "titulo": "Destacado",
+                "tipo": "active"
+            }
+        ],
+        "orden": "2",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "1",
+        "hijos": "1",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "10",
+                "tipo": "1",
+                "titulo": "Categoria de servicios",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "destacado",
+                        "tipo": "active",
+                        "titulo": "Destacado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_children",
+                        "tipo": "link",
+                        "titulo": "Subcategorias",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url",
+                        "tipo": "url",
+                        "titulo": "URL",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripcion",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "idpadre",
+                        "tipo": "recursive_radio",
+                        "titulo": "Padre",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "keywords",
+                        "tipo": "token",
+                        "titulo": "Palabras clave",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "metadescripcion",
+                        "tipo": "editor",
+                        "titulo": "Meta Descripción",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "destacado",
+                        "tipo": "active",
+                        "titulo": "Destacado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": "",
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1"
+            }
+        ]
+    },
+    {
         "icono": "equalizer",
         "module": "seo",
         "titulo": "SEO",
@@ -366,6 +703,11 @@
                 "tipo": "active"
             },
             {
+                "field": "copy",
+                "titulo": "Copiar",
+                "tipo": "action"
+            },
+            {
                 "field": "url_detalle",
                 "titulo": "Editar",
                 "tipo": "link"
@@ -393,7 +735,7 @@
                 "tipo": "token"
             },
             {
-                "field": "descripcion",
+                "field": "metadescripcion",
                 "titulo": "Meta Descripción",
                 "tipo": "editor"
             },
@@ -408,10 +750,11 @@
                 "tipo": "active"
             }
         ],
-        "orden": "2",
+        "orden": "3",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "1",
@@ -480,6 +823,16 @@
                         }
                     },
                     {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
                         "field": "url_detalle",
                         "tipo": "link",
                         "titulo": "Editar",
@@ -538,7 +891,7 @@
                         }
                     },
                     {
-                        "field": "descripcion",
+                        "field": "metadescripcion",
                         "tipo": "editor",
                         "titulo": "Meta Descripción",
                         "texto_ayuda": "",
@@ -662,10 +1015,11 @@
                 "tipo": "active"
             }
         ],
-        "orden": "3",
+        "orden": "4",
         "estado": "1",
         "aside": "1",
         "tipos": "1",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "2",
@@ -1371,10 +1725,11 @@
         "titulo": "Sitemap",
         "mostrar": "",
         "detalle": "",
-        "orden": "4",
+        "orden": "5",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "8",
@@ -1414,10 +1769,11 @@
         "titulo": "Administrador",
         "mostrar": "",
         "detalle": "",
-        "orden": "5",
+        "orden": "6",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
+        "hijos": "0",
         "hijo": []
     },
     {
@@ -1463,10 +1819,11 @@
                 "tipo": "number"
             }
         ],
-        "orden": "6",
+        "orden": "7",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "4",
@@ -1685,6 +2042,11 @@
                 "tipo": "active"
             },
             {
+                "field": "copy",
+                "titulo": "Copiar",
+                "tipo": "action"
+            },
+            {
                 "field": "url_detalle",
                 "titulo": "Editar",
                 "tipo": "link"
@@ -1717,10 +2079,11 @@
                 "tipo": "active"
             }
         ],
-        "orden": "7",
+        "orden": "8",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "5",
@@ -1732,8 +2095,8 @@
                         "titulo": "Nuevo",
                         "estado": {
                             "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -1776,6 +2139,16 @@
                             "1": "true",
                             "2": "true",
                             "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -1937,10 +2310,11 @@
                 "tipo": "active"
             }
         ],
-        "orden": "8",
+        "orden": "9",
         "estado": "1",
         "aside": "1",
         "tipos": "1",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "6",
@@ -2535,10 +2909,11 @@
                 "tipo": "text"
             }
         ],
-        "orden": "9",
+        "orden": "10",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "7",

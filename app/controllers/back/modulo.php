@@ -99,7 +99,7 @@ class modulo extends base
             $this->metadata['title'] = 'Editar '.$this->metadata['title'] ;
         } else {
             $id = 0;
-            $this->metadata['title'] .= 'Nuevo '.$this->metadata['title'] ;
+            $this->metadata['title'] = 'Nuevo '.$this->metadata['title'] ;
         }
 
         $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active');

@@ -20,6 +20,7 @@ class moduloconfiguracion extends base
     );
     protected $tipos_detalle = array(
         'active' => array('text' => 'Active', 'value' => 'active'),
+        'recursive_radio' => array('text' => 'Arbol de botones radio', 'value' => 'recursive_radio'),
         'password' => array('text' => 'Contraseña', 'value' => 'password'),
         'editor' => array('text' => 'Editor', 'value' => 'editor'),
         'email' => array('text' => 'Email', 'value' => 'email'),
@@ -48,13 +49,14 @@ class moduloconfiguracion extends base
         /* cabeceras y campos que se muestran en la lista:
         titulo,campo de la tabla a usar, tipo (ver archivo lista.php funcion "field") */
         $th = array(
-            'id' => array('title_th' => 'ID', 'field' => 0, 'type' => 'text'),
+            //'id' => array('title_th' => 'ID', 'field' => 0, 'type' => 'text'),
             'orden' => array('title_th' => 'Orden', 'field' => 'orden', 'type' => 'text'),
             'module' => array('title_th' => 'Modulo', 'field' => 'module', 'type' => 'text'),
             'titulo' => array('title_th' => 'Titulo', 'field' => 'titulo', 'type' => 'text'),
             'estado' => array('title_th' => 'Estado', 'field' => 'estado', 'type' => 'active'),
-            'aside' => array('title_th' => 'Aparece en aside', 'field' => 'aside', 'type' => 'active'),
-            'tipos' => array('title_th' => 'Contiene tipos', 'field' => 'tipos', 'type' => 'active'),
+            //'aside' => array('title_th' => 'Aparece en aside', 'field' => 'aside', 'type' => 'active'),
+            //'tipos' => array('title_th' => 'Contiene tipos', 'field' => 'tipos', 'type' => 'active'),
+            //'hijos' => array('title_th' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active'),
             'copy' => array('title_th' => 'Copiar', 'field' => 0, 'type' => 'action','action'=>'copy','mensaje'=>'Copiando Elemento'),
             'editar' => array('title_th' => 'Editar', 'field' => 'url_detalle', 'type' => 'link'),
             'subseccion' => array('title_th' => 'Modulos', 'field' => 'url_subseccion', 'type' => 'link'),
@@ -95,7 +97,7 @@ class moduloconfiguracion extends base
             $this->metadata['title'] = 'Editar '.$this->metadata['title'] ;
         } else {
             $id = 0;
-            $this->metadata['title'] .= 'Nuevo '.$this->metadata['title'] ;
+            $this->metadata['title'] = 'Nuevo '.$this->metadata['title'] ;
         }
 
         $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active');
@@ -131,6 +133,7 @@ class moduloconfiguracion extends base
             'estado' => array('title_field' => 'Estado', 'field' => 'estado', 'type' => 'active', 'required' => true),
             'aside' => array('title_field' => 'Aside', 'field' => 'aside', 'type' => 'active', 'required' => true),
             'tipos' => array('title_field' => 'Contiene Tipos', 'field' => 'tipos', 'type' => 'active', 'required' => true),
+            'hijos' => array('title_field' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active', 'required' => true),
         );
 
         $detalle = new detalle($this->metadata); //controlador de detalle

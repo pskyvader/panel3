@@ -3,6 +3,11 @@ namespace app\controllers\back;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\{name} as {name}_model;
+//use \app\models\administrador as administrador_model;
+//use \app\models\moduloconfiguracion as moduloconfiguracion_model;
+//use \app\models\modulo as modulo_model;
+//use \core\functions;
+//use \core\image;
 
 class {name} extends base
 {

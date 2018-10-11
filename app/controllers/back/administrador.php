@@ -26,7 +26,7 @@ class administrador extends base
             $this->metadata['title'] = 'Editar '.$this->metadata['title'] ;
         } else {
             $id = 0;
-            $this->metadata['title'] .= 'Nuevo '.$this->metadata['title'] ;
+            $this->metadata['title'] = 'Nuevo '.$this->metadata['title'] ;
         }
         $profile = false;
 

@@ -63,13 +63,13 @@
         {"url": "assets/js/jquery-sortable-min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/js/jquery.basictable.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/ckeditor/ckeditor.js","local":true,"defer":false,"combine":false},
-        {"url": "js/custom.js","local":true,"defer":false,"combine":true},
         {"url": "js/list.js","local":true,"defer":false,"combine":true},
         {"url": "js/detail.js","local":true,"defer":false,"combine":true},
         {"url": "js/image.js","local":true,"defer":false,"combine":true},
         {"url": "js/multiple.js","local":true,"defer":false,"combine":true},
         {"url": "js/map.js","local":true,"defer":false,"combine":true},
         {"url": "js/ajax.js","local":true,"defer":false,"combine":true},
-        {"url": "js/functions.js","local":true,"defer":false,"combine":true}
+        {"url": "js/functions.js","local":true,"defer":false,"combine":true},
+        {"url": "js/custom.js","local":true,"defer":false,"combine":true}
     ]
 }

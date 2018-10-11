@@ -23,11 +23,12 @@ class texto extends base_model
         }
 
         if (isset($condiciones['palabra'])) {
-            $condiciones['buscar'] = array(
-                'titulo' => $condiciones['palabra'],
-                'keywords' => $condiciones['palabra'],
-                'descripcion' => $condiciones['palabra'],
-            );
+            $fields = table::getByname(static::$table);
+            $condiciones['buscar'] = array();
+            if(isset($fields['titulo'])) $condiciones['buscar']['titulo']=$condiciones['palabra'];
+            if(isset($fields['keywords'])) $condiciones['buscar']['keywords']=$condiciones['palabra'];
+            if(isset($fields['descripcion'])) $condiciones['buscar']['descripcion']=$condiciones['palabra'];
+            if(isset($fields['metadescripcion'])) $condiciones['buscar']['metadescripcion']=$condiciones['palabra'];        
         }
 
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);

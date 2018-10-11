@@ -162,7 +162,24 @@ class functions
         return $array;
     }
 
-    public static function reArrayFiles(&$file_post)
+    public static function crear_arbol($data, $idpadre = 0)
+    {
+        $tree = array('children' => array(), 'root' => array());
+        foreach ($data as $key => $node) {
+            $id = $node[0];
+            /* Puede que exista el children creado si los hijos entran antes que el padre */
+            $node['children'] = (isset($tree['children'][$id])) ? $tree['children'][$id]['children'] : array();
+            $tree['children'][$id] = $node;
+            if ($node['idpadre'] == $idpadre) {
+                $tree['root'][$id] = &$tree['children'][$id];
+            } else {
+                $tree['children'][$node['idpadre']]['children'][$id] = &$tree['children'][$id];
+            }
+        }
+        return $tree['root'];
+    }
+
+    public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);

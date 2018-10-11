@@ -74,7 +74,7 @@
                 "tipo": "char(255)"
             },
             {
-                "titulo": "descripcion",
+                "titulo": "metadescripcion",
                 "tipo": "longtext"
             },
             {
@@ -149,6 +149,10 @@
             },
             {
                 "titulo": "tipos",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "hijos",
                 "tipo": "tinyint(1)"
             }
         ],
@@ -343,6 +347,53 @@
             },
             {
                 "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "seccioncategoria",
+        "idname": "idseccioncategoria",
+        "fields": [
+            {
+                "titulo": "idpadre",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "descripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "keywords",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "metadescripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "destacado",
                 "tipo": "tinyint(1)"
             }
         ],

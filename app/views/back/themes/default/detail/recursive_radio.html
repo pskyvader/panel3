@@ -1,0 +1,14 @@
+{if is_children}
+<div class="radio radio-primary" style="padding-left:{level}px">
+    <label>
+        <input id="{field}" name="{field}" type="radio" value="{value}" {checked} {required}>
+        {title}
+    </label>
+</div>
+{children}
+{else is_children}
+<label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
+<div class="col-sm-8">
+    {children}
+</div>
+{/if is_children}

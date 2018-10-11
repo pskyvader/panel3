@@ -89,7 +89,7 @@ class detalle
         return array('campos' => $campos);
     }
 
-    private function field($campos, $fila, $parent = '', $idparent = 0)
+    private function field($campos, $fila, $parent = '', $idparent = 0, $level = 0)
     {
         switch ($campos['type']) {
             case 'active':
@@ -245,19 +245,19 @@ class detalle
                 break;
             case 'image':
                 $folder = $this->metadata['modulo'];
-                $image_url=(isset($fila[$campos['field']])) ? (image::generar_url($fila[$campos['field']][0], 'thumb')) : '';
+                $image_url = (isset($fila[$campos['field']])) ? (image::generar_url($fila[$campos['field']][0], 'thumb')) : '';
                 $data = array(
                     'title_field' => $campos['title_field'],
                     'field' => $campos['field'],
                     'is_required' => $campos['required'],
-                    'is_required_modal' => ($image_url!='')?$campos['required']:true,
-                    'is_required_alert' => ($image_url!='')?$campos['required']:true,
+                    'is_required_modal' => ($image_url != '') ? $campos['required'] : true,
+                    'is_required_alert' => ($image_url != '') ? $campos['required'] : true,
                     'required' => ($campos['required']) ? 'required="required"' : '',
                     'image' => $image_url,
-                    'is_image'=>($image_url!='')?true:false,
-                    'url'=>($image_url!='')?$fila[$campos['field']][0]['url']:'',
-                    'parent'=>($image_url!='')?$fila[$campos['field']][0]['parent']:'',
-                    'folder'=>($image_url!='')?$fila[$campos['field']][0]['folder']:'',
+                    'is_image' => ($image_url != '') ? true : false,
+                    'url' => ($image_url != '') ? $fila[$campos['field']][0]['url'] : '',
+                    'parent' => ($image_url != '') ? $fila[$campos['field']][0]['parent'] : '',
+                    'folder' => ($image_url != '') ? $fila[$campos['field']][0]['folder'] : '',
                     'help' => $campos['help'],
                 );
                 break;
@@ -331,6 +331,42 @@ class detalle
                     'lat' => (isset($fila[$campos['field']])) ? $fila[$campos['field']]['lat'] : '',
                     'lng' => (isset($fila[$campos['field']])) ? $fila[$campos['field']]['lng'] : '',
                 );
+                break;
+            case 'recursive_radio':
+                if ($level == 0) {
+                    $data = array(
+                        'is_children' => false,
+                        'title_field' => $campos['title_field'],
+                        'field' => $campos['field'],
+                        'is_required' => $campos['required'],
+                        'children' => $this->field($campos, $fila, '', 0, 1),
+                    );
+                } else {
+                    $parent = $campos['parent'];
+                    if(!isset($fila[$campos['field']])){
+                        if(isset($_GET['idpadre'])) $checked=($idparent==$_GET['idpadre'])?'checked="checked"':'';
+                        else $checked=($idparent==0)?'checked="checked"':'';
+                    }else{
+                        $checked=($idparent==$fila[$campos['field']] ) ? 'checked="checked"' : '';
+                    }
+                    $data = array(
+                        'is_children' => true,
+                        'field' => $campos['field'],
+                        'value' => $idparent,
+                        'title' => (isset($parent[$idparent])) ? $parent[$idparent]['titulo'] : '',
+                        'checked' => $checked,
+                        'required' => ($campos['required']) ? 'required' : '',
+                        'level' => ($level-1) * 20,
+                        'children' => '',
+                    );
+                    if(isset($parent[$idparent])){
+                        $campos['parent']=$parent[$idparent]['children'];
+                        foreach ($campos['parent'] as $key => $children) {
+                            $data['children'].=$this->field($campos, $fila, '', $children[0], $level+1);
+                        }
+                    }
+                }
+
                 break;
             case 'text':
             default:

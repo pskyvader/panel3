@@ -41,7 +41,17 @@ class aside
                     $modulo = $mod[$cm[0]][0];
                     $estados = $modulo['estado'][0]['estado'];
                     if ($estados[$tipo_admin] == 'true') {
-                        $url = functions::generar_url(array($cm['module']), (($cm['tipos']) ? array('tipo' => $modulo['tipo']) : false));
+                        $extra = array();
+                        if ($cm['tipos']) {
+                            $extra['tipo'] = $modulo['tipo'];
+                        }
+                        if ($cm['hijos']) {
+                            $extra['idpadre'] = 0;
+                        }
+                        if (count($extra) == 0) {
+                            $extra = false;
+                        }
+                        $url = functions::generar_url(array($cm['module']), $extra);
                         $active = ($url == $current_url);
                         $menu[] = array('url' => $url, 'icon' => $cm['icono'], 'title' => $modulo['titulo'], 'has_submenu' => false, 'active' => $active, 'separador' => false);
                     }
@@ -52,7 +62,17 @@ class aside
                         $modulo = $m;
                         $estados = $modulo['estado'][0]['estado'];
                         if ($estados[$tipo_admin] == 'true') {
-                            $url = functions::generar_url(array($cm['module']), (($cm['tipos']) ? array('tipo' => $modulo['tipo']) : false));
+                            $extra = array();
+                            if ($cm['tipos']) {
+                                $extra['tipo'] = $modulo['tipo'];
+                            }
+                            if ($cm['hijos']) {
+                                $extra['idpadre'] = 0;
+                            }
+                            if (count($extra) == 0) {
+                                $extra = false;
+                            }
+                            $url = functions::generar_url(array($cm['module']), $extra);
                             $active = ($url == $current_url);
                             $me['submenu'][] = array('url' => $url, 'sub_title' => $modulo['titulo'], 'active' => $active);
                             if ($active) {
