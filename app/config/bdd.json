@@ -128,6 +128,14 @@
                 "tipo": "char(255)"
             },
             {
+                "titulo": "sub",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "padre",
+                "tipo": "char(255)"
+            },
+            {
                 "titulo": "mostrar",
                 "tipo": "longtext"
             },
@@ -358,7 +366,7 @@
         "fields": [
             {
                 "titulo": "idpadre",
-                "tipo": "int(11)"
+                "tipo": "longtext"
             },
             {
                 "titulo": "tipo",
@@ -370,6 +378,57 @@
             },
             {
                 "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "descripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "keywords",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "metadescripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "destacado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "seccion",
+        "idname": "idseccion",
+        "fields": [
+            {
+                "titulo": "idseccioncategoria",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
                 "tipo": "char(255)"
             },
             {
