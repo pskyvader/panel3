@@ -6,20 +6,19 @@ use \core\app;
 use \core\database;
 use \core\functions;
 
-class seccioncategoria extends base_model
+class seccion extends base_model
 {
-    public static $idname = 'idseccioncategoria',
-    $table = 'seccioncategoria';
+    public static $idname = 'idseccion',
+    $table = 'seccion';
     public static function getAll($where = array(), $condiciones = array(), $select = "")
     {
         $connection = database::instance();
         if (!isset($where['estado']) && app::$_front) {
             $where['estado'] = true;
         }
-
-        if(isset($where['idpadre'])){
-            $idpadre=$where['idpadre'];
-            unset($where['idpadre']);
+        if(isset($where['idseccioncategoria'])){
+            $idseccioncategoria=$where['idseccioncategoria'];
+            unset($where['idseccioncategoria']);
         }
 
         if (!isset($condiciones['order'])) {
@@ -50,11 +49,10 @@ class seccioncategoria extends base_model
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
         if ($select == '') {
             foreach ($row as $key => $value) {
-                $row[$key]['idpadre'] = functions::decode_json($row[$key]['idpadre']);
-                if(isset($idpadre) && !in_array($idpadre,$row[$key]['idpadre'])){
+                $row[$key]['idseccioncategoria'] = functions::decode_json($row[$key]['idseccioncategoria']);
+                if(isset($idseccioncategoria) && !in_array($idseccioncategoria,$row[$key]['idseccioncategoria'])){
                     unset($row[$key]);
                 }
-                
                 if (isset($row[$key]) && isset($row[$key]['foto'])) {
                     $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
                 }
@@ -79,7 +77,7 @@ class seccioncategoria extends base_model
             if (isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
             }
-            $row[0]['idpadre'] = functions::decode_json($row[0]['idpadre']);
+            $row[0]['idseccioncategoria'] = functions::decode_json($row[0]['idseccioncategoria']);
         }
         return (count($row) == 1) ? $row[0] : $row;
     }

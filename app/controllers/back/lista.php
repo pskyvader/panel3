@@ -199,11 +199,15 @@ class lista
                 break;
             case 'image':
                 $folder = $this->metadata['modulo'];
-                $thumb_url = image::generar_url($fila[$th['field']][0], 'thumb', $folder, $fila[0]);
-                $zoom_url = image::generar_url($fila[$th['field']][0], 'zoom', $folder, $fila[0]);
-                $original_url = image::generar_url($fila[$th['field']][0], '', $folder, $fila[0]);
+                if (isset($fila[$th['field']][0])) {
+                    $thumb_url = image::generar_url($fila[$th['field']][0], 'thumb', $folder, $fila[0]);
+                    $zoom_url = image::generar_url($fila[$th['field']][0], 'zoom', $folder, $fila[0]);
+                    $original_url = image::generar_url($fila[$th['field']][0], '', $folder, $fila[0]);
+                } else {
+                    $thumb_url = $zoom_url = $original_url = '';
+                }
                 $html = $this->templates[$type];
-                $data = array('title' => $th['title_th'], 'url' => $thumb_url, 'zoom' => $zoom_url, 'original' => $original_url,'id'=>$fila[0]);
+                $data = array('title' => $th['title_th'], 'url' => $thumb_url, 'zoom' => $zoom_url, 'original' => $original_url, 'id' => $fila[0]);
                 $content = view::render_template($data, $html);
                 return $content;
                 break;

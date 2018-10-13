@@ -9,7 +9,7 @@ use \core\functions;
 class moduloconfiguracion extends base
 {
     protected $url = array('moduloconfiguracion');
-    protected $metadata = array('title' => 'Configuracion de modulos','modulo'=>'moduloconfiguracion');
+    protected $metadata = array('title' => 'Configuracion de modulos', 'modulo' => 'moduloconfiguracion');
     protected $tipos_mostrar = array(
         'action' => array('text' => 'Accion', 'value' => 'action'),
         'active' => array('text' => 'Active', 'value' => 'active'),
@@ -20,6 +20,7 @@ class moduloconfiguracion extends base
     );
     protected $tipos_detalle = array(
         'active' => array('text' => 'Active', 'value' => 'active'),
+        'recursive_checkbox' => array('text' => 'Arbol de botones checkbox', 'value' => 'recursive_checkbox'),
         'recursive_radio' => array('text' => 'Arbol de botones radio', 'value' => 'recursive_radio'),
         'password' => array('text' => 'Contraseña', 'value' => 'password'),
         'editor' => array('text' => 'Editor', 'value' => 'editor'),
@@ -30,6 +31,7 @@ class moduloconfiguracion extends base
         'multiple' => array('text' => 'Multiple', 'value' => 'multiple'),
         'number' => array('text' => 'Numero', 'value' => 'number'),
         'text' => array('text' => 'Texto', 'value' => 'text'),
+        'textarea' => array('text' => 'Texto largo', 'value' => 'textarea'),
         'token' => array('text' => 'Token', 'value' => 'token'),
         'url' => array('text' => 'URL', 'value' => 'url'),
     );
@@ -54,10 +56,10 @@ class moduloconfiguracion extends base
             'module' => array('title_th' => 'Modulo', 'field' => 'module', 'type' => 'text'),
             'titulo' => array('title_th' => 'Titulo', 'field' => 'titulo', 'type' => 'text'),
             'estado' => array('title_th' => 'Estado', 'field' => 'estado', 'type' => 'active'),
-            //'aside' => array('title_th' => 'Aparece en aside', 'field' => 'aside', 'type' => 'active'),
+            'aside' => array('title_th' => 'Aparece en aside', 'field' => 'aside', 'type' => 'active'),
             //'tipos' => array('title_th' => 'Contiene tipos', 'field' => 'tipos', 'type' => 'active'),
             //'hijos' => array('title_th' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active'),
-            'copy' => array('title_th' => 'Copiar', 'field' => 0, 'type' => 'action','action'=>'copy','mensaje'=>'Copiando Elemento'),
+            'copy' => array('title_th' => 'Copiar', 'field' => 0, 'type' => 'action', 'action' => 'copy', 'mensaje' => 'Copiando Elemento'),
             'editar' => array('title_th' => 'Editar', 'field' => 'url_detalle', 'type' => 'link'),
             'subseccion' => array('title_th' => 'Modulos', 'field' => 'url_subseccion', 'type' => 'link'),
             'delete' => array('title_th' => 'Eliminar', 'field' => 'delete', 'type' => 'delete'),
@@ -94,10 +96,10 @@ class moduloconfiguracion extends base
         if (isset($var[0])) {
             $id = (int) $var[0];
             $this->url[] = $id;
-            $this->metadata['title'] = 'Editar '.$this->metadata['title'] ;
+            $this->metadata['title'] = 'Editar ' . $this->metadata['title'];
         } else {
             $id = 0;
-            $this->metadata['title'] = 'Nuevo '.$this->metadata['title'] ;
+            $this->metadata['title'] = 'Nuevo ' . $this->metadata['title'];
         }
 
         $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active');
@@ -124,9 +126,11 @@ class moduloconfiguracion extends base
             'button' => array('field' => '', 'type' => 'multiple_button', 'col' => 3),
         );
         $campos = array(
-            'module' => array('title_field' => 'Modulo', 'field' => 'module', 'type' => 'text', 'required' => true),
+            'module' => array('title_field' => 'Modulo', 'field' => 'module', 'type' => 'url', 'required' => true, 'help' => 'Modulo asociado'),
             'titulo' => array('title_field' => 'Titulo', 'field' => 'titulo', 'type' => 'text', 'required' => true),
-            'icono' => array('title_field' => 'Icono', 'field' => 'icono', 'type' => 'icon', 'required' => true),
+            'icono' => array('title_field' => 'Icono', 'field' => 'icono', 'type' => 'icon', 'required' => true, 'help' => 'Icono para barra lateral'),
+            'sub' => array('title_field' => 'Sub seccion', 'field' => 'sub', 'type' => 'url', 'required' => false, 'help' => 'Modulo de subseccion, si existe'),
+            'padre' => array('title_field' => 'Modulo padre', 'field' => 'padre', 'type' => 'text', 'required' => false, 'help' => 'Nombre del modulo padre, si existe'),
             'mostrar' => array('title_field' => 'Mostrar', 'field' => 'mostrar', 'type' => 'multiple', 'required' => true, 'columnas' => $columnas_mostrar),
             'detalle' => array('title_field' => 'Detalle', 'field' => 'detalle', 'type' => 'multiple', 'required' => true, 'columnas' => $columnas_detalle),
             'orden' => array('title_field' => 'Orden', 'field' => 'orden', 'type' => 'number', 'required' => true),

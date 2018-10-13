@@ -4,7 +4,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.+)$ index.php?url=$1 [QSA]
 
-
 <IfModule mod_gzip.c>
 mod_gzip_on Yes
 mod_gzip_dechunk Yes
@@ -49,3 +48,4 @@ ExpiresDefault "access plus 1 days"
 </FilesMatch>
 
 </ifModule>
+

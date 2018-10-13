@@ -245,7 +245,7 @@ class detalle
                 break;
             case 'image':
                 $folder = $this->metadata['modulo'];
-                $image_url = (isset($fila[$campos['field']])) ? (image::generar_url($fila[$campos['field']][0], 'thumb')) : '';
+                $image_url = (isset($fila[$campos['field']]) && isset($fila[$campos['field']][0])) ? (image::generar_url($fila[$campos['field']][0], 'thumb')) : '';
                 $data = array(
                     'title_field' => $campos['title_field'],
                     'field' => $campos['field'],
@@ -332,6 +332,7 @@ class detalle
                     'lng' => (isset($fila[$campos['field']])) ? $fila[$campos['field']]['lng'] : '',
                 );
                 break;
+            case 'recursive_checkbox':
             case 'recursive_radio':
                 if ($level == 0) {
                     $data = array(
@@ -339,15 +340,23 @@ class detalle
                         'title_field' => $campos['title_field'],
                         'field' => $campos['field'],
                         'is_required' => $campos['required'],
-                        'children' => $this->field($campos, $fila, '', 0, 1),
+                        'children' => '',
                     );
+                    foreach ($campos['parent'] as $key => $children) {
+                        $data['children'] .= $this->field($campos, $fila, '', $children[0], 1);
+                    }
+
                 } else {
                     $parent = $campos['parent'];
-                    if(!isset($fila[$campos['field']])){
-                        if(isset($_GET['idpadre'])) $checked=($idparent==$_GET['idpadre'])?'checked="checked"':'';
-                        else $checked=($idparent==0)?'checked="checked"':'';
-                    }else{
-                        $checked=($idparent==$fila[$campos['field']] ) ? 'checked="checked"' : '';
+                    if (!isset($fila[$campos['field']])) {
+                        if (isset($_GET[$campos['field']])) {
+                            $checked = ($idparent == $_GET[$campos['field']]) ? 'checked="checked"' : '';
+                        } else {
+                            $checked = ($idparent == 0) ? 'checked="checked"' : '';
+                        }
+
+                    } else {
+                        $checked = (in_array($idparent,$fila[$campos['field']])) ? 'checked="checked"' : '';
                     }
                     $data = array(
                         'is_children' => true,
@@ -356,17 +365,25 @@ class detalle
                         'title' => (isset($parent[$idparent])) ? $parent[$idparent]['titulo'] : '',
                         'checked' => $checked,
                         'required' => ($campos['required']) ? 'required' : '',
-                        'level' => ($level-1) * 20,
+                        'level' => ($level - 1) * 20,
                         'children' => '',
                     );
-                    if(isset($parent[$idparent])){
-                        $campos['parent']=$parent[$idparent]['children'];
+                    if (isset($parent[$idparent])) {
+                        $campos['parent'] = $parent[$idparent]['children'];
                         foreach ($campos['parent'] as $key => $children) {
-                            $data['children'].=$this->field($campos, $fila, '', $children[0], $level+1);
+                            $data['children'] .= $this->field($campos, $fila, '', $children[0], $level + 1);
                         }
                     }
                 }
-
+                break;
+            case 'textarea':
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field' => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'required' => ($campos['required']) ? 'required="required"' : '',
+                    'value' => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
+                );
                 break;
             case 'text':
             default:
@@ -376,6 +393,7 @@ class detalle
                     'is_required' => $campos['required'],
                     'required' => ($campos['required']) ? 'required="required"' : '',
                     'value' => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
+                    'help' => (isset($campos['help'])) ? $campos['help'] : '',
                 );
                 break;
         }

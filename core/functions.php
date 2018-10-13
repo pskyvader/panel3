@@ -159,6 +159,7 @@ class functions
     public static function decode_json($json)
     {
         $array = json_decode(html_entity_decode($json), true);
+        if(!is_array($array)) $array=array();
         return $array;
     }
 
@@ -170,10 +171,10 @@ class functions
             /* Puede que exista el children creado si los hijos entran antes que el padre */
             $node['children'] = (isset($tree['children'][$id])) ? $tree['children'][$id]['children'] : array();
             $tree['children'][$id] = $node;
-            if ($node['idpadre'] == $idpadre) {
+            if ($node['idpadre'][0] == $idpadre) {
                 $tree['root'][$id] = &$tree['children'][$id];
             } else {
-                $tree['children'][$node['idpadre']]['children'][$id] = &$tree['children'][$id];
+                $tree['children'][$node['idpadre'][0]]['children'][$id] = &$tree['children'][$id];
             }
         }
         return $tree['root'];

@@ -58,6 +58,7 @@
         {"url": "assets/plugins/dropzone/dropzone.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/form-colorpicker/js/bootstrap-colorpicker.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/knob/jquery.knob.min.js","local":true,"defer":false,"combine":true},
+        {"url": "assets/plugins/form-autosize/jquery.autosize-min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/js/rut.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/form-select2/select2.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/js/jquery-sortable-min.js","local":true,"defer":false,"combine":true},

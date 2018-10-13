@@ -40,7 +40,7 @@ class manifest
             ),
             "start_url" => functions::generar_url(array("application","index",$version_application), false),
             "background_color" => $config['color_secundario'],
-            "display" => "standalone",
+            "display" => "browser",
             "theme_color" => $config['color_primario'],
         );
         header('Content-Type: application/json');

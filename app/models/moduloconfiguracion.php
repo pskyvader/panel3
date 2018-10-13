@@ -62,4 +62,21 @@ class moduloconfiguracion extends base_model
         }
         return (count($row) == 1) ? $row[0] : $row;
     }
+    public static function copy($id)
+    {
+        $row = static::getById($id);
+        $row['mostrar']=functions::encode_json($row['mostrar']);
+        $row['detalle']=functions::encode_json($row['detalle']);
+        $fields = table::getByname(static::$table);
+        $insert = database::create_data($fields, $row);
+        $connection = database::instance();
+        $row = $connection->insert(static::$table, static::$idname, $insert);
+        if ($row) {
+            $last_id = $connection->get_last_insert_id();
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            return $last_id;
+        } else {
+            return $row;
+        }
+    }
 }

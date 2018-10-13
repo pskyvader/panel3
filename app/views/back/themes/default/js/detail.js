@@ -58,13 +58,14 @@ function inicio_detail() {
         $('body').on('keyup', 'form#formulario input.url', function() {
             $($(this)).val(urlamigable($(this).val()));
         });
-
-        $('body').on('keyup', 'form#formulario input[name=titulo]', function() {
-            $('form#formulario input.url').val(urlamigable($(this).val()));
+        $('body').on('blur', 'form#formulario input.url', function() {
+            $($(this)).val(urlamigable($(this).val()));
         });
 
         $('body').on('blur', 'form#formulario input[name=titulo]', function() {
-            $('form#formulario input.url').val(urlamigable($(this).val()));
+            if($('form#formulario input.url').first().val()==''){
+                $('form#formulario input.url').first().val(urlamigable($(this).val()));
+            }
         });
 
     }

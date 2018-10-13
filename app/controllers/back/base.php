@@ -21,11 +21,19 @@ class base
         if (isset($moduloconfiguracion[0])) {
             $this->contiene_tipos = (isset($moduloconfiguracion['tipos'])) ? $moduloconfiguracion['tipos'] : false;
             $this->contiene_hijos = (isset($moduloconfiguracion['hijos'])) ? $moduloconfiguracion['hijos'] : false;
+            $this->sub = (isset($moduloconfiguracion['sub'])) ? $moduloconfiguracion['sub'] : '';
+            $this->padre = (isset($moduloconfiguracion['padre'])) ? $moduloconfiguracion['padre'] : '';
             if ($this->contiene_tipos && isset($_GET['tipo'])) {
                 $tipo = $_GET['tipo'];
             } else {
                 $tipo = 0;
             }
+
+            if ($this->padre != '') {
+                $parent = '\app\models\\' . $this->padre;
+                $this->class_parent = new $parent();
+            }
+
             $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $tipo));
             $this->metadata['title'] = $modulo[0]['titulo'];
         }
@@ -45,6 +53,7 @@ class base
         if ($this->contiene_hijos && !isset($_GET['idpadre'])) {
             $this->url = array('home');
         }
+
         if (!administrador_model::verificar_sesion()) {
             $this->url = array_merge(array('login', 'index'), $this->url);
         }
@@ -63,6 +72,12 @@ class base
         if ($this->contiene_hijos) {
             $where['idpadre'] = $_GET['idpadre'];
         }
+        if (isset($this->class_parent)) {
+            $class_parent = $this->class_parent;
+            if (isset($_GET[$class_parent::$idname])) {
+                $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
+            }
+        }
         $condiciones = array();
         $url_detalle = $this->url;
         $url_detalle[] = 'detail';
@@ -75,21 +90,31 @@ class base
         }
 
         if ($this->contiene_hijos) {
-            foreach ($respuesta['row'] as $k => $v) {
-                $extra = array();
-                if ($this->contiene_tipos) {
-                    $extra['tipo'] = $_GET['tipo'];
+            if ($this->contiene_tipos) {
+                foreach ($respuesta['row'] as $k => $v) {
+                    $respuesta['row'][$k]['url_children'] = functions::generar_url($this->url, array('idpadre' => $v[0], 'tipo' => $_GET['tipo']));
                 }
-                if ($this->contiene_hijos) {
-                    $extra['idpadre'] = $v[0];
+            } else {
+                foreach ($respuesta['row'] as $k => $v) {
+                    $respuesta['row'][$k]['url_children'] = functions::generar_url($this->url, array('idpadre' => $v[0]));
                 }
-                if (count($extra) == 0) {
-                    $extra = false;
-                }
-                $respuesta['row'][$k]['url_children'] = functions::generar_url($this->url, $extra);
             }
-        }else{
+        } else {
             unset($configuracion['th']['url_children']);
+        }
+
+        if ($this->sub != '') {
+            if ($this->contiene_tipos) {
+                foreach ($respuesta['row'] as $k => $v) {
+                    $respuesta['row'][$k]['url_sub'] = functions::generar_url(array($this->sub), array($class::$idname => $v[0], 'tipo' => $_GET['tipo']));
+                }
+            } else {
+                foreach ($respuesta['row'] as $k => $v) {
+                    $respuesta['row'][$k]['url_sub'] = functions::generar_url(array($this->sub), array($class::$idname => $v[0]));
+                }
+            }
+        } else {
+            unset($configuracion['th']['url_sub']);
         }
 
         $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
@@ -145,11 +170,40 @@ class base
                     break;
                 }
             }
-            $raiz = array(0, 'titulo' => 'Raíz', 'idpadre' => -1);
+            $raiz = array(0, 'titulo' => 'Raíz', 'idpadre' => array(-1));
             array_unshift($categorias, $raiz);
             $configuracion['campos']['idpadre']['parent'] = functions::crear_arbol($categorias, -1);
-        }else{
+        } else if ($this->contiene_hijos || isset($configuracion['campos']['idpadre'])) {
+            $configuracion['campos']['idpadre'] = array('title_field' => 'idpadre', 'field' => 'idpadre', 'type' => 'hidden', 'required' => true);
+            if ($id == 0) {
+                if (isset($_GET['idpadre'])) {
+                    $row['idpadre'] = functions::encode_json(array((string)$_GET['idpadre']));
+                } else {
+                    $row['idpadre'] = functions::encode_json(array('0'));
+                }
+            }
+        } else {
             unset($configuracion['campos']['idpadre']);
+        }
+
+        if (isset($this->class_parent)) {
+            $class_parent = $this->class_parent;
+            $idparent=$class_parent::$idname;
+            if (isset($configuracion['campos'][$idparent])) {
+                $categorias = $class_parent::getAll();
+                $configuracion['campos'][$idparent]['parent'] = functions::crear_arbol($categorias);
+            }else{
+                $configuracion['campos'][$idparent] = array('title_field' => $idparent, 'field' => $idparent, 'type' => 'hidden', 'required' => true);
+                if ($id == 0) {
+                    if (isset($_GET[$idparent])) {
+                        $row[$idparent] = functions::encode_json(array((string)$_GET[$idparent]));
+                    } else {
+                        $row[$idparent] = functions::encode_json(array('0'));
+                    }
+                }else{
+                    $row[$idparent] = functions::encode_json($row[$idparent]);
+                }
+            }
         }
 
         $data = array( //informacion para generar la vista del detalle, arrays SIEMPRE antes de otras variables!!!!

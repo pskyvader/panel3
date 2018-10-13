@@ -69,8 +69,7 @@ class app
             //eliminamos el controlador de url, así sólo nos quedaran los parámetros del método
             unset($url[0]);
         } else {
-            view::render('404');
-            exit;
+            $this->_controller = 'error';
         }
 
         //obtenemos la clase con su espacio de nombres

@@ -103,7 +103,7 @@ class configuracion_administrador extends base
 
         foreach ($campos as $key => $tabla) {
             $tablename = $tabla['tablename'];
-            if ($key == 0) {
+            if ($key == 0) { //primero es siempre la tabla "tablas", se crea inmediatamente para guardar las siguientes configuraciones
                 $existe = table_model::table_exists($tablename);
                 if (!$existe) {
                     $fields = $tabla['fields'];

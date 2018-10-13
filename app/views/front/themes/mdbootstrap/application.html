@@ -1,0 +1,24 @@
+<style>
+        body {
+            background: {color_secundario};
+            text-align: center;
+            
+        }
+        #header-top,header, footer{display: none;}
+    </style>
+    <img class="p-3" src="{logo}" alt="logo" style="height: auto;max-width: 100%;background:{color_secundario};">
+    <h4  style="color:{color_primario};">Cargando...</h4>
+    <script>
+        var element = document.createElement('link');
+        element.rel = 'prerender';
+        element.href = '{path}';
+        document.head.appendChild(element);
+    </script> 
+    <script>
+        window.onload = function() {
+            console.log('load'+ "{path}");
+            setTimeout(function(){
+            window.location.replace("{path}");
+            },1000);
+        }
+    </script>

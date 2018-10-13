@@ -416,7 +416,7 @@
             {
                 "field": "metadescripcion",
                 "titulo": "Meta Descripción",
-                "tipo": "editor"
+                "tipo": "textarea"
             },
             {
                 "field": "orden",
@@ -438,7 +438,7 @@
         "estado": "1",
         "aside": "1",
         "tipos": "1",
-        "hijos": "1",
+        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "10",
@@ -610,7 +610,7 @@
                     },
                     {
                         "field": "metadescripcion",
-                        "tipo": "editor",
+                        "tipo": "textarea",
                         "titulo": "Meta Descripción",
                         "texto_ayuda": "",
                         "required": "false",
@@ -737,7 +737,7 @@
             {
                 "field": "metadescripcion",
                 "titulo": "Meta Descripción",
-                "tipo": "editor"
+                "tipo": "textarea"
             },
             {
                 "field": "orden",
@@ -892,7 +892,7 @@
                     },
                     {
                         "field": "metadescripcion",
-                        "tipo": "editor",
+                        "tipo": "textarea",
                         "titulo": "Meta Descripción",
                         "texto_ayuda": "",
                         "required": "false",

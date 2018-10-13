@@ -9,8 +9,8 @@ use \core\functions;
 
 class image
 {
-    private static $types = array("image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/svg+xml", "image/png", "video/webm", "video/mp4", "application/zip", "application/x-zip-compressed", "application/octet-stream", "application/postscript", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.presentationml.slide", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12", "application/pdf", "application/download");
-    private static $extensions = array("bmp", "ico", "gif", "jpeg", "jpg", "svg", "xml", "png", "webm", "mp4", "zip", "doc", "docx", "dotx", "xls", "xlsx", "xltx", "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf");
+    private static $types = array("image/webp", "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/svg+xml", "image/png", "video/webm", "video/mp4", "application/zip", "application/x-zip-compressed", "application/octet-stream", "application/postscript", "application/msword", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.openxmlformats-officedocument.presentationml.slide", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12", "application/pdf", "application/download");
+    private static $extensions = array("webp", "bmp", "ico", "gif", "jpeg", "jpg", "svg", "xml", "png", "webm", "mp4", "zip", "doc", "docx", "dotx", "xls", "xlsx", "xltx", "xlam", "xlsb", "ppt", "pptx", "potx", "ppsx", "sldx", "pdf");
     private static $upload_dir = '';
     private static $upload_url = '';
 
@@ -75,7 +75,11 @@ class image
 
         foreach ($recortes as $key => $recorte) {
             rename($folder_tmp . '/' . self::nombre_archivo($file['tmp'], $recorte['tag']), $folder . '/' . self::nombre_archivo($file['url'], $recorte['tag']));
+            if (file_exists($folder_tmp . '/' . self::nombre_archivo($file['tmp'], $recorte['tag'], 'webp'))) {
+                rename($folder_tmp . '/' . self::nombre_archivo($file['tmp'], $recorte['tag'], 'webp'), $folder . '/' . self::nombre_archivo($file['url'], $recorte['tag'], 'webp'));
+            }
         }
+
         $file['tmp'] = '';
         return $file;
     }
@@ -244,19 +248,18 @@ class image
         $imagen_tipo = $info_imagen['mime'];
 
         $proporcion_imagen = $ancho / $alto;
-        if($ancho_maximo==null){
-            $ancho_maximo=$alto_maximo/$proporcion_imagen;
+        if ($ancho_maximo == null) {
+            $ancho_maximo = $alto_maximo / $proporcion_imagen;
         }
-        if($alto_maximo==null){
-            $alto_maximo=$ancho_maximo/$proporcion_imagen;
+        if ($alto_maximo == null) {
+            $alto_maximo = $ancho_maximo / $proporcion_imagen;
         }
 
-            $tamano_final = self::proporcion_foto($ancho_maximo, $alto_maximo, $ancho, $alto, $tipo);
-            $x = $tamano_final['x'];
-            $y = $tamano_final['y'];
-            $miniatura_ancho = $tamano_final['miniatura_ancho'];
-            $miniatura_alto = $tamano_final['miniatura_alto'];
-       
+        $tamano_final = self::proporcion_foto($ancho_maximo, $alto_maximo, $ancho, $alto, $tipo);
+        $x = $tamano_final['x'];
+        $y = $tamano_final['y'];
+        $miniatura_ancho = $tamano_final['miniatura_ancho'];
+        $miniatura_alto = $tamano_final['miniatura_alto'];
 
         switch ($imagen_tipo) {
             case "image/jpg":
@@ -301,21 +304,31 @@ class image
         }
 
         $foto_recorte = self::nombre_archivo($foto, $etiqueta);
+        $foto_webp = self::nombre_archivo($foto, $etiqueta, 'webp');
         if (file_exists($ruta . $foto_recorte)) {
             unlink($ruta . $foto_recorte);
+        }
+        if (file_exists($ruta . $foto_webp)) {
+            unlink($ruta . $foto_webp);
         }
         if ($imagen_tipo == "image/png") {
             imagepng($lienzo, $ruta . '/' . $foto_recorte, 8);
         } else {
             imagejpeg($lienzo, $ruta . '/' . $foto_recorte, $recorte['calidad']);
+            imagewebp($lienzo, $ruta . '/' . $foto_webp, $recorte['calidad']);
         }
         $respuesta['exito'] = true;
         return $respuesta;
     }
-    public static function nombre_archivo($file, $tag = '')
+    public static function nombre_archivo($file, $tag = '', $extension = '')
     {
         $name = explode(".", $file);
-        $extension = strtolower(array_pop($name));
+        if ($extension == '') {
+            $extension = strtolower(array_pop($name));
+        } else {
+            array_pop($name);
+        }
+
         $name = functions::url_amigable(implode($name, ''));
         if ($tag != '') {
 
@@ -325,7 +338,7 @@ class image
             return $name . '.' . $extension;
         }
     }
-    public static function generar_url($file, $tag = 'thumb', $folder = "", $subfolder = '')
+    public static function generar_url($file, $tag = 'thumb', $folder = "", $subfolder = '', $extension = '')
     {
         if ($folder == '') {
             $folder = $file['folder'];
@@ -336,13 +349,15 @@ class image
             $subfolder = $file['parent'] . '/';
         }
 
-        $url = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag));
+        $url = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
         $time = functions::fecha_archivo(self::get_upload_dir() . $url, true);
         if ($time != false) {
             $archivo = self::get_upload_url() . $url . '?time=' . $time;
+
         } else { $archivo = '';}
         return $archivo;
     }
+
 
     public static function delete($folder, $file = '', $subfolder = '')
     {
