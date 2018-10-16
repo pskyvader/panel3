@@ -45,7 +45,7 @@ class aside
                         if ($cm['tipos']) {
                             $extra['tipo'] = $modulo['tipo'];
                         }
-                        if ($cm['hijos']) {
+                        if ($modulo['hijos']) {
                             $extra['idpadre'] = 0;
                         }
                         if (count($extra) == 0) {
@@ -66,7 +66,7 @@ class aside
                             if ($cm['tipos']) {
                                 $extra['tipo'] = $modulo['tipo'];
                             }
-                            if ($cm['hijos']) {
+                            if ($modulo['hijos']) {
                                 $extra['idpadre'] = 0;
                             }
                             if (count($extra) == 0) {

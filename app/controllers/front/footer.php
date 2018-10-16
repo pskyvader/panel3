@@ -4,6 +4,7 @@ namespace app\controllers\front;
 defined("APPPATH") or die("Acceso denegado");
 
 use \app\models\logo as logo_model;
+use \app\models\seo;
 use \app\models\texto;
 use \core\app;
 use \core\functions;
@@ -15,11 +16,12 @@ class footer
     public function normal()
     {
         if (!isset($_POST['ajax'])) {
-            $data=array();
+            $data = array();
             $config = app::getConfig();
             $logo = logo_model::getById(6);
             $data['logo'] = image::generar_url($logo['foto'][0], 'sitio');
-            $data['path'] = app::$_path;
+            $seo = seo::getById(1);
+            $data['path'] = functions::generar_url(array($seo['url']));
             $data['title'] = $config['title'];
             view::set_array($data);
 
@@ -43,7 +45,6 @@ class footer
             view::set('social', $redes_sociales);
 
             view::set('is_social', (count($redes_sociales) > 0));
-
 
             view::render('footer');
             view::js();

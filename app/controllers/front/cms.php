@@ -7,14 +7,14 @@ use \app\models\seo;
 use \core\functions;
 use \core\view;
 
-class home
+class cms
 {
-    protected $url = array('home');
-    protected $metadata = array('title' => 'home');
+    protected $url = array('cms');
+    protected $metadata = array('title' => 'CMS');
     protected $breadcrumb = array();
     public function __construct()
     {
-        $seo = seo::getById(1);
+        $seo = seo::getById(2);
         $this->url = array($seo['url']);
         $this->metadata['title'] = $seo['titulo'];
         $this->metadata['keywords_text'] = $seo['keywords'];
@@ -37,7 +37,7 @@ class home
         $banner = new banner();
         $banner->normal($row_banner);
 
-        view::render('home');
+        view::render('cms');
 
         $footer = new footer();
         $footer->normal();

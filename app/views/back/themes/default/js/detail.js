@@ -62,10 +62,11 @@ function inicio_detail() {
             $($(this)).val(urlamigable($(this).val()));
         });
 
+        $('body').on('keyup', 'form#formulario input[name=titulo]', function() {
+            $('form#formulario input.url').first().val(urlamigable($(this).val()));
+        });
         $('body').on('blur', 'form#formulario input[name=titulo]', function() {
-            if($('form#formulario input.url').first().val()==''){
-                $('form#formulario input.url').first().val(urlamigable($(this).val()));
-            }
+            $('form#formulario input.url').first().val(urlamigable($(this).val()));
         });
 
     }

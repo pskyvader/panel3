@@ -97,6 +97,10 @@ class lista
             $condiciones['limit'] = (($page - 1) * $limit);
             $condiciones['limit2'] = ($limit);
         }
+        $inicio = ($limit * ($page - 1)) + 1;
+        $fin = ($limit * ($page));
+        if($fin>$count) $fin=$count;
+
         $row = $class::getAll($where, $condiciones);
         foreach ($row as $k => $v) {
             $urltmp = $urledit;
@@ -104,7 +108,7 @@ class lista
             $row[$k]['url_detalle'] = functions::generar_url($urltmp);
         }
 
-        return array('row' => $row, 'page' => $page, 'total' => $total, 'limit' => $limit, 'search' => $search);
+        return array('row' => $row, 'page' => $page, 'total' => $total, 'limit' => $limit, 'search' => $search, 'count' => $count, 'inicio' => $inicio, 'fin' => $fin);
     }
 
     private function pagination($data)

@@ -3,6 +3,8 @@ namespace core;
 
 defined("APPPATH") or die("Acceso denegado");
 
+use \app\models\seo as seo_model;
+
 class app
 {
     private $_controller = "";
@@ -69,7 +71,9 @@ class app
             //eliminamos el controlador de url, así sólo nos quedaran los parámetros del método
             unset($url[0]);
         } else {
-            $this->_controller = 'error';
+            $fullClass = $namespace . 'error';
+            $this->_controller = new $fullClass;
+            return;
         }
 
         //obtenemos la clase con su espacio de nombres
@@ -90,7 +94,7 @@ class app
             }
         }
         //asociamos el resto de segmentos a $this->_params para pasarlos al método llamado, por defecto será un array vacío
-        $this->_params = $url ? array(array_merge($url)) : [];
+        $this->_params = $url ? array(array_merge($url)) : array();
     }
 
     /**
@@ -101,8 +105,16 @@ class app
     {
         if (isset($_GET["url"])) {
             $url = explode("/", filter_var(rtrim($_GET["url"], "/"), FILTER_SANITIZE_URL));
-            if($url[0]=='manifest.js') $url[0]='manifest';
-            if($url[0]=='sw.js') $url[0]='sw';
+            if ($url[0] == 'manifest.js') {
+                $url[0] = 'manifest';
+            } elseif ($url[0] == 'sw.js') {
+                $url[0] = 'sw';
+            } elseif (self::$_front) {
+                $seo = seo_model::getAll(array('url' => $url[0]), array('limit' => 1), 'modulo_front');
+                if (count($seo) == 1) {
+                    $url[0] = $seo[0][0];
+                }
+            }
             unset($_GET["url"]);
             return $url;
         } else {
@@ -148,7 +160,7 @@ class app
         return self::$_config;
     }
 
-    public static function get_dir($front=false)
+    public static function get_dir($front = false)
     {
         if (self::$_front || $front) {
             return self::$_url['base_dir'];
@@ -157,7 +169,7 @@ class app
 
         }
     }
-    public static function get_url($front=false)
+    public static function get_url($front = false)
     {
         if (self::$_front || $front) {
             return self::$_url['base'];
@@ -165,7 +177,7 @@ class app
             return self::$_url['admin'];
         }
     }
-    public static function get_sub($front=false)
+    public static function get_sub($front = false)
     {
         if (self::$_front || $front) {
             return self::$_url['base_sub'];

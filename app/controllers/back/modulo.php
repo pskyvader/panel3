@@ -58,6 +58,7 @@ class modulo extends base
             'orden' => array('title_th' => 'Orden', 'field' => 'orden', 'type' => 'text'),
             'titulo' => array('title_th' => 'Titulo', 'field' => 'titulo', 'type' => 'text'),
             'aside' => array('title_th' => 'Aparece en aside', 'field' => 'aside', 'type' => 'active'),
+            //'hijos' => array('title_th' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active'),
             'copy' => array('title_th' => 'Copiar', 'field' => 0, 'type' => 'action','action'=>'copy','mensaje'=>'Copiando Elemento'),
             'editar' => array('title_th' => 'Editar', 'field' => 'url_detalle', 'type' => 'link'),
             'delete' => array('title_th' => 'Eliminar', 'field' => 'delete', 'type' => 'delete'),
@@ -163,6 +164,7 @@ class modulo extends base
             'orden' => array('title_field' => 'Orden', 'field' => 'orden', 'type' => 'number', 'required' => true),
             'estado' => array('title_field' => 'Estado', 'field' => 'estado', 'type' => 'multiple', 'required' => true, 'columnas' => $columnas_estado),
             'aside' => array('title_field' => 'Aside', 'field' => 'aside', 'type' => 'active', 'required' => true),
+            'hijos' => array('title_field' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active', 'required' => true),
         );
 
         $detalle = new detalle($this->metadata); //controlador de detalle

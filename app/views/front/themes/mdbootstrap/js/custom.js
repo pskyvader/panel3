@@ -1,12 +1,11 @@
 $(window).on('load', inicio);
 $(window).on('load', register_sw);
-$(window).on('load', activar_imagen);
-$(window).on('scroll', activar_imagen);
-$(window).on('resize', activar_imagen);
+$(window).on('load scroll resize', activar_imagen);
 var path = $("meta[property='path']").prop("content");
 var modulo = $("meta[property='modulo']").prop("content");
 var url = $("meta[property='og:url']").prop("content");
 var googlemaps_key = $("meta[property='googlemaps_key']").prop("content");
+
 
 function inicio() {
     modulo = $("meta[property='modulo']").prop("content");
@@ -14,6 +13,13 @@ function inicio() {
     $('[data-toggle="tooltip"]').tooltip();
     if ($('.carousel').length > 0) {
         $('.carousel').carousel();
+        
+        $('.carousel').on('slide.bs.carousel', function(e){
+            load_source($('source',e.relatedTarget));
+            load_background($('.blur',e.relatedTarget));
+            load_image($('img',e.relatedTarget));
+        });
+        $('.carousel').on('slid.bs.carousel', activar_imagen);
         $('.carousel').hammer().on('swipeleft', function() {
             $(this).carousel('next');
         });

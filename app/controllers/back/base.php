@@ -20,7 +20,6 @@ class base
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($this->metadata['modulo']);
         if (isset($moduloconfiguracion[0])) {
             $this->contiene_tipos = (isset($moduloconfiguracion['tipos'])) ? $moduloconfiguracion['tipos'] : false;
-            $this->contiene_hijos = (isset($moduloconfiguracion['hijos'])) ? $moduloconfiguracion['hijos'] : false;
             $this->sub = (isset($moduloconfiguracion['sub'])) ? $moduloconfiguracion['sub'] : '';
             $this->padre = (isset($moduloconfiguracion['padre'])) ? $moduloconfiguracion['padre'] : '';
             if ($this->contiene_tipos && isset($_GET['tipo'])) {
@@ -35,6 +34,7 @@ class base
             }
 
             $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $tipo));
+            $this->contiene_hijos = (isset($modulo[0]['hijos'])) ? $modulo[0]['hijos'] : false;
             $this->metadata['title'] = $modulo[0]['titulo'];
         }
 

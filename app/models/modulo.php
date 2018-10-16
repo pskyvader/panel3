@@ -14,9 +14,9 @@ class modulo extends base_model
     public static function getAll($where = array(), $condiciones = array(), $select = "")
     {
         $connection = database::instance();
-        if (!isset($where['estado']) && app::$_front) {
+        /*if (!isset($where['estado']) && app::$_front) {
             $where['estado'] = true;
-        }
+        }*/
 
         if (!isset($condiciones['order'])) {
             $condiciones['order'] = 'orden ASC';

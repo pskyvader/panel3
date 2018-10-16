@@ -26,6 +26,10 @@ class view
     /**
      * @var
      */
+    private static $content_url = array();
+    /**
+     * @var
+     */
     const VIEWS_PATH = "app/views/";
 
     /**
@@ -38,7 +42,7 @@ class view
      * @param  [String]  [template name]
      * @return [html]    [render html]
      */
-    public static function render($template,$minify=true,$return=false)
+    public static function render($template, $minify = true, $return = false)
     {
         $theme = self::get_theme();
         $template_url = $theme . $template . "." . self::EXTENSION_TEMPLATES;
@@ -46,13 +50,21 @@ class view
             throw new \Exception("Error: El archivo " . $template_url . " no existe", 1);
         }
 
-        $content = file_get_contents($template_url);
+        if (isset(self::$content_url[$template_url])) {
+            $content = self::$content_url[$template_url];
+        } else {
+            $content = file_get_contents($template_url);
+            self::$content_url[$template_url] = $content;
+        }
         $str = self::render_template(self::$data, $content);
-        if($minify) $str = minify::minify_html($str);
-        if($return){
+        if ($minify) {
+            $str = minify::minify_html($str);
+        }
+
+        if ($return) {
             self::reset();
             return $str;
-        }else{
+        } else {
             ob_start();
             echo $str;
             $str = ob_get_contents();
@@ -180,7 +192,7 @@ class view
                 $js[] = $j;
             }
         }
-        if ($combine && count($locales)>0) {
+        if ($combine && count($locales) > 0) {
             $dir = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.js';
             if (file_exists($dir . '\\' . $file)) {
@@ -209,7 +221,7 @@ class view
 
         $js = array_merge($no_combinados, $locales, $js);
         if ($array_only) {
-            return array($js,$nuevo);
+            return array($js, $nuevo);
         } else {
             self::set('css', array());
             self::set('js', $js);
@@ -259,7 +271,7 @@ class view
             }
         }
 
-        if ($combine && count($locales)>0) {
+        if ($combine && count($locales) > 0) {
             $dir = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.css';
             if (file_exists($dir . '\\' . $file)) {
@@ -289,7 +301,7 @@ class view
         $css = array_merge($no_combinados, $locales, $css);
 
         if ($array_only) {
-            return array($css,$nuevo);
+            return array($css, $nuevo);
         } else {
             self::set('js', array());
             self::set('is_content', false);

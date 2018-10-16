@@ -75,10 +75,13 @@
                             </table>
                         </div>
                         <div class="panel-footer">
+                            <div class="pull-left m-n">
+                                Mostrando {inicio} a {fin} de {count} elementos
+                            </div>
                             <ul class="pagination pull-right m-n">
                                 {foreach pagination}
                                 <li class="{class_page}">
-                                    <a href="{url_page}">{text_page}</a>
+                                    <a href="{url_page}" class="{class_page}">{text_page}</a>
                                 </li>
                                 {/foreach pagination}
                             </ul>
