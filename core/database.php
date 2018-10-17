@@ -339,9 +339,9 @@ class database
             if (isset($data[$key])) {
                 $m[$key] = $data[$key];
             } else {
-                if($value['tipo']=='tinyint(1)'){
+                if ($value['tipo'] == 'tinyint(1)') {
                     $m[$key] = 'true';
-                }else{
+                } else {
                     $m[$key] = '';
                 }
             }
@@ -393,7 +393,7 @@ class database
             $portada = false;
             foreach ($img as $k => $f) { //cada foto
                 if (isset($f['tmp']) && $f['tmp'] != '') {
-                    $f = image::move($f, $table, $id);
+                    $f = image::move($f, $table, $key, $id);
                 }
                 $ids[$key][$f['id']] = $f['id'];
                 if ($f['portada'] == 'true') {
@@ -421,7 +421,7 @@ class database
             if (is_array($images)) {
                 foreach ($images as $k => $file) {
                     if (!isset($value[$file['id']])) {
-                        image::delete($table, $file, $id);
+                        image::delete($table, $file, $id,$key);
                     }
                 }
             }

@@ -1,21 +1,11 @@
-
 <section class="banner-seccion view hm-stylish-light d-print-none">
-        <picture class="imagen">
-                {foreach srcset}
-                <source media="{media}" {data}srcset="{url}" type="{type}">
-                {/foreach srcset}
-                <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
-            </picture>
-
+    <div class="blur" data-background="{background}"></div>
+    <div class="container p-0">
     <picture class="imagen">
-        <source media="(min-width: 1600px)" srcset="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto1'.$banner['foto']);?>">
-        <source media="(min-width: 1200px)" srcset="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto2'.$banner['foto']);?>">
-        <source media="(min-width: 992px)" srcset="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto3'.$banner['foto']);?>">
-        <source media="(min-width: 768px)" srcset="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto4'.$banner['foto']);?>">
-        <source media="(min-width: 576px)" srcset="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto5'.$banner['foto']);?>">
-        <source media="(min-width: 400px)" srcset="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto6'.$banner['foto']);?>">
-        <source media="(min-width: 0px)" srcset="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto7'.$banner['foto']);?>">
-        <img class="h-100" src="<?php echo _PATH.fecha_archivo($carpetas['urlBanner'].'foto1'.$banner['foto']);?>" alt="<?php echo $banner['titulo'];?>">
+        {foreach srcset}
+        <source media="{media}" srcset="{url}" type="{type}">
+        {/foreach srcset}
+        <img class="w-100" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
     </picture>
     <div class="mask waves-effect waves-light">
         <div class="row h-100">
@@ -24,4 +14,5 @@
             </h1>
         </div>
     </div>
+</div>
 </section>

@@ -15,9 +15,9 @@ function inicio() {
         $('.carousel').carousel();
         
         $('.carousel').on('slide.bs.carousel', function(e){
-            load_source($('source',e.relatedTarget));
-            load_background($('.blur',e.relatedTarget));
-            load_image($('img',e.relatedTarget));
+            load_source($('source[data-srcset]',e.relatedTarget));
+            load_background($('.blur[data-background]',e.relatedTarget));
+            load_image($('img[data-src]',e.relatedTarget));
         });
         $('.carousel').on('slid.bs.carousel', activar_imagen);
         $('.carousel').hammer().on('swipeleft', function() {

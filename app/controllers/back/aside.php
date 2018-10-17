@@ -108,7 +108,7 @@ class aside
             view::set('name', $administrador["nombre"]);
             view::set('email', $administrador["email"]);
             view::set('url_admin', functions::generar_url(array("administrador", "detail", $administrador[0], 'profile'), array('tipo' => $tipo_admin)));
-            view::set('img_admin', image::generar_url($administrador["foto"][0], 'profile', 'administrador', $administrador[0]));
+            view::set('img_admin', image::generar_url($administrador["foto"][0], 'profile'));
 
             view::render('aside');
         }

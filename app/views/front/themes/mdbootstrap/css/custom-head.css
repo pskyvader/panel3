@@ -68,7 +68,7 @@ header .navbar-nav>.nav-item>.dropdown-menu{min-width:100%;margin-left:0;positio
 }
 /*!HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER */
 /*!BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER */
-#banner-principal .carousel-inner .blur{content:"";position:fixed;left:-20px;right:-20px;top:-20px;bottom:-20px;z-index:-1;display:block;background-size:cover;background-position:center;width:calc(100% + 40px);height:calc(100% + 40px);-webkit-filter:blur(5px);-moz-filter:blur(5px);-o-filter:blur(5px);-ms-filter:blur(5px);filter:blur(15px)}
+#banner-principal .carousel-inner .blur,.banner-seccion .blur{content:"";position:absolute;left:-20px;right:-20px;top:-20px;bottom:-20px;z-index:-1;display:block;background-size:cover;background-position:center;width:calc(100% + 40px);height:calc(100% + 40px);-webkit-filter:blur(5px);-moz-filter:blur(5px);-o-filter:blur(5px);-ms-filter:blur(5px);filter:blur(15px)}
 #banner-principal .texto{text-shadow:2px 2px 5px #1a1a1a}
 #banner-principal .texto .texto1{text-transform:uppercase;font-size:2.2rem;font-weight:900}
 #banner-principal .texto .texto2{font-size:1.6rem;font-weight:600}
@@ -77,7 +77,7 @@ header .navbar-nav>.nav-item>.dropdown-menu{min-width:100%;margin-left:0;positio
 #banner-principal .carousel-inner .imagen img{min-width:100%;min-height:100%;width:100%}
 #banner-principal.carousel .carousel-indicators li{max-width:20px;height:5px;border-radius:0;cursor:pointer;background:#fff}
 #banner-principal.carousel .carousel-indicators li.active{background:rgba(253,133,15,.7)}
-.banner-seccion{height:250px}
+.banner-seccion{height:200px}
 .banner-seccion img{float:none;margin:0 auto}
 .banner-seccion h1{margin:0;font-size:2.25rem;font-weight:700;color:#fff;text-transform:uppercase}
 .banner-seccion h1:after{/*!content:"";display:block;width:10rem;height:6px;background:#278c90;margin:0 auto;margin-top:.5rem*/}
@@ -100,9 +100,10 @@ header .navbar-nav>.nav-item>.dropdown-menu{min-width:100%;margin-left:0;positio
 }
 @media (max-width:576.98px){
 #banner-principal .carousel-inner{height:auto}
+.banner-seccion{height:auto}
 }
 @media (max-width:399.98px){
 /*!#banner-principal .carousel-inner .imagen img{width:auto;height:100%}*/
-.banner-seccion{height:200px}
+.banner-seccion{height:auto}
 }
 /*!BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER BANNER */

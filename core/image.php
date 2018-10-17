@@ -56,11 +56,11 @@ class image
         return $respuesta;
     }
 
-    public static function move($file, $folder, $name_final, $folder_tmp = 'tmp')
+    public static function move($file, $folder, $subfolder, $name_final, $folder_tmp = 'tmp')
     {
         $recortes = self::get_recortes($folder);
         $folder_tmp = self::get_upload_dir() . $folder_tmp;
-        $folder = self::get_upload_dir() . $folder . '/' . $name_final;
+        $folder = self::get_upload_dir() . $folder . '/' . $name_final . '/' . $subfolder;
         if (!file_exists($folder)) {
             if (!mkdir($folder, 0777, true)) {
                 echo "Error al crear directorio " . $folder;
@@ -81,6 +81,7 @@ class image
         }
 
         $file['tmp'] = '';
+        $file['subfolder'] = $subfolder;
         return $file;
     }
     private static function get_recortes($modulo)
@@ -338,7 +339,7 @@ class image
             return $name . '.' . $extension;
         }
     }
-    public static function generar_url($file, $tag = 'thumb', $folder = "", $subfolder = '', $extension = '')
+    public static function generar_url($file, $tag = 'thumb', $extension = "", $folder = "", $subfolder = "")
     {
         if ($folder == '') {
             $folder = $file['folder'];
@@ -346,7 +347,7 @@ class image
         if ($subfolder != '') {
             $subfolder .= '/';
         } else {
-            $subfolder = $file['parent'] . '/';
+            $subfolder = $file['parent'] . '/' . $file['subfolder'] . '/';
         }
 
         $url = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
@@ -358,8 +359,7 @@ class image
         return $archivo;
     }
 
-
-    public static function delete($folder, $file = '', $subfolder = '')
+    public static function delete($folder, $file = '', $subfolder = '', $sub = '')
     {
         if ($file == "" && $subfolder != '') {
             $url = self::get_upload_dir() . $folder . '/' . $subfolder . '/';
@@ -378,13 +378,16 @@ class image
             if ($subfolder != '') {
                 $subfolder .= '/';
             }
-            $url = self::get_upload_dir() . $folder . '/' . $subfolder . $file['url'];
+            if ($sub != '') {
+                $sub .= '/';
+            }
+            $url = self::get_upload_dir() . $folder . '/' . $subfolder . $sub . $file['url'];
             if (file_exists($url)) {
                 unlink($url);
             }
 
             foreach ($recortes as $key => $recorte) {
-                $url = self::get_upload_dir() . $folder . '/' . $subfolder . self::nombre_archivo($file['url'], $recorte['tag']);
+                $url = self::get_upload_dir() . $folder . '/' . $subfolder . $sub . self::nombre_archivo($file['url'], $recorte['tag']);
                 if (file_exists($url)) {
                     unlink($url);
                 }

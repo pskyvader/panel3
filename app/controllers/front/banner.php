@@ -22,14 +22,14 @@ class banner
             $banner = array();
             foreach ($row_banner as $key => $b) {
                 if (isset($b["foto"][0])) {
-                    $foto = image::generar_url($b["foto"][0], 'foto1', 'banner', $b[0]);
+                    $foto = image::generar_url($b["foto"][0], 'foto1');
                 } else {
                     $foto = '';
                 }
                 if ($foto != '') {
                     $thumb[] = array('id' => $key, 'active' => ($key == 0) ? 'active' : '');
 
-                    $srcset = $this->srcset($b["foto"][0], $b[0]);
+                    $srcset = $this->srcset($b["foto"][0]);
 
                     $banner[] = array(
                         'srcset' => $srcset,
@@ -37,10 +37,13 @@ class banner
                         'active' => ($key == 0) ? 'active' : '',
                         'data' => ($key != 0) ? 'data-' : '',
                         'foto' => $foto,
-                        'texto1' => $b['texto1'], 'is_texto1' => ($b['texto1'] != ''),
-                        'texto2' => $b['texto2'], 'is_texto2' => ($b['texto2'] != ''),
-                        'link' => functions::ruta($b['link']), 'is_link' => ($b['link'] != ''),
-                        'background' => image::generar_url($b["foto"][0], 'color', 'banner', $b[0]),
+                        'texto1' => $b['texto1'],
+                        'is_texto1' => ($b['texto1'] != ''),
+                        'texto2' => $b['texto2'],
+                        'is_texto2' => ($b['texto2'] != ''),
+                        'link' => functions::ruta($b['link']),
+                        'is_link' => ($b['link'] != ''),
+                        'background' => image::generar_url($b["foto"][0], 'color'),
                     );
                 }
 
@@ -51,52 +54,38 @@ class banner
         }
     }
 
-    public function individual($row_banner = array())
+    public function individual($foto_base,$titulo)
     {
-        if (count($row_banner) > 0) {
-            $b = $row_banner[0];
+        $foto = image::generar_url($foto_base, 'foto1');
+        if ($foto != '') {
+            $srcset = array();
 
-            if (isset($b["foto"][0])) {
-                $foto1 = image::generar_url($b["foto"][0], 'foto1', 'banner', $b[0]);
-                $name = explode(".", $b["foto"][0]['url']);
-                $mime = 'image/' . strtolower(array_pop($name));
-
-            } else {
-                $foto1 = '';
-            }
-            if ($foto1 != '') {
-                $srcset = array();
-
-                $banner = array(
-                    'srcset' => $srcset,
-                    'title' => $b['titulo'],
-                    'active' => ($key == 0) ? 'active' : '',
-                    'data' => ($key != 0) ? 'data-' : '',
-                    'foto' => $foto1,
-                    'texto1' => $b['texto1'], 'is_texto1' => ($b['texto1'] != ''),
-                    'texto2' => $b['texto2'], 'is_texto2' => ($b['texto2'] != ''),
-                    'link' => functions::ruta($b['link']), 'is_link' => ($b['link'] != ''),
-                    'background' => image::generar_url($b["foto"][0], 'color', 'banner', $b[0]),
-                );
-            }
-
-            view::set('banner', $banner);
-            view::render('banner');
+            $srcset = $this->srcset($foto_base);
+            $banner = array(
+                'srcset' => $srcset,
+                'title' => $titulo,
+                'foto' => $foto,
+                'background' => image::generar_url($foto_base, 'color'),
+            );
         }
+
+        view::set_array($banner);
+        view::render('banner-seccion');
+
     }
 
-    public function srcset($foto_base, $id)
+    public function srcset($foto_base)
     {
         $images = self::$sizes;
         $srcset = array();
         foreach ($images as $k => $size) {
-            $foto = image::generar_url($foto_base, $size['foto'], 'banner', $id, 'webp');
+            $foto = image::generar_url($foto_base, $size['foto'], 'webp');
             if ($foto != '') {
                 $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/webp');
             }
         }
         foreach ($images as $k => $size) {
-            $foto = image::generar_url($foto_base, $size['foto'], 'banner', $id);
+            $foto = image::generar_url($foto_base, $size['foto']);
             if ($foto != '') {
                 $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/jpg');
             }

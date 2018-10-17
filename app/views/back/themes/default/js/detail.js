@@ -7,7 +7,7 @@ var config_editor = {
 var token = null;
 var editor = null;
 var url_list = '';
-var timestamp = 5;
+var timestamp = 7;
 
 function inicio_detail() {
     if ($('div.form-group.image').length > 0) {
@@ -109,6 +109,10 @@ $(document).on('click', 'form#formulario button.active', function() {
 });
 
 function loadBootstrap(event) {
+    event.editor.balloonToolbars.create({
+        buttons: 'Link,Unlink,Image',
+        widgets: 'image'
+    });
     var jQueryScriptTag = document.createElement('script');
     var bootstrapScriptTag = document.createElement('script');
     jQueryScriptTag.src = 'https://code.jquery.com/jquery-1.11.3.min.js';

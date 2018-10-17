@@ -4060,7 +4060,7 @@ body.sidebar-collapsed .static-sidebar-wrapper .widget nav.widget-body>ul.acc-me
 @media (min-width:992px){
 .navbar-static-top{border-radius:0}
 }
-.navbar-fixed-bottom,.navbar-fixed-top{position:fixed;right:0;left:0;z-index:10000}
+.navbar-fixed-bottom,.navbar-fixed-top{position:fixed;right:0;left:0;z-index:9995}
 @media (min-width:992px){
 .navbar-fixed-bottom,.navbar-fixed-top{border-radius:0}
 }

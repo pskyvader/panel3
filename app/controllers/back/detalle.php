@@ -258,6 +258,7 @@ class detalle
                     'url' => ($image_url != '') ? $fila[$campos['field']][0]['url'] : '',
                     'parent' => ($image_url != '') ? $fila[$campos['field']][0]['parent'] : '',
                     'folder' => ($image_url != '') ? $fila[$campos['field']][0]['folder'] : '',
+                    'subfolder' => ($image_url != '') ? $fila[$campos['field']][0]['subfolder'] : '',
                     'help' => $campos['help'],
                 );
                 break;

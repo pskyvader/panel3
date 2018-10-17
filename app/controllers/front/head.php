@@ -54,8 +54,8 @@ class head
         }
         $this->data['title'] = $titulo;
         $this->data['description_text'] = strip_tags($this->data['description_text']);
-        $this->data['keywords'] = ($this->data['keywords_text'] != '');
-        $this->data['description'] = ($this->data['description_text'] != '');
+        $this->data['keywords'] = strip_tags($this->data['keywords_text'] != '');
+        $this->data['description'] = strip_tags($this->data['description_text'] != '');
         $logo = logo_model::getById(5);
         $this->data['logo'] = image::generar_url($logo['foto'][0], 'social');
         if (isset($metadata['image'])) {

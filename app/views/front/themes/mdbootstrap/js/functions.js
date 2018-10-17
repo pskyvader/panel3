@@ -160,11 +160,6 @@ function iniciar(body, head, data_form) {
 
 
 function activar_imagen() {
-    $('img[data-src]').each(function() {
-        if (is_visible($(this))) {
-            load_image($(this));
-        }
-    });
     $('source[data-srcset]').each(function() {
         if (is_visible($(this))) {
             load_source($(this));
@@ -174,6 +169,11 @@ function activar_imagen() {
     $('.blur[data-background]').each(function() {
         if (is_visible($(this))) {
             load_background($(this));
+        }
+    });
+    $('img[data-src]').each(function() {
+        if (is_visible($(this))) {
+            load_image($(this));
         }
     });
 }

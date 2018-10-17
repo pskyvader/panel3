@@ -202,11 +202,10 @@ class lista
                 return $content;
                 break;
             case 'image':
-                $folder = $this->metadata['modulo'];
                 if (isset($fila[$th['field']][0])) {
-                    $thumb_url = image::generar_url($fila[$th['field']][0], 'thumb', $folder, $fila[0]);
-                    $zoom_url = image::generar_url($fila[$th['field']][0], 'zoom', $folder, $fila[0]);
-                    $original_url = image::generar_url($fila[$th['field']][0], '', $folder, $fila[0]);
+                    $thumb_url = image::generar_url($fila[$th['field']][0], 'thumb');
+                    $zoom_url = image::generar_url($fila[$th['field']][0], 'zoom');
+                    $original_url = image::generar_url($fila[$th['field']][0], '');
                 } else {
                     $thumb_url = $zoom_url = $original_url = '';
                 }

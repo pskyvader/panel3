@@ -59,7 +59,7 @@ class header
                 $menu = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url'])), 'active' => $s['url']);
                 $moduloconfiguracion = moduloconfiguracion_model::getByModulo($s['modulo_back']);
                 if (isset($moduloconfiguracion[0])) {
-                    $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $s['tipo_modulo']));
+                    $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $s['tipo_modulo']),array('limit'=>1));
                     if (isset($modulo[0])) {
                         $c = '\app\models\\' . $s['modulo_back'];
                         $class = new $c;

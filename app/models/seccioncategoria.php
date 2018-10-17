@@ -83,4 +83,25 @@ class seccioncategoria extends base_model
         }
         return (count($row) == 1) ? $row[0] : $row;
     }
+    
+    public static function getByUrl($url)
+    {
+        $where = array('url'=>$url);
+        if (app::$_front) {
+            $fields = table::getByname(static::$table);
+            if (isset($fields['estado'])) {
+                $where['estado'] = true;
+            }
+        }
+        $condition=array('limit'=>1);
+        $connection = database::instance();
+        $row = $connection->get(static::$table, static::$idname, $where,$condition);
+        if (count($row) == 1) {
+            if (isset($row[0]['foto'])) {
+                $row[0]['foto'] = functions::decode_json($row[0]['foto']);
+            }
+            $row[0]['idpadre'] = functions::decode_json($row[0]['idpadre']);
+        }
+        return (count($row) == 1) ? $row[0] : $row;
+    }
 }
