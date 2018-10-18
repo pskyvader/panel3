@@ -93,7 +93,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "1",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "9",
@@ -334,7 +333,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -359,6 +359,11 @@
                 "field": "titulo",
                 "titulo": "Titulo",
                 "tipo": "text"
+            },
+            {
+                "field": "foto",
+                "titulo": "Foto",
+                "tipo": "image"
             },
             {
                 "field": "estado",
@@ -408,6 +413,16 @@
                 "tipo": "url"
             },
             {
+                "field": "foto",
+                "titulo": "Foto",
+                "tipo": "image"
+            },
+            {
+                "field": "resumen",
+                "titulo": "Resumen",
+                "tipo": "textarea"
+            },
+            {
                 "field": "descripcion",
                 "titulo": "Descripcion",
                 "tipo": "editor"
@@ -447,7 +462,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "1",
-        "hijos": "1",
         "hijo": [
             {
                 "idmoduloconfiguracion": "10",
@@ -489,6 +503,16 @@
                         "field": "titulo",
                         "tipo": "text",
                         "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -592,6 +616,30 @@
                         }
                     },
                     {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen 450x300 px, formato jpg o png",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "resumen",
+                        "tipo": "textarea",
+                        "titulo": "Resumen",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
                         "field": "descripcion",
                         "tipo": "editor",
                         "titulo": "Descripcion",
@@ -676,7 +724,16 @@
                         }
                     }
                 ],
-                "recortes": [],
+                "recortes": [
+                    {
+                        "tag": "foto1",
+                        "titulo": "Foto 1",
+                        "ancho": "450",
+                        "alto": "300",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    }
+                ],
                 "orden": "1",
                 "estado": [
                     {
@@ -687,7 +744,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "1"
             }
         ]
     },
@@ -795,7 +853,6 @@
         "estado": "1",
         "aside": "0",
         "tipos": "1",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "12",
@@ -1036,7 +1093,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -1073,6 +1131,21 @@
                 "tipo": "active"
             },
             {
+                "field": "banner",
+                "titulo": "Banner",
+                "tipo": "image"
+            },
+            {
+                "field": "menu",
+                "titulo": "Menu",
+                "tipo": "active"
+            },
+            {
+                "field": "submenu",
+                "titulo": "Submenu",
+                "tipo": "active"
+            },
+            {
                 "field": "copy",
                 "titulo": "Copiar",
                 "tipo": "action"
@@ -1100,6 +1173,31 @@
                 "tipo": "url"
             },
             {
+                "field": "foto",
+                "titulo": "Foto",
+                "tipo": "image"
+            },
+            {
+                "field": "banner",
+                "titulo": "Banner",
+                "tipo": "image"
+            },
+            {
+                "field": "modulo_front",
+                "titulo": "Modulo en front",
+                "tipo": "url"
+            },
+            {
+                "field": "modulo_back",
+                "titulo": "Modulo en back",
+                "tipo": "url"
+            },
+            {
+                "field": "tipo_modulo",
+                "titulo": "Tipo en modulo",
+                "tipo": "number"
+            },
+            {
                 "field": "keywords",
                 "titulo": "Palabras clave",
                 "tipo": "token"
@@ -1115,6 +1213,16 @@
                 "tipo": "number"
             },
             {
+                "field": "menu",
+                "titulo": "Menu",
+                "tipo": "active"
+            },
+            {
+                "field": "submenu",
+                "titulo": "Submenu",
+                "tipo": "active"
+            },
+            {
                 "field": "estado",
                 "titulo": "Estado",
                 "tipo": "active"
@@ -1124,7 +1232,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "0",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "1",
@@ -1136,7 +1243,7 @@
                         "titulo": "Nuevo",
                         "estado": {
                             "1": "true",
-                            "2": "true",
+                            "2": "false",
                             "3": "false"
                         }
                     }
@@ -1147,9 +1254,9 @@
                         "tipo": "text",
                         "titulo": "ID",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -1159,7 +1266,7 @@
                         "estado": {
                             "1": "true",
                             "2": "true",
-                            "3": "true"
+                            "3": "false"
                         }
                     },
                     {
@@ -1189,6 +1296,36 @@
                         "estado": {
                             "1": "true",
                             "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "banner",
+                        "tipo": "image",
+                        "titulo": "Banner",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "menu",
+                        "tipo": "active",
+                        "titulo": "Menu",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "submenu",
+                        "tipo": "active",
+                        "titulo": "Submenu",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
                             "3": "false"
                         }
                     },
@@ -1249,6 +1386,66 @@
                         }
                     },
                     {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Foto para redes sociales, 350x260 px, formato jpg o png",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "banner",
+                        "tipo": "image",
+                        "titulo": "Banner",
+                        "texto_ayuda": "Imagen 1140x200 px, formato jpg o png",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "modulo_front",
+                        "tipo": "url",
+                        "titulo": "Modulo en front",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "modulo_back",
+                        "tipo": "url",
+                        "titulo": "Modulo en back",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "tipo_modulo",
+                        "tipo": "number",
+                        "titulo": "Tipo en modulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
                         "field": "keywords",
                         "tipo": "token",
                         "titulo": "Palabras clave",
@@ -1281,7 +1478,31 @@
                         "estado": {
                             "1": "true",
                             "2": "true",
-                            "3": "true"
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "menu",
+                        "tipo": "active",
+                        "titulo": "Menu",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "submenu",
+                        "tipo": "active",
+                        "titulo": "Submenu",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
                         }
                     },
                     {
@@ -1297,7 +1518,48 @@
                         }
                     }
                 ],
-                "recortes": [],
+                "recortes": [
+                    {
+                        "tag": "social",
+                        "titulo": "Redes sociales",
+                        "ancho": "350",
+                        "alto": "260",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "foto1",
+                        "titulo": "Foto 1",
+                        "ancho": "1140",
+                        "alto": "200",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    },
+                    {
+                        "tag": "foto2",
+                        "titulo": "Foto 2",
+                        "ancho": "960",
+                        "alto": "200",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    },
+                    {
+                        "tag": "foto3",
+                        "titulo": "Foto 3",
+                        "ancho": "720",
+                        "alto": "200",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    },
+                    {
+                        "tag": "foto4",
+                        "titulo": "Foto 4",
+                        "ancho": "540",
+                        "alto": "200",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    }
+                ],
                 "orden": "1",
                 "estado": [
                     {
@@ -1308,7 +1570,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -1391,7 +1654,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "1",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "2",
@@ -1565,7 +1827,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             },
             {
                 "idmoduloconfiguracion": "2",
@@ -1739,7 +2002,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             },
             {
                 "idmoduloconfiguracion": "2",
@@ -1913,7 +2177,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             },
             {
                 "idmoduloconfiguracion": "2",
@@ -2087,7 +2352,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -2103,7 +2369,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "0",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "8",
@@ -2133,7 +2398,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -2149,7 +2415,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "0",
-        "hijos": "0",
         "hijo": []
     },
     {
@@ -2201,7 +2466,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "0",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "4",
@@ -2390,7 +2654,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -2463,7 +2728,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "0",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "5",
@@ -2613,7 +2877,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -2696,7 +2961,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "1",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "6",
@@ -2877,7 +3141,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             },
             {
                 "idmoduloconfiguracion": "6",
@@ -3058,7 +3323,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             },
             {
                 "idmoduloconfiguracion": "6",
@@ -3239,7 +3505,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -3297,7 +3564,6 @@
         "estado": "1",
         "aside": "1",
         "tipos": "0",
-        "hijos": "0",
         "hijo": [
             {
                 "idmoduloconfiguracion": "7",
@@ -3415,7 +3681,8 @@
                         }
                     }
                 ],
-                "aside": "1"
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     }
