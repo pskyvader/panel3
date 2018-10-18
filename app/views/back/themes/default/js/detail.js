@@ -7,7 +7,7 @@ var config_editor = {
 var token = null;
 var editor = null;
 var url_list = '';
-var timestamp = 7;
+var timestamp = 13;
 
 function inicio_detail() {
     if ($('div.form-group.image').length > 0) {
@@ -20,7 +20,7 @@ function inicio_detail() {
     });
     editor = $('textarea.editor');
     if (editor.length > 0) {
-        CKEDITOR.timestamp = timestamp;
+        //CKEDITOR.timestamp = timestamp;
         $(editor).each(function() {
             CKEDITOR.replace($(this).prop('id'), config_editor);
         });

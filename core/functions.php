@@ -19,7 +19,12 @@ class functions
     {
         if (ini_get("session.use_cookies")) {
             $path = app::get_sub();
-            setcookie($cookie, $value, $time, $path);
+            if (!headers_sent()) {
+                setcookie($cookie, $value, $time, $path);
+            } else {
+                echo '<script>document.cookie = "' . $cookie . '=' . $value . '; expires=' . date('r', $time) . '; path=' . $path . ';";</script>';
+            }
+
         }
     }
 
@@ -159,7 +164,10 @@ class functions
     public static function decode_json($json)
     {
         $array = json_decode(html_entity_decode($json), true);
-        if(!is_array($array)) $array=array();
+        if (!is_array($array)) {
+            $array = array();
+        }
+
         return $array;
     }
 
@@ -181,6 +189,7 @@ class functions
     }
 
     public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
+
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);

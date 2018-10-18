@@ -196,8 +196,17 @@ class view
             $dir = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.js';
             if (file_exists($dir . '\\' . $file)) {
-                $locales = array(array('url' => app::$_path . $file, 'defer' => 'async defer'));
+                if (isset($_COOKIE['loaded_js']) && $_COOKIE['loaded_js']) {
+                    $defer = '';
+                } else {
+                     functions::set_cookie('loaded_js', true, time() + (31536000));
+                    $defer = 'async defer';
+                }
+                $locales = array(array('url' => app::$_path . $file, 'defer' => $defer));
             } else {
+                if (isset($_COOKIE['loaded_js'])) {
+                    functions::set_cookie('loaded_js', false, time() + (31536000));
+                }
                 if (is_writable($dir)) {
                     array_map('unlink', glob($dir . "\\*.js"));
                     $minifier = null;
@@ -275,8 +284,17 @@ class view
             $dir = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.css';
             if (file_exists($dir . '\\' . $file)) {
-                $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true));
+                if (isset($_COOKIE['loaded_css']) && $_COOKIE['loaded_css']) {
+                    $defer = false;
+                } else {
+                    functions::set_cookie('loaded_css', true, time() + (31536000));
+                    $defer = true;
+                }
+                $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => $defer));
             } else {
+                if (isset($_COOKIE['loaded_css'])) {
+                    functions::set_cookie('loaded_css', false, time() + (31536000));
+                }
                 if (is_writable($dir)) {
                     array_map('unlink', glob($dir . "\\*.css"));
                     $minifier = null;
@@ -297,7 +315,6 @@ class view
                 }
             }
         }
-
         $css = array_merge($no_combinados, $locales, $css);
 
         if ($array_only) {

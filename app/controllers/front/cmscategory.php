@@ -8,7 +8,7 @@ use \core\functions;
 use \core\image;
 use \core\view;
 
-class cms extends base
+class cmscategory extends base
 {
     public function __construct()
     {
@@ -91,7 +91,7 @@ class cms extends base
         $footer->normal();
     }
 
-    public function categorias($row)
+    private function categorias($row)
     {
         $categories = array();
         foreach ($row as $key => $categoria) {
