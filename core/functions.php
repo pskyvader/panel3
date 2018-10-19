@@ -47,6 +47,26 @@ class functions
         }
     }
 
+    public static function get_idseccion($url){
+        $url=explode('-',$url);
+        return (int)$url[0];
+    }
+    public static function url_seccion($url_base,$seccion,$return=false){
+        $url=$url_base;
+        $extra="";
+        if(isset($seccion[0])){
+            $extra.=$seccion[0];
+            if(isset($seccion['url'])){
+                $extra.="-".$seccion['url'];
+            }elseif(isset($seccion['titulo'])){
+                $extra.="-".self::url_amigable($seccion['titulo']);
+            }
+        }
+        $url[]=$extra;
+        if($return) return $url;
+        else return self::generar_url($url);
+    }
+
     public static function generar_url($url, $extra = null, $front_auto = true, $front = true)
     {
         $url = implode('/', $url);

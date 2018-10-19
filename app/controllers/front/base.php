@@ -36,38 +36,26 @@ class base
         $this->metadata['description_text']=(isset($meta['descripcion']) && $meta['descripcion']!='')?$meta['descripcion']:$this->metadata['description_text'];
         $this->metadata['description_text']=(isset($meta['metadescripcion']) && $meta['metadescripcion']!='')?$meta['metadescripcion']:$this->metadata['description_text'];
     }
-    public function index()
+    
+    protected function lista($row, $url='detail',$recorte='foto1')
     {
-        $this->meta($this->seo);
-        functions::url_redirect($this->url);
-
-        $head = new head($this->metadata);
-        $head->normal();
-
-        $header = new header();
-        $header->normal();
-
-        //$breadcrumb = new breadcrumb();
-        //$breadcrumb->normal($this->breadcrumb);
-
-        $banner = new banner();
-        $banner->individual($this->seo['banner'][0],$this->metadata['title']);
-        $var=array();
-        if($this->seo['tipo_modulo']!=0){
-            $var['tipo']=$this->seo['tipo_modulo'];
+        $lista = array();
+        foreach ($row as $key => $v) {
+            $c = array(
+                'title' => $v['titulo'],
+                'url' => image::generar_url($v['foto'][0], $recorte),
+                'description' => $v['resumen'],
+                'srcset' => array(),
+                'link' => functions::url_seccion(array($this->url[0], $url),$v),
+            );
+            $src = image::generar_url($v['foto'][0], $recorte, 'webp');
+            if ($src != '') {
+                $c['srcset'][] = array('media' => '', 'src' => $src, 'type' => 'image/webp');
+            }
+            $lista[] = $c;
         }
-        if($this->modulo['hijos']){
-            $var['idpadre'] = 0;
-        }
-        $row=seccioncategoria_model::getAll($var);
-        $categories=array();
-        foreach ($row as $key => $categoria) {
-            $categories[]=array('title'=>$categoria['titulo'],'url'=>$categoria['foto'][0],'description'=>$categoria['descripcion']);
-        }
-        view::set('categories',$categories);
-        view::render('cms-category');
-
-        $footer = new footer();
-        $footer->normal();
+        return $lista;
     }
+
+
 }

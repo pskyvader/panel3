@@ -16,8 +16,8 @@ class seccion extends base_model
         if (!isset($where['estado']) && app::$_front) {
             $where['estado'] = true;
         }
-        if(isset($where['idseccioncategoria'])){
-            $idseccioncategoria=$where['idseccioncategoria'];
+        if (isset($where['idseccioncategoria'])) {
+            $idseccioncategoria = $where['idseccioncategoria'];
             unset($where['idseccioncategoria']);
         }
 
@@ -50,13 +50,16 @@ class seccion extends base_model
         if ($select == '') {
             foreach ($row as $key => $value) {
                 $row[$key]['idseccioncategoria'] = functions::decode_json($row[$key]['idseccioncategoria']);
-                if(isset($idseccioncategoria) && !in_array($idseccioncategoria,$row[$key]['idseccioncategoria'])){
+                if (isset($idseccioncategoria) && !in_array($idseccioncategoria, $row[$key]['idseccioncategoria'])) {
                     unset($row[$key]);
                 }
                 if (isset($row[$key]) && isset($row[$key]['foto'])) {
                     $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
                 }
             }
+        }
+        if (isset($idseccioncategoria)) {
+            $row = array_values($row);
         }
         return $row;
     }
@@ -74,10 +77,13 @@ class seccion extends base_model
         $connection = database::instance();
         $row = $connection->get(static::$table, static::$idname, $where);
         if (count($row) == 1) {
-            if (isset($row[0]['foto'])) {
+            $row[0]['idseccioncategoria'] = functions::decode_json($row[0]['idseccioncategoria']);
+            if (isset($idseccioncategoria) && !in_array($idseccioncategoria, $row[0]['idseccioncategoria'])) {
+                unset($row[0]);
+            }
+            if (isset($row[0]) && isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
             }
-            $row[0]['idseccioncategoria'] = functions::decode_json($row[0]['idseccioncategoria']);
         }
         return (count($row) == 1) ? $row[0] : $row;
     }

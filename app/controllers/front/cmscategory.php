@@ -2,6 +2,7 @@
 namespace app\controllers\front;
 
 defined("APPPATH") or die("Acceso denegado");
+use \app\models\seccion as seccion_model;
 use \app\models\seccioncategoria as seccioncategoria_model;
 use \app\models\seo;
 use \core\functions;
@@ -39,9 +40,9 @@ class cmscategory extends base
             $var['idpadre'] = 0;
         }
         $row = seccioncategoria_model::getAll($var);
-        $categories = $this->categorias($row);
+        $categories = $this->lista($row);
         view::set('list', $categories);
-        view::render('grid3');
+        view::render('grid-border-3');
 
         $footer = new footer();
         $footer->normal();
@@ -50,9 +51,10 @@ class cmscategory extends base
     public function detail($var = array())
     {
         if (isset($var[0])) {
-            $categoria = seccioncategoria_model::getByUrl($var[0]);
+            $id=functions::get_idseccion($var[0]);
+            $categoria = seccioncategoria_model::getById($id);
             if (isset($categoria[0])) {
-                $this->url = array($this->url[0], 'detail', $categoria['url']);
+                $this->url = functions::url_seccion(array($this->url[0], 'detail'),$categoria,true);
             }
         }
         functions::url_redirect($this->url);
@@ -70,7 +72,6 @@ class cmscategory extends base
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
 
-        
         view::set('title', $categoria['titulo']);
         view::set('description', $categoria['descripcion']);
         view::render('title-text');
@@ -83,31 +84,66 @@ class cmscategory extends base
             $var['idpadre'] = $categoria[0];
         }
         $row = seccioncategoria_model::getAll($var);
-        $categories = $this->categorias($row);
+        $categories = $this->lista($row);
         view::set('list', $categories);
-        view::render('grid3');
+        view::render('grid-border-3');
 
+        $var = array();
+        if ($this->seo['tipo_modulo'] != 0) {
+            $var['tipo'] = $this->seo['tipo_modulo'];
+        }
+        if ($this->modulo['hijos']) {
+            $var[seccioncategoria_model::$idname] = $categoria[0];
+        }
+        $row = seccion_model::getAll($var);
+
+        if (count($row) > 0) {
+            view::set('title', 'Secciones');
+            view::render('title');
+            $secciones = $this->lista($row, 'sub','lista');
+            view::set('list', $secciones);
+            view::render('grid-3');
+        }
         $footer = new footer();
         $footer->normal();
     }
 
-    private function categorias($row)
+
+    
+
+    public function sub($var = array())
     {
-        $categories = array();
-        foreach ($row as $key => $categoria) {
-            $c = array(
-                'title' => $categoria['titulo'],
-                'url' => image::generar_url($categoria['foto'][0], 'foto1'),
-                'description' => $categoria['resumen'],
-                'srcset' => array(),
-                'link' => functions::generar_url(array($this->url[0], 'detail', $categoria['url'])),
-            );
-            $src = image::generar_url($categoria['foto'][0], 'foto1', 'webp');
-            if ($src != '') {
-                $c['srcset'][] = array('media' => '', 'src' => $src, 'type' => 'image/webp');
+        if (isset($var[0])) {
+            $id=functions::get_idseccion($var[0]);
+            $seccion = seccion_model::getById($id);
+            if (isset($seccion[0])) {
+                $this->url = functions::url_seccion(array($this->url[0], 'sub'),$seccion,true);
             }
-            $categories[] = $c;
         }
-        return $categories;
+        functions::url_redirect($this->url);
+        $this->meta($seccion);
+
+        $head = new head($this->metadata);
+        $head->normal();
+
+        $header = new header();
+        $header->normal();
+
+        $banner = new banner();
+        $banner->individual($this->seo['banner'][0], $this->seo['titulo']);
+
+        //$breadcrumb = new breadcrumb();
+        //$breadcrumb->normal($this->breadcrumb);
+
+        view::set('title', $seccion['titulo']);
+        view::set('description', $seccion['descripcion']);
+        view::render('title-text');
+
+
+        $carousel=new carousel();
+        $carousel->normal($seccion['foto'],$seccion['titulo']);
+
+        $footer = new footer();
+        $footer->normal();
     }
 }

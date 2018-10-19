@@ -16,6 +16,7 @@ class home extends base
     }
     public function index()
     {
+        $this->meta($this->seo);
         functions::url_redirect($this->url);
 
         $head = new head($this->metadata);
@@ -31,8 +32,8 @@ class home extends base
 
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
-
-        view::render('home');
+        view::set('title','Categorias destacadas');
+        view::render('title');
 
         $footer = new footer();
         $footer->normal();

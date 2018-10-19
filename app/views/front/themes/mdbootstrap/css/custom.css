@@ -21,6 +21,7 @@ p{font-size:.875rem}
 .bg-dot:after{content:"";width:43px;background:url(../img/dot.png);height:5px;display:block;text-align:center;margin:15px auto}
 .bg-dot.text-left:after{text-align:left;margin:15px 0}
 .list-square{list-style:square;color:#278c92}
+.btn{background-color: #278c92;}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
 /*! FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE*/
 .flotante{z-index:2;position:relative}
