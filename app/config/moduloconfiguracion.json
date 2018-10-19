@@ -814,6 +814,11 @@
                 "tipo": "multiple_image"
             },
             {
+                "field": "resumen",
+                "titulo": "Resumen",
+                "tipo": "textarea"
+            },
+            {
                 "field": "descripcion",
                 "titulo": "Descripcion",
                 "tipo": "editor"
@@ -980,8 +985,20 @@
                         "field": "foto",
                         "tipo": "multiple_image",
                         "titulo": "Foto",
-                        "texto_ayuda": "Imagen 800x600 px, formato jpg o png",
+                        "texto_ayuda": "Imagen 1110x600 px, formato jpg o png",
                         "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "resumen",
+                        "tipo": "textarea",
+                        "titulo": "Resumen",
+                        "texto_ayuda": "",
+                        "required": "false",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -1077,10 +1094,50 @@
                     {
                         "tag": "foto1",
                         "titulo": "Foto 1",
-                        "ancho": "800",
+                        "ancho": "1110",
                         "alto": "600",
                         "calidad": "90",
                         "tipo": "centrar"
+                    },
+                    {
+                        "tag": "foto2",
+                        "titulo": "Foto 2",
+                        "ancho": "930",
+                        "alto": "500",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "foto3",
+                        "titulo": "Foto 3",
+                        "ancho": "690",
+                        "alto": "400",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "foto4",
+                        "titulo": "Foto 4",
+                        "ancho": "510",
+                        "alto": "300",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "thumb_carousel",
+                        "titulo": "Thumb carrusel",
+                        "ancho": "100",
+                        "alto": "50",
+                        "calidad": "90",
+                        "tipo": "recortar"
+                    },
+                    {
+                        "tag": "lista",
+                        "titulo": "Lista",
+                        "ancho": "350",
+                        "alto": "260",
+                        "calidad": "90",
+                        "tipo": "recortar"
                     }
                 ],
                 "orden": "1",

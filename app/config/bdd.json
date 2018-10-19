@@ -71,11 +71,11 @@
             },
             {
                 "titulo": "foto",
-                "tipo": "char(255)"
+                "tipo": "longtext"
             },
             {
                 "titulo": "banner",
-                "tipo": "char(255)"
+                "tipo": "longtext"
             },
             {
                 "titulo": "modulo_front",
@@ -410,7 +410,7 @@
             },
             {
                 "titulo": "foto",
-                "tipo": "char(255)"
+                "tipo": "longtext"
             },
             {
                 "titulo": "resumen",
@@ -465,7 +465,11 @@
             },
             {
                 "titulo": "foto",
-                "tipo": "char(255)"
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
             },
             {
                 "titulo": "descripcion",
