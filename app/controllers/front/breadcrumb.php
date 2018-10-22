@@ -13,12 +13,18 @@ class breadcrumb
     { 
         $seo=seo::getById(1);
         $b = array(
-            array('url' => functions::generar_url(array($seo['url'])), 'title' =>$seo['titulo'], 'active' => ''),
+            array('url' => functions::generar_url(array($seo['url'])), 'title' =>$seo['titulo']),
         );
         $b=array_merge($b,$breadcrumb);
         foreach ($b as $key => $bread) {
-            $b[$key]['is_active']=($bread['active']!='');
+            $b[$key]['is_active']=false;
+            $b[$key]['active']='';
         }
+        $last=array_pop($b);
+        $last['is_active']=true;
+        $last['active']='active';
+        $b[]=$last;
+
         view::set('breadcrumb', $b);
         $last=array_pop($b);
         view::set('titulo', $last['title']);

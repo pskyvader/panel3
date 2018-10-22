@@ -1,5 +1,7 @@
 body{font-family:'Open Sans',sans-serif}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
+.carousel-control-next,.carousel-control-prev{color:#dedede}
+.carousel-control-next:focus,.carousel-control-next:hover,.carousel-control-prev:focus,.carousel-control-prev:hover{color:#d4d4d4}
 input[type=date],input[type=datetime-local],input[type=email],input[type=number],input[type=password],input[type=search-md],input[type=search],input[type=tel],input[type=text],input[type=time],input[type=url],textarea.md-textarea{border:1px solid #d9d9d9;font-size:.9375rem;padding:.5rem 1rem;width:calc(100% - 2rem)}
 .md-form label{left:1rem;font-size:.9375rem}
 .md-form label.active{-webkit-transform:translateY(-180%);-ms-transform:translateY(-180%);transform:translateY(-180%)}
@@ -21,7 +23,7 @@ p{font-size:.875rem}
 .bg-dot:after{content:"";width:43px;background:url(../img/dot.png);height:5px;display:block;text-align:center;margin:15px auto}
 .bg-dot.text-left:after{text-align:left;margin:15px 0}
 .list-square{list-style:square;color:#278c92}
-.btn{background-color: #278c92;}
+.btn{background-color:#278c92}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
 /*! FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE*/
 .flotante{z-index:2;position:relative}

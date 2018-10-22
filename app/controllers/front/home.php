@@ -3,6 +3,7 @@ namespace app\controllers\front;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\banner as banner_model;
+use \app\models\seccion as seccion_model;
 use \app\models\seo;
 use \core\functions;
 use \core\image;
@@ -32,8 +33,21 @@ class home extends base
 
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
-        view::set('title','Categorias destacadas');
-        view::render('title');
+        
+        $var = array('tipo'=>1,'destacado'=>true);
+
+        $row = seccion_model::getAll($var);
+
+        if (count($row) > 0) {
+            $seo=seo::getById(2);
+            $this->url = array($seo['url']);
+            view::set('title','Servicios destacados');
+            view::render('title');
+            $secciones = $this->lista($row, 'sub','lista');
+            view::set('list', $secciones);
+            view::render('grid-3');
+        }
+
 
         $footer = new footer();
         $footer->normal();
