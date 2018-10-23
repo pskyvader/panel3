@@ -118,6 +118,8 @@ class functions
         $url = str_replace("Ñ", "N", $url);
         $url = str_replace("Ý", "Y", $url);
         $url = str_replace("ý", "y", $url);
+        $url=explode('-',$url);
+        $url=implode('-',array_filter($url));
         $url = strtolower($url);
         return $url;
     }

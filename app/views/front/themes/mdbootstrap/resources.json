@@ -3,7 +3,8 @@
             {"url": "css/custom-head.css","local":true,"media":"all","combine":false,"defer":false},
             {"url": "css/mdb.min.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "css/jquery.fancybox.min.css","local":true,"media":"all","combine":true,"defer":true},
-            {"url": "css/custom.css","local":true,"media":"all","combine":true,"defer":true}
+            {"url": "css/custom.css","local":true,"media":"all","combine":true,"defer":true},
+            {"url": "css/fonts.css","local":true,"media":"all","combine":true,"defer":true}
     ],
     "js" : [
         {"url": "js/jquery-3.3.1.min.js","local":true,"defer":false,"combine":true},

@@ -1,0 +1,106 @@
+<?php
+namespace app\controllers\front;
+
+defined("APPPATH") or die("Acceso denegado");
+use \app\models\seccion as seccion_model;
+use \app\models\seo;
+use \core\functions;
+use \core\view;
+
+class cms extends base
+{
+    public function __construct()
+    {
+        parent::__construct(seo::getById(3));
+    }
+    public function index()
+    {
+        $this->meta($this->seo);
+        functions::url_redirect($this->url);
+
+        $head = new head($this->metadata);
+        $head->normal();
+
+        $header = new header();
+        $header->normal();
+
+        $banner = new banner();
+        $banner->individual($this->seo['banner'][0], $this->metadata['title']);
+
+        $breadcrumb = new breadcrumb();
+        $breadcrumb->normal($this->breadcrumb);
+
+        $var = array();
+        if ($this->seo['tipo_modulo'] != 0) {
+            $var['tipo'] = $this->seo['tipo_modulo'];
+        }
+        if ($this->modulo['hijos']) {
+            $var['idpadre'] = 0;
+        }
+        $row        = seccion_model::getAll($var);
+        $sidebar=array();
+        foreach ($row as $key => $s) {
+            $sidebar[]=array('title'=>$s['titulo'],'active'=>'','url'=>functions::url_seccion(array($this->url[0], 'detail'), $s));
+        }
+        
+        view::set('title_category', $this->seo['titulo']);
+        view::set('sidebar', $sidebar);
+        
+        view::set('description', '');
+        view::render('cms-sidebar');
+
+        $footer = new footer();
+        $footer->normal();
+    }
+
+    public function detail($var = array())
+    {
+        if (isset($var[0])) {
+            $id      = functions::get_idseccion($var[0]);
+            $seccion = seccion_model::getById($id);
+            if (isset($seccion[0])) {
+                $this->url = functions::url_seccion(array($this->url[0], 'detail'), $seccion, true);
+                $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => $seccion['titulo']);
+            }
+        }
+        functions::url_redirect($this->url);
+        $this->meta($seccion);
+
+        $head = new head($this->metadata);
+        $head->normal();
+
+        $header = new header();
+        $header->normal();
+
+        $banner = new banner();
+        $banner->individual($this->seo['banner'][0], $this->seo['titulo']);
+
+        $breadcrumb = new breadcrumb();
+        $breadcrumb->normal($this->breadcrumb);
+
+        
+        $var = array();
+        if ($this->seo['tipo_modulo'] != 0) {
+            $var['tipo'] = $this->seo['tipo_modulo'];
+        }
+        if ($this->modulo['hijos']) {
+            $var['idpadre'] = 0;
+        }
+        $row        = seccion_model::getAll($var);
+        $sidebar=array();
+        foreach ($row as $key => $s) {
+            $sidebar[]=array('title'=>$s['titulo'],'active'=>'','url'=>functions::url_seccion(array($this->url[0], 'detail'), $s));
+        }
+        
+        view::set('title_category', $this->seo['titulo']);
+        view::set('sidebar', $sidebar);
+        
+        view::set('description', $seccion['descripcion']);
+        view::render('cms-sidebar');
+        
+        
+
+        $footer = new footer();
+        $footer->normal();
+    }
+}

@@ -1,0 +1,23 @@
+<section class="cms-sidebar py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-xl-3 sidebar pb-4">
+                <h3>{title_category}</h3>
+                <ul class="list-group">
+                    {foreach sidebar}
+                    <li>
+                        <a class="{active}" href="{url}">
+                            {title}
+                        </a>
+                    </li>
+                    {/foreach sidebar}
+                </ul>
+            </div>
+            <div class="col-lg-8">
+                <div class="descripcion">
+                    {description}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

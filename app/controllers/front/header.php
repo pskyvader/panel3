@@ -53,10 +53,15 @@ class header
     private function menu()
     {
         $lista_menu = array();
-        $seo = seo::getAll(array('menu' => true));
+        $seo = seo::getAll();
         foreach ($seo as $key => $s) {
             if ($s['submenu'] && $s['modulo_back'] != 'none') {
-                $menu = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url'])), 'active' => $s['url']);
+                if($s['menu']){
+                    $url=functions::generar_url(array($s['url']));
+                }else{
+                    $url='';
+                }
+                $menu = array('titulo' => $s['titulo'], 'link' => $url, 'active' => $s['url']);
                 $moduloconfiguracion = moduloconfiguracion_model::getByModulo($s['modulo_back']);
                 if (isset($moduloconfiguracion[0])) {
                     $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $s['tipo_modulo']), array('limit' => 1));
@@ -81,7 +86,9 @@ class header
 
                 $lista_menu[] = $menu;
             } else {
-                $lista_menu[] = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url'])), 'active' => $s['url']);
+                if($s['menu']){
+                    $lista_menu[] = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url'])), 'active' => $s['url']);
+                }
             }
         }
 
@@ -117,6 +124,10 @@ class header
             $data['no_url'] = !$data['is_url'];
             $data['url'] = $menu['link'];
             $data['title'] = $menu['titulo'];
+            
+            $data['nivel'] = $nivel;
+            
+            $data['key'] = $key;
             view::set_array($data);
             $menu_final .= view::render('menu', false, true);
         }

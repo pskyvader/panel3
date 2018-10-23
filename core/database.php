@@ -179,6 +179,11 @@ class database
             $image = $insert['image'];
             unset($insert['image']);
         }
+        $file = array();
+        if (isset($insert['file'])) {
+            $file = $insert['file'];
+            unset($insert['file']);
+        }
         $sql = "INSERT INTO " . self::$_prefix . $table;
         $sql .= "(" . $idname;
         foreach ($insert as $key => $value) {
@@ -194,6 +199,9 @@ class database
         if (count($image) > 0) {
             $this->process_image($image, $table, $idname, $this->get_last_insert_id());
         }
+        if (count($file) > 0) {
+            $this->process_file($file, $table, $idname, $this->get_last_insert_id());
+        }
         return $row;
     }
 
@@ -204,6 +212,11 @@ class database
         if (isset($set['image'])) {
             $image = $set['image'];
             unset($set['image']);
+        }
+        $file = array();
+        if (isset($set['file'])) {
+            $file = $set['file'];
+            unset($set['file']);
         }
         if (isset($set['...'])) {
             unset($set['...']);
@@ -228,6 +241,9 @@ class database
             if (count($image) > 0) {
                 $this->process_image($image, $table, $idname, $where[$idname]);
             }
+            if (count($file) > 0) {
+                $this->process_file($file, $table, $idname, $where[$idname]);
+            }
             return $row;
         } else {
             echo "error cantidad de condiciones";
@@ -246,6 +262,7 @@ class database
         if (count($where) > 0) {
             $row = $this->consulta($sql, false);
             image::delete($table, '', $where[$idname]);
+            file::delete($table, '', $where[$idname]);
             return $row;
         } else {
             echo "error cantidad de condiciones";
@@ -349,6 +366,9 @@ class database
         if (isset($data['image'])) {
             $m['image'] = $data['image'];
         }
+        if (isset($data['file'])) {
+            $m['file'] = $data['file'];
+        }
         return $m;
     }
 
@@ -360,7 +380,7 @@ class database
                 foreach ($multiple as $k => $e) {
                     if (is_array($e)) {
                         foreach ($e as $a => $f) {
-                            if ($key == "image") {
+                            if ($key == "image" || $key == "file" ) {
                                 foreach ($f as $ke => $va) {
                                     $row[$k][$ke][$a] = $va;
                                 }
@@ -372,7 +392,7 @@ class database
                         $row[$k] = $e;
                     }
                 }
-                if ($key != "image") {
+                if ($key != "image" && $key != "file") {
                     $data[$key] = functions::encode_json($row);
                 } else {
                     $data[$key] = $row;
@@ -395,7 +415,7 @@ class database
                 if (isset($f['tmp']) && $f['tmp'] != '') {
                     $f = image::move($f, $table, $key, $id);
                 }
-                $ids[$key][$f['id']] = $f['id'];
+                $ids[$key][$f['id']] =  $f['url'];
                 if ($f['portada'] == 'true') {
                     if ($portada) {
                         $f['portada'] = 'false';
@@ -420,13 +440,48 @@ class database
             $images = json_decode(html_entity_decode($row[0][$key]), true);
             if (is_array($images)) {
                 foreach ($images as $k => $file) {
-                    if (!isset($value[$file['id']])) {
+                    if (!isset($value[$file['id']]) || $value[$file['id']]!=$file['url']) {
                         image::delete($table, $file, $id,$key);
                     }
                 }
             }
         }
         image::delete_temp();
+        return $data;
+    }
+
+    
+    private function process_file($file, $table, $idname, $id)
+    {
+        $data = array();
+        $ids = array();
+        foreach ($file as $key => $archivo) { //cada campo
+            $row = array();
+            foreach ($archivo as $k => $f) { //cada archivo
+                if (isset($f['tmp']) && $f['tmp'] != '') {
+                    $f = file::move($f, $table, $key, $id);
+                }
+                $ids[$key][$f['id']] = $f['url'];
+                $f['parent'] = $id;
+                $f['folder'] = $table;
+                $row[$k] = $f;
+            }
+            $data[$key] = functions::encode_json($row);
+        }
+
+        $row = $this->get($table, $idname, array($idname => $id), array('limit' => 1));
+        $this->update($table, $idname, $data, array($idname => $id));
+        foreach ($ids as $key => $value) {
+            $files = json_decode(html_entity_decode($row[0][$key]), true);
+            if (is_array($files)) {
+                foreach ($files as $k => $file) {
+                    if (!isset($value[$file['id']]) || $value[$file['id']]!=$file['url']) {
+                        file::delete($table, $file, $id,$key);
+                    }
+                }
+            }
+        }
+        file::delete_temp();
         return $data;
     }
 

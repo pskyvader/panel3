@@ -50,6 +50,9 @@ class base_model implements crud
                 if (isset($row[$key]['foto'])) {
                     $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
                 }
+                if (isset($row[$key]['archivo'])) {
+                    $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
+                }
             }
         }
         return $row;
@@ -67,6 +70,9 @@ class base_model implements crud
         if (count($row) == 1) {
             if (isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
+            }
+            if (isset($row[0]['archivo'])) {
+                $row[0]['archivo'] = functions::decode_json($row[0]['archivo']);
             }
         }
         return (count($row) == 1) ? $row[0] : $row;
@@ -116,6 +122,9 @@ class base_model implements crud
         $row = static::getById($id);
         if (isset($row['foto'])) {
             unset($row['foto']);
+        }
+        if (isset($row['archivo'])) {
+            unset($row['archivo']);
         }
         $fields = table::getByname(static::$table);
         $insert = database::create_data($fields, $row);

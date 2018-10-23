@@ -1,87 +1,72 @@
-function inicio_image() {
-    $('.image_multiple').each(function() {
-        inicio_image_multiple($(this));
+function inicio_file() {
+    $('.file_multiple').each(function() {
+        inicio_file_multiple($(this));
     });
-    $('.image_individual').each(function() {
+    $('.file_individual').each(function() {
         var t = $(this);
         $(t).on('change', 'input[name="..."]', function(e) {
             habilitar(false);
             if (e.target.files.length > 0) {
-                post(create_url(modulo, 'upload'), {}, "Subiendo Imagen", !1, e.target.files, after_guardar_image, t);
+                post(create_url(modulo, 'upload_file'), {}, "Subiendo Archivo", !1, e.target.files, after_guardar_file, t);
             }
         });
-        $('body').on('click', '.eliminar_image', function() {
-            $('#eliminar_editar_image', t).data('id', $(this).data('id'));
+        $('body').on('click', '.eliminar_file', function() {
+            $('#eliminar_editar_file', t).data('id', $(this).data('id'));
         });
     });
 }
-$('body').on('click', '#formulario .fileinput-exists,input[name="..."],#cancelar', function() {
-    cancelar_archivo($(this).data('id'));
-});
-var after_guardar_image = function(data, t) {
+
+var after_guardar_file = function(data, t) {
     $('.tmp', t).val(data.archivos[0].name);
     $('.name', t).val(data.archivos[0].name);
+    $('.original_name', t).val(data.archivos[0].original_name);
 };
 
-function cancelar_archivo(data_id) {
-    if (xhr != null) {
-        xhr.abort();
-        notificacion_footer("Subida cancelada");
-        xhr = null;
-    }
-    barra(0);
-    habilitar(true);
-    eliminar_image(data_id);
-    eliminar_file(data_id);
-}
 
-function eliminar_image(campo) {
-    $('input[name="image[' + campo + '][0][url]"]').val('');
-    $('input[name="image[' + campo + '][0][tmp]"]').val('');
+function eliminar_file(campo) {
+    $('input[name="file[' + campo + '][0][url]"]').val('');
+    $('input[name="file[' + campo + '][0][tmp]"]').val('');
     $('input[name="' + campo + '"]').val('');
     $('img.' + campo).remove();
-    $('.eliminar_image[data-id=' + campo + ']').hide();
+    $('.eliminar_file[data-id=' + campo + ']').hide();
 }
 
-function inicio_image_multiple(e) {
-    var url = create_url(modulo, 'upload');
+
+function inicio_file_multiple(e) {
+    var url = create_url(modulo, 'upload_file');
     var multiple = false;
     var parallel = 3;
     var new_line = $('.new_line', e).clone();
     $('.new_line', e).remove();
-    $(".multiple_image", e).addClass('dropzone');
-    var fotos_temporal = [];
+    $(".multiple_file", e).addClass('dropzone');
+    var archivos_temporal = [];
     var id = [];
     var id_actual = 0;
-    $('.image_list .campo.fields', e).each(function() {
+    $('.file_list .campo.fields', e).each(function() {
         if ($('.id', this).val() > id) {
             id[$('.id', this).val()] = $('.id', this).val();
         }
     });
-    $('.campo.fields .active', e).each(function() {
-        multiple_active($(this));
-    });
-    $(".multiple_image", e).dropzone({
+    $(".multiple_file", e).dropzone({
         addRemoveLinks: true,
         paramName: 'file',
-        createImageThumbnails: false,
+        createfileThumbnails: false,
         url: url,
         parallelUploads: parallel,
         uploadMultiple: multiple,
-        acceptedFiles: "image/*",
         init: function() {
             this.on("addedfile", function(e) {
-                    fotos_temporal.push(e.name), habilitar(!1), e.previewElement.addEventListener("click", function() {
+                    archivos_temporal.push(e.name), habilitar(!1), e.previewElement.addEventListener("click", function() {
                         this.removeFile(e);
                     });
                 }),
                 this.on("removedfile", function(e, i) {
-                    var a = $.inArray(e.name, fotos_temporal); - 1 != a && fotos_temporal.splice(a, 1), 0 == fotos_temporal.length && habilitar(!0);
+                    var a = $.inArray(e.name, archivos_temporal); - 1 != a && archivos_temporal.splice(a, 1), 0 == archivos_temporal.length && habilitar(!0);
                 }),
                 this.on("success", function(file, data) {
                     var datos = $.parseJSON(data);
                     if (typeof(datos['exito']) != 'undefined' && datos['exito']) {
-                        var mensaje = 'Imagen ' + (($.isArray(datos['mensaje'])) ? datos['mensaje'].join('<br/>') : datos['mensaje']) + ' añadida correctamente';
+                        var mensaje = 'filen ' + (($.isArray(datos['mensaje'])) ? datos['mensaje'].join('<br/>') : datos['mensaje']) + ' añadida correctamente';
                         notificacion_footer(mensaje);
                         $(datos['archivos']).each(function(k, v) {
                             if (file.name == v.original_name) {
@@ -90,13 +75,12 @@ function inicio_image_multiple(e) {
                                 } while (typeof(id[id_actual]) != 'undefined');
                                 id[id_actual] = id_actual;
                                 var new_l = new_line.clone();
-                                $('.image', new_l).prop('src', v.url);
+                                $('.file', new_l).prop('href', v.url).text(v.original_name);
                                 $('.tmp', new_l).val(v.name);
                                 $('.id', new_l).val(id_actual);
+                                $('.original_name', new_l).val(v.original_name);
                                 multiple_active($('.active', new_l));
-                                $('.image_list').append(new_l);
-                                if (id_actual == 1) $('.active', new_l).click();
-                                $('.tooltips,.tooltip, [data-toggle="tooltip"]').tooltip();
+                                $('.file_list').append(new_l);
                             }
                         });
                     } else {
@@ -104,14 +88,14 @@ function inicio_image_multiple(e) {
                     }
                     this.removeFile(file);
                 }), this.on("complete", function(e, i) {
-                    var a = $.inArray(e.name, fotos_temporal); - 1 != a && fotos_temporal.splice(a, 1), 0 == fotos_temporal.length && habilitar(!0)
+                    var a = $.inArray(e.name, archivos_temporal); - 1 != a && archivos_temporal.splice(a, 1), 0 == archivos_temporal.length && habilitar(!0)
                 }),
-                this.on('error',function(e,f){
-                    console.log(e,f);
+                this.on('error', function(e, f) {
+                    console.log(e, f);
                 })
         }
     });
-    $(".image_list.sorted_multiple").sortable({
+    $(".file_list.sorted_multiple").sortable({
         handle: ".move",
         vertical: !1,
         itemSelector: ".campo",

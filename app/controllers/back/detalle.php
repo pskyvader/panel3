@@ -7,6 +7,7 @@ use \app\models\modulo as modulo_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 use \core\functions;
 use \core\image;
+use \core\file;
 use \core\view;
 
 class detalle
@@ -302,6 +303,47 @@ class detalle
                         $field['active'] = $campo['portada'];
                         $field['class'] = ($campo['portada'] == 'true') ? 'btn-success' : 'btn-danger';
                         $field['icon'] = ($campo['portada'] == 'true') ? 'fa-check' : 'fa-close';
+                        $fields[] = $field;
+                    }
+                }
+
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field' => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'help' => $campos['help'],
+                    'required' => ($campos['required']) ? 'required="required"' : '',
+                    'fields' => $fields,
+                );
+                break;
+            case 'file':
+                $folder = $this->metadata['modulo'];
+                $file_url = (isset($fila[$campos['field']]) && isset($fila[$campos['field']][0])) ? (file::generar_url($fila[$campos['field']][0],'')) : '';
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field' => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'is_required_modal' => ($file_url != '') ? $campos['required'] : true,
+                    'is_required_alert' => ($file_url != '') ? $campos['required'] : true,
+                    'required' => ($campos['required']) ? 'required="required"' : '',
+                    'file' => $file_url,
+                    'is_file' => ($file_url != '') ? true : false,
+                    'url' => ($file_url != '') ? $fila[$campos['field']][0]['url'] : '',
+                    'parent' => ($file_url != '') ? $fila[$campos['field']][0]['parent'] : '',
+                    'folder' => ($file_url != '') ? $fila[$campos['field']][0]['folder'] : '',
+                    'subfolder' => ($file_url != '') ? $fila[$campos['field']][0]['subfolder'] : '',
+                    'help' => $campos['help'],
+                );
+                break;
+            case 'multiple_file':
+                $folder = $this->metadata['modulo'];
+                $fields = array();
+                if (isset($fila[$campos['field']])) {
+                    foreach ($fila[$campos['field']] as $key => $campo) {
+                        $field = $campo;
+                        $field['title_field'] = $campos['title_field'];
+                        $field['field'] = $campos['field'];
+                        $field['file'] = file::generar_url($campo, '');
                         $fields[] = $field;
                     }
                 }

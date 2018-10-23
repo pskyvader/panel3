@@ -7,6 +7,7 @@ use \app\models\modulo as modulo_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 use \core\functions;
 use \core\image;
+use \core\file;
 
 class base
 {
@@ -249,6 +250,12 @@ class base
     public function upload()
     {
         $respuesta = image::upload_tmp($this->metadata['modulo']);
+        echo json_encode($respuesta);
+    }
+    
+    public function upload_file()
+    {
+        $respuesta = file::upload_tmp();
         echo json_encode($respuesta);
     }
 }

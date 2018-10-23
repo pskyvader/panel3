@@ -19,7 +19,7 @@ class aside
             $administrador = administrador_model::getById($_SESSION[administrador_model::$idname . $prefix_site]);
             $tipo_admin = $administrador["tipo"];
             $moduloconfiguracion = moduloconfiguracion_model::getAll(array('estado' => true, 'aside' => true));
-            $modulo = modulo_model::getAll();
+            $modulo = modulo_model::getAll(array('aside' => true));
 
             $mod = array();
             foreach ($modulo as $key => $m) {

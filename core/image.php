@@ -83,8 +83,7 @@ class image
                 rename($folder_tmp . '/' . self::nombre_archivo($file['tmp'], $recorte['tag'], 'webp'), $folder . '/' . self::nombre_archivo($file['url'], $recorte['tag'], 'webp'));
             }
         }
-
-        $file['tmp']       = '';
+        unset($file['tmp']);
         $file['subfolder'] = $subfolder;
         return $file;
     }
@@ -121,7 +120,7 @@ class image
         return $recortes;
     }
 
-    private static function upload($file, $folder_upload = 'tmp', $name_final = '')
+    protected static function upload($file, $folder_upload = 'tmp', $name_final = '')
     {
         $folder = self::get_upload_dir() . $folder_upload;
 
@@ -129,6 +128,10 @@ class image
         if ($respuesta['exito']) {
             if ('' == $name_final) {
                 $name_final = uniqid();
+            } else {
+                $name_final = explode(".", $name_final);
+                $extension  = '.' . strtolower(array_pop($name_final));
+                $name_final = functions::url_amigable(implode($name_final, ''));
             }
             $name      = explode(".", $file['name']);
             $extension = '.' . strtolower(array_pop($name));
@@ -157,13 +160,13 @@ class image
     {
         $name      = explode(".", $file['name']);
         $extension = strtolower(array_pop($name));
-        $respuesta = array('exito' => false, 'mensaje' => 'Error: formato de imagen no valido');
+        $respuesta = array('exito' => false, 'mensaje' => 'Error: formato no valido');
         if (0 != $file['error']) {
             $respuesta['mensaje'] = 'Error al subir archivo: ' . $file['error'];
-        } elseif (!in_array($file['type'], self::$types)) {
+        } elseif (!in_array($file['type'], static::$types)) {
             $respuesta['mensaje'] .= '. Extension: ' . $file['type'];
-        } elseif (!in_array($extension, self::$extensions)) {
-            $respuesta['mensaje'] .= '. Extension de archivo: ' . $extension;
+        } elseif (!in_array($extension, static::$extensions)) {
+            $respuesta['mensaje'] .= '.<br/> Extension de archivo: ' . $extension;
         } else {
             $respuesta['exito'] = true;
         }
@@ -206,7 +209,7 @@ class image
         }
 
         // si es valido, se crea una imagen intermedia para acelerar el proceso de recorte de las demas imagenes
-        if ($alto > ($alto_maximo * 1.5) || $ancho > ($ancho_maximo * 1.5)) {
+        if ($alto > ($alto_valido * 1.5) || $ancho > ($ancho_valido * 1.5)) {
             $alto_final  = ($alto / $ancho) * $ancho_valido; //alto proporcional segun mayor ancho valido
             $ancho_final = ($ancho / $alto) * $alto_valido; //ancho proporcional segun mayor alto valido
             if ($ancho_final >= $ancho_valido) {
@@ -218,7 +221,7 @@ class image
                 return $respuesta;
             }
             $archivo_recorte         = $archivo;
-            $archivo_recorte['name'] = self::nombre_archivo($archivo_recorte['name'], $tag = 'recorte_previo');
+            $archivo_recorte['name'] = self::nombre_archivo($archivo_recorte['name'], 'recorte_previo');
             foreach ($recortes_foto as $recorte) {
                 if ($recorte['ancho'] <= $ancho_valido && $recorte['alto'] <= $alto_valido) {
                     $respuesta = self::recortar_foto($recorte, $archivo_recorte);
@@ -377,8 +380,8 @@ class image
             }
         }
 
-        $foto_recorte = self::nombre_archivo($foto, $etiqueta);
-        $foto_webp    = self::nombre_archivo($foto, $etiqueta, 'webp');
+        $foto_recorte = self::nombre_archivo($foto, $etiqueta, '', true);
+        $foto_webp    = self::nombre_archivo($foto, $etiqueta, 'webp', true);
         if (file_exists($ruta . $foto_recorte)) {
             unlink($ruta . $foto_recorte);
         }
@@ -397,7 +400,7 @@ class image
 
         return $respuesta;
     }
-    public static function nombre_archivo($file, $tag = '', $extension = '')
+    public static function nombre_archivo($file, $tag = '', $extension = '', $remove = false)
     {
         $name = explode(".", $file);
         if ('' == $extension) {
@@ -405,10 +408,11 @@ class image
         } else {
             array_pop($name);
         }
-
-        $name = explode('-', implode($name, ''));
-        if (count($name) > 1) {
-            array_pop($name);
+        if ($remove) {
+            $name = explode('-', implode($name, ''));
+            if (count($name) > 1) {
+                array_pop($name);
+            }
         }
 
         $name = functions::url_amigable(implode($name, ''));
@@ -481,6 +485,12 @@ class image
 
             foreach ($recortes as $key => $recorte) {
                 $url = self::get_upload_dir() . $folder . '/' . $subfolder . $sub . self::nombre_archivo($file['url'], $recorte['tag']);
+                if (file_exists($url)) {
+                    unlink($url);
+                }
+
+                $url = self::get_upload_dir() . $folder . '/' . $subfolder . $sub . self::nombre_archivo($file['url'], $recorte['tag'], 'webp');
+
                 if (file_exists($url)) {
                     unlink($url);
                 }

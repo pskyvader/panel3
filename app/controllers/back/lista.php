@@ -202,10 +202,11 @@ class lista
                 return $content;
                 break;
             case 'image':
-                if (isset($fila[$th['field']][0])) {
-                    $thumb_url = image::generar_url($fila[$th['field']][0], 'thumb');
-                    $zoom_url = image::generar_url($fila[$th['field']][0], 'zoom');
-                    $original_url = image::generar_url($fila[$th['field']][0], '');
+                if (isset($fila[$th['field']]) && is_array($fila[$th['field']])) {
+                    $portada=image::portada($fila[$th['field']]);
+                    $thumb_url = image::generar_url($portada, 'thumb');
+                    $zoom_url = image::generar_url($portada, 'zoom');
+                    $original_url = image::generar_url($portada, '');
                 } else {
                     $thumb_url = $zoom_url = $original_url = '';
                 }

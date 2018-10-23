@@ -58,7 +58,7 @@ class head
         $this->data['description'] = strip_tags($this->data['description_text'] != '');
         $logo = logo_model::getById(5);
         $this->data['logo'] = image::generar_url($logo['foto'][0], 'social');
-        if (isset($metadata['image'])) {
+        if (isset($metadata['image']) && $metadata['image']!='') {
             $this->data['image_url'] = $metadata['image'];
             $this->data['image'] = true;
         }

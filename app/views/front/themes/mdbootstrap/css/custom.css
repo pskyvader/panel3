@@ -6,24 +6,25 @@ input[type=date],input[type=datetime-local],input[type=email],input[type=number]
 .md-form label{left:1rem;font-size:.9375rem}
 .md-form label.active{-webkit-transform:translateY(-180%);-ms-transform:translateY(-180%);transform:translateY(-180%)}
 textarea.md-textarea{min-height:10rem}
-input[type=date]:focus:not([readonly]),input[type=datetime-local]:focus:not([readonly]),input[type=email]:focus:not([readonly]),input[type=number]:focus:not([readonly]),input[type=password]:focus:not([readonly]),input[type=search-md]:focus:not([readonly]),input[type=search]:focus:not([readonly]),input[type=tel]:focus:not([readonly]),input[type=text]:focus:not([readonly]),input[type=time]:focus:not([readonly]),input[type=url]:focus:not([readonly]),textarea.md-textarea:focus:not([readonly]){border-color:#278c90;box-shadow:0 1px 0 0 #278c90}
-input[type=date]:focus:not([readonly])+label,input[type=datetime-local]:focus:not([readonly])+label,input[type=email]:focus:not([readonly])+label,input[type=number]:focus:not([readonly])+label,input[type=password]:focus:not([readonly])+label,input[type=search-md]:focus:not([readonly])+label,input[type=search]:focus:not([readonly])+label,input[type=tel]:focus:not([readonly])+label,input[type=text]:focus:not([readonly])+label,input[type=time]:focus:not([readonly])+label,input[type=url]:focus:not([readonly])+label,textarea.md-textarea:focus:not([readonly])+label{color:#278c90}
-a{color:#278c90}
+input[type=date]:focus:not([readonly]),input[type=datetime-local]:focus:not([readonly]),input[type=email]:focus:not([readonly]),input[type=number]:focus:not([readonly]),input[type=password]:focus:not([readonly]),input[type=search-md]:focus:not([readonly]),input[type=search]:focus:not([readonly]),input[type=tel]:focus:not([readonly]),input[type=text]:focus:not([readonly]),input[type=time]:focus:not([readonly]),input[type=url]:focus:not([readonly]),textarea.md-textarea:focus:not([readonly]){border-color:#258084;box-shadow:0 1px 0 0 #258084}
+input[type=date]:focus:not([readonly])+label,input[type=datetime-local]:focus:not([readonly])+label,input[type=email]:focus:not([readonly])+label,input[type=number]:focus:not([readonly])+label,input[type=password]:focus:not([readonly])+label,input[type=search-md]:focus:not([readonly])+label,input[type=search]:focus:not([readonly])+label,input[type=tel]:focus:not([readonly])+label,input[type=text]:focus:not([readonly])+label,input[type=time]:focus:not([readonly])+label,input[type=url]:focus:not([readonly])+label,textarea.md-textarea:focus:not([readonly])+label{color:#258084}
+a{color:#258084}
 a:focus,a:hover{color:#15318a}
 h2{font-size:1.375rem;font-weight:600;text-transform:uppercase;margin-bottom:2rem}
 p{font-size:.875rem}
-.divisor:after{content:"";display:block;width:5rem;height:3px;background:#278c90;margin-top:.5rem}
+.divisor:after{content:"";display:block;width:5rem;height:3px;background:#258084;margin-top:.5rem}
 .sidebar h3{font-size:1.1rem;font-weight:900;text-transform:uppercase}
 .sidebar ul li{list-style:none;border-bottom:1px solid #eaeaea}
 .sidebar ul li:first-child{border-top:1px solid #eaeaea}
 .sidebar ul li a:before{content:"";display:inline-block;width:5px;height:5px;margin-right:10px;vertical-align:middle;margin-bottom:.3rem;background:#000}
 .sidebar ul li a{display:block;color:#1a1a1a;padding:.5rem 0;font-size:.875rem;font-weight:500;text-transform:uppercase}
-.sidebar ul li a.active{color:#278c90}
+.sidebar ul li a.active{color:#258084}
 .sidebar ul li a:focus,.sidebar ul li a:hover{text-decoration:underline}
 .bg-dot:after{content:"";width:43px;background:url(../img/dot.png);height:5px;display:block;text-align:center;margin:15px auto}
 .bg-dot.text-left:after{text-align:left;margin:15px 0}
 .list-square{list-style:square;color:#278c92}
 .btn{background-color:#278c92}
+.dropdown-toggle-split::after{margin-left:.255em}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
 /*! FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE*/
 .flotante{z-index:2;position:relative}
@@ -37,13 +38,13 @@ p{font-size:.875rem}
 /*! FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE*/
 /*!HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME*/
 .bienvenido h1{font-size:1.8rem;text-transform:uppercase;font-weight:700}
-.bienvenido h1 span{color:#278c90}
+.bienvenido h1 span{color:#258084}
 .banner-home .view{cursor:pointer}
 .noticias-home .noticias .titulo{position:absolute;bottom:0;padding:1rem;color:#fff;text-shadow:1px 1px 5px #000}
 .banner-home-abajo h2{font-size:1.375rem;font-weight:700;text-transform:uppercase;margin-bottom:2rem}
 #popup-home{max-width:800px;margin:0 30px}
 #popup-home h2{font-size:2.125rem}
-#popup-home .btn{background-color:#278c90}
+#popup-home .btn{background-color:#258084}
 #popup-home img.logo{max-width:200px}
 .checkbox-warning-filled [type=checkbox][class*=filled-in]:checked+label:after{border-color:#278c92;background-color:#278c92}
 .producto-destacado h2{font-size:2rem;font-weight:700}
@@ -102,7 +103,7 @@ footer h3:hover{color:#278c92}
 .seccion .sidebar ul li a{font-weight:600}
 .seccion .sidebar ul.submenu{padding:0}
 .seccion .sidebar ul.submenu li a{font-size:.9rem;color:#a4a4a4}
-.seccion .sidebar ul li a.active,.seccion .sidebar ul li a:hover{color:#278c90}
+.seccion .sidebar ul li a.active,.seccion .sidebar ul li a:hover{color:#258084}
 .seccion .sidebar ul.submenu li a.active,.seccion .sidebar ul.submenu li a:hover{color:#000}
 .descripcion img{max-width:100%;height:auto}
 @media (max-width:767.98px){
@@ -159,9 +160,9 @@ footer h3:hover{color:#278c92}
 .detalle-producto .cantidad input::-moz-selection{background:0 0}
 .detalle-producto .cantidad input::selection{background:0 0}
 .detalle-producto .cantidad input{width:35px;border:none;vertical-align:super;text-align:right}
-.detalle-producto .cotizar .btn{background-color:#278c90;font-size:.875rem;text-transform:uppercase;padding:.75rem 1rem;margin:0 15px}
+.detalle-producto .cotizar .btn{background-color:#258084;font-size:.875rem;text-transform:uppercase;padding:.75rem 1rem;margin:0 15px}
 .detalle-producto .mas-informacion{font-size:1rem;font-weight:700;text-transform:uppercase;width:200px;text-align:center}
-.detalle-producto .mas-informacion:after{content:"";display:block;width:200px;height:2px;background:#278c90;margin-top:15px;position:absolute}
+.detalle-producto .mas-informacion:after{content:"";display:block;width:200px;height:2px;background:#258084;margin-top:15px;position:absolute}
 .detalle-producto #carrusel-producto .carousel-item img{border:1px solid #dadada}
 .detalle-producto #carrusel-producto.carousel-thumbnails{margin-bottom:1rem}
 .detalle-producto #carrusel-producto.carousel-thumbnails .carousel-indicators{position:relative;margin:0;margin-top:1rem}
@@ -177,23 +178,23 @@ footer h3:hover{color:#278c92}
 .servicios .card-wrapper{min-height:250px}
 .servicios .card-wrapper .face h4{font-size:1.4375rem;font-weight:700}
 .servicios .card-wrapper .face .descripcion{max-height:5.5rem;overflow:hidden}
-.servicios .card-wrapper .face.front{color:#fff;background-color:#278c90!important}
+.servicios .card-wrapper .face.front{color:#fff;background-color:#258084!important}
 .servicios .card-wrapper .face.front img{width:100px}
 .servicios .card-wrapper .vermas{text-transform:uppercase;text-decoration:underline;font-weight:700;font-size:.875rem}
-.servicios .card-wrapper .face.back{border:3px solid #278c90}
-.servicios .card-wrapper .face.back h4{color:#278c90}
+.servicios .card-wrapper .face.back{border:3px solid #258084}
+.servicios .card-wrapper .face.back h4{color:#258084}
 .servicios .card-wrapper .face.back a{color:#555}
-.servicios .card-wrapper .face.back a .masdetalles{color:#278c90;text-decoration:underline}
+.servicios .card-wrapper .face.back a .masdetalles{color:#258084;text-decoration:underline}
 .servicios .card-wrapper .fa-undo{font-size:1rem}
-#popup-servicios h2{font-weight:700;font-size:1.4rem;max-width:500px;text-align:center;margin-bottom:0;color:#278c90}
-#popup-servicios .btn{background-color:#278c90;font-size:1rem}
+#popup-servicios h2{font-weight:700;font-size:1.4rem;max-width:500px;text-align:center;margin-bottom:0;color:#258084}
+#popup-servicios .btn{background-color:#258084;font-size:1rem}
 /*!SERVICIOS */
 /*!NOTICIAS */
 .seccion-blog .noticia{margin-bottom:50px;border-bottom:1px solid#eaeaea;padding-bottom:60px}
 .seccion-blog .noticia h2{font-size:1.4375rem;text-transform:capitalize;margin-top:2rem;margin-bottom:1rem}
-.seccion-blog .sidebar ul li a.active{color:#278c90}
+.seccion-blog .sidebar ul li a.active{color:#258084}
 .seccion-blog .noticia a.btn-more{text-transform:uppercase;text-decoration:underline;font-weight:700;font-size:14px}
-.seccion-blog .noticia .btn{background:#278c90}
+.seccion-blog .noticia .btn{background:#258084}
 /*!NOTICIAS */
 /*!SUCURSALES */
 .sucursales .mapa{min-height:15rem}
@@ -235,24 +236,24 @@ a.facebook{background:#3b5998;padding:10px;border-radius:5px;color:#fff;margin-l
 }
 /*!CARRO*/
 /*!CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO */
-.contacto .icono{width:40px;display:inline-block;vertical-align:top;text-align:left;color:#278c90}
+.contacto .icono{width:40px;display:inline-block;vertical-align:top;text-align:left;color:#258084}
 .contacto .icono .fa-lg{font-size:1.7rem}
 .contacto .icono+.informacion{width:calc(100% - 40px);display:inline-block;float:right}
 .contacto form{margin-bottom:4rem}
-.contacto form .btn{background-color:#278c90;font-size:1rem}
+.contacto form .btn{background-color:#258084;font-size:1rem}
 .contacto h2{font-size:1.25rem;font-weight:700}
-.contacto h3{color:#278c90;font-size:1.375rem;font-weight:700}
+.contacto h3{color:#258084;font-size:1.375rem;font-weight:700}
 .contacto ul li{font-size:.9rem;color:#000;font-weight:700;padding:.2rem 0}
 .contacto ul li a{color:#000}
-.contacto ul li a:hover{color:#278c90}
+.contacto ul li a:hover{color:#258084}
 .contacto .mapa{height:25rem}
 .contacto .dropdown-content li{padding:0}
 .contacto .dropdown-content li>a,.contacto .dropdown-content li>span{color:#757575;font-weight:500}
 /*!CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO */
 /*!CUENTA */
-.cuenta .btn{background:#278c90}
+.cuenta .btn{background:#258084}
 .cuenta-pedidos a{color:#000}
-.cuenta-pedidos .btn{background:#278c90}
+.cuenta-pedidos .btn{background:#258084}
 .cuenta-pedidos .accordion-blocks .card{margin-bottom:1.2rem;box-shadow:0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12)}
 .cuenta-pedidos .accordion-blocks .card .card-body{border-top:1px solid #eee}
 /*!CUENTA */

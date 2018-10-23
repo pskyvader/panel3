@@ -20,6 +20,8 @@ class moduloconfiguracion extends base
     );
     protected $tipos_detalle = array(
         'active' => array('text' => 'Active', 'value' => 'active'),
+        'file' => array('text' => 'Archivo', 'value' => 'file'),
+        'multiple_file' => array('text' => 'Archivo multiple', 'value' => 'multiple_file'),
         'recursive_checkbox' => array('text' => 'Arbol de botones checkbox', 'value' => 'recursive_checkbox'),
         'recursive_radio' => array('text' => 'Arbol de botones radio', 'value' => 'recursive_radio'),
         'password' => array('text' => 'Contraseña', 'value' => 'password'),

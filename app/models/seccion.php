@@ -56,6 +56,9 @@ class seccion extends base_model
                 if (isset($row[$key]) && isset($row[$key]['foto'])) {
                     $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
                 }
+                if (isset($row[$key]) && isset($row[$key]['archivo'])) {
+                    $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
+                }
             }
         }
         if (isset($idseccioncategoria)) {
@@ -84,7 +87,36 @@ class seccion extends base_model
             if (isset($row[0]) && isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
             }
+            if (isset($row[0]) && isset($row[0]['archivo'])) {
+                $row[0]['archivo'] = functions::decode_json($row[0]['archivo']);
+            }
         }
         return (count($row) == 1) ? $row[0] : $row;
     }
+
+    public static function copy($id)
+    {
+        $row = static::getById($id);
+        if (isset($row['foto'])) {
+            unset($row['foto']);
+        }
+        if (isset($row['archivo'])) {
+            unset($row['archivo']);
+        }
+        $row['idseccioncategoria']=functions::encode_json($row['idseccioncategoria']);
+        $fields = table::getByname(static::$table);
+        $insert = database::create_data($fields, $row);
+        $connection = database::instance();
+        $row = $connection->insert(static::$table, static::$idname, $insert);
+        if ($row) {
+            $last_id = $connection->get_last_insert_id();
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            return $last_id;
+        } else {
+            return $row;
+        }
+    }
+
+
+
 }
