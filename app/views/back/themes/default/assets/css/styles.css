@@ -5224,7 +5224,7 @@ body>.ui-pnotify-modal-overlay{position:fixed;z-index:100039}
 .fileinput-exists .fileinput-new,.fileinput-new .fileinput-exists{display:none}
 .fileinput-inline .fileinput-controls{display:inline}
 .fileinput-filename{vertical-align:middle;display:inline-block;overflow:hidden}
-.form-control .fileinput-filename{vertical-align:bottom}
+.form-control .fileinput-filename{vertical-align:bottom;white-space:nowrap;max-width:calc(100% - 20px);text-overflow:ellipsis}
 .fileinput.input-group{display:table}
 .fileinput.input-group>*{position:relative;z-index:2}
 .fileinput.input-group>.btn-file{z-index:1}
@@ -5917,6 +5917,7 @@ body.dragging,body.dragging *{cursor:move!important}
 .placeholder{height:20px}
 .placeholder:before{position:relative;content:"";width:0;height:0;border:3px solid #bbb}
 .panel-ctrls .form-group,.panel-ctrls label{margin:0!important;vertical-align:top}
+.input-group-btn .btn-md,
 .btn-md{padding:6px 15px;font-size:12px;margin:5px 1px}
 .btn .material-icons{font-size:17px}
 table .tooltip.top{left:0!important;margin-top:15px}

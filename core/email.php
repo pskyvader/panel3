@@ -1,7 +1,9 @@
 <?php namespace core;
 
 defined("APPPATH") or die("Access denied");
+use \app\models\logo;
 use \core\app;
+use \core\image;
 use \core\view;
 use \PHPMailer;
 
@@ -25,14 +27,7 @@ class email
         $nombre_sitio = $config['title'];
         $color_primario = $config['color_primario'];
         $color_secundario = $config['color_secundario'];
-        if (!isset($body_email['logo'])) {
-            $logo="";
-            //$l = new logo();
-            //$logo = $l->get_logo(array('id' => 2, 'limit' => 1));
-            //$logo = _PATH . fecha_archivo($carpetas['urlLogo'] . $logo[0]['foto']);
-        } else {
-            $logo = 'cid:' . $body_email['logo'];
-        }
+        $logo='logo';
 
         $body = file_get_contents($body_email['body']);
 
@@ -76,7 +71,6 @@ class email
     {
         $config = app::getConfig();
         $dominio = $config['domain'];
-        $email_empresa = $config['main_email'];
         $from = $config['email_from'];
         $nombre_sitio = $config['title'];
         require_once(PROJECTPATH.'/phpmailer/PHPMailerAutoload.php');
@@ -114,6 +108,10 @@ class email
                 $mail->AddEmbeddedImage($imagen['url'], $imagen['tag']);
             }
         }
+        
+        $logo = logo::getById(8);
+        $mail->AddEmbeddedImage(image::generar_dir($logo['foto'][0], 'email'), 'logo');
+
         if (!$mail->send()) {
             $respuesta['exito'] = false;
             $respuesta['mensaje'] = "Mailer Error: " . $mail->ErrorInfo;

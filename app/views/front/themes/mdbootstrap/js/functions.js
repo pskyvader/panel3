@@ -239,3 +239,20 @@ function mover(elemento, tiempo, delay) {
         }, tiempo);
     }
 }
+
+function notificacion(mensaje, tipo) {
+    toastr.clear();
+    toastr[tipo](mensaje);
+}
+
+function barra(porcentaje) {
+    /*if (porcentaje >= 0 && porcentaje < 100) {
+        $.skylo('show', function() {
+            $.skylo('set', porcentaje);
+        });
+    } else {
+        setTimeout(function() {
+            $.skylo('end');
+        }, 500);
+    }*/
+}

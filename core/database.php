@@ -192,7 +192,7 @@ class database
         $sql .= ") VALUES ('" . $valor_primario . "'";
         foreach ($insert as $key => $value) {
             $sql .= ",";
-            $sql .= ($value == "true" || $value == "false") ? $value : "'" . $value . "'";
+            $sql .= ($value == "true" || $value == "false") ? $value : "'" . str_replace("'", "\\'", $value) . "'";
         }
         $sql .= ")";
         $row = $this->consulta($sql, false);

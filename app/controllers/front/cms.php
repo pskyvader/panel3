@@ -4,6 +4,7 @@ namespace app\controllers\front;
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\seccion as seccion_model;
 use \app\models\seo;
+use \core\file;
 use \core\functions;
 use \core\view;
 
@@ -37,15 +38,15 @@ class cms extends base
         if ($this->modulo['hijos']) {
             $var['idpadre'] = 0;
         }
-        $row        = seccion_model::getAll($var);
-        $sidebar=array();
+        $row     = seccion_model::getAll($var);
+        $sidebar = array();
         foreach ($row as $key => $s) {
-            $sidebar[]=array('title'=>$s['titulo'],'active'=>'','url'=>functions::url_seccion(array($this->url[0], 'detail'), $s));
+            $sidebar[] = array('title' => $s['titulo'], 'active' => '', 'url' => functions::url_seccion(array($this->url[0], 'detail'), $s));
         }
-        
+
         view::set('title_category', $this->seo['titulo']);
         view::set('sidebar', $sidebar);
-        
+
         view::set('description', '');
         view::render('cms-sidebar');
 
@@ -59,7 +60,7 @@ class cms extends base
             $id      = functions::get_idseccion($var[0]);
             $seccion = seccion_model::getById($id);
             if (isset($seccion[0])) {
-                $this->url = functions::url_seccion(array($this->url[0], 'detail'), $seccion, true);
+                $this->url          = functions::url_seccion(array($this->url[0], 'detail'), $seccion, true);
                 $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => $seccion['titulo']);
             }
         }
@@ -78,7 +79,6 @@ class cms extends base
         $breadcrumb = new breadcrumb();
         $breadcrumb->normal($this->breadcrumb);
 
-        
         $var = array();
         if ($this->seo['tipo_modulo'] != 0) {
             $var['tipo'] = $this->seo['tipo_modulo'];
@@ -86,19 +86,29 @@ class cms extends base
         if ($this->modulo['hijos']) {
             $var['idpadre'] = 0;
         }
-        $row        = seccion_model::getAll($var);
-        $sidebar=array();
+        $row     = seccion_model::getAll($var);
+        $sidebar = array();
         foreach ($row as $key => $s) {
-            $sidebar[]=array('title'=>$s['titulo'],'active'=>'','url'=>functions::url_seccion(array($this->url[0], 'detail'), $s));
+            $sidebar[] = array('title' => $s['titulo'], 'active' => '', 'url' => functions::url_seccion(array($this->url[0], 'detail'), $s));
         }
-        
-        view::set('title_category', $this->seo['titulo']);
+
+        $extra='';
+        if (count($seccion['archivo']) > 0) {
+            $files = array();
+            foreach ($seccion['archivo'] as $key => $a) {
+                $files[] = array('title' => $a['url'], 'size' => functions::file_size(file::generar_dir($a, '')), 'url' => file::generar_url($a, ''));
+            }
+            view::set('files', $files);
+            view::set('title', 'Archivos');
+            $extra=view::render('files',false,true);
+        }
+
         view::set('sidebar', $sidebar);
-        
+        view::set('title_category', $this->seo['titulo']);
+        view::set('title', $seccion['titulo']);
         view::set('description', $seccion['descripcion']);
+        view::set('extra', $extra);
         view::render('cms-sidebar');
-        
-        
 
         $footer = new footer();
         $footer->normal();

@@ -11,6 +11,7 @@ class breadcrumb
 {
     public function normal($breadcrumb=array())
     { 
+        //return false;
         $seo=seo::getById(1);
         $b = array(
             array('url' => functions::generar_url(array($seo['url'])), 'title' =>$seo['titulo']),

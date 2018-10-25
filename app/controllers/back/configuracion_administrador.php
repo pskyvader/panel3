@@ -163,6 +163,7 @@ class configuracion_administrador extends base
                 array('titulo' => 'Logo Header sitio', 'orden' => 5),
                 array('titulo' => 'Logo Footer sitio', 'orden' => 6),
                 array('titulo' => 'Manifest', 'orden' => 7),
+                array('titulo' => 'Email', 'orden' => 8),
             );
             foreach ($insert_logo as $key => $logos) {
                 logo_model::insert($logos);

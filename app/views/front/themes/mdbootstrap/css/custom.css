@@ -2,14 +2,14 @@ body{font-family:'Open Sans',sans-serif}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
 .carousel-control-next,.carousel-control-prev{color:#dedede}
 .carousel-control-next:focus,.carousel-control-next:hover,.carousel-control-prev:focus,.carousel-control-prev:hover{color:#d4d4d4}
-input[type=date],input[type=datetime-local],input[type=email],input[type=number],input[type=password],input[type=search-md],input[type=search],input[type=tel],input[type=text],input[type=time],input[type=url],textarea.md-textarea{border:1px solid #d9d9d9;font-size:.9375rem;padding:.5rem 1rem;width:calc(100% - 2rem)}
+.md-form input[type=date], .md-form input[type=datetime-local], .md-form input[type=email], .md-form input[type=number], .md-form input[type=password], .md-form input[type=search-md], .md-form input[type=search], .md-form input[type=tel], .md-form input[type=text], .md-form input[type=time], .md-form input[type=url], .md-form textarea.md-textarea{border:1px solid #d9d9d9;font-size:.9375rem;padding:.5rem 1rem;width:calc(100% - 2rem)}
 .md-form label{left:1rem;font-size:.9375rem}
 .md-form label.active{-webkit-transform:translateY(-180%);-ms-transform:translateY(-180%);transform:translateY(-180%)}
 textarea.md-textarea{min-height:10rem}
-input[type=date]:focus:not([readonly]),input[type=datetime-local]:focus:not([readonly]),input[type=email]:focus:not([readonly]),input[type=number]:focus:not([readonly]),input[type=password]:focus:not([readonly]),input[type=search-md]:focus:not([readonly]),input[type=search]:focus:not([readonly]),input[type=tel]:focus:not([readonly]),input[type=text]:focus:not([readonly]),input[type=time]:focus:not([readonly]),input[type=url]:focus:not([readonly]),textarea.md-textarea:focus:not([readonly]){border-color:#258084;box-shadow:0 1px 0 0 #258084}
-input[type=date]:focus:not([readonly])+label,input[type=datetime-local]:focus:not([readonly])+label,input[type=email]:focus:not([readonly])+label,input[type=number]:focus:not([readonly])+label,input[type=password]:focus:not([readonly])+label,input[type=search-md]:focus:not([readonly])+label,input[type=search]:focus:not([readonly])+label,input[type=tel]:focus:not([readonly])+label,input[type=text]:focus:not([readonly])+label,input[type=time]:focus:not([readonly])+label,input[type=url]:focus:not([readonly])+label,textarea.md-textarea:focus:not([readonly])+label{color:#258084}
+.md-form input[type=date]:focus:not([readonly]), .md-form input[type=datetime-local]:focus:not([readonly]), .md-form input[type=email]:focus:not([readonly]), .md-form input[type=number]:focus:not([readonly]), .md-form input[type=password]:focus:not([readonly]), .md-form input[type=search-md]:focus:not([readonly]), .md-form input[type=search]:focus:not([readonly]), .md-form input[type=tel]:focus:not([readonly]), .md-form input[type=text]:focus:not([readonly]), .md-form input[type=time]:focus:not([readonly]), .md-form input[type=url]:focus:not([readonly]), .md-form textarea.md-textarea:focus:not([readonly]){border-color:#258084;box-shadow:0 1px 0 0 #258084}
+.md-form input[type=date]:focus:not([readonly])+label, .md-form input[type=datetime-local]:focus:not([readonly])+label, .md-form input[type=email]:focus:not([readonly])+label, .md-form input[type=number]:focus:not([readonly])+label, .md-form input[type=password]:focus:not([readonly])+label, .md-form input[type=search-md]:focus:not([readonly])+label, .md-form input[type=search]:focus:not([readonly])+label, .md-form input[type=tel]:focus:not([readonly])+label, .md-form input[type=text]:focus:not([readonly])+label, .md-form input[type=time]:focus:not([readonly])+label, .md-form input[type=url]:focus:not([readonly])+label, .md-form textarea.md-textarea:focus:not([readonly])+label{color:#258084}
 a{color:#258084}
-a:focus,a:hover{color:#15318a}
+a:focus,a:hover{color:#000}
 h2{font-size:1.375rem;font-weight:600;text-transform:uppercase;margin-bottom:2rem}
 p{font-size:.875rem}
 .divisor:after{content:"";display:block;width:5rem;height:3px;background:#258084;margin-top:.5rem}
@@ -23,7 +23,8 @@ p{font-size:.875rem}
 .bg-dot:after{content:"";width:43px;background:url(../img/dot.png);height:5px;display:block;text-align:center;margin:15px auto}
 .bg-dot.text-left:after{text-align:left;margin:15px 0}
 .list-square{list-style:square;color:#278c92}
-.btn{background-color:#278c92}
+.btn{background-color:#278c92;color: #fff}
+.btn:focus,.btn:hover{background-color:#216f73; color: #fff;}
 .dropdown-toggle-split::after{margin-left:.255em}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
 /*! FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE*/
@@ -74,12 +75,12 @@ footer ul{padding-left:1rem;margin-bottom:0}
 footer ul li{padding:.5rem 0}
 footer ul li a{margin-right:1rem}
 footer ul li .social a{margin-right:0rem}
-footer hr{border-top-color:#5065a7}
+footer hr{border-top-color:#000}
 footer .before-footer{background:#278c92;height:.6rem}
 footer .direcciones h4{font-size:.8125rem;font-weight:700;text-transform:uppercase}
 footer .direcciones li{padding-top:0}
 footer .direcciones .descripcion p{margin-bottom:0}
-footer .after-footer{color:#a7adca;font-size:.8125rem}
+footer .after-footer{color:#6e6e6e;font-size:.8125rem}
 footer h3 .icono{width:30px;height:30px;position:relative;margin:0;-webkit-transform:rotate(0);-moz-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0);-webkit-transition:.5s ease-in-out;-moz-transition:.5s ease-in-out;-o-transition:.5s ease-in-out;transition:.5s ease-in-out;cursor:pointer;float:right}
 footer h3 .icono span{display:block;position:absolute;height:2px;width:50%;border-radius:9px;opacity:1;left:0;top:13px;-webkit-transition:.25s ease-in-out;-moz-transition:.25s ease-in-out;-o-transition:.25s ease-in-out;transition:.25s ease-in-out}
 footer h3 .icono span:nth-child(1){-webkit-transform:rotate(0);-moz-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}

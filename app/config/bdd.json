@@ -468,6 +468,10 @@
                 "tipo": "longtext"
             },
             {
+                "titulo": "archivo",
+                "tipo": "longtext"
+            },
+            {
                 "titulo": "resumen",
                 "tipo": "longtext"
             },

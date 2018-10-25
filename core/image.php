@@ -441,6 +441,26 @@ class image
         } else { $archivo = '';}
         return $archivo;
     }
+    
+    public static function generar_dir($file, $tag = 'thumb', $extension = "", $folder = "", $subfolder = "")
+    {
+        if ('' == $folder) {
+            $folder = $file['folder'];
+        }
+        if ('' != $subfolder) {
+            $subfolder .= '/';
+        } else {
+            $subfolder = $file['parent'] . '/' . $file['subfolder'] . '/';
+        }
+
+        $url  = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
+        $archivo=self::get_upload_dir() . $url;
+        if (!file_exists($archivo)) {
+            $archivo = '';
+        }
+        return $archivo;
+    }
+
     public static function portada($fotos)
     {
         $portada = array();

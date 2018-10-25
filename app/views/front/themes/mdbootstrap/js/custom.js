@@ -11,6 +11,7 @@ function inicio() {
     modulo = $("meta[property='modulo']").prop("content");
     url = $("meta[property='og:url']").prop("content");
     $('[data-toggle="tooltip"]').tooltip();
+    $('.mdb-select').material_select();
     if ($('.carousel').length > 0) {
         $('.carousel').carousel();
         
@@ -26,7 +27,10 @@ function inicio() {
         $('.carousel').hammer().on('swiperight', function() {
             $(this).carousel('prev');
         });
-
+    }
+    
+    if ($('.map').length > 0) {
+        inicio_map();
     }
 }
 

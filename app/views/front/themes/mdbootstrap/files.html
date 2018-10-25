@@ -1,0 +1,11 @@
+<section class="files py-4">
+        <h5>{title}</h5>
+        <ul class="list-group">
+            {foreach files}
+            <a href="{url}" target="_blank" rel="noopener noreferrer" class="list-group-item d-flex justify-content-between align-items-center btn btn-md btn-white grey lighten-4">
+                {title}
+                <span class="badge badge-dark badge-pill">{size}</span>
+            </a>
+            {/foreach files}
+        </ul>
+</section>
