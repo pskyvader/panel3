@@ -38,6 +38,7 @@ class head
         $this->data['path'] = app::$_path;
         $this->data['color_primario'] = $config['color_primario'];
         $this->data['googlemaps_key'] = $config['googlemaps_key'];
+        $this->data['google_captcha'] = $config['google_captcha'];
 
         $title = $config['title'];
         $short_title = $config['short_title'];

@@ -73,7 +73,7 @@ class head
             if (isset($_POST['ajax_header'])) {
                 $this->ajax();
             } else {
-                $this->data['css'] = view::css(true);
+                $this->data['css'] = view::css(true,false);
                 view::set_array($this->data);
                 view::render('head');
             }

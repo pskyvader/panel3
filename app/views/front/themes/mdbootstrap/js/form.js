@@ -1,29 +1,40 @@
 $(document).on('submit', 'form', function(e) { // guardar formulario detalle
-    e.preventDefault();    
-    var asunto =$('select[name=asunto] option:selected',this).val();
-    if(asunto==''){
+    var asunto = $('select[name=asunto] option:selected', this).val();
+    if (asunto == '') {
         toastr["error"]('Debes seleccionar un asunto');
         return false;
     }
     habilitar(false);
     barra(50);
     var data = $(this).serializeObject();
-    
+
     var f = $('input[type=file]', this);
-    var archivo=[];
-    if (f.length>0) {
-        $(f).each(function(){
-            var files=$(this)[0].files;
-            $(files).each(function(k,v){
+    var archivo = [];
+    if (f.length > 0) {
+        $(f).each(function() {
+            var files = $(this)[0].files;
+            $(files).each(function(k, v) {
                 archivo.push(v);
             });
         });
     }
-    if(archivo.length==0) archivo=null;
+    if (archivo.length == 0) archivo = null;
 
-    post($(this).prop('action'), data, "Enviando mensaje",archivo);
+    post($(this).prop('action'), data, "Enviando mensaje", archivo, function(datos) {
+        if (typeof(grecaptcha) != 'undefined' && datos.captcha) {
+            grecaptcha.reset();
+        }
+    });
     return false;
 });
+
+
+function inicio_captcha() {
+    if (typeof(grecaptcha) == 'undefined') {
+        $.getScript('https://www.google.com/recaptcha/api.js');
+    }
+}
+
 function habilitar(valor) {
     habilitado = (valor) ? false : true;
     elementos = $('form button');

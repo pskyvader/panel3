@@ -22,28 +22,33 @@ class enviar
         $email_empresa = $config['main_email'];
 
         if (empty($campos['nombre'])) {
-            $respuesta['mensaje']= '<strong>Error!</strong>&nbsp; Nombre vacío.';
+            $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Nombre vacío.';
         } elseif (empty($campos['email'])) {
-            $respuesta['mensaje']= '<strong>Error!</strong>&nbsp; Email vacío.';
+            $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Email vacío.';
         } elseif (!filter_var($campos['email'], FILTER_VALIDATE_EMAIL)) {
-            $respuesta['mensaje']= '<strong>Error!</strong>&nbsp; Email no valido.';
+            $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Email no valido.';
         } elseif (empty($campos['mensaje'])) {
-            $respuesta['mensaje']= '<strong>Error!</strong>&nbsp; Mensaje vacío.';
+            $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Mensaje vacío.';
+        } elseif (!isset($campos['g-recaptcha-response']) || empty($campos['g-recaptcha-response'])) {
+            $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Error en captcha. Por favor completa el captcha.';
+            $respuesta['captcha']=true;
         }
 
         if ($respuesta['mensaje'] != '') {
             $respuesta['exito'] = false;
         }
 
-        /* if ($respuesta['exito']) {
-        $url                = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $campos['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
-        $captcha            = json_decode(file_get_contents($url));
-        $respuesta['exito'] = $captcha['success'];
-        if (!$captcha['success']) {
-        $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Captcha incorrecto o caducado.';
+        if ($respuesta['exito']) {
+            $url                  = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $campos['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+            $file=file_get_contents($url);
+            $captcha              = functions::decode_json($file);
+            $respuesta['exito']   = ($captcha['success']);
+            if (!$respuesta['exito']) {
+                $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Error en captcha. Por favor completa el captcha.';
+            }
+            $respuesta['captcha']=true;
+            unset($campos['g-recaptcha-response']);
         }
-        unset($campos['g-recaptcha-response']);
-        }*/
 
         if ($respuesta['exito']) {
             $body_email = array(
@@ -67,8 +72,10 @@ class enviar
             $respuesta = email::enviar_email(array($campos['email'], $email_empresa), "Formulario de " . $titulo, $body, $adjuntos, $imagenes);
             if ($respuesta['exito']) {
                 $respuesta['mensaje'] = "<strong>Gracias!</strong>&nbsp; Email enviado correctamente.";
+                $respuesta['captcha']=true;
             } else {
                 $respuesta['mensaje'] = "<strong>Error!</strong>&nbsp; No se puede enviar el email, por favor intente más tarde.<br/>" . $respuesta['mensaje'];
+                $respuesta['captcha']=true;
             }
         }
         echo functions::encode_json($respuesta);

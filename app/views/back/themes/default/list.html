@@ -17,9 +17,9 @@
                         <div class="panel-heading">
                             <div class="panel-ctrls pull-left">
                                 <label class="panel-ctrls-center">
-                                    <select name="limit" aria-controls="example" class="form-control">
+                                    <select name="limit" aria-controls="limits" class="select form-control">
                                         {foreach limits}
-                                        <option value="{value}" {active}>{value}</option>
+                                        <option value="{value}" {active}>{text}</option>
                                         {/foreach limits}
                                     </select>
                                 </label>

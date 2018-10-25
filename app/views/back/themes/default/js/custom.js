@@ -22,6 +22,7 @@ function inicio() {
     url = $("meta[property='og:url']").prop("content");
     Utility.animateContent();
     $('body').scrollSidebar();
+    $('.select').dropdown(); // DropdownJS
     enquire.register("screen and (max-width: 1199px)", {
         match: function() { //smallscreen
             $('body').addClass('sidebar-collapsed');

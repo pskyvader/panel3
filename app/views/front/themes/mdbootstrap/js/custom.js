@@ -5,6 +5,7 @@ var path = $("meta[property='path']").prop("content");
 var modulo = $("meta[property='modulo']").prop("content");
 var url = $("meta[property='og:url']").prop("content");
 var googlemaps_key = $("meta[property='googlemaps_key']").prop("content");
+var google_captcha = $("meta[property='google_captcha']").prop("content");
 
 
 function inicio() {
@@ -12,13 +13,14 @@ function inicio() {
     url = $("meta[property='og:url']").prop("content");
     $('[data-toggle="tooltip"]').tooltip();
     $('.mdb-select').material_select();
+    Waves.attach('.btn', ['waves-light']);
     if ($('.carousel').length > 0) {
         $('.carousel').carousel();
-        
-        $('.carousel').on('slide.bs.carousel', function(e){
-            load_source($('source[data-srcset]',e.relatedTarget));
-            load_background($('.blur[data-background]',e.relatedTarget));
-            load_image($('img[data-src]',e.relatedTarget));
+
+        $('.carousel').on('slide.bs.carousel', function(e) {
+            load_source($('source[data-srcset]', e.relatedTarget));
+            load_background($('.blur[data-background]', e.relatedTarget));
+            load_image($('img[data-src]', e.relatedTarget));
         });
         $('.carousel').on('slid.bs.carousel', activar_imagen);
         $('.carousel').hammer().on('swipeleft', function() {
@@ -28,9 +30,13 @@ function inicio() {
             $(this).carousel('prev');
         });
     }
-    
+
     if ($('.map').length > 0) {
         inicio_map();
+    }
+    
+    if ($('.g-recaptcha').length > 0) {
+        inicio_captcha();
     }
 }
 

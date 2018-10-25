@@ -12,7 +12,6 @@ $(function() {
 	// Bootstrap JS
     $('.popovers').popover({container: 'body', trigger: 'hover', placement: 'top'});
 
-    $('.select').dropdown(); // DropdownJS
 
     //Tabdrop
     jQuery.expr[':'].noparents = function(a,i,m){

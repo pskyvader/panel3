@@ -2,12 +2,12 @@ body{font-family:'Open Sans',sans-serif}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
 .carousel-control-next,.carousel-control-prev{color:#dedede}
 .carousel-control-next:focus,.carousel-control-next:hover,.carousel-control-prev:focus,.carousel-control-prev:hover{color:#d4d4d4}
-.md-form input[type=date], .md-form input[type=datetime-local], .md-form input[type=email], .md-form input[type=number], .md-form input[type=password], .md-form input[type=search-md], .md-form input[type=search], .md-form input[type=tel], .md-form input[type=text], .md-form input[type=time], .md-form input[type=url], .md-form textarea.md-textarea{border:1px solid #d9d9d9;font-size:.9375rem;padding:.5rem 1rem;width:calc(100% - 2rem)}
+.md-form input[type=date],.md-form input[type=datetime-local],.md-form input[type=email],.md-form input[type=number],.md-form input[type=password],.md-form input[type=search-md],.md-form input[type=search],.md-form input[type=tel],.md-form input[type=text],.md-form input[type=time],.md-form input[type=url],.md-form textarea.md-textarea{border:1px solid #d9d9d9;font-size:.9375rem;padding:.5rem 1rem;width:calc(100% - 2rem)}
 .md-form label{left:1rem;font-size:.9375rem}
 .md-form label.active{-webkit-transform:translateY(-180%);-ms-transform:translateY(-180%);transform:translateY(-180%)}
 textarea.md-textarea{min-height:10rem}
-.md-form input[type=date]:focus:not([readonly]), .md-form input[type=datetime-local]:focus:not([readonly]), .md-form input[type=email]:focus:not([readonly]), .md-form input[type=number]:focus:not([readonly]), .md-form input[type=password]:focus:not([readonly]), .md-form input[type=search-md]:focus:not([readonly]), .md-form input[type=search]:focus:not([readonly]), .md-form input[type=tel]:focus:not([readonly]), .md-form input[type=text]:focus:not([readonly]), .md-form input[type=time]:focus:not([readonly]), .md-form input[type=url]:focus:not([readonly]), .md-form textarea.md-textarea:focus:not([readonly]){border-color:#258084;box-shadow:0 1px 0 0 #258084}
-.md-form input[type=date]:focus:not([readonly])+label, .md-form input[type=datetime-local]:focus:not([readonly])+label, .md-form input[type=email]:focus:not([readonly])+label, .md-form input[type=number]:focus:not([readonly])+label, .md-form input[type=password]:focus:not([readonly])+label, .md-form input[type=search-md]:focus:not([readonly])+label, .md-form input[type=search]:focus:not([readonly])+label, .md-form input[type=tel]:focus:not([readonly])+label, .md-form input[type=text]:focus:not([readonly])+label, .md-form input[type=time]:focus:not([readonly])+label, .md-form input[type=url]:focus:not([readonly])+label, .md-form textarea.md-textarea:focus:not([readonly])+label{color:#258084}
+.md-form input[type=date]:focus:not([readonly]),.md-form input[type=datetime-local]:focus:not([readonly]),.md-form input[type=email]:focus:not([readonly]),.md-form input[type=number]:focus:not([readonly]),.md-form input[type=password]:focus:not([readonly]),.md-form input[type=search-md]:focus:not([readonly]),.md-form input[type=search]:focus:not([readonly]),.md-form input[type=tel]:focus:not([readonly]),.md-form input[type=text]:focus:not([readonly]),.md-form input[type=time]:focus:not([readonly]),.md-form input[type=url]:focus:not([readonly]),.md-form textarea.md-textarea:focus:not([readonly]){border-color:#258084;box-shadow:0 1px 0 0 #258084}
+.md-form input[type=date]:focus:not([readonly])+label,.md-form input[type=datetime-local]:focus:not([readonly])+label,.md-form input[type=email]:focus:not([readonly])+label,.md-form input[type=number]:focus:not([readonly])+label,.md-form input[type=password]:focus:not([readonly])+label,.md-form input[type=search-md]:focus:not([readonly])+label,.md-form input[type=search]:focus:not([readonly])+label,.md-form input[type=tel]:focus:not([readonly])+label,.md-form input[type=text]:focus:not([readonly])+label,.md-form input[type=time]:focus:not([readonly])+label,.md-form input[type=url]:focus:not([readonly])+label,.md-form textarea.md-textarea:focus:not([readonly])+label{color:#258084}
 a{color:#258084}
 a:focus,a:hover{color:#000}
 h2{font-size:1.375rem;font-weight:600;text-transform:uppercase;margin-bottom:2rem}
@@ -23,8 +23,8 @@ p{font-size:.875rem}
 .bg-dot:after{content:"";width:43px;background:url(../img/dot.png);height:5px;display:block;text-align:center;margin:15px auto}
 .bg-dot.text-left:after{text-align:left;margin:15px 0}
 .list-square{list-style:square;color:#278c92}
-.btn{background-color:#278c92;color: #fff}
-.btn:focus,.btn:hover{background-color:#216f73; color: #fff;}
+.btn{background-color:#278c92;color:#fff}
+.btn:focus,.btn:hover{background-color:#216f73;color:#fff}
 .dropdown-toggle-split::after{margin-left:.255em}
 /*!TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO */
 /*! FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE FLOTANTE*/
@@ -237,11 +237,13 @@ a.facebook{background:#3b5998;padding:10px;border-radius:5px;color:#fff;margin-l
 }
 /*!CARRO*/
 /*!CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO CONTACTO */
+.file-field .file-path-wrapper{overflow:visible;float:left}
+.file-field input.file-path{height:25px}
 .contacto .icono{width:40px;display:inline-block;vertical-align:top;text-align:left;color:#258084}
 .contacto .icono .fa-lg{font-size:1.7rem}
 .contacto .icono+.informacion{width:calc(100% - 40px);display:inline-block;float:right}
 .contacto form{margin-bottom:4rem}
-.contacto form .btn{background-color:#258084;font-size:1rem}
+.contacto form .btn{background-color:#258084;font-size:.8rem}
 .contacto h2{font-size:1.25rem;font-weight:700}
 .contacto h3{color:#258084;font-size:1.375rem;font-weight:700}
 .contacto ul li{font-size:.9rem;color:#000;font-weight:700;padding:.2rem 0}

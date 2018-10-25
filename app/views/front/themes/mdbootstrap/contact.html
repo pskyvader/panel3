@@ -11,12 +11,32 @@
                     <div class="row">
                         {foreach campos}
                         {if is_input}
+                        {if is_file}
+                        <div class="col-12">
+                            <div class="md-form">
+                                <div class="file-field row">
+                                    <div class="col-sm-4">
+                                        <div class="btn btn-sm float-left">
+                                            <span><i class="fa fa-upload mr-2" aria-hidden="true"></i>Selecciona</span>
+                                            <input type="{type}" id="{field}" name="{field}" {if required} required="" {/if required}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="file-path-wrapper w-100 p-0">
+                                            <input class="file-path" type="text" readonly="" placeholder="{title}" {if required} required="" {/if required}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {else is_file}
                         <div class="col-12">
                             <div class="md-form">
                                 <input type="{type}" id="{field}" name="{field}" class="form-control" {if required} required="" {/if required}>
                                 <label for="{field}" class="">{title} {if is_required}*{/if is_required}</label>
                             </div>
                         </div>
+                        {/if is_file}
                         {else is_input}
                         {if is_textarea}
                         <div class="col-12">
@@ -28,6 +48,9 @@
                         {/if is_textarea}
                         {/if is_input}
                         {/foreach campos}
+                        <div class="col-12">
+                            <div class="g-recaptcha" data-sitekey="{google_captcha}"></div>
+                        </div>
                         <div class="col-12">
                             <button type="submit" class="btn float-left">Enviar</button>
                         </div>

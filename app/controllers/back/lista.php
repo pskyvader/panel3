@@ -115,15 +115,12 @@ class lista
     {
 
         $limits = array(
-            2 => array('value' => 2, 'active' => ''),
-            5 => array('value' => 5, 'active' => ''),
-            10 => array('value' => 10, 'active' => ''),
-            25 => array('value' => 25, 'active' => ''),
-            50 => array('value' => 50, 'active' => ''),
-            100 => array('value' => 100, 'active' => ''),
-            500 => array('value' => 500, 'active' => ''),
-            1000 => array('value' => 1000, 'active' => ''),
-            10000 => array('value' => 10000, 'active' => ''),
+            10 => array('value' => 10,'text' => 10, 'active' => ''),
+            25 => array('value' => 25,'text' => 25, 'active' => ''),
+            100 => array('value' => 100,'text' => 100, 'active' => ''),
+            500 => array('value' => 500,'text' => 500, 'active' => ''),
+            1000 => array('value' => 1000,'text' => 1000, 'active' => ''),
+            1000000 => array('value' => 1000000,'text' => 'Todos', 'active' => ''),
         );
         $limits[$data['limit']]['active'] = 'selected';
         $data['limits'] = $limits;

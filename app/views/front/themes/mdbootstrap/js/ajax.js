@@ -44,19 +44,18 @@ function post(url_post, info, mensaje_inicial, archivo, callback, extra) {
             return xhr;
         },
         success: function(datos, textStatus, jqXHR) {
-            console.log(datos);
             if (typeof(datos['exito']) != 'undefined' && datos['exito']) {
                 var mensaje = (($.isArray(datos['mensaje'])) ? datos['mensaje'].join('<br/>') : datos['mensaje']);
                 notificacion(mensaje, 'success');
-                if (callback != null) {
-                    callback(datos, extra);
-                }
-                if (typeof(datos['refresh']) != 'undefined' && datos['refresh']) {
-                    go_url(url);
-                }
             } else {
                 var mensaje = (($.isArray(datos['mensaje'])) ? datos['mensaje'].join('<br/>') : datos['mensaje']);
                 notificacion(mensaje, 'error');
+            }
+            if (callback != null) {
+                callback(datos, extra);
+            }
+            if (typeof(datos['refresh']) != 'undefined' && datos['refresh']) {
+                go_url(url);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
