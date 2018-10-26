@@ -2,26 +2,22 @@
 namespace app\controllers\front;
 
 defined("APPPATH") or die("Acceso denegado");
-use \core\functions;
-use \core\view;
-use \app\models\seo;
 use \app\models\banner as banner_model;
+use \app\models\seccion as seccion_model;
+use \app\models\seo;
+use \core\functions;
+use \core\image;
+use \core\view;
 
-class home
+class home extends base
 {
-    protected $url = array('home');
-    protected $metadata = array('title' => 'home');
-    protected $breadcrumb = array();
     public function __construct()
     {
-        $seo=seo::getById(1);
-        $this->url=array($seo['url']);
-        $this->metadata['title']=$seo['titulo'];
-        $this->metadata['keywords_text']=$seo['keywords'];
-        $this->metadata['description_text']=$seo['metadescripcion'];
+        parent::__construct(seo::getById(1));
     }
     public function index()
     {
+        $this->meta($this->seo);
         functions::url_redirect($this->url);
 
         $head = new head($this->metadata);
@@ -29,15 +25,29 @@ class home
 
         $header = new header();
         $header->normal();
-        
-        //$breadcrumb = new breadcrumb();
-        //$breadcrumb->normal($this->breadcrumb);
 
-        $row_banner=banner_model::getAll(array('tipo'=>1));
+
+        $row_banner = banner_model::getAll(array('tipo' => 1));
         $banner = new banner();
         $banner->normal($row_banner);
 
-        view::render('home');
+        //$breadcrumb = new breadcrumb();
+        //$breadcrumb->normal($this->breadcrumb);
+        
+        $var = array('tipo'=>1,'destacado'=>true);
+
+        $row = seccion_model::getAll($var);
+
+        if (count($row) > 0) {
+            $seo=seo::getById(2);
+            $this->url = array($seo['url']);
+            view::set('title','Servicios destacados');
+            view::render('title');
+            $secciones = $this->lista($row, 'sub','lista');
+            view::set('list', $secciones);
+            view::render('grid-3');
+        }
+
 
         $footer = new footer();
         $footer->normal();

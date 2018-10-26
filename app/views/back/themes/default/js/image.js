@@ -7,14 +7,14 @@ function inicio_image() {
         $(t).on('change', 'input[name="..."]', function(e) {
             habilitar(false);
             if (e.target.files.length > 0) {
-                post(create_url(modulo, 'upload'), {}, "Subiendo Archivo", !1, e.target.files, after_guardar_image, t);
+                post(create_url(modulo, 'upload'), {}, "Subiendo Imagen", !1, e.target.files, after_guardar_image, t);
             }
+        });
+        $('body').on('click', '.eliminar_image', function() {
+            $('#eliminar_editar_image', t).data('id', $(this).data('id'));
         });
     });
 }
-$('body').on('click', '.eliminar_archivo', function() {
-    $('#eliminar_editar', t).data('id', $(this).data('id'));
-});
 $('body').on('click', '#formulario .fileinput-exists,input[name="..."],#cancelar', function() {
     cancelar_archivo($(this).data('id'));
 });
@@ -31,15 +31,16 @@ function cancelar_archivo(data_id) {
     }
     barra(0);
     habilitar(true);
-    eliminar_archivo(data_id);
+    eliminar_image(data_id);
+    eliminar_file(data_id);
 }
 
-function eliminar_archivo(campo) {
+function eliminar_image(campo) {
     $('input[name="image[' + campo + '][0][url]"]').val('');
     $('input[name="image[' + campo + '][0][tmp]"]').val('');
     $('input[name="' + campo + '"]').val('');
     $('img.' + campo).remove();
-    $('.eliminar_archivo[data-id=' + campo + ']').hide();
+    $('.eliminar_image[data-id=' + campo + ']').hide();
 }
 
 function inicio_image_multiple(e) {
@@ -71,11 +72,11 @@ function inicio_image_multiple(e) {
         init: function() {
             this.on("addedfile", function(e) {
                     fotos_temporal.push(e.name), habilitar(!1), e.previewElement.addEventListener("click", function() {
-                        this.removeFile(e)
-                    })
+                        this.removeFile(e);
+                    });
                 }),
                 this.on("removedfile", function(e, i) {
-                    var a = $.inArray(e.name, fotos_temporal); - 1 != a && fotos_temporal.splice(a, 1), 0 == fotos_temporal.length && habilitar(!0)
+                    var a = $.inArray(e.name, fotos_temporal); - 1 != a && fotos_temporal.splice(a, 1), 0 == fotos_temporal.length && habilitar(!0);
                 }),
                 this.on("success", function(file, data) {
                     var datos = $.parseJSON(data);
@@ -104,6 +105,9 @@ function inicio_image_multiple(e) {
                     this.removeFile(file);
                 }), this.on("complete", function(e, i) {
                     var a = $.inArray(e.name, fotos_temporal); - 1 != a && fotos_temporal.splice(a, 1), 0 == fotos_temporal.length && habilitar(!0)
+                }),
+                this.on('error',function(e,f){
+                    console.log(e,f);
                 })
         }
     });

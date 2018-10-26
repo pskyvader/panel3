@@ -17,9 +17,9 @@
                         <div class="panel-heading">
                             <div class="panel-ctrls pull-left">
                                 <label class="panel-ctrls-center">
-                                    <select name="limit" aria-controls="example" class="form-control">
+                                    <select name="limit" aria-controls="limits" class="select form-control">
                                         {foreach limits}
-                                        <option value="{value}" {active}>{value}</option>
+                                        <option value="{value}" {active}>{text}</option>
                                         {/foreach limits}
                                     </select>
                                 </label>
@@ -35,11 +35,22 @@
 
                             </div>
                             <div class="btn-group mt-sm">
+                                {if excel}
+                                <button class="btn btn-default csv">
+                                    <i class="fa fa-file-excel-o"></i> 
+                                    <span> Exportar CSV</span>
+                                </button>
+                                <button class="btn btn-default excel">
+                                    <i class="fa fa-file-excel-o"></i> 
+                                    <span> Exportar Excel</span>
+                                </button>
+                                {/if excel}
                                 {if new}
                                 <a class="btn btn-default new" href="{new_url}">
-                                    <i class="fa fa-plus"></i>
-                                    <span>Nuevo</span>
-                                </a>{/if new}
+                                    <i class="fa fa-plus"></i> 
+                                    <span> Nuevo</span>
+                                </a>
+                                {/if new}
                             </div>
                         </div>
                         <div class="panel-body no-padding table-responsive">
@@ -75,10 +86,14 @@
                             </table>
                         </div>
                         <div class="panel-footer">
+                            <div class="hidden" id="count_elementos">{count}</div>
+                            <div class="pull-left m-n">
+                                Mostrando {inicio} a {fin} de {count} elementos
+                            </div>
                             <ul class="pagination pull-right m-n">
                                 {foreach pagination}
                                 <li class="{class_page}">
-                                    <a href="{url_page}">{text_page}</a>
+                                    <a href="{url_page}" class="{class_page}">{text_page}</a>
                                 </li>
                                 {/foreach pagination}
                             </ul>

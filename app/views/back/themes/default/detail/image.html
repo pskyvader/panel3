@@ -10,7 +10,7 @@
             <div> 
                 {if is_required_modal} 
                 {else is_required_modal} 
-                <a href="#" class="btn btn-default eliminar_archivo" data-id="{field}" data-toggle="modal" data-target=".modal-eliminar">Eliminar</a> 
+                <a href="#" class="btn btn-default eliminar_image" data-id="{field}" data-toggle="modal" data-target=".modal-eliminar">Eliminar</a> 
                 {/if is_required_modal} 
                 <a href="#" class="btn btn-default fileinput-exists" data-id="{field}" data-dismiss="fileinput">Quitar</a>
                 <span class="btn btn-default btn-file">
@@ -25,8 +25,9 @@
         <input type="hidden" class="url" name="image[{field}][0][url]" value="{url}">
         <input type="hidden" class="parent" name="image[{field}][0][parent]" value="{parent}">
         <input type="hidden" class="folder" name="image[{field}][0][folder]" value="{folder}">
+        <input type="hidden" class="subfolder" name="image[{field}][0][subfolder]" value="{subfolder}">
         <input type="hidden" class="tmp" name="image[{field}][0][tmp]" value="">
-        <input id="{field}" class="name" name="{field}" type="hidden" {required}  value="{url}">
+        <input id="{field}" class="name" name="" type="hidden" {required}  value="{url}">
     </div>
     <div class="col-sm-3">
         <div class="alert alert-info">{help}</div> 
@@ -47,7 +48,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-raised btn-danger" id="eliminar_editar" onclick="eliminar_archivo($(this).data('id'));" data-dismiss="modal">Eliminar</button>
+                            <button type="button" class="btn btn-raised btn-danger" id="eliminar_editar_image" onclick="eliminar_image($(this).data('id'));" data-dismiss="modal">Eliminar</button>
                         </div>
                     </div>
                 </div>

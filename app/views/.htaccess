@@ -29,18 +29,15 @@ ExpiresDefault "access plus 1 years"
 ExpiresDefault "access plus 1 months"
 </FilesMatch>
 
-
-
 # 1 SEMANA
 <FilesMatch "\.(txt|xml|js|css|htm|png|jpg|jpeg|less)$">
 ExpiresDefault "access plus 4 months"
 </FilesMatch>
 
-
-<FilesMatch "\.(php)$">
-ExpiresDefault "access plus 1 days"
-</FilesMatch>
-
 </ifModule>
 
-Allow from all
+Order allow,deny
+<Files ~ "\.(js|css|htm|png|jpg|jpeg|less|ttf|woff|woff2)$">
+   allow from all
+</Files>
+allow from all

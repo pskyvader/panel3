@@ -1,0 +1,18 @@
+<section class="banner-seccion view hm-stylish-light d-print-none">
+    <div class="blur" data-background="{background}"></div>
+    <div class="container p-0">
+    <picture class="imagen">
+        {foreach srcset}
+        <source media="{media}" srcset="{url}" type="{type}">
+        {/foreach srcset}
+        <img class="w-100" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
+    </picture>
+    <div class="mask waves-effect waves-light">
+        <div class="row h-100">
+            <h1 class="text-center col align-self-center">
+                {title}
+            </h1>
+        </div>
+    </div>
+</div>
+</section>

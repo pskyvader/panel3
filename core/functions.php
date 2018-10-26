@@ -19,7 +19,12 @@ class functions
     {
         if (ini_get("session.use_cookies")) {
             $path = app::get_sub();
-            setcookie($cookie, $value, $time, $path);
+            if (!headers_sent()) {
+                setcookie($cookie, $value, $time, $path);
+            } else {
+                echo '<script>document.cookie = "' . $cookie . '=' . $value . '; expires=' . date('r', $time) . '; path=' . $path . ';";</script>';
+            }
+
         }
     }
 
@@ -28,8 +33,8 @@ class functions
      */
     public static function url_redirect($url)
     {
-        $ruta = self::generar_url($url);
-        $current = self::current_url();
+        $ruta     = self::generar_url($url);
+        $current  = self::current_url();
         $redirect = ($ruta != $current);
 
         if ($redirect) {
@@ -40,6 +45,32 @@ class functions
             header("Location: " . $ruta);
             exit;
         }
+    }
+
+    public static function get_idseccion($url)
+    {
+        $url = explode('-', $url);
+        return (int) $url[0];
+    }
+    public static function url_seccion($url_base, $seccion, $return = false)
+    {
+        $url   = $url_base;
+        $extra = "";
+        if (isset($seccion[0])) {
+            $extra .= $seccion[0];
+            if (isset($seccion['url'])) {
+                $extra .= "-" . $seccion['url'];
+            } elseif (isset($seccion['titulo'])) {
+                $extra .= "-" . self::url_amigable($seccion['titulo']);
+            }
+        }
+        $url[] = $extra;
+        if ($return) {
+            return $url;
+        } else {
+            return self::generar_url($url);
+        }
+
     }
 
     public static function generar_url($url, $extra = null, $front_auto = true, $front = true)
@@ -93,6 +124,8 @@ class functions
         $url = str_replace("Ñ", "N", $url);
         $url = str_replace("Ý", "Y", $url);
         $url = str_replace("ý", "y", $url);
+        $url = explode('-', $url);
+        $url = implode('-', array_filter($url));
         $url = strtolower($url);
         return $url;
     }
@@ -100,7 +133,7 @@ class functions
     public static function fecha_archivo($archivo, $only_fecha = false)
     {
 
-        $c = (strpos($archivo, '?') === false) ? '?time=' : '&time=';
+        $c  = (strpos($archivo, '?') === false) ? '?time=' : '&time=';
         $ac = explode("?", $archivo);
         $ac = $ac[0];
         if ($only_fecha) {
@@ -114,7 +147,7 @@ class functions
     {
         $texto = trim($texto);
         $texto = trim($texto, ' ');
-        $pos = strpos($texto, 'http');
+        $pos   = strpos($texto, 'http');
         if ($pos !== false || $texto == '#') {
             $ruta = $texto;
         } elseif ($texto == '.') {
@@ -128,7 +161,7 @@ class functions
     public static function active($string)
     {
         $pagina = $_SERVER['REQUEST_URI'];
-        $url = self::current_url();
+        $url    = self::current_url();
         if (strpos($pagina, $string) !== false) {
             return true;
         } else if ($url == $string) {
@@ -159,7 +192,10 @@ class functions
     public static function decode_json($json)
     {
         $array = json_decode(html_entity_decode($json), true);
-        if(!is_array($array)) $array=array();
+        if (!is_array($array)) {
+            $array = array();
+        }
+
         return $array;
     }
 
@@ -169,7 +205,7 @@ class functions
         foreach ($data as $key => $node) {
             $id = $node[0];
             /* Puede que exista el children creado si los hijos entran antes que el padre */
-            $node['children'] = (isset($tree['children'][$id])) ? $tree['children'][$id]['children'] : array();
+            $node['children']      = (isset($tree['children'][$id])) ? $tree['children'][$id]['children'] : array();
             $tree['children'][$id] = $node;
             if ($node['idpadre'][0] == $idpadre) {
                 $tree['root'][$id] = &$tree['children'][$id];
@@ -181,12 +217,13 @@ class functions
     }
 
     public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
+
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);
 
         $file_count = $multiple ? count($file_post['name']) : 1;
-        $file_keys = array_keys($file_post);
+        $file_keys  = array_keys($file_post);
 
         for ($i = 0; $i < $file_count; $i++) {
             foreach ($file_keys as $key) {
@@ -195,6 +232,14 @@ class functions
         }
 
         return $file_ary;
+    }
+
+    public static function file_size($file_url)
+    {
+        $size       = filesize($file_url);
+        $unit       = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
+        $final_size = @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
+        return $final_size;
     }
 
 }

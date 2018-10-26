@@ -20,6 +20,8 @@ class moduloconfiguracion extends base
     );
     protected $tipos_detalle = array(
         'active' => array('text' => 'Active', 'value' => 'active'),
+        'file' => array('text' => 'Archivo', 'value' => 'file'),
+        'multiple_file' => array('text' => 'Archivo multiple', 'value' => 'multiple_file'),
         'recursive_checkbox' => array('text' => 'Arbol de botones checkbox', 'value' => 'recursive_checkbox'),
         'recursive_radio' => array('text' => 'Arbol de botones radio', 'value' => 'recursive_radio'),
         'password' => array('text' => 'Contraseña', 'value' => 'password'),
@@ -58,7 +60,6 @@ class moduloconfiguracion extends base
             'estado' => array('title_th' => 'Estado', 'field' => 'estado', 'type' => 'active'),
             'aside' => array('title_th' => 'Aparece en aside', 'field' => 'aside', 'type' => 'active'),
             //'tipos' => array('title_th' => 'Contiene tipos', 'field' => 'tipos', 'type' => 'active'),
-            //'hijos' => array('title_th' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active'),
             'copy' => array('title_th' => 'Copiar', 'field' => 0, 'type' => 'action', 'action' => 'copy', 'mensaje' => 'Copiando Elemento'),
             'editar' => array('title_th' => 'Editar', 'field' => 'url_detalle', 'type' => 'link'),
             'subseccion' => array('title_th' => 'Modulos', 'field' => 'url_subseccion', 'type' => 'link'),
@@ -75,8 +76,7 @@ class moduloconfiguracion extends base
         foreach ($respuesta['row'] as $key => $value) {
             $respuesta['row'][$key]['url_subseccion'] = functions::generar_url(array('modulo'), array($class::$idname => $value[0]));
         }
-
-        $menu = array('new' => true, 'edit' => true, 'delete' => true);
+        $menu = array('new' => true, 'excel' => true);
         $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
             'breadcrumb' => $this->breadcrumb,
             'th' => $th,
@@ -137,7 +137,6 @@ class moduloconfiguracion extends base
             'estado' => array('title_field' => 'Estado', 'field' => 'estado', 'type' => 'active', 'required' => true),
             'aside' => array('title_field' => 'Aside', 'field' => 'aside', 'type' => 'active', 'required' => true),
             'tipos' => array('title_field' => 'Contiene Tipos', 'field' => 'tipos', 'type' => 'active', 'required' => true),
-            'hijos' => array('title_field' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active', 'required' => true),
         );
 
         $detalle = new detalle($this->metadata); //controlador de detalle

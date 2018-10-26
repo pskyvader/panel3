@@ -70,6 +70,26 @@
                 "tipo": "char(255)"
             },
             {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "banner",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "modulo_front",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "modulo_back",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "tipo_modulo",
+                "tipo": "int(11)"
+            },
+            {
                 "titulo": "keywords",
                 "tipo": "char(255)"
             },
@@ -80,6 +100,14 @@
             {
                 "titulo": "orden",
                 "tipo": "int(11)"
+            },
+            {
+                "titulo": "menu",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "submenu",
+                "tipo": "tinyint(1)"
             },
             {
                 "titulo": "estado",
@@ -158,10 +186,6 @@
             {
                 "titulo": "tipos",
                 "tipo": "tinyint(1)"
-            },
-            {
-                "titulo": "hijos",
-                "tipo": "tinyint(1)"
             }
         ],
         "truncate": "0"
@@ -208,6 +232,10 @@
             },
             {
                 "titulo": "aside",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "hijos",
                 "tipo": "tinyint(1)"
             }
         ],
@@ -381,6 +409,14 @@
                 "tipo": "char(255)"
             },
             {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
+            },
+            {
                 "titulo": "descripcion",
                 "tipo": "longtext"
             },
@@ -429,7 +465,15 @@
             },
             {
                 "titulo": "foto",
-                "tipo": "char(255)"
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "archivo",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
             },
             {
                 "titulo": "descripcion",

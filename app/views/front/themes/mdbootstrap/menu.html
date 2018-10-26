@@ -1,14 +1,14 @@
 <li class="nav-item {active} {sub} {margen}">
-    {if prefetch}
-    <link rel="prefetch" href="{url}">
-    {/if prefetch}
     {if is_url}
-    <a class="{clase}" href="{url}" {target}>
-        {title}
-    </a>
+        {if prefetch}
+            <link rel="prefetch" href="{url}">
+        {/if prefetch}
+        <a class="{clase}" href="{url}" {target}>
+            {title}
+        </a>
     {/if is_url}
-    {if is_hijo}
-    <button type="button" class="dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-{nivel}-{key}">
+    {if contiene_hijo}
+    <button type="button" class="dropdown-toggle dropdown-toggle-split p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown{nivel}{key}">
         {if no_url}
         <a class="{clase}" href="javascript:;" {target}>
             {title}
@@ -16,8 +16,8 @@
         {/if no_url}
         <span class="sr-only">Submenu</span>
     </button>
-    <ul class="dropdown-menu z-depth-1-half row" aria-labelledby="dropdown-{nivel}-{key}">
+    <ul class="dropdown-menu z-depth-1-half row" aria-labelledby="dropdown{nivel}{key}">
         {hijos}
     </ul>
-    {/if is_hijo}
+    {/if contiene_hijo}
 </li>

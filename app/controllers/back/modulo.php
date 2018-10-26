@@ -22,6 +22,7 @@ class modulo extends base
 
     protected $tipos_menu = array(
         'new' => array('titulo' => 'Nuevo', 'field' => 'new'),
+        'excel' => array('titulo' => 'Exportar a excel', 'field' => 'excel'),
     );
     public function __construct()
     {
@@ -58,6 +59,7 @@ class modulo extends base
             'orden' => array('title_th' => 'Orden', 'field' => 'orden', 'type' => 'text'),
             'titulo' => array('title_th' => 'Titulo', 'field' => 'titulo', 'type' => 'text'),
             'aside' => array('title_th' => 'Aparece en aside', 'field' => 'aside', 'type' => 'active'),
+            //'hijos' => array('title_th' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active'),
             'copy' => array('title_th' => 'Copiar', 'field' => 0, 'type' => 'action','action'=>'copy','mensaje'=>'Copiando Elemento'),
             'editar' => array('title_th' => 'Editar', 'field' => 'url_detalle', 'type' => 'link'),
             'delete' => array('title_th' => 'Eliminar', 'field' => 'delete', 'type' => 'delete'),
@@ -72,7 +74,7 @@ class modulo extends base
         $respuesta = $list->get_row($class, $where, $condiciones, $url_detalle); //obtener unicamente elementos de la pagina actual
         $row = $respuesta['row'];
         $new = ($parent['tipos'] || count($row) == 0) ? true : false;
-        $menu = array('new' => $new, 'edit' => true, 'delete' => true);
+        $menu = array('new' => $new, 'excel' => true);
 
         $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
             'breadcrumb' => $this->breadcrumb,
@@ -163,6 +165,7 @@ class modulo extends base
             'orden' => array('title_field' => 'Orden', 'field' => 'orden', 'type' => 'number', 'required' => true),
             'estado' => array('title_field' => 'Estado', 'field' => 'estado', 'type' => 'multiple', 'required' => true, 'columnas' => $columnas_estado),
             'aside' => array('title_field' => 'Aside', 'field' => 'aside', 'type' => 'active', 'required' => true),
+            'hijos' => array('title_field' => 'Contiene hijos', 'field' => 'hijos', 'type' => 'active', 'required' => true),
         );
 
         $detalle = new detalle($this->metadata); //controlador de detalle

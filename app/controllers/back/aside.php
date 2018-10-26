@@ -19,7 +19,7 @@ class aside
             $administrador = administrador_model::getById($_SESSION[administrador_model::$idname . $prefix_site]);
             $tipo_admin = $administrador["tipo"];
             $moduloconfiguracion = moduloconfiguracion_model::getAll(array('estado' => true, 'aside' => true));
-            $modulo = modulo_model::getAll();
+            $modulo = modulo_model::getAll(array('aside' => true));
 
             $mod = array();
             foreach ($modulo as $key => $m) {
@@ -45,7 +45,7 @@ class aside
                         if ($cm['tipos']) {
                             $extra['tipo'] = $modulo['tipo'];
                         }
-                        if ($cm['hijos']) {
+                        if ($modulo['hijos']) {
                             $extra['idpadre'] = 0;
                         }
                         if (count($extra) == 0) {
@@ -66,7 +66,7 @@ class aside
                             if ($cm['tipos']) {
                                 $extra['tipo'] = $modulo['tipo'];
                             }
-                            if ($cm['hijos']) {
+                            if ($modulo['hijos']) {
                                 $extra['idpadre'] = 0;
                             }
                             if (count($extra) == 0) {
@@ -108,7 +108,7 @@ class aside
             view::set('name', $administrador["nombre"]);
             view::set('email', $administrador["email"]);
             view::set('url_admin', functions::generar_url(array("administrador", "detail", $administrador[0], 'profile'), array('tipo' => $tipo_admin)));
-            view::set('img_admin', image::generar_url($administrador["foto"][0], 'profile', 'administrador', $administrador[0]));
+            view::set('img_admin', image::generar_url($administrador["foto"][0], 'profile'));
 
             view::render('aside');
         }

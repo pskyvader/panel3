@@ -7,6 +7,7 @@ use \app\models\modulo as modulo_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 use \core\functions;
 use \core\image;
+use \core\file;
 use \core\view;
 
 class detalle
@@ -91,6 +92,7 @@ class detalle
 
     private function field($campos, $fila, $parent = '', $idparent = 0, $level = 0)
     {
+        $editor_count=0;
         switch ($campos['type']) {
             case 'active':
                 $data = array(
@@ -111,6 +113,33 @@ class detalle
                     'required' => ($campos['required']) ? 'required="required"' : '',
                     'value' => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
                 );
+                if($editor_count==0){
+                    $theme=app::get_url().view::get_theme().'assets/ckeditor/';
+                    $t='?t=I8BG';
+                    $data['preload']=array(
+                        array('url'=>'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css','type'=>'style'),
+                        array('url'=>'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css','type'=>'style'),
+                        array('url'=>'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js','type'=>'script'),
+                        array('url'=>'https://code.jquery.com/jquery-1.11.3.min.js','type'=>'script'),
+                        
+                        array('url'=>$theme.'contents.css','type'=>'style'),
+                        array('url'=>$theme.'plugins/btgrid/styles/editor.css','type'=>'style'),
+                        array('url'=>$theme.'plugins/tableselection/styles/tableselection.css','type'=>'style'),
+                        array('url'=>$theme.'plugins/balloontoolbar/skins/default.css','type'=>'style'),
+                        array('url'=>$theme.'plugins/balloontoolbar/skins/moono-lisa/balloontoolbar.css','type'=>'style'),
+                        array('url'=>$theme.'plugins/balloonpanel/skins/moono-lisa/balloonpanel.css','type'=>'style'),
+
+                        array('url'=>$theme.'skins/moono-lisa/editor.css'.$t,'type'=>'style'),
+                        array('url'=>$theme.'plugins/basewidget/css/style.css'.$t,'type'=>'style'),
+                        array('url'=>$theme.'plugins/layoutmanager/css/style.css'.$t,'type'=>'style'),
+                        
+                        
+                    );
+                   ;
+                }else{
+                    $data['preload']=array();
+                }
+                $editor_count++;
                 break;
             case 'multiple':
                 $fields = array();
@@ -258,6 +287,7 @@ class detalle
                     'url' => ($image_url != '') ? $fila[$campos['field']][0]['url'] : '',
                     'parent' => ($image_url != '') ? $fila[$campos['field']][0]['parent'] : '',
                     'folder' => ($image_url != '') ? $fila[$campos['field']][0]['folder'] : '',
+                    'subfolder' => ($image_url != '') ? $fila[$campos['field']][0]['subfolder'] : '',
                     'help' => $campos['help'],
                 );
                 break;
@@ -273,6 +303,47 @@ class detalle
                         $field['active'] = $campo['portada'];
                         $field['class'] = ($campo['portada'] == 'true') ? 'btn-success' : 'btn-danger';
                         $field['icon'] = ($campo['portada'] == 'true') ? 'fa-check' : 'fa-close';
+                        $fields[] = $field;
+                    }
+                }
+
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field' => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'help' => $campos['help'],
+                    'required' => ($campos['required']) ? 'required="required"' : '',
+                    'fields' => $fields,
+                );
+                break;
+            case 'file':
+                $folder = $this->metadata['modulo'];
+                $file_url = (isset($fila[$campos['field']]) && isset($fila[$campos['field']][0])) ? (file::generar_url($fila[$campos['field']][0],'')) : '';
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field' => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'is_required_modal' => ($file_url != '') ? $campos['required'] : true,
+                    'is_required_alert' => ($file_url != '') ? $campos['required'] : true,
+                    'required' => ($campos['required']) ? 'required="required"' : '',
+                    'file' => $file_url,
+                    'is_file' => ($file_url != '') ? true : false,
+                    'url' => ($file_url != '') ? $fila[$campos['field']][0]['url'] : '',
+                    'parent' => ($file_url != '') ? $fila[$campos['field']][0]['parent'] : '',
+                    'folder' => ($file_url != '') ? $fila[$campos['field']][0]['folder'] : '',
+                    'subfolder' => ($file_url != '') ? $fila[$campos['field']][0]['subfolder'] : '',
+                    'help' => $campos['help'],
+                );
+                break;
+            case 'multiple_file':
+                $folder = $this->metadata['modulo'];
+                $fields = array();
+                if (isset($fila[$campos['field']])) {
+                    foreach ($fila[$campos['field']] as $key => $campo) {
+                        $field = $campo;
+                        $field['title_field'] = $campos['title_field'];
+                        $field['field'] = $campos['field'];
+                        $field['file'] = file::generar_url($campo, '');
                         $fields[] = $field;
                     }
                 }

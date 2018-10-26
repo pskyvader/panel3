@@ -22,6 +22,7 @@ function inicio() {
     url = $("meta[property='og:url']").prop("content");
     Utility.animateContent();
     $('body').scrollSidebar();
+    $('.select').dropdown(); // DropdownJS
     enquire.register("screen and (max-width: 1199px)", {
         match: function() { //smallscreen
             $('body').addClass('sidebar-collapsed');
@@ -41,7 +42,7 @@ function inicio() {
     inicio_detail();
     inicio_list();
     $(".dial").knob(); // knob
-	$('textarea.autosize').autosize({append: "\n"});
+    $('textarea.autosize').autosize({append: "\n"});
 }
 
 $('body').on('click', 'button.generar_sitemap,button.nuevo_sitemap', function() {

@@ -7,6 +7,7 @@ use \app\models\modulo as modulo_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 use \core\functions;
 use \core\image;
+use \core\file;
 
 class base
 {
@@ -20,7 +21,6 @@ class base
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($this->metadata['modulo']);
         if (isset($moduloconfiguracion[0])) {
             $this->contiene_tipos = (isset($moduloconfiguracion['tipos'])) ? $moduloconfiguracion['tipos'] : false;
-            $this->contiene_hijos = (isset($moduloconfiguracion['hijos'])) ? $moduloconfiguracion['hijos'] : false;
             $this->sub = (isset($moduloconfiguracion['sub'])) ? $moduloconfiguracion['sub'] : '';
             $this->padre = (isset($moduloconfiguracion['padre'])) ? $moduloconfiguracion['padre'] : '';
             if ($this->contiene_tipos && isset($_GET['tipo'])) {
@@ -35,6 +35,7 @@ class base
             }
 
             $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $tipo));
+            $this->contiene_hijos = (isset($modulo[0]['hijos'])) ? $modulo[0]['hijos'] : false;
             $this->metadata['title'] = $modulo[0]['titulo'];
         }
 
@@ -240,6 +241,34 @@ class base
         $respuesta = lista::copy($this->class);
         echo json_encode($respuesta);
     }
+    public function excel()
+    {
+        $respuesta=array('exito'=>false,'mensaje'=>'Debes recargar la pagina');
+        if ($this->contiene_tipos && !isset($_GET['tipo'])) {
+            echo json_encode($respuesta);
+            return;
+        }
+        if ($this->contiene_hijos && !isset($_GET['idpadre'])) {
+            echo json_encode($respuesta);
+            return;
+        }
+        $where = array();
+        if ($this->contiene_tipos) {
+            $where['tipo'] = $_GET['tipo'];
+        }
+        if ($this->contiene_hijos) {
+            $where['idpadre'] = $_GET['idpadre'];
+        }
+        if (isset($this->class_parent)) {
+            $class_parent = $this->class_parent;
+            if (isset($_GET[$class_parent::$idname])) {
+                $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
+            }
+        }
+        $select="";
+        $respuesta = lista::excel($this->class,$where,$select,$this->metadata['title']);
+        echo json_encode($respuesta);
+    }
     public function guardar()
     {
         $respuesta = detalle::guardar($this->class);
@@ -249,6 +278,12 @@ class base
     public function upload()
     {
         $respuesta = image::upload_tmp($this->metadata['modulo']);
+        echo json_encode($respuesta);
+    }
+    
+    public function upload_file()
+    {
+        $respuesta = file::upload_tmp();
         echo json_encode($respuesta);
     }
 }

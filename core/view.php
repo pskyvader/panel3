@@ -26,6 +26,10 @@ class view
     /**
      * @var
      */
+    private static $content_url = array();
+    /**
+     * @var
+     */
     const VIEWS_PATH = "app/views/";
 
     /**
@@ -38,7 +42,7 @@ class view
      * @param  [String]  [template name]
      * @return [html]    [render html]
      */
-    public static function render($template,$minify=true,$return=false)
+    public static function render($template, $minify = true, $return = false)
     {
         $theme = self::get_theme();
         $template_url = $theme . $template . "." . self::EXTENSION_TEMPLATES;
@@ -46,13 +50,21 @@ class view
             throw new \Exception("Error: El archivo " . $template_url . " no existe", 1);
         }
 
-        $content = file_get_contents($template_url);
+        if (isset(self::$content_url[$template_url])) {
+            $content = self::$content_url[$template_url];
+        } else {
+            $content = file_get_contents($template_url);
+            self::$content_url[$template_url] = $content;
+        }
         $str = self::render_template(self::$data, $content);
-        if($minify) $str = minify::minify_html($str);
-        if($return){
+        if ($minify) {
+            $str = minify::minify_html($str);
+        }
+
+        if ($return) {
             self::reset();
             return $str;
-        }else{
+        } else {
             ob_start();
             echo $str;
             $str = ob_get_contents();
@@ -180,14 +192,22 @@ class view
                 $js[] = $j;
             }
         }
-        if ($combine && count($locales)>0) {
+        if ($combine && count($locales) > 0) {
             $dir = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.js';
             if (file_exists($dir . '\\' . $file)) {
-                $locales = array(array('url' => app::$_path . $file, 'defer' => 'async defer'));
+                if (isset($_COOKIE['loaded_js']) && $_COOKIE['loaded_js']) {
+                    $defer = '';
+                } else {
+                     functions::set_cookie('loaded_js', true, time() + (31536000));
+                    $defer = 'async defer';
+                }
+                $locales = array(array('url' => app::$_path . $file, 'defer' => $defer));
             } else {
+                if (isset($_COOKIE['loaded_js'])) {
+                    functions::set_cookie('loaded_js', false, time() + (31536000));
+                }
                 if (is_writable($dir)) {
-                    array_map('unlink', glob($dir . "\\*.js"));
                     $minifier = null;
                     foreach ($locales as $key => $l) {
                         if ($minifier == null) {
@@ -195,9 +215,11 @@ class view
                         } else {
                             $minifier->add($l['url']);
                         }
-
                     }
-                    $minifier->minify($dir . '\\' . $file);
+                    $minify=$minifier->minify();
+                    array_map('unlink', glob($dir . "\\*.js"));
+                    file_put_contents($dir . '\\' . $file, $minify);
+
                     $locales = array(array('url' => app::$_path . $file, 'defer' => 'async defer'));
                 } else {
                     foreach ($locales as $key => $l) {
@@ -209,7 +231,7 @@ class view
 
         $js = array_merge($no_combinados, $locales, $js);
         if ($array_only) {
-            return array($js,$nuevo);
+            return array($js, $nuevo);
         } else {
             self::set('css', array());
             self::set('js', $js);
@@ -259,14 +281,22 @@ class view
             }
         }
 
-        if ($combine && count($locales)>0) {
+        if ($combine && count($locales) > 0) {
             $dir = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.css';
             if (file_exists($dir . '\\' . $file)) {
-                $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true));
+                if (isset($_COOKIE['loaded_css']) && $_COOKIE['loaded_css']) {
+                    $defer = false;
+                } else {
+                    functions::set_cookie('loaded_css', true, time() + (31536000));
+                    $defer = true;
+                }
+                $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => $defer));
             } else {
+                if (isset($_COOKIE['loaded_css'])) {
+                    functions::set_cookie('loaded_css', false, time() + (31536000));
+                }
                 if (is_writable($dir)) {
-                    array_map('unlink', glob($dir . "\\*.css"));
                     $minifier = null;
                     foreach ($locales as $key => $l) {
                         if ($minifier == null) {
@@ -274,9 +304,10 @@ class view
                         } else {
                             $minifier->add($l['url']);
                         }
-
                     }
-                    $minifier->minify($dir . '\\' . $file);
+                    $minify=$minifier->minify();
+                    array_map('unlink', glob($dir . "\\*.css"));
+                    file_put_contents($dir . '\\' . $file, $minify);
                     $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true));
                 } else {
                     foreach ($locales as $key => $l) {
@@ -285,11 +316,10 @@ class view
                 }
             }
         }
-
         $css = array_merge($no_combinados, $locales, $css);
 
         if ($array_only) {
-            return array($css,$nuevo);
+            return array($css, $nuevo);
         } else {
             self::set('js', array());
             self::set('is_content', false);

@@ -16,8 +16,8 @@ class seccion extends base_model
         if (!isset($where['estado']) && app::$_front) {
             $where['estado'] = true;
         }
-        if(isset($where['idseccioncategoria'])){
-            $idseccioncategoria=$where['idseccioncategoria'];
+        if (isset($where['idseccioncategoria'])) {
+            $idseccioncategoria = $where['idseccioncategoria'];
             unset($where['idseccioncategoria']);
         }
 
@@ -50,13 +50,19 @@ class seccion extends base_model
         if ($select == '') {
             foreach ($row as $key => $value) {
                 $row[$key]['idseccioncategoria'] = functions::decode_json($row[$key]['idseccioncategoria']);
-                if(isset($idseccioncategoria) && !in_array($idseccioncategoria,$row[$key]['idseccioncategoria'])){
+                if (isset($idseccioncategoria) && !in_array($idseccioncategoria, $row[$key]['idseccioncategoria'])) {
                     unset($row[$key]);
                 }
                 if (isset($row[$key]) && isset($row[$key]['foto'])) {
                     $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
                 }
+                if (isset($row[$key]) && isset($row[$key]['archivo'])) {
+                    $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
+                }
             }
+        }
+        if (isset($idseccioncategoria)) {
+            $row = array_values($row);
         }
         return $row;
     }
@@ -74,11 +80,43 @@ class seccion extends base_model
         $connection = database::instance();
         $row = $connection->get(static::$table, static::$idname, $where);
         if (count($row) == 1) {
-            if (isset($row[0]['foto'])) {
+            $row[0]['idseccioncategoria'] = functions::decode_json($row[0]['idseccioncategoria']);
+            if (isset($idseccioncategoria) && !in_array($idseccioncategoria, $row[0]['idseccioncategoria'])) {
+                unset($row[0]);
+            }
+            if (isset($row[0]) && isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
             }
-            $row[0]['idseccioncategoria'] = functions::decode_json($row[0]['idseccioncategoria']);
+            if (isset($row[0]) && isset($row[0]['archivo'])) {
+                $row[0]['archivo'] = functions::decode_json($row[0]['archivo']);
+            }
         }
         return (count($row) == 1) ? $row[0] : $row;
     }
+
+    public static function copy($id)
+    {
+        $row = static::getById($id);
+        if (isset($row['foto'])) {
+            unset($row['foto']);
+        }
+        if (isset($row['archivo'])) {
+            unset($row['archivo']);
+        }
+        $row['idseccioncategoria']=functions::encode_json($row['idseccioncategoria']);
+        $fields = table::getByname(static::$table);
+        $insert = database::create_data($fields, $row);
+        $connection = database::instance();
+        $row = $connection->insert(static::$table, static::$idname, $insert);
+        if ($row) {
+            $last_id = $connection->get_last_insert_id();
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            return $last_id;
+        } else {
+            return $row;
+        }
+    }
+
+
+
 }

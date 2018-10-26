@@ -38,6 +38,7 @@ class head
         $this->data['path'] = app::$_path;
         $this->data['color_primario'] = $config['color_primario'];
         $this->data['googlemaps_key'] = $config['googlemaps_key'];
+        $this->data['google_captcha'] = $config['google_captcha'];
 
         $title = $config['title'];
         $short_title = $config['short_title'];
@@ -54,11 +55,11 @@ class head
         }
         $this->data['title'] = $titulo;
         $this->data['description_text'] = strip_tags($this->data['description_text']);
-        $this->data['keywords'] = ($this->data['keywords_text'] != '');
-        $this->data['description'] = ($this->data['description_text'] != '');
+        $this->data['keywords'] = strip_tags($this->data['keywords_text'] != '');
+        $this->data['description'] = strip_tags($this->data['description_text'] != '');
         $logo = logo_model::getById(5);
         $this->data['logo'] = image::generar_url($logo['foto'][0], 'social');
-        if (isset($metadata['image'])) {
+        if (isset($metadata['image']) && $metadata['image']!='') {
             $this->data['image_url'] = $metadata['image'];
             $this->data['image'] = true;
         }

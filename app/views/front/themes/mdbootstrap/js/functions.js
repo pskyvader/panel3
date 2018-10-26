@@ -160,39 +160,69 @@ function iniciar(body, head, data_form) {
 
 
 function activar_imagen() {
-    $('img[data-src]').each(function() {
-        if (typeof($(this).data('src')) != 'undefined' && $(this).data('src') != '') {
-            if (isInViewport($(this)[0])) {
-                var src = $(this).data('src');
-                $(this)[0].removeAttribute('data-src');
-                $(this).attr('src', src).on('load', function() {
-                    $(this).fadeIn();
-                });
-
-            }
-        }
-    });
     $('source[data-srcset]').each(function() {
-        if (typeof($(this).data('srcset')) != 'undefined' && $(this).data('srcset') != '') {
-            if (isInViewport($(this)[0])) {
-                var srcset = $(this).data('srcset');
-                $(this)[0].removeAttribute('data-srcset');
-                $(this).attr('srcset', srcset).on('load', function() {
-                    $(this).fadeIn();
-                });
-            }
+        if (is_visible($(this))) {
+            load_source($(this));
         }
     });
 
     $('.blur[data-background]').each(function() {
-        if (typeof($(this).data('background')) != 'undefined' && $(this).data('background') != '') {
-            if (isInViewport($(this)[0])) {
-                var background = $(this).data('background');
-                $(this).css('background-image', 'url(' + background + ')');
-                $(this)[0].removeAttribute('data-background');
-            }
+        if (is_visible($(this))) {
+            load_background($(this));
         }
     });
+    $('img[data-src]').each(function() {
+        if (is_visible($(this))) {
+            load_image($(this));
+        }
+    });
+}
+
+function load_image(image) {
+    if (typeof($(image).data('src')) != 'undefined' && $(image).data('src') != '') {
+        var src = $(image).data('src');
+        $(image)[0].removeAttribute('data-src');
+        $(image).prop('src', src).on('load', function(e) {
+            $(e.target).fadeIn();
+        });
+    }
+}
+
+function load_source(source) {
+    if (typeof($(source).data('srcset')) != 'undefined' && $(source).data('srcset') != '') {
+        var srcset = $(source).data('srcset');
+        $(source)[0].removeAttribute('data-srcset');
+        $(source).prop('srcset', srcset);
+    }
+}
+
+
+function load_background(background) {
+    if (typeof($(background).data('background')) != 'undefined' && $(background).data('background') != '') {
+        var back = $(background).data('background');
+        $(background).css('background-image', 'url(' + back + ')');
+        $(background)[0].removeAttribute('data-background');
+    }
+}
+
+
+
+function is_visible(images) {
+    var $w = $(window),
+        th = 0;
+
+    var $e = $(images);
+    if ($e.is(":hidden")) {
+        return false;
+    } else {
+        var wt = $w.scrollTop(),
+            wb = wt + $w.height(),
+            et = $e.offset().top,
+            eb = et + $e.height();
+
+        return eb >= wt - th && et <= wb + th;
+
+    }
 }
 
 function mover(elemento, tiempo, delay) {
@@ -210,8 +240,19 @@ function mover(elemento, tiempo, delay) {
     }
 }
 
+function notificacion(mensaje, tipo) {
+    toastr.clear();
+    toastr[tipo](mensaje);
+}
 
-function isInViewport(el) {
-    var rect = el.getBoundingClientRect();
-    return (rect.bottom >= 0 && rect.right >= 0 && rect.top <= (window.innerHeight || document.documentElement.clientHeight) && rect.left <= (window.innerWidth || document.documentElement.clientWidth));
+function barra(porcentaje) {
+    /*if (porcentaje >= 0 && porcentaje < 100) {
+        $.skylo('show', function() {
+            $.skylo('set', porcentaje);
+        });
+    } else {
+        setTimeout(function() {
+            $.skylo('end');
+        }, 500);
+    }*/
 }

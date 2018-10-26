@@ -7,11 +7,14 @@ var config_editor = {
 var token = null;
 var editor = null;
 var url_list = '';
-var timestamp = 5;
+var timestamp = 13;
 
 function inicio_detail() {
     if ($('div.form-group.image').length > 0) {
         inicio_image();
+    }
+    if ($('div.form-group.file').length > 0) {
+        inicio_file();
     }
     url_list = $('form#formulario').data('list');
     token = $('input.token-campo');
@@ -20,7 +23,7 @@ function inicio_detail() {
     });
     editor = $('textarea.editor');
     if (editor.length > 0) {
-        CKEDITOR.timestamp = timestamp;
+        //CKEDITOR.timestamp = timestamp;
         $(editor).each(function() {
             CKEDITOR.replace($(this).prop('id'), config_editor);
         });
@@ -62,10 +65,11 @@ function inicio_detail() {
             $($(this)).val(urlamigable($(this).val()));
         });
 
+        $('body').on('keyup', 'form#formulario input[name=titulo]', function() {
+            $('form#formulario input.url').first().val(urlamigable($(this).val()));
+        });
         $('body').on('blur', 'form#formulario input[name=titulo]', function() {
-            if($('form#formulario input.url').first().val()==''){
-                $('form#formulario input.url').first().val(urlamigable($(this).val()));
-            }
+            $('form#formulario input.url').first().val(urlamigable($(this).val()));
         });
 
     }
@@ -108,6 +112,10 @@ $(document).on('click', 'form#formulario button.active', function() {
 });
 
 function loadBootstrap(event) {
+    event.editor.balloonToolbars.create({
+        buttons: 'Link,Unlink,Image',
+        widgets: 'image'
+    });
     var jQueryScriptTag = document.createElement('script');
     var bootstrapScriptTag = document.createElement('script');
     jQueryScriptTag.src = 'https://code.jquery.com/jquery-1.11.3.min.js';
