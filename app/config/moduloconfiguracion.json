@@ -107,6 +107,15 @@
                             "2": "true",
                             "3": "true"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -471,6 +480,15 @@
                     {
                         "field": "new",
                         "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -882,6 +900,15 @@
                             "2": "true",
                             "3": "true"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -1193,6 +1220,15 @@
                     {
                         "field": "new",
                         "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -1599,6 +1635,15 @@
                         "titulo": "Nuevo",
                         "estado": {
                             "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
                             "2": "false",
                             "3": "false"
                         }
@@ -2024,6 +2069,15 @@
                             "2": "true",
                             "3": "true"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -2198,6 +2252,15 @@
                             "1": "true",
                             "2": "true",
                             "3": "true"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -2374,6 +2437,15 @@
                             "2": "true",
                             "3": "true"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -2487,7 +2559,7 @@
                     },
                     {
                         "field": "mapa",
-                        "tipo": "text",
+                        "tipo": "map",
                         "titulo": "Mapa",
                         "texto_ayuda": "",
                         "required": "false",
@@ -2548,6 +2620,15 @@
                             "1": "true",
                             "2": "true",
                             "3": "true"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -2739,6 +2820,15 @@
                             "2": "true",
                             "3": "true"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [],
@@ -2831,6 +2921,15 @@
                     {
                         "field": "new",
                         "titulo": "Nuevo",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
                         "estado": {
                             "1": "false",
                             "2": "false",
@@ -3106,6 +3205,15 @@
                             "2": "false",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -3339,6 +3447,15 @@
                             "2": "false",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -3521,6 +3638,15 @@
                             "2": "true",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -3698,6 +3824,15 @@
                     {
                         "field": "new",
                         "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -3940,6 +4075,15 @@
                         "estado": {
                             "1": "false",
                             "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
                             "3": "false"
                         }
                     }
