@@ -51,18 +51,18 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
             xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function(evt) { //Barra de progreso de subida y ejecución
                 if (evt.lengthComputable) {
-                    var percentComplete = (evt.loaded / evt.total) * 80;
+                    var percentComplete = (evt.loaded / evt.total) * 50;
                     barra(percentComplete);
                 } else {
-                    barra(50);
+                    barra(25);
                 }
             }, false);
             xhr.addEventListener("progress", function(evt) {
                 if (evt.lengthComputable) {
-                    var percentComplete = 80 + (evt.loaded / evt.total) * 20;
+                    var percentComplete = 50 + (evt.loaded / evt.total) * 50;
                     barra(percentComplete);
                 } else {
-                    barra(90);
+                    barra(75);
                 }
             }, false);
             return xhr;
@@ -70,6 +70,7 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
         success: function(datos, textStatus, jqXHR) {
             if (typeof(datos['exito']) != 'undefined' && datos['exito']) {
                 if (importante) {
+                    console.log('adsf');
                     var mensaje = (($.isArray(datos['mensaje'])) ? datos['mensaje'].join('<br/>') : datos['mensaje']);
                     notificacion('Confirmación', mensaje, 'success');
                 }

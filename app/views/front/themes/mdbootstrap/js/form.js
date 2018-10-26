@@ -32,6 +32,8 @@ $(document).on('submit', 'form', function(e) { // guardar formulario detalle
 function inicio_captcha() {
     if (typeof(grecaptcha) == 'undefined') {
         $.getScript('https://www.google.com/recaptcha/api.js');
+    }else{
+        grecaptcha.render("recaptcha");
     }
 }
 

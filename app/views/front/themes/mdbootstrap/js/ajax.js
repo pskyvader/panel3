@@ -27,18 +27,18 @@ function post(url_post, info, mensaje_inicial, archivo, callback, extra) {
             xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function(evt) { //Barra de progreso de subida y ejecución
                 if (evt.lengthComputable) {
-                    var percentComplete = (evt.loaded / evt.total) * 80;
+                    var percentComplete = (evt.loaded / evt.total) * 50;
                     barra(percentComplete);
                 } else {
-                    barra(50);
+                    barra(25);
                 }
             }, false);
             xhr.addEventListener("progress", function(evt) {
                 if (evt.lengthComputable) {
-                    var percentComplete = 80 + (evt.loaded / evt.total) * 20;
+                    var percentComplete = 50 + (evt.loaded / evt.total) * 50;
                     barra(percentComplete);
                 } else {
-                    barra(90);
+                    barra(75);
                 }
             }, false);
             return xhr;

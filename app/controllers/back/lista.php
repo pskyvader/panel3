@@ -11,7 +11,7 @@ use \core\view;
 
 class lista
 {
-    private $metadata = array('title' => '');
+    private $metadata  = array('title' => '');
     private $templates = array();
 
     public function __construct($metadata)
@@ -20,37 +20,37 @@ class lista
             $this->metadata[$key] = $value;
         }
         $list_dir = view::get_theme() . 'list/';
-        $files = scandir($list_dir);
+        $files    = scandir($list_dir);
         foreach ($files as $file) {
-            $nombre = explode(".", $file);
+            $nombre    = explode(".", $file);
             $extension = strtolower(array_pop($nombre));
             if ($extension == 'html') {
-                $html = file_get_contents($list_dir . $file);
+                $html                                   = file_get_contents($list_dir . $file);
                 $this->templates[implode('.', $nombre)] = $html;
             }
         }
     }
     public function normal($data)
     {
-        $th = $data['th'];
+        $th       = $data['th'];
         $row_data = $data['row'];
-        $row = array();
-        $even = false;
+        $row      = array();
+        $even     = false;
         foreach ($row_data as $key => $fila) {
             $td = array();
             foreach ($th as $k => $v) {
                 $content = $this->field($v, $fila);
-                $td[] = array('content' => $content, 'content_field' => $v['field']);
+                $td[]    = array('content' => $content, 'content_field' => $v['field']);
             }
             $linea = array('even' => $even, 'id' => $fila[0], 'td' => $td, 'order' => (isset($fila['orden'])) ? $fila['orden'] : '');
             $row[] = $linea;
-            $even = !$even;
+            $even  = !$even;
         }
-        $data['row'] = $row;
-        $data['title'] = $this->metadata['title'];
+        $data['row']         = $row;
+        $data['title']       = $this->metadata['title'];
         $data['order_class'] = isset($th['orden']);
-        $data['order_head'] = isset($th['orden']);
-        $data['order_body'] = isset($th['orden']);
+        $data['order_head']  = isset($th['orden']);
+        $data['order_body']  = isset($th['orden']);
 
         $data = $this->pagination($data);
 
@@ -77,8 +77,8 @@ class lista
     }
     public function get_row($class, $where, $condiciones, $urledit)
     {
-        $limit = (isset($_GET['limit'])) ? (int) $_GET['limit'] : 10;
-        $page = (isset($_GET['page'])) ? (int) $_GET['page'] : 1;
+        $limit  = (isset($_GET['limit'])) ? (int) $_GET['limit'] : 10;
+        $page   = (isset($_GET['page'])) ? (int) $_GET['page'] : 1;
         $search = (isset($_GET['search'])) ? $_GET['search'] : '';
 
         if ($search != '') {
@@ -94,17 +94,19 @@ class lista
 
         $condiciones['limit'] = $limit;
         if ($page > 1) {
-            $condiciones['limit'] = (($page - 1) * $limit);
+            $condiciones['limit']  = (($page - 1) * $limit);
             $condiciones['limit2'] = ($limit);
         }
         $inicio = ($limit * ($page - 1)) + 1;
-        $fin = ($limit * ($page));
-        if($fin>$count) $fin=$count;
+        $fin    = ($limit * ($page));
+        if ($fin > $count) {
+            $fin = $count;
+        }
 
         $row = $class::getAll($where, $condiciones);
         foreach ($row as $k => $v) {
-            $urltmp = $urledit;
-            $urltmp[] = $v[0];
+            $urltmp                 = $urledit;
+            $urltmp[]               = $v[0];
             $row[$k]['url_detalle'] = functions::generar_url($urltmp);
         }
 
@@ -115,21 +117,21 @@ class lista
     {
 
         $limits = array(
-            10 => array('value' => 10,'text' => 10, 'active' => ''),
-            25 => array('value' => 25,'text' => 25, 'active' => ''),
-            100 => array('value' => 100,'text' => 100, 'active' => ''),
-            500 => array('value' => 500,'text' => 500, 'active' => ''),
-            1000 => array('value' => 1000,'text' => 1000, 'active' => ''),
-            1000000 => array('value' => 1000000,'text' => 'Todos', 'active' => ''),
+            10      => array('value' => 10, 'text' => 10, 'active' => ''),
+            25      => array('value' => 25, 'text' => 25, 'active' => ''),
+            100     => array('value' => 100, 'text' => 100, 'active' => ''),
+            500     => array('value' => 500, 'text' => 500, 'active' => ''),
+            1000    => array('value' => 1000, 'text' => 1000, 'active' => ''),
+            1000000 => array('value' => 1000000, 'text' => 'Todos', 'active' => ''),
         );
         $limits[$data['limit']]['active'] = 'selected';
-        $data['limits'] = $limits;
+        $data['limits']                   = $limits;
 
         $pagination = array();
-        $rango = 5;
-        $min = 1;
-        $max = $data['total'];
-        $sw = false;
+        $rango      = 5;
+        $min        = 1;
+        $max        = $data['total'];
+        $sw         = false;
         while ((($max - $min) + 1) > $rango) {
             if ($sw) {
                 if ($min != $data['page'] && $min + 1 != $data['page']) {
@@ -146,24 +148,24 @@ class lista
         $_GET['page'] = $data['page'] - 1;
         $pagination[] = array(
             'class_page' => 'previous ' . (($data['page'] > 1) ? '' : 'disabled'),
-            'url_page' => "?" . http_build_query($_GET),
-            'text_page' => '<i class="fa fa-angle-left"> </i> Anterior',
+            'url_page'   => "?" . http_build_query($_GET),
+            'text_page'  => '<i class="fa fa-angle-left"> </i> Anterior',
         );
 
         for ($i = $min; $i <= $max; $i++) {
             $_GET['page'] = $i;
             $pagination[] = array(
                 'class_page' => (($data['page'] == $i) ? 'active' : ''),
-                'url_page' => "?" . http_build_query($_GET),
-                'text_page' => $i,
+                'url_page'   => "?" . http_build_query($_GET),
+                'text_page'  => $i,
             );
         }
 
         $_GET['page'] = $data['page'] + 1;
         $pagination[] = array(
             'class_page' => 'next ' . (($data['page'] < $data['total']) ? '' : 'disabled'),
-            'url_page' => "?" . http_build_query($_GET),
-            'text_page' => 'Siguiente <i class="fa fa-angle-right"> </i> ',
+            'url_page'   => "?" . http_build_query($_GET),
+            'text_page'  => 'Siguiente <i class="fa fa-angle-right"> </i> ',
         );
 
         $data['pagination'] = $pagination;
@@ -177,47 +179,47 @@ class lista
             case 'active':
                 $html = $this->templates[$type];
                 $data = array(
-                    'field' => $th['field'],
+                    'field'  => $th['field'],
                     'active' => $fila[$th['field']],
-                    'id' => $fila[0],
-                    'class' => ($fila[$th['field']]) ? 'btn-success' : 'btn-danger',
-                    'icon' => ($fila[$th['field']]) ? 'fa-check' : 'fa-close',
+                    'id'     => $fila[0],
+                    'class'  => ($fila[$th['field']]) ? 'btn-success' : 'btn-danger',
+                    'icon'   => ($fila[$th['field']]) ? 'fa-check' : 'fa-close',
                 );
                 $content = view::render_template($data, $html);
                 return $content;
                 break;
             case 'delete':
-                $html = $this->templates[$type];
-                $data = array('id' => $fila[0]);
+                $html    = $this->templates[$type];
+                $data    = array('id' => $fila[0]);
                 $content = view::render_template($data, $html);
                 return $content;
                 break;
             case 'link':
-                $html = $this->templates[$type];
-                $data = array('text' => $th['title_th'], 'url' => $fila[$th['field']]);
+                $html    = $this->templates[$type];
+                $data    = array('text' => $th['title_th'], 'url' => $fila[$th['field']]);
                 $content = view::render_template($data, $html);
                 return $content;
                 break;
             case 'image':
                 if (isset($fila[$th['field']]) && is_array($fila[$th['field']])) {
-                    $portada=image::portada($fila[$th['field']]);
-                    $thumb_url = image::generar_url($portada, 'thumb');
-                    $zoom_url = image::generar_url($portada, 'zoom');
+                    $portada      = image::portada($fila[$th['field']]);
+                    $thumb_url    = image::generar_url($portada, 'thumb');
+                    $zoom_url     = image::generar_url($portada, 'zoom');
                     $original_url = image::generar_url($portada, '');
                 } else {
                     $thumb_url = $zoom_url = $original_url = '';
                 }
-                $html = $this->templates[$type];
-                $data = array('title' => $th['title_th'], 'url' => $thumb_url, 'zoom' => $zoom_url, 'original' => $original_url, 'id' => $fila[0]);
+                $html    = $this->templates[$type];
+                $data    = array('title' => $th['title_th'], 'url' => $thumb_url, 'zoom' => $zoom_url, 'original' => $original_url, 'id' => $fila[0]);
                 $content = view::render_template($data, $html);
                 return $content;
                 break;
             case 'action':
                 $html = $this->templates[$type];
                 $data = array(
-                    'text' => $th['title_th'],
-                    'id' => $fila[$th['field']],
-                    'action' => $th['action'],
+                    'text'    => $th['title_th'],
+                    'id'      => $fila[$th['field']],
+                    'action'  => $th['action'],
                     'mensaje' => $th['mensaje'],
                 );
                 $content = view::render_template($data, $html);
@@ -231,15 +233,15 @@ class lista
     }
     public static function configuracion($modulo)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
-        $tipo_admin = $_SESSION["tipo" . $prefix_site];
+        $prefix_site         = functions::url_amigable(app::$_title);
+        $tipo_admin          = $_SESSION["tipo" . $prefix_site];
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($modulo);
-        $var = array('idmoduloconfiguracion' => $moduloconfiguracion[0]);
+        $var                 = array('idmoduloconfiguracion' => $moduloconfiguracion[0]);
         if (isset($_GET['tipo'])) {
             $var['tipo'] = $_GET['tipo'];
         }
-        $modulo = modulo_model::getAll($var, array('limit' => 1));
-        $modulo = $modulo[0];
+        $modulo  = modulo_model::getAll($var, array('limit' => 1));
+        $modulo  = $modulo[0];
         $estados = $modulo['estado'][0]['estado'];
         if ($estados[$tipo_admin] != 'true') {
             functions::url_redirect(array('home'));
@@ -264,45 +266,80 @@ class lista
 
     public static function orden($class)
     {
-        $campos = $_POST['campos'];
+        $campos    = $_POST['campos'];
         $respuesta = array('exito' => false, 'mensaje' => '');
         $elementos = $campos['elementos'];
         foreach ($elementos as $key => $e) {
             $class::update($e);
         }
-        $respuesta['exito'] = true;
+        $respuesta['exito']   = true;
         $respuesta['mensaje'] = "Orden actualizado correctamente";
         return $respuesta;
     }
     public static function estado($class)
     {
-        $campos = $_POST['campos'];
+        $campos    = $_POST['campos'];
         $respuesta = array('exito' => false, 'mensaje' => '');
-        $set = array('id' => $campos['id'], $campos['campo'] => $campos['active']);
+        $set       = array('id' => $campos['id'], $campos['campo'] => $campos['active']);
         $class::update($set);
-        $respuesta['exito'] = true;
+        $respuesta['exito']   = true;
         $respuesta['mensaje'] = "Estado actualizado correctamente.";
         return $respuesta;
     }
     public static function eliminar($class)
     {
-        $campos = $_POST['campos'];
+        $campos    = $_POST['campos'];
         $respuesta = array('exito' => false, 'mensaje' => '');
         $class::delete($campos['id']);
-        $respuesta['exito'] = true;
+        $respuesta['exito']   = true;
         $respuesta['mensaje'] = "Eliminado correctamente.";
         return $respuesta;
     }
 
     public static function copy($class)
     {
-        $campos = $_POST['campos'];
-        $respuesta = array('exito' => false, 'mensaje' => '');
-        $id = $class::copy($campos['id']);
-        $respuesta['exito'] = true;
+        $campos               = $_POST['campos'];
+        $respuesta            = array('exito' => false, 'mensaje' => '');
+        $id                   = $class::copy($campos['id']);
+        $respuesta['exito']   = true;
         $respuesta['mensaje'] = "Copiado correctamente.";
-        $respuesta['id'] = $id;
+        $respuesta['id']      = $id;
         $respuesta['refresh'] = true;
+        return $respuesta;
+    }
+
+    public static function excel($class, $where, $select,$title)
+    {
+        $respuesta   = array('exito' => false, 'mensaje' => 'No hay datos para exportar');
+        $condiciones = array();
+        $condiciones['limit'] = $_GET['limit'];
+        $condiciones['limit2'] = $_GET['limit2'];
+        $row         = $class::getAll($where, $condiciones, $select);
+        if (count($row) > 0) {
+            $head   = array();
+            $delete = array();
+            foreach ($row[0] as $k => $v) {
+                if (is_array($v) || is_int($k) || $k=='tipo' || $k=='orden' || $k=='estado' || $k==$class::$idname) {
+                    $delete[] = $k;
+                } else {
+                    $head[] = $k;
+                }
+            }
+
+            if (count($delete) > 0) {
+                foreach ($row as $key => $r) {
+                    foreach ($delete as $k => $d) {
+                        unset($row[$key][$d]);
+                    }
+                }
+            }
+
+            $respuesta['exito']    = true;
+            $respuesta['mensaje']  = "Excel generado.";
+            $respuesta['exportar'] = $row;
+            $respuesta['head']     = $head;
+            $respuesta['title']     = $title;
+        }
         return $respuesta;
     }
 }

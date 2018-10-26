@@ -42,7 +42,7 @@ function inicio() {
     inicio_detail();
     inicio_list();
     $(".dial").knob(); // knob
-	$('textarea.autosize').autosize({append: "\n"});
+    $('textarea.autosize').autosize({append: "\n"});
 }
 
 $('body').on('click', 'button.generar_sitemap,button.nuevo_sitemap', function() {

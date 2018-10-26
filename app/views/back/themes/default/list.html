@@ -35,11 +35,22 @@
 
                             </div>
                             <div class="btn-group mt-sm">
+                                {if excel}
+                                <button class="btn btn-default csv">
+                                    <i class="fa fa-file-excel-o"></i> 
+                                    <span> Exportar CSV</span>
+                                </button>
+                                <button class="btn btn-default excel">
+                                    <i class="fa fa-file-excel-o"></i> 
+                                    <span> Exportar Excel</span>
+                                </button>
+                                {/if excel}
                                 {if new}
                                 <a class="btn btn-default new" href="{new_url}">
-                                    <i class="fa fa-plus"></i>
-                                    <span>Nuevo</span>
-                                </a>{/if new}
+                                    <i class="fa fa-plus"></i> 
+                                    <span> Nuevo</span>
+                                </a>
+                                {/if new}
                             </div>
                         </div>
                         <div class="panel-body no-padding table-responsive">
@@ -75,6 +86,7 @@
                             </table>
                         </div>
                         <div class="panel-footer">
+                            <div class="hidden" id="count_elementos">{count}</div>
                             <div class="pull-left m-n">
                                 Mostrando {inicio} a {fin} de {count} elementos
                             </div>

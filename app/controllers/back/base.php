@@ -241,6 +241,34 @@ class base
         $respuesta = lista::copy($this->class);
         echo json_encode($respuesta);
     }
+    public function excel()
+    {
+        $respuesta=array('exito'=>false,'mensaje'=>'Debes recargar la pagina');
+        if ($this->contiene_tipos && !isset($_GET['tipo'])) {
+            echo json_encode($respuesta);
+            return;
+        }
+        if ($this->contiene_hijos && !isset($_GET['idpadre'])) {
+            echo json_encode($respuesta);
+            return;
+        }
+        $where = array();
+        if ($this->contiene_tipos) {
+            $where['tipo'] = $_GET['tipo'];
+        }
+        if ($this->contiene_hijos) {
+            $where['idpadre'] = $_GET['idpadre'];
+        }
+        if (isset($this->class_parent)) {
+            $class_parent = $this->class_parent;
+            if (isset($_GET[$class_parent::$idname])) {
+                $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
+            }
+        }
+        $select="";
+        $respuesta = lista::excel($this->class,$where,$select,$this->metadata['title']);
+        echo json_encode($respuesta);
+    }
     public function guardar()
     {
         $respuesta = detalle::guardar($this->class);

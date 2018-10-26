@@ -208,7 +208,6 @@ class view
                     functions::set_cookie('loaded_js', false, time() + (31536000));
                 }
                 if (is_writable($dir)) {
-                    array_map('unlink', glob($dir . "\\*.js"));
                     $minifier = null;
                     foreach ($locales as $key => $l) {
                         if ($minifier == null) {
@@ -216,9 +215,11 @@ class view
                         } else {
                             $minifier->add($l['url']);
                         }
-
                     }
-                    $minifier->minify($dir . '\\' . $file);
+                    $minify=$minifier->minify();
+                    array_map('unlink', glob($dir . "\\*.js"));
+                    file_put_contents($dir . '\\' . $file, $minify);
+
                     $locales = array(array('url' => app::$_path . $file, 'defer' => 'async defer'));
                 } else {
                     foreach ($locales as $key => $l) {
@@ -296,7 +297,6 @@ class view
                     functions::set_cookie('loaded_css', false, time() + (31536000));
                 }
                 if (is_writable($dir)) {
-                    array_map('unlink', glob($dir . "\\*.css"));
                     $minifier = null;
                     foreach ($locales as $key => $l) {
                         if ($minifier == null) {
@@ -304,9 +304,10 @@ class view
                         } else {
                             $minifier->add($l['url']);
                         }
-
                     }
-                    $minifier->minify($dir . '\\' . $file);
+                    $minify=$minifier->minify();
+                    array_map('unlink', glob($dir . "\\*.css"));
+                    file_put_contents($dir . '\\' . $file, $minify);
                     $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true));
                 } else {
                     foreach ($locales as $key => $l) {

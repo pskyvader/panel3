@@ -10,7 +10,7 @@ use \core\functions;
 class base_model implements crud
 {
     public static $idname = '',
-    $table = '';
+    $table                = '';
 
     public static function getAll($where = array(), $condiciones = array(), $select = "")
     {
@@ -24,7 +24,7 @@ class base_model implements crud
         }
 
         if (isset($condiciones['palabra'])) {
-            $fields = table::getByname(static::$table);
+            $fields                = table::getByname(static::$table);
             $condiciones['buscar'] = array();
             if (isset($fields['titulo'])) {
                 $condiciones['buscar']['titulo'] = $condiciones['palabra'];
@@ -45,14 +45,12 @@ class base_model implements crud
         }
 
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        if ($select == '') {
-            foreach ($row as $key => $value) {
-                if (isset($row[$key]['foto'])) {
-                    $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
-                }
-                if (isset($row[$key]['archivo'])) {
-                    $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
-                }
+        foreach ($row as $key => $value) {
+            if (isset($row[$key]['foto'])) {
+                $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
+            }
+            if (isset($row[$key]['archivo'])) {
+                $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
             }
         }
         return $row;
@@ -63,10 +61,13 @@ class base_model implements crud
         $where = array(static::$idname => $id);
         if (app::$_front) {
             $fields = table::getByname(static::$table);
-            if(isset($fields['estado'])) $where['estado'] = true;
+            if (isset($fields['estado'])) {
+                $where['estado'] = true;
+            }
+
         }
         $connection = database::instance();
-        $row = $connection->get(static::$table, static::$idname, $where);
+        $row        = $connection->get(static::$table, static::$idname, $where);
         if (count($row) == 1) {
             if (isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
@@ -80,10 +81,10 @@ class base_model implements crud
 
     public static function insert($data, $log = true)
     {
-        $fields = table::getByname(static::$table);
-        $insert = database::create_data($fields, $data);
+        $fields     = table::getByname(static::$table);
+        $insert     = database::create_data($fields, $data);
         $connection = database::instance();
-        $row = $connection->insert(static::$table, static::$idname, $insert);
+        $row        = $connection->insert(static::$table, static::$idname, $insert);
         if ($row) {
             $last_id = $connection->get_last_insert_id();
             if ($log) {
@@ -101,7 +102,7 @@ class base_model implements crud
         $where = array(static::$idname => $set['id']);
         unset($set['id']);
         $connection = database::instance();
-        $row = $connection->update(static::$table, static::$idname, $set, $where);
+        $row        = $connection->update(static::$table, static::$idname, $set, $where);
         if ($log) {
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
         }
@@ -111,9 +112,9 @@ class base_model implements crud
 
     public static function delete($id)
     {
-        $where = array(static::$idname => $id);
+        $where      = array(static::$idname => $id);
         $connection = database::instance();
-        $row = $connection->delete(static::$table, static::$idname, $where);
+        $row        = $connection->delete(static::$table, static::$idname, $where);
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
         return $row;
     }
@@ -126,10 +127,10 @@ class base_model implements crud
         if (isset($row['archivo'])) {
             unset($row['archivo']);
         }
-        $fields = table::getByname(static::$table);
-        $insert = database::create_data($fields, $row);
+        $fields     = table::getByname(static::$table);
+        $insert     = database::create_data($fields, $row);
         $connection = database::instance();
-        $row = $connection->insert(static::$table, static::$idname, $insert);
+        $row        = $connection->insert(static::$table, static::$idname, $insert);
         if ($row) {
             $last_id = $connection->get_last_insert_id();
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
