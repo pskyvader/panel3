@@ -71,6 +71,7 @@
         {"url": "js/image.js","local":true,"defer":false,"combine":true},
         {"url": "js/file.js","local":true,"defer":false,"combine":true},
         {"url": "js/excel.js","local":true,"defer":false,"combine":true},
+        {"url": "js/regenerar_imagen.js","local":true,"defer":false,"combine":true},
         {"url": "js/multiple.js","local":true,"defer":false,"combine":true},
         {"url": "js/list.js","local":true,"defer":false,"combine":true},
         {"url": "js/detail.js","local":true,"defer":false,"combine":true},

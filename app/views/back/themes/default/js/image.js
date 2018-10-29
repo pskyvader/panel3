@@ -10,7 +10,7 @@ function inicio_image() {
                 post(create_url(modulo, 'upload'), {}, "Subiendo Imagen", !1, e.target.files, after_guardar_image, t);
             }
         });
-        $('body').on('click', '.eliminar_image', function() {
+        $(t).on('click', '.eliminar_image', function() {
             $('#eliminar_editar_image', t).data('id', $(this).data('id'));
         });
     });

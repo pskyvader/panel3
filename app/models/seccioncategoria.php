@@ -60,6 +60,10 @@ class seccioncategoria extends base_model
                 }
             }
         }
+        
+        if (isset($idpadre)) {
+            $row = array_values($row);
+        }
         return $row;
     }
 

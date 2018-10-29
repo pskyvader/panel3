@@ -42,7 +42,7 @@ function procesar_excel(url, page, limit, total_excel) {
     var progress = ((info.limit) / total_excel) * 80;
     if (progress < 10) progress = 10;
     barra(progress);
-    post_excel(url, info, mensaje, function(data) {
+    post_basic(url, info, mensaje, function(data) {
         var data = JSON.parse(data);
         if (!fin) {
             procesar_excel(url, page + 1, limit, total_excel);
@@ -58,17 +58,6 @@ function procesar_excel(url, page, limit, total_excel) {
     });
 }
 
-function post_excel(url_post, info, mensaje_inicial, callback) {
-    notificacion_footer(mensaje_inicial);
-    $.get(url_post, info, function(data) {
-        callback(data);
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-        console.log(jqXHR);
-        console.log(errorThrown);
-        notificacion('Oh no!', 'Ha ocurrido un error, por favor intenta más tarde', 'error');
-    });
-}
 
 function add_ws(data) {
     var skip = false;

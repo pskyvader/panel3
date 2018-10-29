@@ -312,8 +312,8 @@ class lista
     {
         $respuesta   = array('exito' => false, 'mensaje' => 'No hay datos para exportar');
         $condiciones = array();
-        $condiciones['limit'] = $_GET['limit'];
-        $condiciones['limit2'] = $_GET['limit2'];
+        $condiciones['limit'] = $_POST['limit'];
+        $condiciones['limit2'] = $_POST['limit2'];
         $row         = $class::getAll($where, $condiciones, $select);
         if (count($row) > 0) {
             $head   = array();

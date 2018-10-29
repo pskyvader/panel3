@@ -76,7 +76,7 @@ class moduloconfiguracion extends base
         foreach ($respuesta['row'] as $key => $value) {
             $respuesta['row'][$key]['url_subseccion'] = functions::generar_url(array('modulo'), array($class::$idname => $value[0]));
         }
-        $menu = array('new' => true, 'excel' => true);
+        $menu = array('new' => true, 'excel' => true, 'regenerar' => false);
         $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
             'breadcrumb' => $this->breadcrumb,
             'th' => $th,

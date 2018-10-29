@@ -44,7 +44,7 @@ class view
      */
     public static function render($template, $minify = true, $return = false)
     {
-        $theme = self::get_theme();
+        $theme        = self::get_theme();
         $template_url = $theme . $template . "." . self::EXTENSION_TEMPLATES;
         if (!file_exists($template_url)) {
             throw new \Exception("Error: El archivo " . $template_url . " no existe", 1);
@@ -53,7 +53,7 @@ class view
         if (isset(self::$content_url[$template_url])) {
             $content = self::$content_url[$template_url];
         } else {
-            $content = file_get_contents($template_url);
+            $content                          = file_get_contents($template_url);
             self::$content_url[$template_url] = $content;
         }
         $str = self::render_template(self::$data, $content);
@@ -78,16 +78,16 @@ class view
     {
         foreach ($data as $key => $d) {
             if (is_array($d)) { //arrray de elementos foreach en vista
-                $array_open = "{foreach " . $key . "}";
+                $array_open  = "{foreach " . $key . "}";
                 $array_close = "{/foreach " . $key . "}";
 
-                $pos_open = strpos($content, $array_open);
+                $pos_open  = strpos($content, $array_open);
                 $pos_close = strpos($content, $array_close);
 
                 if ($pos_open !== false && $pos_close !== false) { //existe el codigo foreach en vista?
                     $subcontent1 = substr($content, $pos_open, ($pos_close - $pos_open));
-                    $subcontent = str_replace($array_open, "", $subcontent1);
-                    $sub = "";
+                    $subcontent  = str_replace($array_open, "", $subcontent1);
+                    $sub         = "";
                     foreach ($d as $k => $s) { //rellenar recursivamente los elementos dentro del foreach
                         $sub .= self::render_template($s, $subcontent);
                     }
@@ -98,31 +98,31 @@ class view
                 }
 
             } else {
-                $if_open = "{if " . $key . "}";
-                $if_else = "{else " . $key . "}";
+                $if_open  = "{if " . $key . "}";
+                $if_else  = "{else " . $key . "}";
                 $if_close = "{/if " . $key . "}";
 
-                $pos_open = strpos($content, $if_open);
-                $pos_else = strpos($content, $if_else);
+                $pos_open  = strpos($content, $if_open);
+                $pos_else  = strpos($content, $if_else);
                 $pos_close = strpos($content, $if_close);
 
                 if ($pos_open !== false && $pos_close !== false) { //existe el codigo IF en vista?
                     if ($d) { //valor if true
                         if ($pos_else !== false) {
                             $subcontent = substr($content, $pos_else, ($pos_close - $pos_else));
-                            $content = str_replace($subcontent, "", $content);
+                            $content    = str_replace($subcontent, "", $content);
                         }
                         $content = str_replace($if_open, "", $content);
                         $content = str_replace($if_close, "", $content);
                     } elseif ($pos_else !== false) { //valor if false y existe else
                         $subcontent = substr($content, $pos_open, ($pos_else - $pos_open));
-                        $content = str_replace($subcontent, "", $content);
-                        $content = str_replace($if_else, "", $content);
-                        $content = str_replace($if_close, "", $content);
+                        $content    = str_replace($subcontent, "", $content);
+                        $content    = str_replace($if_else, "", $content);
+                        $content    = str_replace($if_close, "", $content);
                     } else { //valor if false y no existe else
                         $subcontent = substr($content, $pos_open, ($pos_close - $pos_open));
-                        $content = str_replace($subcontent, "", $content);
-                        $content = str_replace($if_close, "", $content);
+                        $content    = str_replace($subcontent, "", $content);
+                        $content    = str_replace($if_close, "", $content);
                     }
                 } else {
                     $content = str_replace('{' . $key . '}', $d, $content);
@@ -159,13 +159,13 @@ class view
         }
         $theme = self::get_theme();
         if (self::$resources == '') {
-            $resources = file_get_contents($theme . 'resources.json');
+            $resources       = file_get_contents($theme . 'resources.json');
             self::$resources = json_decode($resources, true);
         }
-        $js = array();
-        $locales = array();
+        $js            = array();
+        $locales       = array();
         $no_combinados = array();
-        $nuevo = 0;
+        $nuevo         = 0;
         foreach (self::$resources['js'] as $key => $j) {
             if ($j['local']) {
                 $j['url'] = $theme . $j['url'];
@@ -177,8 +177,8 @@ class view
                         }
                         $locales[] = $j;
                     } else {
-                        $j['url'] = app::$_path . functions::fecha_archivo($j['url']);
-                        $j['defer'] = ($j['defer']) ? 'async defer' : '';
+                        $j['url']        = app::$_path . functions::fecha_archivo($j['url']);
+                        $j['defer']      = ($j['defer']) ? 'async defer' : '';
                         $no_combinados[] = $j;
                     }
                 } else {
@@ -187,19 +187,19 @@ class view
                     }
                 }
             } else {
-                $j['url'] = functions::ruta($j['url']);
+                $j['url']   = functions::ruta($j['url']);
                 $j['defer'] = ($j['defer']) ? 'async defer' : '';
-                $js[] = $j;
+                $js[]       = $j;
             }
         }
         if ($combine && count($locales) > 0) {
-            $dir = app::get_dir();
+            $dir  = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.js';
             if (file_exists($dir . '\\' . $file)) {
                 if (isset($_COOKIE['loaded_js']) && $_COOKIE['loaded_js']) {
                     $defer = '';
                 } else {
-                     functions::set_cookie('loaded_js', true, time() + (31536000));
+                    functions::set_cookie('loaded_js', true, time() + (31536000));
                     $defer = 'async defer';
                 }
                 $locales = array(array('url' => app::$_path . $file, 'defer' => $defer));
@@ -216,9 +216,8 @@ class view
                             $minifier->add($l['url']);
                         }
                     }
-                    $minify=$minifier->minify();
                     array_map('unlink', glob($dir . "\\*.js"));
-                    file_put_contents($dir . '\\' . $file, $minify);
+                    $minify = $minifier->minify($dir . '\\' . $file);
 
                     $locales = array(array('url' => app::$_path . $file, 'defer' => 'async defer'));
                 } else {
@@ -248,13 +247,13 @@ class view
         }
         $theme = self::get_theme();
         if (self::$resources == '') {
-            $resources = file_get_contents($theme . 'resources.json');
+            $resources       = file_get_contents($theme . 'resources.json');
             self::$resources = json_decode($resources, true);
         }
-        $css = array();
-        $locales = array();
+        $css           = array();
+        $locales       = array();
         $no_combinados = array();
-        $nuevo = 0;
+        $nuevo         = 0;
         foreach (self::$resources['css'] as $key => $c) {
             if ($c['local']) {
                 $c['url'] = $theme . $c['url'];
@@ -267,7 +266,7 @@ class view
                         $locales[] = $c;
                     } else {
                         //$c['content_css'] = file_get_contents($c['url']);
-                        $c['url'] = app::$_path . functions::fecha_archivo($c['url']);
+                        $c['url']        = app::$_path . functions::fecha_archivo($c['url']);
                         $no_combinados[] = $c;
                     }
                 } else {
@@ -277,12 +276,12 @@ class view
                 }
             } else {
                 $c['url'] = functions::ruta($c['url']);
-                $css[] = $c;
+                $css[]    = $c;
             }
         }
 
         if ($combine && count($locales) > 0) {
-            $dir = app::get_dir();
+            $dir  = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.css';
             if (file_exists($dir . '\\' . $file)) {
                 if (isset($_COOKIE['loaded_css']) && $_COOKIE['loaded_css']) {
@@ -305,9 +304,8 @@ class view
                             $minifier->add($l['url']);
                         }
                     }
-                    $minify=$minifier->minify();
                     array_map('unlink', glob($dir . "\\*.css"));
-                    file_put_contents($dir . '\\' . $file, $minify);
+                    $minify  = $minifier->minify($dir . '\\' . $file);
                     $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true));
                 } else {
                     foreach ($locales as $key => $l) {
@@ -327,9 +325,9 @@ class view
             self::set('css', $css);
 
             if ($return) {
-                $theme = self::get_theme();
+                $theme        = self::get_theme();
                 $template_url = $theme . 'resources' . "." . self::EXTENSION_TEMPLATES;
-                $content = file_get_contents($template_url);
+                $content      = file_get_contents($template_url);
                 return self::render_template(self::$data, $content);
             } else {
                 self::render('resources');

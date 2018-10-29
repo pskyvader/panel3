@@ -16,6 +16,19 @@ function update_orden(b) {
         elementos: e
     }, "Actualizando Orden", !1);
 }
+
+function post_basic(url_post, info, mensaje_inicial, callback) {
+    notificacion_footer(mensaje_inicial);
+    $.post(url_post, info, function(data) {
+        callback(data);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+        console.log(jqXHR);
+        console.log(errorThrown);
+        notificacion('Oh no!', 'Ha ocurrido un error, por favor intenta más tarde', 'error');
+    });
+}
+
 var xhr = null;
 
 function post(url_post, info, mensaje_inicial, importante, archivo, callback, extra) {

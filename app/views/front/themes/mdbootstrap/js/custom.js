@@ -34,7 +34,7 @@ function inicio() {
     if ($('.map').length > 0) {
         inicio_map();
     }
-    
+
     if ($('.g-recaptcha').length > 0) {
         inicio_captcha();
     }

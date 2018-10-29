@@ -269,6 +269,44 @@ class base
         $respuesta = lista::excel($this->class,$where,$select,$this->metadata['title']);
         echo json_encode($respuesta);
     }
+
+
+    public function get_all()
+    {
+        $respuesta=array('exito'=>false,'mensaje'=>'Debes recargar la pagina');
+        if ($this->contiene_tipos && !isset($_GET['tipo'])) {
+            echo json_encode($respuesta);
+            return;
+        }
+        if ($this->contiene_hijos && !isset($_GET['idpadre'])) {
+            echo json_encode($respuesta);
+            return;
+        }
+        $where = array();
+        if ($this->contiene_tipos) {
+            $where['tipo'] = $_GET['tipo'];
+        }
+        if ($this->contiene_hijos) {
+            $where['idpadre'] = $_GET['idpadre'];
+        }
+        if (isset($this->class_parent)) {
+            $class_parent = $this->class_parent;
+            if (isset($_GET[$class_parent::$idname])) {
+                $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
+            }
+        }
+        $condiciones = array();
+        $select="";
+        $class=$this->class;
+        $row=$class::getAll($where, $condiciones, $select);
+        echo json_encode($row);
+    }
+
+    public function regenerar(){
+        $respuesta=image::regenerar($_POST);
+        echo json_encode($respuesta);
+    }
+
     public function guardar()
     {
         $respuesta = detalle::guardar($this->class);

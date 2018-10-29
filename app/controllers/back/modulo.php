@@ -23,6 +23,7 @@ class modulo extends base
     protected $tipos_menu = array(
         'new' => array('titulo' => 'Nuevo', 'field' => 'new'),
         'excel' => array('titulo' => 'Exportar a excel', 'field' => 'excel'),
+        'regenerar' => array('titulo' => 'Regenerar imagenes', 'field' => 'regenerar'),
     );
     public function __construct()
     {
@@ -74,7 +75,7 @@ class modulo extends base
         $respuesta = $list->get_row($class, $where, $condiciones, $url_detalle); //obtener unicamente elementos de la pagina actual
         $row = $respuesta['row'];
         $new = ($parent['tipos'] || count($row) == 0) ? true : false;
-        $menu = array('new' => $new, 'excel' => true);
+        $menu = array('new' => $new, 'excel' => true, 'regenerar' => false);
 
         $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
             'breadcrumb' => $this->breadcrumb,

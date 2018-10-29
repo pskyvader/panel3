@@ -19,6 +19,7 @@ class image
     {
 
     }
+    //Subir a carpeta temporal, durante la creacion de la seccion. al guardar el archivo se mueve a la carpeta definitiva
     public static function upload_tmp($modulo)
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
@@ -33,7 +34,6 @@ class image
             }
 
             foreach ($file_ary as $key => $files) {
-
                 $archivo            = self::upload($files, 'tmp');
                 $respuesta['exito'] = $archivo['exito'];
                 if (!$archivo['exito']) {
@@ -59,7 +59,18 @@ class image
 
         return $respuesta;
     }
+    //regenerar imagenes ya guardadas
+    public static function regenerar($file)
+    {
+        $recortes       = self::get_recortes($file['folder']);
+        $file['name']   = $file['url'];
+        $file['folder'] = $file['folder'] . '/' . $file['parent'] . '/' . $file['subfolder'];
+        array_map('unlink', glob(self::get_upload_dir().$file['folder']."/".$file['id']."-*.*"));
+        $respuesta      = self::recortes_foto($file, $recortes);
+        return $respuesta;
+    }
 
+    //mover archivo (normalmente) desde la carpeta temporal a la definitiva
     public static function move($file, $folder, $subfolder, $name_final, $folder_tmp = 'tmp')
     {
         $recortes   = self::get_recortes($folder);
@@ -87,6 +98,7 @@ class image
         $file['subfolder'] = $subfolder;
         return $file;
     }
+    //obtener recortes de fotos desde bdd, segun la seccion actual
     private static function get_recortes($modulo)
     {
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($modulo);
@@ -119,7 +131,7 @@ class image
 
         return $recortes;
     }
-
+//subir archivo
     protected static function upload($file, $folder_upload = 'tmp', $name_final = '')
     {
         $folder = self::get_upload_dir() . $folder_upload;
@@ -441,7 +453,7 @@ class image
         } else { $archivo = '';}
         return $archivo;
     }
-    
+
     public static function generar_dir($file, $tag = 'thumb', $extension = "", $folder = "", $subfolder = "")
     {
         if ('' == $folder) {
@@ -453,8 +465,8 @@ class image
             $subfolder = $file['parent'] . '/' . $file['subfolder'] . '/';
         }
 
-        $url  = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
-        $archivo=self::get_upload_dir() . $url;
+        $url     = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
+        $archivo = self::get_upload_dir() . $url;
         if (!file_exists($archivo)) {
             $archivo = '';
         }

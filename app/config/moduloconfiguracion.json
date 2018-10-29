@@ -116,6 +116,15 @@
                             "2": "true",
                             "3": "true"
                         }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -493,6 +502,15 @@
                             "1": "true",
                             "2": "true",
                             "3": "true"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
                         }
                     }
                 ],
@@ -909,6 +927,15 @@
                             "2": "true",
                             "3": "true"
                         }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -1233,6 +1260,15 @@
                             "1": "true",
                             "2": "true",
                             "3": "true"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -1645,6 +1681,15 @@
                         "estado": {
                             "1": "false",
                             "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
                             "3": "false"
                         }
                     }
@@ -2078,6 +2123,15 @@
                             "2": "false",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -2257,6 +2311,15 @@
                     {
                         "field": "excel",
                         "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
                         "estado": {
                             "1": "false",
                             "2": "false",
@@ -2446,6 +2509,15 @@
                             "2": "false",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -2625,6 +2697,15 @@
                     {
                         "field": "excel",
                         "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
                         "estado": {
                             "1": "false",
                             "2": "false",
@@ -2816,14 +2897,23 @@
                         "field": "new",
                         "titulo": "Nuevo",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
                         "field": "excel",
                         "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
                         "estado": {
                             "1": "false",
                             "2": "false",
@@ -2933,6 +3023,15 @@
                         "estado": {
                             "1": "false",
                             "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
                             "3": "false"
                         }
                     }
@@ -3214,6 +3313,15 @@
                             "2": "false",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -3456,6 +3564,15 @@
                             "2": "false",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -3647,6 +3764,15 @@
                             "2": "true",
                             "3": "false"
                         }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
                     }
                 ],
                 "mostrar": [
@@ -3833,6 +3959,15 @@
                     {
                         "field": "excel",
                         "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -4084,6 +4219,15 @@
                         "estado": {
                             "1": "true",
                             "2": "true",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
                             "3": "false"
                         }
                     }
