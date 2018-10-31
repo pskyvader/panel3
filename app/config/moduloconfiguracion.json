@@ -226,7 +226,7 @@
                         "field": "foto",
                         "tipo": "image",
                         "titulo": "Foto",
-                        "texto_ayuda": "Imagen 1140x500 px, formato jpg o png",
+                        "texto_ayuda": "Imagen 1920x1080 px, formato jpg o png",
                         "required": "true",
                         "estado": {
                             "1": "true",
@@ -311,32 +311,32 @@
                     {
                         "tag": "foto1",
                         "titulo": "Foto 1",
-                        "ancho": "1140",
-                        "alto": "500",
+                        "ancho": "1900",
+                        "alto": "1080",
                         "calidad": "90",
                         "tipo": "recortar"
                     },
                     {
                         "tag": "foto2",
                         "titulo": "Foto 2",
-                        "ancho": "960",
-                        "alto": "500",
+                        "ancho": "1200",
+                        "alto": "800",
                         "calidad": "90",
                         "tipo": "recortar"
                     },
                     {
                         "tag": "foto3",
                         "titulo": "Foto 3",
-                        "ancho": "720",
-                        "alto": "400",
+                        "ancho": "768",
+                        "alto": "600",
                         "calidad": "90",
                         "tipo": "recortar"
                     },
                     {
                         "tag": "foto4",
                         "titulo": "Foto 4",
-                        "ancho": "540",
-                        "alto": "350",
+                        "ancho": "556",
+                        "alto": "400",
                         "calidad": "90",
                         "tipo": "recortar"
                     }
@@ -3192,7 +3192,7 @@
                     {
                         "tag": "sitio",
                         "titulo": "Logo del sitio",
-                        "ancho": "200",
+                        "ancho": "300",
                         "alto": "100",
                         "calidad": "90",
                         "tipo": "centrar"
