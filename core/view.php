@@ -98,33 +98,9 @@ class view
                 }
 
             } else {
-                $if_open  = "{if " . $key . "}";
-                $if_else  = "{else " . $key . "}";
-                $if_close = "{/if " . $key . "}";
-
-                $pos_open  = strpos($content, $if_open);
-                $pos_else  = strpos($content, $if_else);
-                $pos_close = strpos($content, $if_close);
-
-                if ($pos_open !== false && $pos_close !== false) { //existe el codigo IF en vista?
-                    if ($d) { //valor if true
-                        if ($pos_else !== false) {
-                            $subcontent = substr($content, $pos_else, ($pos_close - $pos_else));
-                            $content    = str_replace($subcontent, "", $content);
-                        }
-                        $content = str_replace($if_open, "", $content);
-                        $content = str_replace($if_close, "", $content);
-                    } elseif ($pos_else !== false) { //valor if false y existe else
-                        $subcontent = substr($content, $pos_open, ($pos_else - $pos_open));
-                        $content    = str_replace($subcontent, "", $content);
-                        $content    = str_replace($if_else, "", $content);
-                        $content    = str_replace($if_close, "", $content);
-                    } else { //valor if false y no existe else
-                        $subcontent = substr($content, $pos_open, ($pos_close - $pos_open));
-                        $content    = str_replace($subcontent, "", $content);
-                        $content    = str_replace($if_close, "", $content);
-                    }
-                } else {
+                $res     = self::template_if($content, $key, $d);
+                $content = $res[0];
+                if (!$res[1]) {
                     $content = str_replace('{' . $key . '}', $d, $content);
                 }
 
@@ -132,6 +108,41 @@ class view
         }
 
         return $content;
+    }
+    private static function template_if($content, $key, $d)
+    {
+        $is_if    = false;
+        $if_open  = "{if " . $key . "}";
+        $if_else  = "{else " . $key . "}";
+        $if_close = "{/if " . $key . "}";
+
+        $pos_open  = strpos($content, $if_open);
+        $pos_else  = strpos($content, $if_else);
+        $pos_close = strpos($content, $if_close);
+
+        if ($pos_open !== false && $pos_close !== false) { //existe el codigo IF en vista?
+            $is_if = true;
+            if ($d) { //valor if true
+                if ($pos_else !== false && $pos_else < $pos_close) {
+                    $subcontent = substr($content, $pos_else, ($pos_close - $pos_else));
+                    $content = implode("", explode($subcontent, $content, 2));
+                }
+                $content = implode("", explode($if_open, $content, 2));
+                $content = implode("", explode($if_close, $content, 2));
+            } elseif ($pos_else !== false && $pos_else < $pos_close) { //valor if false y existe else
+                $subcontent = substr($content, $pos_open, ($pos_else - $pos_open));
+                $content = implode("", explode($subcontent, $content, 2));
+                $content    = implode("", explode($if_else, $content, 2));
+                $content    = implode("", explode($if_close, $content, 2));
+            } else { //valor if false y no existe else
+                $subcontent = substr($content, $pos_open, ($pos_close - $pos_open));
+                $content = implode("", explode($subcontent, $content, 2));
+                $content    = implode("", explode($if_close, $content, 2));
+            }
+            $res     = self::template_if($content, $key, $d);
+            $content = $res[0];
+        }
+        return array($content, $is_if);
     }
 
     /**

@@ -1,0 +1,15 @@
+<li class="menu-item {active} {if contiene_hijo} {if nivel0} menu-item-has-children {/if nivel0} {/if contiene_hijo}">
+    {if is_url}
+        {if prefetch}
+        <link rel="prefetch" href="{url}">
+        {/if prefetch}
+        <a class="" href="{url}" {target}>
+            {title}
+        </a>
+    {/if is_url}
+    {if contiene_hijo}
+        <ul class="sub-menu">
+            {hijos}
+        </ul>
+    {/if contiene_hijo}
+</li>

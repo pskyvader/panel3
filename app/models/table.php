@@ -186,17 +186,18 @@ class table extends base_model
 
     public static function generar($id)
     {
+        $config = app::getConfig();
         $respuesta = array('exito' => true, 'mensaje' => array());
         $row = static::getById($id);
         $idname = $row['idname'];
         $tablename = $row['tablename'];
         $dir = app::get_dir(true);
-        $destino = $dir . 'app\controllers\back\\' . $tablename . '.php';
+        $destino = $dir . app::NAMESPACE_BACK.$config['theme_back'].'\\' . $tablename . '.php';
         if (file_exists($destino)) {
             $respuesta['mensaje'][] = 'Controlador ' . $tablename . ' ya existe';
         } else {
             $controller_url = $dir . 'app\templates\controllers\back\controller.tpl';
-            $controller_template = view::render_template(array('name' => $tablename), file_get_contents($controller_url));
+            $controller_template = view::render_template(array('name' => $tablename,'theme' => $config['theme_back']), file_get_contents($controller_url));
             $respuesta['mensaje'][] = 'Controlador ' . $tablename . ' no existe, creado';
             file_put_contents($destino, $controller_template);
         }

@@ -15,11 +15,11 @@ class app
     public static $_front = true;
     private static $_config = array();
     private static $_url = array();
-    const NAMESPACE_FRONT = "app\controllers\\front\\";
-    const NAMESPACE_BACK = "app\controllers\\back\\";
+    const NAMESPACE_FRONT = "app\controllers\\front\\themes\\";
+    const NAMESPACE_BACK = "app\controllers\\back\\themes\\";
     const CONTROLLERS_PATH = "controllers/";
-    const FRONT_PATH = "front/";
-    const BACK_PATH = "back/";
+    const FRONT_PATH = "front/themes/";
+    const BACK_PATH = "back/themes/";
 
     /**
      * [__construct description]
@@ -55,12 +55,12 @@ class app
 
         $path = APPPATH . '/' . self::CONTROLLERS_PATH;
         if (self::$_front) {
-            $path .= self::FRONT_PATH;
-            $namespace = self::NAMESPACE_FRONT;
+            $path .= self::FRONT_PATH.$config['theme'].'/';
+            $namespace = self::NAMESPACE_FRONT.$config['theme'].'\\';
         } else {
             self::$_path = self::$_url['admin'];
-            $path .= self::BACK_PATH;
-            $namespace = self::NAMESPACE_BACK;
+            $path .= self::BACK_PATH.$config['theme_back'].'/';
+            $namespace = self::NAMESPACE_BACK.$config['theme_back'].'\\';
         }
         //obtenemos la url parseada
         $url = $this->parseUrl();
