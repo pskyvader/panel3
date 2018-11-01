@@ -18,6 +18,7 @@ class error
     public function index()
     {
         http_response_code(404);
+        $this->metadata['class'] = (new \ReflectionClass($this))->getShortName();
         $head = new head($this->metadata);
         $head->normal();
 

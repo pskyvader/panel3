@@ -83,7 +83,6 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
         success: function(datos, textStatus, jqXHR) {
             if (typeof(datos['exito']) != 'undefined' && datos['exito']) {
                 if (importante) {
-                    console.log('adsf');
                     var mensaje = (($.isArray(datos['mensaje'])) ? datos['mensaje'].join('<br/>') : datos['mensaje']);
                     notificacion('Confirmación', mensaje, 'success');
                 }

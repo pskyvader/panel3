@@ -87,7 +87,7 @@ function generar(longitud) {
 }
 $('body').on('click', 'form#formulario a.generar_pass', function() {
     var pass = generar(8);
-    $(this).siblings('input').val(pass).attr('type', 'text');
+    $(this).siblings('input').val(pass).prop('type', 'text');
 });
 
 
@@ -149,7 +149,6 @@ var after_guardar = function(data) {
     }
 };
 $(document).on('submit', 'form#formulario', function(e) { // guardar formulario detalle
-    e.preventDefault();
     habilitar(false);
     var error = false;
     error = validar($(this));
@@ -164,19 +163,23 @@ $(document).on('submit', 'form#formulario', function(e) { // guardar formulario 
 });
 
 function validar(form) { //validar campos al editar elemento
-    var requeridos = form.find(':input[required]');
+    var requeridos = $(':input[required]', form);
     var nombres = '';
     var error = false;
     $(requeridos).each(function() {
         if ($(this).val() == '') {
             $(this).parent().parent().addClass('has-error');
-            nombres += "<br/><b>" + $(this).attr('name') + "</b>";
+            var n = $(this).prop('name');
+            if (n == '') n = $(this).prop('id');
+            nombres += "<br/><b>" + n + "</b>";
             error = true;
         } else if ($(this).prop('id') == 'rut') {
             var isValid = $.validateRut($(this).val());
             if (!isValid) {
                 $(this).parent().parent().addClass('has-error');
-                nombres += "<br/><b>" + $(this).attr('name') + "</b>";
+                var n = $(this).prop('name');
+                if (n == '') n = $(this).prop('id');
+                nombres += "<br/><b>" + n + "</b>";
                 error = true;
             }
         }
@@ -184,6 +187,7 @@ function validar(form) { //validar campos al editar elemento
     if (error) {
         var mensaje = 'Hay campos vacíos, debes llenar los campos obligatorios:' + nombres;
         notificacion('Oh No!', mensaje, 'error');
+        mover('.has-error');
     }
     return error;
 }

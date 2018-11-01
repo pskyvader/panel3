@@ -26,7 +26,7 @@ class cmscategory extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'][0], $this->metadata['title']);
+        $banner->individual($this->seo['banner'], $this->metadata['title']);
 
         $breadcrumb = new breadcrumb();
         $breadcrumb->normal($this->breadcrumb);
@@ -67,7 +67,7 @@ class cmscategory extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'][0], $this->seo['titulo']);
+        $banner->individual($this->seo['banner'], $this->seo['titulo']);
 
         $breadcrumb = new breadcrumb();
         $breadcrumb->normal($this->breadcrumb);
@@ -128,7 +128,7 @@ class cmscategory extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'][0], $this->seo['titulo']);
+        $banner->individual($this->seo['banner'], $this->seo['titulo']);
 
         $breadcrumb = new breadcrumb();
         $breadcrumb->normal($this->breadcrumb);

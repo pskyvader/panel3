@@ -2,9 +2,8 @@
 namespace app\controllers\front\themes\gatografias;
 
 defined("APPPATH") or die("Acceso denegado");
-use \core\functions;
+use \core\image;
 use \core\view;
-use \app\models\seo;
 use \app\models\banner as banner_model;
 
 class error
@@ -18,11 +17,14 @@ class error
     public function index()
     {
         http_response_code(404);
+        $this->metadata['class'] = (new \ReflectionClass($this))->getShortName();
         $head = new head($this->metadata);
         $head->normal();
 
         $header = new header();
         $header->normal();
+        $banner=banner_model::getById(5);
+        view::set('url',image::generar_url(image::portada($banner['foto']),''));
         
         view::render('404');
 

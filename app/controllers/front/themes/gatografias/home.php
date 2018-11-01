@@ -35,16 +35,8 @@ class home extends base
         //$breadcrumb->normal($this->breadcrumb);
         
         
-        //$footer = new footer();
-        //$footer->normal();
+        $footer = new footer();
+        $footer->normal();
 
-        //footer->normal incluye esta linea
-        echo "<div class='border-bottom-home'><div/>";
-        echo '<div/>';
-        view::js(false);
-        echo '  
-        </body>
-        </html>';
-        //footer->normal incluye esta linea
     }
 }

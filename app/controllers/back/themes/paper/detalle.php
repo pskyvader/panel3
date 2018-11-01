@@ -295,6 +295,7 @@ class detalle
                 $folder = $this->metadata['modulo'];
                 $fields = array();
                 if (isset($fila[$campos['field']])) {
+                    $count=count($fila[$campos['field']]);
                     foreach ($fila[$campos['field']] as $key => $campo) {
                         $field = $campo;
                         $field['title_field'] = $campos['title_field'];
@@ -305,6 +306,8 @@ class detalle
                         $field['icon'] = ($campo['portada'] == 'true') ? 'fa-check' : 'fa-close';
                         $fields[] = $field;
                     }
+                }else{
+                    $count=0;
                 }
 
                 $data = array(
@@ -314,6 +317,7 @@ class detalle
                     'help' => $campos['help'],
                     'required' => ($campos['required']) ? 'required="required"' : '',
                     'fields' => $fields,
+                    'count' => ($count>0)?$count:'',
                 );
                 break;
             case 'file':

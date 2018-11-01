@@ -1,6 +1,7 @@
 $(window).on('load', inicio);
 $(window).on('load', register_sw);
 $(window).on('scroll resize', activar_imagen);
+$(window).on('resize', imageGallery);
 var path = $("meta[property='path']").prop("content");
 var modulo = $("meta[property='modulo']").prop("content");
 var url = $("meta[property='og:url']").prop("content");
@@ -14,7 +15,6 @@ function inicio() {
 
     $(".scrollup").hide();
     $('[data-toggle="tooltip"]').tooltip();
-    imageGallery();
     if ($('.home-slider').length > 0) {
         // home slider
         var owl = $('.home-slider').owlCarousel({
@@ -29,10 +29,10 @@ function inicio() {
         owl.on('changed.owl.carousel', function(e) {
             activar_imagen();
         });
-    } else {
-        activar_imagen();
     }
 
+    activar_imagen();
+    imageGallery();
 
     //fluid width videos
 

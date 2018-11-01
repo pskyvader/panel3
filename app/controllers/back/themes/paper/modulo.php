@@ -75,7 +75,7 @@ class modulo extends base
         $respuesta = $list->get_row($class, $where, $condiciones, $url_detalle); //obtener unicamente elementos de la pagina actual
         $row = $respuesta['row'];
         $new = ($parent['tipos'] || count($row) == 0) ? true : false;
-        $menu = array('new' => $new, 'excel' => true, 'regenerar' => false);
+        $menu = array('new' => $new, 'excel' => false, 'regenerar' => false);
 
         $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
             'breadcrumb' => $this->breadcrumb,

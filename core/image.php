@@ -65,8 +65,8 @@ class image
         $recortes       = self::get_recortes($file['folder']);
         $file['name']   = $file['url'];
         $file['folder'] = $file['folder'] . '/' . $file['parent'] . '/' . $file['subfolder'];
-        array_map('unlink', glob(self::get_upload_dir().$file['folder']."/".$file['id']."-*.*"));
-        $respuesta      = self::recortes_foto($file, $recortes);
+        array_map('unlink', glob(self::get_upload_dir() . $file['folder'] . "/" . $file['id'] . "-*.*"));
+        $respuesta = self::recortes_foto($file, $recortes);
         return $respuesta;
     }
 
@@ -221,7 +221,7 @@ class image
         }
 
         // si es valido, se crea una imagen intermedia para acelerar el proceso de recorte de las demas imagenes
-        if ($alto > ($alto_valido * 1.5) || $ancho > ($ancho_valido * 1.5)) {
+        if (($alto > ($alto_valido * 1.5) && $alto_valido>0) || ($ancho > ($ancho_valido * 1.5) && $ancho_valido>0 )) {
             $alto_final  = ($alto / $ancho) * $ancho_valido; //alto proporcional segun mayor ancho valido
             $ancho_final = ($ancho / $alto) * $alto_valido; //ancho proporcional segun mayor alto valido
             if ($ancho_final >= $ancho_valido) {
@@ -327,10 +327,10 @@ class image
         $imagen_tipo = $info_imagen['mime'];
 
         $proporcion_imagen = $ancho / $alto;
-        if (null == $ancho_maximo) {
-            $ancho_maximo = (float) $alto_maximo / $proporcion_imagen;
+        if (null == $ancho_maximo || 0 == $ancho_maximo) {
+            $ancho_maximo = (float) $alto_maximo *$proporcion_imagen;
         }
-        if (null == $alto_maximo) {
+        if (null == $alto_maximo || 0 == $alto_maximo) {
             $alto_maximo = (float) $ancho_maximo / $proporcion_imagen;
         }
 

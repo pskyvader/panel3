@@ -49,7 +49,7 @@ class functions
 
     public static function get_idseccion($url)
     {
-        $url = explode('-', $url);
+        $url = explode('-', $url,2);
         return (int) $url[0];
     }
     public static function url_seccion($url_base, $seccion, $return = false)
@@ -195,7 +195,6 @@ class functions
         if (!is_array($array)) {
             $array = array();
         }
-
         return $array;
     }
 
@@ -217,7 +216,6 @@ class functions
     }
 
     public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
-
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);

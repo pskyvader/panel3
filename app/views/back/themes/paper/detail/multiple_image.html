@@ -1,6 +1,7 @@
 <div class="form-group image_multiple image">
     <label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
     <div class="col-sm-8">
+        <input id="{field}" class="name" name="" type="hidden" {required}  value="{count}">
         <div class="multiple_image"></div>
         <div class="alert alert-info">{help}</div>
         <div class="image_list sorted_multiple row"> 
@@ -20,12 +21,12 @@
                     <input type="hidden" class="folder" name="multiple[image][{field}][folder][]" value="{folder}">
                     <input type="hidden" class="subfolder" name="multiple[image][{field}][subfolder][]" value="{subfolder}">
                     <input type="hidden" class="tmp" name="multiple[image][{field}][tmp][]" value="">
-                    <button class="btn btn-raised eliminar btn-danger btn-md" onclick="$(this).parent().parent().remove();">
+                    <button class="btn btn-raised eliminar btn-danger btn-md" onclick="count_images($(this).closest('.image'));$(this).closest('.campo').remove();">
                         <i class="material-icons">delete</i>
                     </button>
                 </div>
             </div> 
-            {/foreach fields} 
+            {/foreach fields}
         </div>
         <div class="campo new_line col-sm-2">
             <div class="move"><i class="fa fa-arrows fa-lg"></i>
@@ -38,7 +39,7 @@
                 <img class="image" src="" alt="{title_field}">
                 <input type="hidden" class="id" name="multiple[image][{field}][id][]" value="">
                 <input type="hidden" class="tmp" name="multiple[image][{field}][tmp][]" value="">
-                <button class="btn btn-raised eliminar btn-danger btn-md" onclick="$(this).parent().parent().remove();">
+                <button class="btn btn-raised eliminar btn-danger btn-md" onclick="count_images($(this).closest('.image'));$(this).closest('.campo').remove();">
                     <i class="material-icons">delete</i>
                 </button>
             </div>

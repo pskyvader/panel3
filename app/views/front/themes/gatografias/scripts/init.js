@@ -57,14 +57,6 @@
     });
 
 
-    //gallery
-
-
-    $(window).on('resize', function() {
-
-        imageGallery();
-
-    });
 
     //scroll up button
 
@@ -107,13 +99,15 @@
     }
 
     function imageGallery() {
-        var mobile = $(window).width() < 1024;
-        var row_height = mobile ? 120 : 300;
+        var mobile = ($(window).width() < 992);
+        var row_height = mobile ? 150 : 250;
         var imgMargin = mobile ? 10 : 20;
 
         $('.gallery-holder').justifiedGallery({
             rowHeight: row_height,
-            margins: imgMargin
+            margins: imgMargin,
+            maxRowHeight:300,
+            captions:true
         }).on('jg.complete', imageZoom);
 
     }

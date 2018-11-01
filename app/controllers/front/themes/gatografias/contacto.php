@@ -26,7 +26,7 @@ class contacto extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'][0], $this->metadata['title']);
+        $banner->individual($this->seo['banner'], $this->metadata['title']);
 
         $breadcrumb = new breadcrumb();
         $breadcrumb->normal($this->breadcrumb);

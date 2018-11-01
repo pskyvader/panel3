@@ -98,16 +98,17 @@ function inicio_image_multiple(e) {
                                 if (id_actual == 1) $('.active', new_l).click();
                                 $('.tooltips,.tooltip, [data-toggle="tooltip"]').tooltip();
                             }
+                            count_images(e);
                         });
                     } else {
                         notificacion('Oh no!', datos['mensaje'], 'error');
                     }
                     this.removeFile(file);
                 }), this.on("complete", function(e, i) {
-                    var a = $.inArray(e.name, fotos_temporal); - 1 != a && fotos_temporal.splice(a, 1), 0 == fotos_temporal.length && habilitar(!0)
+                    var a = $.inArray(e.name, fotos_temporal); - 1 != a && fotos_temporal.splice(a, 1), 0 == fotos_temporal.length && habilitar(!0);
                 }),
-                this.on('error',function(e,f){
-                    console.log(e,f);
+                this.on('error', function(e, f) {
+                    console.log(e, f);
                 })
         }
     });
@@ -126,4 +127,15 @@ function inicio_image_multiple(e) {
             }), e.addClass(i.group.options.draggedClass)
         }
     })
+}
+
+function count_images(e) {
+    setTimeout(function() {
+        var n = $('.image_list .campo', e).length;
+        if (n > 0) {
+            $('.name', e).val(n);
+        } else {
+            $('.name', e).val('');
+        }
+    }, 100);
 }

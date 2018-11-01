@@ -16,6 +16,7 @@ class base
     protected $class = null;
     protected $breadcrumb = array();
     protected $contiene_tipos = false;
+    protected $contiene_hijos = false;
     public function __construct($class)
     {
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($this->metadata['modulo']);
