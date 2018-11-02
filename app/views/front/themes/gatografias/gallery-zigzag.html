@@ -1,0 +1,25 @@
+<section class="layout-portfolio layout-full">
+    <div class="container">
+        <!-- portfolio-zig-zag -->
+        <div class="portfolio-zigzag clearfix">
+            {foreach galeria}
+            <div class="gallery-item-zigzag {if par} gallery-item-zigzag-right {else par} gallery-item-zigzag-left {/if par} clearfix">
+                <a href="{url}">
+                    <div class="zigzag-img-holder">
+                        <div class="gallery-item-zigzag-img" style="background-image:url('{foto}');">
+                        </div>
+                    </div>
+                </a>
+                <div class="zigzag-desc-holder">
+                    <div class="gallery-item-zigzag-desc">
+                        <h2>{title}</h2>
+                        <div class="gallery-item-subtitle">{subtitle}</div>
+                        <a class="view-more" href="{url}">Galería</a>
+                    </div>
+                </div>
+            </div>
+            {/foreach galeria}
+        </div>
+        <!-- portfolio-zig-zag -->
+    </div>
+</section>

@@ -1,0 +1,104 @@
+</div>
+<!--#contenido-principal empieza en header-->
+<!-- FOOTER INSTAGRAM -->
+<section id="footer-instagram">
+    <div class="widget-footer-instagram">
+        <h5 class="widgettitle">Instagram</h5>
+        <ul class="instagram-pics instagram-size-small">
+        </ul>
+        <p class="clear"><a href="{instagram}" rel="noopener noreferrer" target="_blank">Sígueme</a></p>
+    </div>
+</section>
+<!-- /FOOTER INSTAGRAM -->
+<div id="cargando" class="hidden">
+    <div class="progress cargando">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            <span class="sr-only">Cargando</span>
+        </div>
+    </div>
+    <div id="circle">
+        <div class="loader">
+            <div class="loader">
+                <div class="loader">
+                    <div class="loader">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-widgets">
+            <div class="row">
+                <!-- FOOTER COLUMN 1 -->
+                <div class="col-md-6">
+                    <div class="foo-block">
+                        <div id="text-2" class="widget widget-footer widget_text">
+                            <h5 class="widgettitle">{title}</h5>
+                            <div class="textwidget">{descripcion}</div>
+                        </div>
+                    </div>
+                    <!--foo-block-->
+                </div>
+                <!--col-md-4-->
+                <!-- FOOTER COLUMN 2 -->
+                <div class="col-md-6">
+                    <div class="foo-block">
+                        <div id="text-3" class="widget widget-footer widget_text">
+                            <h5 class="widgettitle">Contáctame</h5>
+                            <div class="textwidget">
+                                <p>
+                                    <a href="tel:{telefono}">
+                                        {telefono}
+                                    </a>
+                                    <br />{nombre}
+                                    <br />
+                                    <a href="mailto:{email}">{email}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--foo-block-->
+                </div>
+                <!--col-md-4-->
+                <!-- FOOTER COLUMN 3 
+                <div class="col-md-4">
+                    <div class="foo-block foo-last">
+                        <div id="recent-posts-3" class="widget widget-footer widget_recent_entries">
+                            <h5 class="widgettitle">Art&iacute;culos Recientes</h5>
+                            <ul>
+                                <li><a href="#">No hay art&iacute;culos que mostrar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                col-md-4-->
+            </div>
+            <!--row-->
+        </div>
+        <!--footer-widgets-->
+        {if is_social}
+        <ul class="footer-social">
+            {foreach social}
+            <li class="list-inline-item">
+                <a href="{url}" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="{title}">
+                    <i class="fa {icon}"></i>
+                    <span class="sr-only">{title}</span>
+                </a>
+            </li>
+            {/foreach social}
+        </ul>
+        {/if is_social}
+        <!-- FOOTER COPYRIGHT -->
+        <div class="copyright">
+            <p>Copyright &copy;, 2018 {title} . Todos los derechos reservados. </p>
+        </div>
+    </div>
+    <!--container-->
+</footer>
+<!-- /FOOTER -->
+</body>
+
+</html>

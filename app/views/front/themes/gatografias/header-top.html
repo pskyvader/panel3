@@ -1,0 +1,15 @@
+{if is_social}
+<div class="search-social">
+    <ul>
+        {foreach social}
+        <li>
+            <a class="social-facebook" href="{url}" rel="noopener noreferrer" target="_blank" data-toggle="tooltip" data-placement="bottom" title="{title}">
+                <i class="fa {icon}"></i>
+                <span class="sr-only">{title}</span>
+            </a>
+        </li>
+        {/foreach social}
+    </ul>
+</div>
+<!-- search-social-->
+{/if is_social}

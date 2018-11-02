@@ -1,0 +1,61 @@
+<!-- CONTENT SECTION -->
+<section id="wrap-content" class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-holder custom-page-template-fw">
+                    <p>Si tienes preguntas o necesitas consultar algo, por favor no dudes en contactarnos.</p>
+                    <div id="contact-form-holder">
+                        <form method="POST" id="contact-form" action='{action}'>
+                            <input type="hidden" name="accion" value="formulario_ajax">
+                            <input type="hidden" name="titulo" value="{title}">
+                            <div class="row">
+                                {foreach campos}
+                                {if is_input}
+                                {if is_file}
+                                <div class="col-sm-4">
+                                    <div class="md-form">
+                                        <div class="file-field row">
+                                            <div class="col-sm-4">
+                                                <div class="btn btn-sm float-left">
+                                                    <span><i class="fa fa-upload mr-2" aria-hidden="true"></i>Selecciona</span>
+                                                    <input type="{type}" id="{field}" name="{field}" {if required} required="" {/if required}>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div class="file-path-wrapper w-100 p-0">
+                                                    <input class="file-path" type="text" readonly="" placeholder="{title}" {if required} required="" {/if required}>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {else is_file}
+                                <div class="col-sm-4">
+                                    <input type="{type}" id="{field}" name="{field}" class="comm-field" {if required} required="" {/if required} placeholder="{title}">
+                                </div>
+                                {/if is_file}
+                                {else is_input}
+                                {if is_textarea}
+                                <div class="col-sm-12">
+                                    <textarea name="{field}" rows="5" class="msg-contact" id="{field}" placeholder="{title}"></textarea>
+                                </div>
+                                {/if is_textarea}
+                                {/if is_input}
+                                {/foreach campos}
+                            </div>
+                            <p class="contact-btn"><input type="submit" value="Enviar" id="submit" /></p>
+                        </form>
+                    </div>
+                    <!-- contact-form-holder-->
+                    <!-- <div id="output-contact"></div> -->
+                </div>
+                <!--page-holder-->
+            </div>
+            <!--col-md-12-->
+        </div>
+        <!--row-->
+    </div>
+    <!--container-->
+</section>
+<!-- /CONTENT SECTION -->

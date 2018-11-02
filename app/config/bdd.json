@@ -501,5 +501,52 @@
             }
         ],
         "truncate": "1"
+    },
+    {
+        "tablename": "galeria",
+        "idname": "idgaleria",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "subtitulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "keywords",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "metadescripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
     }
 ]

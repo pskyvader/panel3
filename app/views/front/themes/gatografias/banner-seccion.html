@@ -1,0 +1,16 @@
+
+
+<section class="topSingleBkg topPageBkg  topSingleBkgImg ">
+    <div class="item-img">
+        <picture class="imagen">
+            {foreach srcset}
+            <source media="{media}" srcset="{url}" type="{type}">
+            {/foreach srcset}
+            <img class="img-responsive" style="width:100%;" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
+        </picture>
+    </div>
+    <div class="inner-desc">
+    <h1 class="post-title single-post-title">{title}</h1>
+    <span class="post-subtitle"> {subtitle}</span>
+    </div>
+</section>

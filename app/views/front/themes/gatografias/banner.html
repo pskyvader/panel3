@@ -1,0 +1,29 @@
+<!-- HOME SLIDER -->
+<div class="slider-container">
+    <div class="owl-carousel owl-theme home-slider">
+        {foreach banner}
+        <div class="slider-post slider-item-box">
+            <div class="slider-img" data-background="{background}" style="{data}background-image:url({background});">
+                <picture class="imagen">
+                    {foreach srcset}
+                    <source media="{media}" {data}srcset="{url}" type="{type}">
+                    {/foreach srcset}
+                    <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{foto}" alt="{title}">
+                </picture>
+            </div>
+            <div class="slider-caption">
+                {if is_texto1}
+                <h3 class="post-subtitle">{texto1}</h3>
+                {/if is_texto1}
+                {if is_texto2}
+                <h1 style="font-family: 'Tangerine', serif; font-size: 70px;">{texto2}</h1>
+                {/if is_texto2}
+                {if is_texto2}
+                <h3 class="post-subtitle">{texto2}</h3>
+                {/if is_texto2}
+            </div>
+        </div>
+        {/foreach banner}
+    </div>
+</div>
+<!-- /HOME SLIDER -->

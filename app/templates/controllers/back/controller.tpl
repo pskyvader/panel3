@@ -1,5 +1,5 @@
 <?php
-namespace app\controllers\back;
+namespace app\controllers\back\themes\{theme};
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\{name} as {name}_model;

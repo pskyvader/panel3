@@ -1,0 +1,24 @@
+{if is_css}
+{foreach css} 
+{if defer}
+<script>
+    var element = document.createElement('link');
+    element.rel = 'stylesheet';
+    element.type = 'text/css';
+    element.href = '{url}';
+    element.media = '{media}';
+    document.head.appendChild(element);
+</script> 
+{else defer}
+    {if is_content}
+        <style>
+        {content_css}
+        </style>
+    {else is_content}
+        <link rel="stylesheet" type="text/css" href="{url}" media="{media}">
+    {/if is_content}
+{/if defer}
+{/foreach css} 
+{else is_css} 
+{foreach js} <script src="{url}" {defer}></script> {/foreach js} 
+{/if is_css}
