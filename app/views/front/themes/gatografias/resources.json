@@ -1,10 +1,10 @@
 {
     "css" : [
-            {"url": "css/custom-head.css","local":true,"media":"all","combine":false,"defer":false},
             {"url": "css/bootstrap/css/bootstrap.min.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "css/fontawesome/css/font-awesome.min.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "scripts/owl-carousel/owl.carousel.min.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "css/style.css","local":true,"media":"all","combine":true,"defer":true},
+            {"url": "css/custom.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "css/fonts.css","local":true,"media":"all","combine":true,"defer":true}
     ],
     "js" : [
@@ -15,6 +15,7 @@
         {"url": "scripts/owl-carousel/owl.carousel.min.js","local":true,"defer":false,"combine":true},
         {"url": "scripts/jquery.justifiedGallery.min.js","local":true,"defer":false,"combine":true},
         {"url": "scripts/jquery.magnific-popup.min.js","local":true,"defer":false,"combine":true},
+        {"url": "js/bootstrap-notify.min.js","local":true,"defer":false,"combine":true},
         {"url": "scripts/init.js","local":true,"defer":false,"combine":true},
         {"url": "js/map.js","local":true,"defer":false,"combine":true},
         {"url": "js/ajax.js","local":true,"defer":false,"combine":true},

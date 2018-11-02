@@ -2,7 +2,6 @@
 namespace app\controllers\front\themes\mdbootstrap;
 
 defined("APPPATH") or die("Acceso denegado");
-use \app\models\seo;
 use \app\models\texto;
 use \core\app;
 use \core\functions;
@@ -12,7 +11,7 @@ class contacto extends base
 {
     public function __construct()
     {
-        parent::__construct(seo::getById(4));
+        parent::__construct($_REQUEST['idseo']);
     }
     public function index()
     {

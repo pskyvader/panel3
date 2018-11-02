@@ -13,7 +13,7 @@ class banner
         array('foto' => 'foto1', 'size' => '1200'),
         array('foto' => 'foto2', 'size' => '991'),
         array('foto' => 'foto3', 'size' => '768'),
-        array('foto' => 'foto4', 'size' => '540'),
+        array('foto' => 'foto4', 'size' => '0'),
     );
     public function normal($row_banner = array())
     {
@@ -82,13 +82,13 @@ class banner
         foreach ($images as $k => $size) {
             $foto = image::generar_url($foto_base, $size['foto'], 'webp');
             if ($foto != '') {
-                $srcset[] = array('media' => '(max-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/webp');
+                $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/webp');
             }
         }
         foreach ($images as $k => $size) {
             $foto = image::generar_url($foto_base, $size['foto']);
             if ($foto != '') {
-                $srcset[] = array('media' => '(max-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/jpg');
+                $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/jpg');
             }
         }
         return $srcset;

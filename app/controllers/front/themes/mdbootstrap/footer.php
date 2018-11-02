@@ -32,15 +32,10 @@ class footer
             $direccion = texto::getById(6);
             view::set('direccion', $direccion['texto']);
             $redes_sociales = array();
-
-            $facebook = texto::getById(3);
-            $redes_sociales[] = array('url' => functions::ruta($facebook['texto']), 'icon' => 'fa-facebook-f', 'title' => $facebook['titulo']);
-
-            $twitter = texto::getById(4);
-            $redes_sociales[] = array('url' => functions::ruta($twitter['texto']), 'icon' => 'fa-twitter', 'title' => $twitter['titulo']);
-
-            $instagram = texto::getById(5);
-            $redes_sociales[] = array('url' => functions::ruta($instagram['texto']), 'icon' => 'fa-instagram', 'title' => $instagram['titulo']);
+            $rss=texto::getAll(array('tipo'=>2));
+            foreach ($rss as $key => $r) {
+                $redes_sociales[] = array('url' => functions::ruta($r['url']), 'icon' => $r['texto'], 'title' => $r['titulo']);
+            }
 
             view::set('social', $redes_sociales);
 

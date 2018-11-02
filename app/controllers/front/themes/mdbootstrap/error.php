@@ -2,10 +2,7 @@
 namespace app\controllers\front\themes\mdbootstrap;
 
 defined("APPPATH") or die("Acceso denegado");
-use \core\functions;
 use \core\view;
-use \app\models\seo;
-use \app\models\banner as banner_model;
 
 class error
 {

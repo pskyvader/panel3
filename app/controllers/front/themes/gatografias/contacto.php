@@ -2,7 +2,6 @@
 namespace app\controllers\front\themes\gatografias;
 
 defined("APPPATH") or die("Acceso denegado");
-use \app\models\seo;
 use \app\models\texto;
 use \core\app;
 use \core\functions;
@@ -12,7 +11,7 @@ class contacto extends base
 {
     public function __construct()
     {
-        parent::__construct(seo::getById(4));
+        parent::__construct($_REQUEST['idseo']);
     }
     public function index()
     {
@@ -28,14 +27,14 @@ class contacto extends base
         $banner = new banner();
         $banner->individual($this->seo['banner'], $this->metadata['title']);
 
-        $breadcrumb = new breadcrumb();
-        $breadcrumb->normal($this->breadcrumb);
+        //$breadcrumb = new breadcrumb();
+        //$breadcrumb->normal($this->breadcrumb);
 
         $campos   = array();
         $campos[] = array('campo' => 'input', 'type' => 'text', 'field' => 'nombre', 'title' => 'Nombre', 'required' => true);
         $campos[] = array('campo' => 'input', 'type' => 'email', 'field' => 'email', 'title' => 'Email', 'required' => true);
         $campos[] = array('campo' => 'input', 'type' => 'text', 'field' => 'telefono', 'title' => 'Teléfono', 'required' => false);
-        $campos[] = array('campo' => 'input', 'type' => 'file', 'field' => 'archivo', 'title' => 'Archivo', 'required' => false);
+        //$campos[] = array('campo' => 'input', 'type' => 'file', 'field' => 'archivo', 'title' => 'Archivo', 'required' => false);
         $campos[] = array('campo' => 'textarea', 'type' => 'text', 'field' => 'mensaje', 'title' => 'Comentario', 'required' => true);
 
         foreach ($campos as $key => $c) {
@@ -46,6 +45,7 @@ class contacto extends base
         }
         view::set('campos', $campos);
 
+        /*
         $informacion = array();
 
         $t             = texto::getById(6);
@@ -67,7 +67,9 @@ class contacto extends base
 
         $config = app::getConfig();
         view::set('googlemaps_key', $config['googlemaps_key']);
-        view::set('google_captcha', $config['google_captcha']);
+        view::set('google_captcha', $config['google_captcha']);*/
+
+
         view::set('action', functions::generar_url(array('enviar')));
         view::render('contact');
 

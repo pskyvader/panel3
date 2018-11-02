@@ -3,7 +3,6 @@ namespace app\controllers\front\themes\gatografias;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\galeria as galeria_model;
-use \app\models\seo;
 use \app\models\texto;
 use \core\image;
 use \core\functions;
@@ -13,7 +12,7 @@ class galeria extends base
 {
     public function __construct()
     {
-        parent::__construct(seo::getById(5));
+        parent::__construct($_REQUEST['idseo']);
     }
     public function index()
     {
@@ -26,9 +25,8 @@ class galeria extends base
         $header = new header();
         $header->normal();
 
-        $subtitulo=texto::getById(9);
         $banner = new banner();
-        $banner->individual($this->seo['banner'], $this->metadata['title'],$subtitulo['descripcion']);
+        $banner->individual($this->seo['banner'], $this->metadata['title'],$this->seo['subtitulo']);
 
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);

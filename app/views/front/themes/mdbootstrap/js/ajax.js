@@ -1,3 +1,13 @@
+function post_basic(url_post, info, callback) {
+    $.post(url_post, info, function(data) {
+        callback(data);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+        console.log(jqXHR);
+        console.log(errorThrown);
+    });
+}
+
 function post(url_post, info, mensaje_inicial, archivo, callback, extra) {
     if (typeof(archivo) == 'undefined') {
         archivo = null;

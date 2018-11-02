@@ -1,5 +1,6 @@
 $(window).on('load', inicio);
 $(window).on('load', register_sw);
+$(window).on('load', get_instagram);
 $(window).on('scroll resize', activar_imagen);
 $(window).on('resize', imageGallery);
 var path = $("meta[property='path']").prop("content");
@@ -12,7 +13,6 @@ var google_captcha = $("meta[property='google_captcha']").prop("content");
 function inicio() {
     modulo = $("meta[property='modulo']").prop("content");
     url = $("meta[property='og:url']").prop("content");
-
     $(".scrollup").hide();
     $('[data-toggle="tooltip"]').tooltip();
     if ($('.home-slider').length > 0) {
@@ -46,6 +46,22 @@ function inicio() {
 
     if ($('.g-recaptcha').length > 0) {
         inicio_captcha();
+    }
+}
+
+function get_instagram() {
+    var pictures = $('#footer-instagram .instagram-pics');
+    if ($('li', pictures).length == 0) {
+        post_basic(path + 'instagram', {}, function(data) {
+            data = JSON.parse(data);
+            $(data).each(function(k, v) {
+                var li = $('<li>');
+                var a = $('<a target="_blank" rel="noopener noreferrer">').prop('href', v.url);
+                var img = $('<img>').prop('src',v.images.low_resolution.url).prop('alt',v.title);
+                pictures.append(li.append(a.append(img)));
+            });
+
+        });
     }
 }
 

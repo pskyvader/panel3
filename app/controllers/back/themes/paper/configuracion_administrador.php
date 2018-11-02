@@ -78,13 +78,13 @@ class configuracion_administrador extends base
         
         $row = moduloconfiguracion_model::getAll();
         $campos = array();
+        $fields = table_model::getByname('moduloconfiguracion');
+        $fields_hijo = table_model::getByname('modulo');
         foreach ($row as $key => $tabla) {
-            $fields = table_model::getByname('moduloconfiguracion');
             $a = database::create_data($fields, $tabla);
             $row_hijo = modulo_model::getAll(array('idmoduloconfiguracion'=>$tabla[0]));
             $h=array();
             
-            $fields_hijo = table_model::getByname('modulo');
             foreach ($row_hijo as $key => $hijos) {
                 $h[] = database::create_data($fields_hijo, $hijos);
             }
@@ -181,6 +181,22 @@ class configuracion_administrador extends base
             if (count($row) == 1) {
                 $moduloconfiguracion['id'] = $row[0][0];
                 moduloconfiguracion_model::update($moduloconfiguracion, false);
+                foreach ($hijo as $key => $h) {
+                    $h['idmoduloconfiguracion'] = $moduloconfiguracion['id'];
+                    $row2=modulo_model::getAll(array('idmoduloconfiguracion'=>$h['idmoduloconfiguracion'],'tipo'=>$h['tipo']),array('limit'=>1));
+
+                    $h['menu'] = functions::encode_json($h['menu']);
+                    $h['mostrar'] = functions::encode_json($h['mostrar']);
+                    $h['detalle'] = functions::encode_json($h['detalle']);
+                    $h['recortes'] = functions::encode_json($h['recortes']);
+                    $h['estado'] = functions::encode_json($h['estado']);
+                    if(count($row2)==1){
+                        $h['id'] = $row2[0][0];
+                        modulo_model::update($h, false);
+                    }else{
+                        modulo_model::insert($h, false);
+                    }
+                }
             } else {
                 $id=moduloconfiguracion_model::insert($moduloconfiguracion, false);
                 foreach ($hijo as $key => $h) {
@@ -194,7 +210,6 @@ class configuracion_administrador extends base
                 }
             }
         }
-
         echo json_encode($respuesta);
     }
 

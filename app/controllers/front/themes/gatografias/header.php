@@ -40,15 +40,10 @@ class header
         $email = texto::getById(2);
         view::set('email', $email['texto']);
         $redes_sociales = array();
-
-        $facebook = texto::getById(3);
-        $redes_sociales[] = array('url' => functions::ruta($facebook['texto']), 'icon' => 'fa-facebook-f', 'title' => $facebook['titulo']);
-
-        $twitter = texto::getById(4);
-        $redes_sociales[] = array('url' => functions::ruta($twitter['texto']), 'icon' => 'fa-twitter', 'title' => $twitter['titulo']);
-
-        $instagram = texto::getById(5);
-        $redes_sociales[] = array('url' => functions::ruta($instagram['texto']), 'icon' => 'fa-instagram', 'title' => $instagram['titulo']);
+        $rss=texto::getAll(array('tipo'=>2));
+        foreach ($rss as $key => $r) {
+            $redes_sociales[] = array('url' => functions::ruta($r['url']), 'icon' => $r['texto'], 'title' => $r['titulo']);
+        }
 
         view::set('social', $redes_sociales);
 
@@ -60,7 +55,7 @@ class header
         $lista_menu = array();
         $seo = seo::getAll();
         foreach ($seo as $key => $s) {
-            if ($s['submenu'] && $s['modulo_back'] != 'none') {
+            if ($s['submenu'] && $s['modulo_back'] != '' && $s['modulo_back'] != 'none') {
                 if($s['menu']){
                     $url=functions::generar_url(array($s['url']));
                 }else{

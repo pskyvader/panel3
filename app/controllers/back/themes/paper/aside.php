@@ -100,7 +100,6 @@ class aside
                 $url = functions::generar_url(array("configuracion_administrador"), false);
                 $active = ($url == $current_url);
                 $menu[] = array('url' => $url, 'icon' => 'settings_applications', 'title' => 'Configuracion Administrador', 'has_submenu' => false, 'active' => $active, 'separador' => false);
-
             }
 
             view::set('menu', $menu);

@@ -1,5 +1,9 @@
 <!-- HEADER -->
 <header id="header-1" class="headerHolder">
+    <div class="visible-xs visible-sm text-center">
+        
+            {header-top}
+    </div>
     <nav class="navbar">
         <!-- LOGO -->
         <div class="logo-1">
@@ -13,14 +17,25 @@
             <span class="icon-bar"></span>
         </button>
         <!-- MENU -->
-        <div class="nav-holder collapse navbar-collapse" id="collapse-navigation">
-            <ul id="menu-menu-1" class="nav menu-nav">
+        <div class="nav-holder navbar-collapse hidden-xs" >
+            <ul class="nav menu-nav">
                 {menu}
             </ul>
         </div>
         <!-- /MENU -->
+        <div class="hidden-xs hidden-sm">
         {header-top}
+    </div>
     </nav>
+    <!-- MENU -->
+    <div class="visible-xs">
+    <div class="nav-holder collapse navbar-collapse" id="collapse-navigation">
+        <ul id="menu-menu-1" class="nav menu-nav">
+            {menu}
+        </ul>
+    </div>
+</div>
+    <!-- /MENU -->
 </header>
 <!-- /HEADER -->
 <div id="contenido-principal">

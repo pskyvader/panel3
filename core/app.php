@@ -110,9 +110,10 @@ class app
             } elseif ($url[0] == 'sw.js') {
                 $url[0] = 'sw';
             } elseif (self::$_front) {
-                $seo = seo_model::getAll(array('url' => $url[0]), array('limit' => 1), 'modulo_front');
+                $seo = seo_model::getAll(array('url' => $url[0]), array('limit' => 1));
                 if (count($seo) == 1) {
-                    $url[0] = $seo[0][0];
+                    $url[0] = $seo[0]['modulo_front'];
+                    $_REQUEST['idseo']=$seo[0][0];
                 }
             }
             unset($_GET["url"]);

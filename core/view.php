@@ -61,16 +61,15 @@ class view
             $str = minify::minify_html($str);
         }
 
+        self::reset();
         if ($return) {
-            self::reset();
             return $str;
         } else {
-            ob_start();
+            /*ob_start();
             echo $str;
             $str = ob_get_contents();
-            ob_end_clean();
+            ob_end_clean();*/
             echo $str;
-            self::reset();
         }
     }
 

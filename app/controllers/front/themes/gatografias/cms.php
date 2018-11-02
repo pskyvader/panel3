@@ -3,7 +3,6 @@ namespace app\controllers\front\themes\gatografias;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\seccion as seccion_model;
-use \app\models\seo;
 use \core\file;
 use \core\functions;
 use \core\view;
@@ -12,7 +11,7 @@ class cms extends base
 {
     public function __construct()
     {
-        parent::__construct(seo::getById(3));
+        parent::__construct($_REQUEST['idseo']);
     }
     public function index()
     {
@@ -26,10 +25,10 @@ class cms extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'], $this->metadata['title']);
+        $banner->individual($this->seo['banner'], $this->metadata['title'],$this->seo['subtitulo']);
 
-        $breadcrumb = new breadcrumb();
-        $breadcrumb->normal($this->breadcrumb);
+        //$breadcrumb = new breadcrumb();
+        //$breadcrumb->normal($this->breadcrumb);
 
         $var = array();
         if ($this->seo['tipo_modulo'] != 0) {
@@ -39,7 +38,10 @@ class cms extends base
             $var['idpadre'] = 0;
         }
         $row     = seccion_model::getAll($var);
-        $sidebar = array();
+        
+        view::set('descripcion', $row[0]['descripcion']);
+        view::render('cms');
+       /* $sidebar = array();
         foreach ($row as $key => $s) {
             $sidebar[] = array('title' => $s['titulo'], 'active' => '', 'url' => functions::url_seccion(array($this->url[0], 'detail'), $s));
         }
@@ -48,7 +50,7 @@ class cms extends base
         view::set('sidebar', $sidebar);
 
         view::set('description', '');
-        view::render('cms-sidebar');
+        view::render('cms-sidebar');*/
 
         $footer = new footer();
         $footer->normal();

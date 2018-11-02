@@ -3,7 +3,6 @@ namespace app\controllers\front\themes\mdbootstrap;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\seccion as seccion_model;
-use \app\models\seo;
 use \core\file;
 use \core\functions;
 use \core\view;
@@ -12,7 +11,7 @@ class cms extends base
 {
     public function __construct()
     {
-        parent::__construct(seo::getById(3));
+        parent::__construct($_REQUEST['idseo']);
     }
     public function index()
     {

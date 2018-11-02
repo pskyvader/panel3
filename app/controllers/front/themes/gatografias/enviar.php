@@ -29,16 +29,16 @@ class enviar
             $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Email no valido.';
         } elseif (empty($campos['mensaje'])) {
             $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Mensaje vacío.';
-        } elseif (!isset($campos['g-recaptcha-response']) || empty($campos['g-recaptcha-response'])) {
+        }/* elseif (!isset($campos['g-recaptcha-response']) || empty($campos['g-recaptcha-response'])) {
             $respuesta['mensaje'] = '<strong>Error!</strong>&nbsp; Error en captcha. Por favor completa el captcha.';
             $respuesta['captcha']=true;
-        }
+        }*/
 
         if ($respuesta['mensaje'] != '') {
             $respuesta['exito'] = false;
         }
 
-        if ($respuesta['exito']) {
+        /*if ($respuesta['exito']) {
             $url                  = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $campos['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
             $file=file_get_contents($url);
             $captcha              = functions::decode_json($file);
@@ -48,7 +48,7 @@ class enviar
             }
             $respuesta['captcha']=true;
             unset($campos['g-recaptcha-response']);
-        }
+        }*/
 
         if ($respuesta['exito']) {
             $body_email = array(

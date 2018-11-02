@@ -85,7 +85,7 @@ function cargar_ajax(href, push, data_form) {
     setTimeout(function() {
         if (!actualizado) {
             var e = $('#contenido-principal');
-            $(e).addClass('view overlay hm-white-strong');
+            $(e).css('opacity', 0.5);
             $(e).prepend($('#cargando').html());
         }
     }, 200);
@@ -240,9 +240,18 @@ function mover(elemento, tiempo, delay) {
     }
 }
 
+var notify = null;
+
 function notificacion(mensaje, tipo) {
-    toastr.clear();
-    toastr[tipo](mensaje);
+    if (tipo == 'error') tipo = 'danger';
+    if (notify != null) {
+        notify.close();
+    }
+    notify = $.notify({
+        message: mensaje
+    }, {
+        type: tipo
+    });
 }
 
 function barra(porcentaje) {
