@@ -51,13 +51,11 @@ class sitemap extends base
         
         $dir = app::get_dir(true);
         $mensaje_error='';
-        if(is_writable($dir)){
-            if(file_exists($dir . 'sitemap.xml')){
-                if(!is_writable($dir . 'sitemap.xml')){
-                    $mensaje_error='Debes dar permisos de escritura o eliminar el archivo '.$dir . 'sitemap.xml';
-                }
+        if(file_exists($dir . 'sitemap.xml')){
+            if(!is_writable($dir . 'sitemap.xml')){
+                $mensaje_error='Debes dar permisos de escritura o eliminar el archivo '.$dir . 'sitemap.xml';
             }
-        }else{
+        }elseif(!is_writable($dir)){
             $mensaje_error='Debes dar permisos de escritura en '.$dir;
         }
         $is_error=($mensaje_error!='');

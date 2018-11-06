@@ -73,8 +73,11 @@
         {"url": "js/excel.js","local":true,"defer":false,"combine":true},
         {"url": "js/regenerar_imagen.js","local":true,"defer":false,"combine":true},
         {"url": "js/multiple.js","local":true,"defer":false,"combine":true},
+        {"url": "js/sitemap.js","local":true,"defer":false,"combine":true},
+        {"url": "js/backup.js","local":true,"defer":false,"combine":true},
         {"url": "js/list.js","local":true,"defer":false,"combine":true},
         {"url": "js/detail.js","local":true,"defer":false,"combine":true},
+        {"url": "js/online.js","local":true,"defer":false,"combine":true},
         {"url": "js/custom.js","local":true,"defer":false,"combine":true}
     ]
 }

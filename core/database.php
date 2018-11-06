@@ -68,12 +68,12 @@ class database
     {
         try {
             //load from config/config.ini
-            $config = app::getConfig();
-            $this->_dbHost = $config["host"];
-            $this->_dbUser = $config["user"];
+            $config            = app::getConfig();
+            $this->_dbHost     = $config["host"];
+            $this->_dbUser     = $config["user"];
             $this->_dbPassword = $config["password"];
-            $this->_dbName = $config["database"];
-            self::$_prefix = $config["prefix"] . "_";
+            $this->_dbName     = $config["database"];
+            self::$_prefix     = $config["prefix"] . "_";
             $this->conect();
         } catch (\PDOException $e) {
             print "Error!: " . $e->getMessage();
@@ -174,7 +174,7 @@ class database
     public function insert($table, $idname, $insert)
     { //consulta insert
         $valor_primario = "";
-        $image = array();
+        $image          = array();
         if (isset($insert['image'])) {
             $image = $insert['image'];
             unset($insert['image']);
@@ -207,7 +207,7 @@ class database
 
     public function update($table, $idname, $set, $where)
     { //consulta update
-        $set = self::process_multiple($set);
+        $set   = self::process_multiple($set);
         $image = array();
         if (isset($set['image'])) {
             $image = $set['image'];
@@ -273,7 +273,7 @@ class database
     public function modify($table, $column, $type)
     { //consulta modificar campo
         $valor_primario = "";
-        $sql = "ALTER TABLE " . self::$_prefix . $table;
+        $sql            = "ALTER TABLE " . self::$_prefix . $table;
         $sql .= " MODIFY " . $column . " " . $type . " NOT NULL ";
         if ($type == 'tinyint(1)') {
             $sql .= " DEFAULT '1' ";
@@ -286,7 +286,7 @@ class database
     public function add($table, $column, $type, $after = '', $primary = false)
     { //consulta agregar campo
         $valor_primario = "";
-        $sql = "ALTER TABLE " . self::$_prefix . $table;
+        $sql            = "ALTER TABLE " . self::$_prefix . $table;
         $sql .= " ADD " . $column . " " . $type . " NOT NULL ";
         if ($type == 'tinyint(1)') {
             $sql .= " DEFAULT '1' ";
@@ -310,7 +310,7 @@ class database
     public function create($table, $columns)
     { //consulta crear tabla
         $valor_primario = "";
-        $sql = "CREATE TABLE " . self::$_prefix . $table . " (";
+        $sql            = "CREATE TABLE " . self::$_prefix . $table . " (";
         foreach ($columns as $key => $column) {
             if ($key > 0) {
                 $sql .= ",";
@@ -333,7 +333,7 @@ class database
     public function truncate($tables)
     { //consulta crear tabla
         $valor_primario = "";
-        $sql = "";
+        $sql            = "";
         foreach ($tables as $key => $table) {
             $sql .= "TRUNCATE TABLE " . self::$_prefix . $table . " ;";
         }
@@ -341,17 +341,158 @@ class database
         return $row;
     }
 
+    public function backup($tables = '*')
+    {
+        $respuesta                     = array('exito' => false, 'mensaje' => 'Error al respaldar base de datos', 'sql' => array());
+        $this->disableForeignKeyChecks = true;
+        $this->batchSize               = 1000; // default 1000 rows
+        try {
+            /**
+             * Tables to export
+             */
+            if ($tables == '*') {
+                $tables = array();
+                $row    = $this->consulta('SHOW TABLES', true);
+                foreach ($row as $key => $value) {
+                    $tables[] = $value[0];
+                }
+            } else {
+                $tables = is_array($tables) ? $tables : explode(',', str_replace(' ', '', $tables));
+            }
+            $sql = "CREATE DATABASE IF NOT EXISTS `" . $this->_dbName . "`;\n\n";
+            $sql .= 'USE `' . $this->_dbName . "`;\n\n";
+            /**
+             * Disable foreign key checks
+             */
+            if ($this->disableForeignKeyChecks === true) {
+                $sql .= "SET foreign_key_checks = 0;\n\n";
+            }
+
+            /**
+             * Iterate tables
+             */
+            foreach ($tables as $table) {
+                /**
+                 * CREATE TABLE
+                 */
+                $sql .= 'DROP TABLE IF EXISTS `' . $table . '`;';
+                $row = $this->consulta('SHOW CREATE TABLE `' . $table . '`', true);
+                $sql .= "\n\n" . $row[0][1] . ";\n\n";
+
+                /**
+                 * INSERT INTO
+                 */
+                $row     = $this->consulta('SELECT COUNT(*) FROM `' . $table . '`', true);
+                $numRows = $row[0][0];
+                // Split table in batches in order to not exhaust system memory
+                $numBatches = intval($numRows / $this->batchSize) + 1; // Number of while-loop calls to perform
+
+                $campos = $this->consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_name='" . $table . "'", true);
+
+                for ($b = 1; $b <= $numBatches; $b++) {
+                    $query         = 'SELECT * FROM `' . $table . '` LIMIT ' . ($b * $this->batchSize - $this->batchSize) . ',' . $this->batchSize;
+                    $row           = $this->consulta($query, true);
+                    $realBatchSize = count($row); // Last batch size can be different from $this->batchSize
+                    $numFields     = count($campos);
+                    if ($realBatchSize !== 0) {
+                        $sql .= 'INSERT INTO `' . $table . '` VALUES ';
+                        foreach ($row as $key => $fila) {
+                            $rowCount = $key+1;
+                            $sql .= '(';
+
+                            foreach ($campos as $k => $v) {
+                                $j = $v[0];
+                                if (isset($fila[$j])) {
+                                    $fila[$j] = addslashes($fila[$j]);
+                                    $fila[$j] = str_replace("\n", "\\n", $fila[$j]);
+                                    $fila[$j] = str_replace("\r", "\\r", $fila[$j]);
+                                    $fila[$j] = str_replace("\f", "\\f", $fila[$j]);
+                                    $fila[$j] = str_replace("\t", "\\t", $fila[$j]);
+                                    $fila[$j] = str_replace("\v", "\\v", $fila[$j]);
+                                    $fila[$j] = str_replace("\a", "\\a", $fila[$j]);
+                                    $fila[$j] = str_replace("\b", "\\b", $fila[$j]);
+                                    $sql .= '"' . $fila[$j] . '"';
+                                } else {
+                                    $sql .= 'NULL';
+                                }
+
+                                if ($k < ($numFields - 1)) {
+                                    $sql .= ',';
+                                }
+
+                            }
+
+                            if ($rowCount == $realBatchSize) {
+                                $rowCount = 0;
+                                $sql .= ");\n"; //close the insert statement
+                            } else {
+                                $sql .= "),\n"; //close the row
+                            }
+
+                            $rowCount++;
+
+                        }
+
+                        $respuesta['sql'][] = $sql;
+                        $sql                = '';
+                    }else{
+                        $respuesta['sql'][] = $sql;
+                        $sql                = '';
+                    }
+                }
+
+                /**
+                 * CREATE TRIGGER
+                 */
+                // Check if there are some TRIGGERS associated to the table
+                /*$query = "SHOW TRIGGERS LIKE '" . $table . "%'";
+                $result = mysqli_query ($this->conn, $query);
+                if ($result) {
+                $triggers = array();
+                while ($trigger = mysqli_fetch_row ($result)) {
+                $triggers[] = $trigger[0];
+                }
+
+                // Iterate through triggers of the table
+                foreach ( $triggers as $trigger ) {
+                $query= 'SHOW CREATE TRIGGER `' . $trigger . '`';
+                $result = mysqli_fetch_array (mysqli_query ($this->conn, $query));
+                $sql.= "\nDROP TRIGGER IF EXISTS `" . $trigger . "`;\n";
+                $sql.= "DELIMITER $$\n" . $result[2] . "$$\n\nDELIMITER ;\n";
+                }
+                $sql.= "\n";
+                $this->saveFile($sql);
+                $sql = '';
+                }*/
+
+                $sql .= "\n\n";
+            }
+            /**
+             * Re-enable foreign key checks
+             */
+            if ($this->disableForeignKeyChecks === true) {
+                $sql .= "SET foreign_key_checks = 1;\n";
+            }
+            
+            $respuesta['sql'][] = $sql;
+            $respuesta['exito']=true;
+        } catch (Exception $e) {
+            $respuesta['mensaje']=$e->getMessage();
+        }
+        return $respuesta;
+    }
+
     public static function encript($password)
     {
         $salt = sha1($password);
-        $p = crypt($password, $salt);
+        $p    = crypt($password, $salt);
         return $salt . sha1($p);
     }
 
     public static function create_data($model, $data)
     {
         $data = self::process_multiple($data);
-        $m = array();
+        $m    = array();
         foreach ($model as $key => $value) {
             if (isset($data[$key])) {
                 $m[$key] = $data[$key];
@@ -380,7 +521,7 @@ class database
                 foreach ($multiple as $k => $e) {
                     if (is_array($e)) {
                         foreach ($e as $a => $f) {
-                            if ($key == "image" || $key == "file" ) {
+                            if ($key == "image" || $key == "file") {
                                 foreach ($f as $ke => $va) {
                                     $row[$k][$ke][$a] = $va;
                                 }
@@ -407,15 +548,15 @@ class database
     private function process_image($image, $table, $idname, $id)
     {
         $data = array();
-        $ids = array();
+        $ids  = array();
         foreach ($image as $key => $img) { //cada campo
-            $row = array();
+            $row     = array();
             $portada = false;
             foreach ($img as $k => $f) { //cada foto
                 if (isset($f['tmp']) && $f['tmp'] != '') {
                     $f = image::move($f, $table, $key, $id);
                 }
-                $ids[$key][$f['id']] =  $f['url'];
+                $ids[$key][$f['id']] = $f['url'];
                 if ($f['portada'] == 'true') {
                     if ($portada) {
                         $f['portada'] = 'false';
@@ -425,7 +566,7 @@ class database
                 }
                 $f['parent'] = $id;
                 $f['folder'] = $table;
-                $row[$k] = $f;
+                $row[$k]     = $f;
             }
             if (!$portada) {
                 $row[0]['portada'] = 'true';
@@ -440,8 +581,8 @@ class database
             $images = json_decode(html_entity_decode($row[0][$key]), true);
             if (is_array($images)) {
                 foreach ($images as $k => $file) {
-                    if (!isset($value[$file['id']]) || $value[$file['id']]!=$file['url']) {
-                        image::delete($table, $file, $id,$key);
+                    if (!isset($value[$file['id']]) || $value[$file['id']] != $file['url']) {
+                        image::delete($table, $file, $id, $key);
                     }
                 }
             }
@@ -450,11 +591,10 @@ class database
         return $data;
     }
 
-    
     private function process_file($file, $table, $idname, $id)
     {
         $data = array();
-        $ids = array();
+        $ids  = array();
         foreach ($file as $key => $archivo) { //cada campo
             $row = array();
             foreach ($archivo as $k => $f) { //cada archivo
@@ -462,9 +602,9 @@ class database
                     $f = file::move($f, $table, $key, $id);
                 }
                 $ids[$key][$f['id']] = $f['url'];
-                $f['parent'] = $id;
-                $f['folder'] = $table;
-                $row[$k] = $f;
+                $f['parent']         = $id;
+                $f['folder']         = $table;
+                $row[$k]             = $f;
             }
             $data[$key] = functions::encode_json($row);
         }
@@ -475,8 +615,8 @@ class database
             $files = json_decode(html_entity_decode($row[0][$key]), true);
             if (is_array($files)) {
                 foreach ($files as $k => $file) {
-                    if (!isset($value[$file['id']]) || $value[$file['id']]!=$file['url']) {
-                        file::delete($table, $file, $id,$key);
+                    if (!isset($value[$file['id']]) || $value[$file['id']] != $file['url']) {
+                        file::delete($table, $file, $id, $key);
                     }
                 }
             }
@@ -501,7 +641,7 @@ class database
     public static function instance()
     {
         if (!isset(self::$_instance)) {
-            $class = __CLASS__;
+            $class           = __CLASS__;
             self::$_instance = new $class;
         }
         return self::$_instance;

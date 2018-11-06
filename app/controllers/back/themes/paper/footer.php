@@ -11,7 +11,7 @@ class footer
     {
         if (!isset($_POST['ajax'])) {
             view::render('footer');
-            view::js();
+            view::js(false);
         }
     }
 
