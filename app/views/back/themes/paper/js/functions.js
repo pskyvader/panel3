@@ -20,7 +20,7 @@ var habilitado = true;
 
 function habilitar(valor) {
     habilitado = (valor) ? false : true;
-    elementos = $('#guardar, #guardar-permanecer,#cancelar,.guardar_modal,input:file,.eliminar_archivo,.btn-file,.acc-menu a,a#logout,table tbody tr');
+    elementos = $('#guardar, #guardar-permanecer,#cancelar,.btn-group .btn,.guardar_modal,input:file,.eliminar_archivo,.btn-file,.acc-menu a,a#logout,table tbody tr');
     elementos.prop('disabled', habilitado).on("click", function() {
         return !habilitado;
     });

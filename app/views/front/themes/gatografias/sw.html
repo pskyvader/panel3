@@ -7,16 +7,20 @@ self.addEventListener("install", function(event) {
         self.skipWaiting();
         return r;
     }).catch(console.error));
-}); {if cache}
+}); 
+{if cache}
 self.addEventListener('fetch', function(event) {
     if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') return;
+    if (event.request.url.split('.').pop()=='json') return;
+    var url=event.request.url.split('/').pop();
+    if (url=='backup' || url=='generar_backup' || url=='vaciar_log' || url=='ping') return;
     event.respondWith(caches.match(event.request).then(function(response) {
         if (response) {
             if (response['url'].split('.').pop() != '') {
                 //console.log('existe',response);
                 return response;
             } else {
-                console.log('no valida', response);
+                console.log('no valida',response);
             }
         }
 
@@ -28,14 +32,14 @@ self.addEventListener('fetch', function(event) {
                     return response;
                 }
 
-                if (fetchRequest.destination == 'image' || fetchRequest.destination == 'font' || fetchRequest.destination == 'style') {
+                if(fetchRequest.destination=='image' || fetchRequest.destination=='font' || fetchRequest.destination=='style'){
                     //console.log(fetchRequest.destination,response);
                     // IMPORTANT: Clone the response. A response is a stream
                     // and because we want the browser to consume the response
                     // as well as the cache consuming the response, we need
                     // to clone it so we have two streams.
                     var responseToCache = response.clone();
-
+    
                     caches.open(version)
                         .then(function(cache) {
                             cache.put(event.request, responseToCache);
@@ -49,13 +53,13 @@ self.addEventListener('fetch', function(event) {
 
 {/if cache}
 
-    self.addEventListener('activate', function(event) {
-        event.waitUntil(caches.keys().then(function(cacheNames) {
-            return Promise.all(cacheNames.filter(function(cacheName) {
-                if (cacheName != version) return true;
-                else return false;
-            }).map(function(cacheName) {
-                return caches.delete(cacheName);
-            }));
+self.addEventListener('activate', function(event) {
+    event.waitUntil(caches.keys().then(function(cacheNames) {
+        return Promise.all(cacheNames.filter(function(cacheName) {
+            if (cacheName != version) return true;
+            else return false;
+        }).map(function(cacheName) {
+            return caches.delete(cacheName);
         }));
-    });
+    }));
+});

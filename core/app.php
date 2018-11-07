@@ -7,19 +7,19 @@ use \app\models\seo as seo_model;
 
 class app
 {
-    private $_controller = "";
-    private $_method = "index";
-    private $_params = array();
-    public static $_title = "";
-    public static $_path = "";
-    public static $_front = true;
+    private $_controller    = "";
+    private $_method        = "index";
+    private $_params        = array();
+    public static $_title   = "";
+    public static $_path    = "";
+    public static $_front   = true;
     private static $_config = array();
-    private static $_url = array();
-    const NAMESPACE_FRONT = "app\controllers\\front\\themes\\";
-    const NAMESPACE_BACK = "app\controllers\\back\\themes\\";
-    const CONTROLLERS_PATH = "controllers/";
-    const FRONT_PATH = "front/themes/";
-    const BACK_PATH = "back/themes/";
+    private static $_url    = array();
+    const NAMESPACE_FRONT   = "app\controllers\\front\\themes\\";
+    const NAMESPACE_BACK    = "app\controllers\\back\\themes\\";
+    const CONTROLLERS_PATH  = "controllers/";
+    const FRONT_PATH        = "front/themes/";
+    const BACK_PATH         = "back/themes/";
 
     /**
      * [__construct description]
@@ -27,14 +27,14 @@ class app
     public function __construct($front)
     {
         session_start();
-        $config = self::getConfig();
+        $config       = self::getConfig();
         self::$_title = $config['title'];
         self::$_front = $front;
 
-        $site = str_replace("www.", "", $_SERVER['HTTP_HOST']);
+        $site          = str_replace("www.", "", $_SERVER['HTTP_HOST']);
         $subdirectorio = $config['dir'];
-        $https = ($config['https']) ? "https://" : "http://";
-        $www = ($config['www']) ? "www." : "";
+        $https         = ($config['https']) ? "https://" : "http://";
+        $www           = ($config['www']) ? "www." : "";
 
         self::$_path = $https . $www . $site . "/";
         if ($subdirectorio != '') {
@@ -44,23 +44,23 @@ class app
             $subdirectorio = "/";
         }
 
-        self::$_url['base'] = self::$_path;
+        self::$_url['base']  = self::$_path;
         self::$_url['admin'] = self::$_path . $config['admin'] . '/';
 
-        self::$_url['base_dir'] = PROJECTPATH . '\\';
+        self::$_url['base_dir']  = PROJECTPATH . '\\';
         self::$_url['admin_dir'] = PROJECTPATH . '\\' . $config['admin'] . '\\';
 
-        self::$_url['base_sub'] = $subdirectorio;
+        self::$_url['base_sub']  = $subdirectorio;
         self::$_url['admin_sub'] = $subdirectorio . $config['admin'] . '/';
 
         $path = APPPATH . '/' . self::CONTROLLERS_PATH;
         if (self::$_front) {
-            $path .= self::FRONT_PATH.$config['theme'].'/';
-            $namespace = self::NAMESPACE_FRONT.$config['theme'].'\\';
+            $path .= self::FRONT_PATH . $config['theme'] . '/';
+            $namespace = self::NAMESPACE_FRONT . $config['theme'] . '\\';
         } else {
             self::$_path = self::$_url['admin'];
-            $path .= self::BACK_PATH.$config['theme_back'].'/';
-            $namespace = self::NAMESPACE_BACK.$config['theme_back'].'\\';
+            $path .= self::BACK_PATH . $config['theme_back'] . '/';
+            $namespace = self::NAMESPACE_BACK . $config['theme_back'] . '\\';
         }
         //obtenemos la url parseada
         $url = $this->parseUrl();
@@ -71,7 +71,7 @@ class app
             //eliminamos el controlador de url, así sólo nos quedaran los parámetros del método
             unset($url[0]);
         } else {
-            $fullClass = $namespace . 'error';
+            $fullClass         = $namespace . 'error';
             $this->_controller = new $fullClass;
             return;
         }
@@ -112,14 +112,20 @@ class app
             } elseif (self::$_front) {
                 $seo = seo_model::getAll(array('url' => $url[0]), array('limit' => 1));
                 if (count($seo) == 1) {
-                    $url[0] = $seo[0]['modulo_front'];
-                    $_REQUEST['idseo']=$seo[0][0];
+                    $url[0]            = $seo[0]['modulo_front'];
+                    $_REQUEST['idseo'] = $seo[0][0];
                 }
             }
             unset($_GET["url"]);
             return $url;
         } else {
-            return array('home');
+            $seo = seo_model::getById(1);
+            if (count($seo) >0) {
+                $url[0]            = $seo['modulo_front'];
+                $_REQUEST['idseo'] = $seo[0];
+            }
+
+            return $url;
         }
     }
 
@@ -137,7 +143,8 @@ class app
             ini_set('display_startup_errors', 0);
             error_reporting(0);
         }
-        setlocale(LC_TIME, "es_CL");
+        setlocale(LC_ALL, 'spanish');
+        setlocale(LC_ALL, "es_ES.UTF-8");
         if (!ini_get('date.timezone')) {date_default_timezone_set('America/Santiago');}
         if (function_exists('header_remove')) {
             header_remove('X-Powered-By');

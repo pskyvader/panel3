@@ -24,7 +24,6 @@ class functions
             } else {
                 echo '<script>document.cookie = "' . $cookie . '=' . $value . '; expires=' . date('r', $time) . '; path=' . $path . ';";</script>';
             }
-
         }
     }
 
@@ -70,7 +69,6 @@ class functions
         } else {
             return self::generar_url($url);
         }
-
     }
 
     public static function generar_url($url, $extra = null, $front_auto = true, $front = true)
@@ -142,6 +140,16 @@ class functions
             return file_exists($ac) ? $archivo . $c . filemtime($ac) : "";
         }
     }
+     //fecha con formato
+    public static function formato_fecha($fecha,$formato=''){
+        //$fecha=strtotime($fecha);
+        if($formato=='')
+            $fecha_final = strftime('%d de %B del %Y', $fecha);
+        else
+            $fecha_final = strftime($formato, $fecha);
+        return $fecha_final;
+    }
+    
     //formato de url
     public static function ruta($texto)
     {
