@@ -119,7 +119,6 @@ class database
             } else {
                 $rows = true;
             }
-
         }
         return $rows;
     }
@@ -341,6 +340,16 @@ class database
         return $row;
     }
 
+    public function restore_backup($backup)
+    {
+        $sql = file_get_contents($backup);
+        $exito=$this->consulta($sql, false);
+        if($exito){
+            unlink($backup);
+        }
+        return $exito;
+    }
+
     public function backup($tables = '*')
     {
         $respuesta                     = array('exito' => false, 'mensaje' => 'Error al respaldar base de datos', 'sql' => array());
@@ -397,7 +406,7 @@ class database
                     if ($realBatchSize !== 0) {
                         $sql .= 'INSERT INTO `' . $table . '` VALUES ';
                         foreach ($row as $key => $fila) {
-                            $rowCount = $key+1;
+                            $rowCount = $key + 1;
                             $sql .= '(';
 
                             foreach ($campos as $k => $v) {
@@ -435,7 +444,7 @@ class database
 
                         $respuesta['sql'][] = $sql;
                         $sql                = '';
-                    }else{
+                    } else {
                         $respuesta['sql'][] = $sql;
                         $sql                = '';
                     }
@@ -473,11 +482,11 @@ class database
             if ($this->disableForeignKeyChecks === true) {
                 $sql .= "SET foreign_key_checks = 1;\n";
             }
-            
+
             $respuesta['sql'][] = $sql;
-            $respuesta['exito']=true;
+            $respuesta['exito'] = true;
         } catch (Exception $e) {
-            $respuesta['mensaje']=$e->getMessage();
+            $respuesta['mensaje'] = $e->getMessage();
         }
         return $respuesta;
     }

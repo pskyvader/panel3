@@ -27,6 +27,21 @@ class functions
         }
     }
 
+    //Cortar string a "length" caracteres
+    public static function substring($string, $length = null, $caracteres = " ...")
+    {
+        if ($length == null) {
+            $length = 50;
+        }
+
+        $s = substr(strip_tags($string), 0, $length);
+        if (strlen(strip_tags($string)) > $length) {
+            $s .= $caracteres;
+        }
+
+        return $s;
+    }
+
     /*
     url_redirect comprueba si la url es valida y redirecciona si no lo es
      */
@@ -48,7 +63,7 @@ class functions
 
     public static function get_idseccion($url)
     {
-        $url = explode('-', $url,2);
+        $url = explode('-', $url, 2);
         return (int) $url[0];
     }
     public static function url_seccion($url_base, $seccion, $return = false)
@@ -140,16 +155,19 @@ class functions
             return file_exists($ac) ? $archivo . $c . filemtime($ac) : "";
         }
     }
-     //fecha con formato
-    public static function formato_fecha($fecha,$formato=''){
+    //fecha con formato
+    public static function formato_fecha($fecha, $formato = '')
+    {
         //$fecha=strtotime($fecha);
-        if($formato=='')
+        if ($formato == '') {
             $fecha_final = strftime('%d de %B del %Y', $fecha);
-        else
+        } else {
             $fecha_final = strftime($formato, $fecha);
+        }
+
         return $fecha_final;
     }
-    
+
     //formato de url
     public static function ruta($texto)
     {
@@ -224,6 +242,7 @@ class functions
     }
 
     public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
+
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);

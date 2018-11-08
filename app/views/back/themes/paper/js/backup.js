@@ -14,6 +14,13 @@ $('body').on('click', 'button.new_respaldo_lento', function() {
     });
 });
 
+
+$('body').on('click', 'button.restaurar', function() {
+    $('.modal-restaurar input[name=id_restaurar]').val($(this).data('id'));
+    post_basic(create_url(modulo, 'vaciar_log'));
+});
+
+
 var tipo_backup = 'lento';
 var respaldo_finalizado = false;
 var total_respaldo = 0;
@@ -40,6 +47,24 @@ function end() {
 }
 
 
+function restaurar_elemento() {
+    habilitar(false);
+    start();
+    respaldo_finalizado = false;
+    var accion = 'restaurar';
+    barra(5);
+    post_basic(create_url(modulo, accion), {
+        id: $('.modal-restaurar input[name=id_restaurar]').val()
+    }, 'Restaurando', fin_restaurar);
+    leer_log(true);
+    setTimeout(function() {
+        if (!respaldo_finalizado) {
+            notificacion('Advertencia', 'La restauracion puede tomar un tiempo <br/> <b>No cierres esta ventana<b/>', 'danger');
+        }
+    }, 3000);
+}
+
+
 function generar_backup_rapido(e) {
     habilitar(false);
     start();
@@ -47,7 +72,7 @@ function generar_backup_rapido(e) {
     var accion = 'generar_backup';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', fin_backup);
-    leer_log();
+    leer_log(false);
     setTimeout(function() {
         if (!respaldo_finalizado) {
             notificacion('Advertencia', 'El respaldo puede tomar un tiempo <br/> <b>por favor no cierres esta ventana<b/>', 'warning');
@@ -62,7 +87,7 @@ function generar_backup(e) {
     var accion = 'generar';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', lista_backup);
-    leer_log();
+    leer_log(false);
     setTimeout(function() {
         if (!respaldo_finalizado) {
             notificacion('Advertencia', 'El respaldo puede tomar un tiempo <br/> <b>por favor no cierres esta ventana<b/>', 'warning');
@@ -71,7 +96,7 @@ function generar_backup(e) {
 }
 
 
-function leer_log() {
+function leer_log(restaurar) {
     if (!respaldo_finalizado) {
         $.ajax({
             url: path + 'log.json',
@@ -85,12 +110,18 @@ function leer_log() {
                     if (data.porcentaje) {
                         barra(data.porcentaje + tiempo_promedio_guardar);
                         if (data.porcentaje == 100) {
-                            fin_backup('{"exito":"true"}');
+                            data.exito=true;
+                            data=JSON.stringify(data);
+                            if(restaurar){
+                                fin_restaurar(data);
+                            }else{
+                                fin_backup(data);
+                            }
                         }
                     }
                     if (data.notificacion) {
                         if (tiempo_promedio > 0) {
-                            var restante = tiempo_promedio - end() - 5;
+                            var restante = tiempo_promedio - end() + 5;
                             if (tiempo_guardar == 0) tiempo_guardar = restante;
                             if (restante < 1) restante = 1;
                             notificacion(data.notificacion, 'Tiempo restante aproximado: ' + restante + ' segundos', 'warning');
@@ -173,6 +204,26 @@ function fin_backup(data) {
                 tiempo: tiempo,
                 tipo_backup: tipo_backup
             });
+            go_url(url);
+        } else {
+            var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);
+            notificacion('Oh no!', mensaje, 'error');
+            barra(0);
+        }
+    }
+}
+
+
+
+function fin_restaurar(data) {
+    //console.log(data,end());
+    if (!respaldo_finalizado) {
+        habilitar(true);
+        respaldo_finalizado = true;
+        var data = JSON.parse(data);
+        if (data.exito) {
+            notificacion('Confirmacion', 'Restauracion completada', 'success');
+            barra(100);
             go_url(url);
         } else {
             var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);

@@ -48,9 +48,9 @@ class backup
         }
         $is_error = ($mensaje_error != '');
 
-        $is_mensaje   = false;
-        
-        $mensaje = "Tiempo promedio de respaldo: ";
+        $is_mensaje = false;
+
+        $mensaje      = "Tiempo promedio de respaldo: ";
         $tiempo_lento = configuracion_model::getByVariable('tiempo_backup_lento');
         if (is_bool($tiempo_lento)) {
             $tiempo_lento = 0;
@@ -66,11 +66,10 @@ class backup
             $tiempo_rapido = (int) $tiempo_rapido;
             $is_mensaje    = true;
             if (!is_bool($tiempo_lento)) {
-                $mensaje .=", ";
+                $mensaje .= ", ";
             }
             $mensaje .= $tiempo_rapido . " segundos (servidor rápido)";
         }
-
 
         $row   = array();
         $files = array_filter(scandir($this->dir_backup), function ($item) {
@@ -113,6 +112,61 @@ class backup
 
         $footer = new footer();
         $footer->normal();
+    }
+
+    public function restaurar()
+    {
+        $respuesta = array('exito' => false, 'mensaje' => 'archivo no encontrado', 'errores' => array());
+        $id        = $_POST['id'];
+        foreach (scandir($this->dir_backup) as $key => $files) {
+            if (strpos($files, $id) !== false) {
+                $file = $files;
+                break;
+            }
+        }
+        if (isset($file)) {
+            if (extension_loaded('zip') === true) {
+                $file = $this->dir_backup . '/' . $file;
+                $zip  = new \ZipArchive();
+                if ($zip->open($file) === true) {
+                    $total = $zip->numFiles;
+                    for ($i = 0; $i < $total; $i++) {
+                        $nombre = $zip->getNameIndex($i);
+                        //$exito  = true;
+                        $exito = $zip->extractTo($this->dir, array($nombre));
+                        if (!$exito) {
+                            $respuesta['errores'][] = $nombre;
+                        }
+                        if ($i % 100 == 0) {
+                            $log = array('mensaje' => 'Restaurando ' . functions::substring($nombre, 30) . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
+                            file_put_contents($this->archivo_log, functions::encode_json($log));
+                        }
+                    }
+                    $zip->close();
+                    if (file_exists($this->dir . '/bdd.sql')) {
+                        $log = array('mensaje' => 'Restaurando Base de datos', 'porcentaje' => 95);
+                        file_put_contents($this->archivo_log, functions::encode_json($log));
+                        $connection             = database::instance();
+                        $exito                  = $connection->restore_backup($this->dir . '/bdd.sql');
+                        if(!$exito){
+                            $respuesta['errores'][] = $exito;
+                        }
+                    } else {
+                        $respuesta['mensaje']   = 'No existe base de datos';
+                        $respuesta['errores'][] = 'bdd.sql';
+                    }
+                    $respuesta['exito'] = true;
+                } else {
+                    $respuesta['mensaje'] = 'Error al abrir archivo';
+                }
+            } else {
+                $respuesta['mensaje'] = 'Debes instalar la extension ZIP';
+            }
+        }
+
+        $log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100);
+        file_put_contents($this->archivo_log, functions::encode_json($log));
+        echo json_encode($respuesta);
     }
 
     public function eliminar()
@@ -193,6 +247,7 @@ class backup
 
     public function generar()
     {
+        ini_set('memory_limit', '-1');
         $respuesta = array('exito' => true, 'mensaje' => '');
 
         if (file_exists($this->dir_backup)) {
@@ -212,6 +267,7 @@ class backup
 
     public function generar_backup($log = true)
     {
+        ini_set('memory_limit', '-1');
         $respuesta = array('exito' => true, 'mensaje' => '');
 
         if (file_exists($this->dir_backup)) {
@@ -229,7 +285,6 @@ class backup
 
         if ($respuesta['exito']) {
             $total = count($respuesta['lista']);
-            ini_set('memory_limit', '-1');
             do {
                 $respuesta = $this->zipData($this->dir, $respuesta['archivo_backup'], $respuesta['lista'], $total, $log);
             } while ((count($respuesta['lista']) > 0) && $respuesta['exito']);
@@ -379,7 +434,7 @@ class backup
                     $this->archivo_log,
                     functions::encode_json(
                         array(
-                            'mensaje'      => $file . ' (' . ($total - count($lista)) . '/' . $total . ')',
+                            'mensaje'      => functions::substring($file, 30) . ' (' . ($total - count($lista)) . '/' . $total . ')',
                             'notificacion' => 'Guardando archivo, Esta operacion puede tomar algun tiempo',
                             'porcentaje'   => 10 + (($total - count($lista)) / $total) * 40,
                         )

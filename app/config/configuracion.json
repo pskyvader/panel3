@@ -1,0 +1,18 @@
+[
+    {
+        "variable": "cantidad_backup_lento",
+        "valor": "7"
+    },
+    {
+        "variable": "tiempo_backup_lento",
+        "valor": "83,285714285714"
+    },
+    {
+        "variable": "cantidad_backup_rapido",
+        "valor": "11"
+    },
+    {
+        "variable": "tiempo_backup_rapido",
+        "valor": "93,727272727273"
+    }
+]

@@ -3,6 +3,7 @@ namespace app\controllers\back\themes\paper;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\administrador as administrador_model;
+use \app\models\configuracion as configuracion_model;
 use \app\models\logo as logo_model;
 use \app\models\table as table_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
@@ -92,6 +93,19 @@ class configuracion_administrador extends base
             $campos[] = $a;
         }
         file_put_contents($dir . 'moduloconfiguracion.json', functions::encode_json($campos, true));
+
+        
+        
+        $row = configuracion_model::getAll();
+        $campos = array();
+        $fields = table_model::getByname('configuracion');
+        foreach ($row as $key => $tabla) {
+            $a = database::create_data($fields, $tabla);
+            $campos[] = $a;
+        }
+        file_put_contents($dir . 'configuracion.json', functions::encode_json($campos, true));
+
+
         echo json_encode($respuesta);
     }
 
@@ -209,6 +223,13 @@ class configuracion_administrador extends base
                     modulo_model::insert($h, false);
                 }
             }
+        }
+
+         
+        $campos = functions::decode_json(file_get_contents($dir . 'configuracion.json'));
+        foreach ($campos as $key => $configuracion) {
+            $row=configuracion_model::getByVariable($configuracion['variable']);
+            configuracion_model::setByVariable($configuracion['variable'],$configuracion['valor']);
         }
         echo json_encode($respuesta);
     }

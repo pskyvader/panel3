@@ -548,5 +548,20 @@
             }
         ],
         "truncate": "1"
+    },
+    {
+        "tablename": "configuracion",
+        "idname": "idconfiguracion",
+        "fields": [
+            {
+                "titulo": "variable",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "valor",
+                "tipo": "char(255)"
+            }
+        ],
+        "truncate": "0"
     }
 ]
