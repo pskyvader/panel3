@@ -324,7 +324,7 @@ class backup
                         if (strpos($file, '.git') === false && strpos($file, '.zip') === false && strpos($file, '.sql') === false && $file != '.' && $file != '..' && substr($file, -1) != '.' && substr($file, -2) != '..') {
                             $count++;
                             $lista_archivos[] = $file;
-                            if ($log && $count % 100 == 0) {
+                            if ($log && $count % 1000 == 0) {
                                 file_put_contents($this->archivo_log, functions::encode_json(array('mensaje' => 'Recuperando archivo ' . $file, 'porcentaje' => 10)));
                             }
                         }
@@ -416,7 +416,7 @@ class backup
                 }
 
                 unset($lista[$key]);
-                if ($log && (time() - $tiempo > 5 || $count % 100 == 0)) {
+                if ($log && (time() - $tiempo > 5 || $count % 1000 == 0)) {
                     file_put_contents(
                         $this->archivo_log,
                         functions::encode_json(

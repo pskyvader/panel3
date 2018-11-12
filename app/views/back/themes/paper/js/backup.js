@@ -69,6 +69,8 @@ function generar_backup_rapido(e) {
     habilitar(false);
     start();
     respaldo_finalizado = false;
+    tiempo_promedio_guardar=0;
+    tiempo_guardar=0;
     var accion = 'generar_backup';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', fin_backup);
@@ -84,6 +86,8 @@ function generar_backup(e) {
     habilitar(false);
     start();
     respaldo_finalizado = false;
+    tiempo_promedio_guardar=0;
+    tiempo_guardar=0;
     var accion = 'generar';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', lista_backup);
