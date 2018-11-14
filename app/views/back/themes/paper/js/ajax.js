@@ -18,14 +18,15 @@ function update_orden(b) {
 }
 
 function post_basic(url_post, info, mensaje_inicial, callback) {
-    notificacion_footer(mensaje_inicial);
+    if (mensaje_inicial) notificacion_footer(mensaje_inicial);
     $.post(url_post, info, function(data) {
-        callback(data);
+        if (callback) callback(data);
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);
         console.log(jqXHR);
         console.log(errorThrown);
         notificacion('Oh no!', 'Ha ocurrido un error, por favor intenta más tarde', 'error');
+        if (callback) callback(textStatus);
     });
 }
 
@@ -89,7 +90,7 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
                 if (callback != null) {
                     callback(datos, extra);
                 }
-                if(typeof(datos['refresh'])!='undefined' && datos['refresh']){
+                if (typeof(datos['refresh']) != 'undefined' && datos['refresh']) {
                     go_url(url);
                 }
             } else {

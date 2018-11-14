@@ -1,0 +1,14 @@
+[
+    {
+        "variable": "version",
+        "valor": "0.16.0"
+    },
+    {
+        "variable": "cantidad_backup_rapido",
+        "valor": "7"
+    },
+    {
+        "variable": "tiempo_backup_rapido",
+        "valor": "105,57142857143"
+    }
+]

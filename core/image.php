@@ -488,19 +488,37 @@ class image
         return $portada;
     }
 
+    private static function removeDirectory($path) {
+        // The preg_replace is necessary in order to traverse certain types of folder paths (such as /dir/[[dir2]]/dir3.abc#/)
+        // The {,.}* with GLOB_BRACE is necessary to pull all hidden files (have to remove or get "Directory not empty" errors)
+        $files = glob(preg_replace('/(\*|\?|\[)/', '[$1]', $path).'/{,.}*', GLOB_BRACE);
+        $s=true;
+        foreach ($files as $file) {
+            if ($file == $path.'/.' || $file == $path.'/..') { continue; } // skip special dir entries
+            $s=is_dir($file) ? self::removeDirectory($file) : unlink($file);
+            if(!$s){
+                echo 'Error :'.$file;
+                exit;
+            }
+        }
+        if($s){
+            $s=rmdir($path);
+        }else{
+            echo 'Error :'.$path;
+        }
+        return $s;
+    }
     public static function delete($folder, $file = '', $subfolder = '', $sub = '')
     {
         if ("" == $file && '' != $subfolder) {
             $url = self::get_upload_dir() . $folder . '/' . $subfolder . '/';
             if (file_exists($url)) {
-                array_map('unlink', glob("$url/*.*"));
-                rmdir($url);
+                self::removeDirectory($url);
             }
         } elseif ('' == $file && '' == $subfolder) {
             $url = self::get_upload_dir() . $folder . '/';
             if (file_exists($url)) {
-                array_map('unlink', glob("$url/*.*"));
-                rmdir($url);
+                self::removeDirectory($url);
             }
         } else {
             $recortes = self::get_recortes($folder);

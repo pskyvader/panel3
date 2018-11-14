@@ -15,16 +15,16 @@ class base_model implements crud
     public static function getAll($where = array(), $condiciones = array(), $select = "")
     {
         $connection = database::instance();
-        if (!isset($where['estado']) && app::$_front) {
+        $fields     = table::getByname(static::$table);
+        if (!isset($where['estado']) && app::$_front && isset($fields['estado'])) {
             $where['estado'] = true;
         }
 
-        if (!isset($condiciones['order'])) {
+        if (!isset($condiciones['order']) && isset($fields['order'])) {
             $condiciones['order'] = 'orden ASC';
         }
 
         if (isset($condiciones['palabra'])) {
-            $fields                = table::getByname(static::$table);
             $condiciones['buscar'] = array();
             if (isset($fields['titulo'])) {
                 $condiciones['buscar']['titulo'] = $condiciones['palabra'];

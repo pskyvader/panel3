@@ -23,7 +23,7 @@ class error
 
         $header = new header();
         $header->normal();
-        $banner=banner_model::getById(5);
+        $banner=banner_model::getById(1);
         view::set('url',image::generar_url(image::portada($banner['foto']),''));
         
         view::render('404');

@@ -1,0 +1,127 @@
+<div class="page-content">
+    <ol class="breadcrumb">
+        {foreach breadcrumb}
+        <li class="{active}">
+            <a href="{url}">
+                {title}
+            </a>
+        </li>
+        {/foreach breadcrumb}
+    </ol>
+    <div class="page-heading">
+        <h1>
+            {title}
+        </h1>
+    </div>
+    <div class="container-fluid">
+        <div data-widget-group="group1">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default no-animate">
+                        <div class="panel-heading">
+                            <div class="btn-group mt-sm">
+                                <button class="btn btn-default new_respaldo_lento">
+                                    <i class="fa fa-plus"></i>
+                                    <span> Nuevo Respaldo (servidor lento)</span>
+                                </button>
+                                <button class="btn btn-default new_respaldo">
+                                    <i class="fa fa-plus"></i>
+                                    <span> Nuevo Respaldo (servidor rapido)</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-body no-padding table-responsive">
+                            {if is_error}
+                            <div class="alert alert-danger">
+                                Se ha encontrado el siguiente error:
+                                <p><b>{mensaje_error}</b></p>
+                                Por favor soluciona este error y actualiza la pagina
+                            </div>
+                            {else is_error}
+                            {if is_mensaje}
+                            <div class="alert alert-info">
+                                <p>{mensaje}</p>
+                            </div>
+                            {/if is_mensaje}
+                            <input type="hidden" name="tiempo_lento" value="{tiempo_lento}">
+                            <input type="hidden" name="tiempo_rapido" value="{tiempo_rapido}">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-hover table-bordered m-n {if order_class}sorted_table{/if order_class}" id="tabla">
+                                <thead>
+                                    <tr>
+                                        <th>Tamaño</th>
+                                        <th>Fecha</th>
+                                        <th>Restaurar</th>
+                                        <th>Descargar</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {foreach row}
+                                    <tr class="{if even} even {else even} odd {/if even} gradeX tooltips" data-id="{id}" data-placement="top" data-trigger="hover" data-original-title="ID: {id}">
+                                        <td class="center" data-field="size">
+                                            {size}
+                                        </td>
+                                        <td class="center" data-field="fecha">
+                                            {fecha}
+                                        </td>
+                                        <td class="center" data-field="restaurar">
+                                            <button class="btn btn-primary btn-raised restaurar btn-md" data-id="{id}" data-toggle="modal" data-target=".modal-restaurar">Restaurar</button>
+                                        </td>
+                                        <td class="center" data-field="descargar">
+                                            <a class="btn btn-primary btn-raised btn-md" href="{url}">Descargar</a>
+                                        </td>
+                                        <td class="center" data-field="eliminar">
+                                            <button data-id="{id}" class="btn btn-raised eliminar btn-danger btn-md" data-toggle="modal" data-target=".modal-eliminar">
+                                                <i class="material-icons">delete</i> Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {/foreach row}
+                                </tbody>
+                            </table>
+                            {/if is_error}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL para eliminacion de elementos-->
+<div class="modal fade modal-eliminar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Confirmación</h2>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de eliminar este elemento? <span id="nombre_elemento"></span></p>
+                <input type="hidden" name="id_eliminar" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-raised btn-danger" onclick="eliminar_elemento();" data-dismiss="modal">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL para eliminacion de elementos-->
+<div class="modal fade modal-restaurar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Confirmación</h2>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de restaurar este elemento? TODA LA INFORMACION SE REEMPLAZARÁ<span id="nombre_elemento"></span></p>
+                <input type="hidden" name="id_restaurar" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-raised btn-warning" onclick="restaurar_elemento();" data-dismiss="modal">Restaurar</button>
+            </div>
+        </div>
+    </div>
+</div>

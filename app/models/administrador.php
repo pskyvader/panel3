@@ -5,13 +5,13 @@ defined("APPPATH") or die("Acceso denegado");
 use \core\app;
 use \core\database;
 use \core\email;
-use \core\view;
 use \core\functions;
+use \core\view;
 
 class administrador extends base_model
 {
     public static $idname = 'idadministrador',
-    $table = 'administrador';
+    $table                = 'administrador';
     public $cookie;
 
     public static function getAll($where = array(), $condiciones = array(), $select = "")
@@ -28,7 +28,7 @@ class administrador extends base_model
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
         if ($select == '') {
             foreach ($row as $key => $value) {
-                $row[$key]['foto']=functions::decode_json($row[$key]['foto']);
+                $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
             }
         }
         return $row;
@@ -47,14 +47,14 @@ class administrador extends base_model
         } else {
             return array('exito' => false, 'mensaje' => 'Contraseña no existe');
         }
-        $fields = table::getByname(static::$table);
-        $insert = database::create_data($fields, $data);
-        $insert['pass'] = database::encript($insert['pass']);
+        $fields          = table::getByname(static::$table);
+        $insert          = database::create_data($fields, $data);
+        $insert['pass']  = database::encript($insert['pass']);
         $insert['email'] = strtolower($insert['email']);
-        $connection = database::instance();
-        $row = $connection->insert(static::$table, static::$idname, $insert);
+        $connection      = database::instance();
+        $row             = $connection->insert(static::$table, static::$idname, $insert);
         if ($row) {
-            $last_id=$connection->get_last_insert_id();
+            $last_id = $connection->get_last_insert_id();
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
             return $last_id;
         } else {
@@ -74,7 +74,7 @@ class administrador extends base_model
                 if ($set['pass'] != $set['pass_repetir']) {
                     return array('exito' => false, 'mensaje' => 'Contraseñas no coinciden');
                 } else {
-                    $set['pass'] = database::encript($set['pass']);
+                    $set['pass']   = database::encript($set['pass']);
                     $set['cookie'] = '';
                     unset($set['pass_repetir']);
                 }
@@ -93,7 +93,7 @@ class administrador extends base_model
         $where = array(static::$idname => $data['id']);
         unset($set['id']);
         $connection = database::instance();
-        $row = $connection->update(static::$table, static::$idname, $set, $where);
+        $row        = $connection->update(static::$table, static::$idname, $set, $where);
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
         return $row;
     }
@@ -101,9 +101,9 @@ class administrador extends base_model
     public static function login_cookie($cookie)
     {
         $prefix_site = functions::url_amigable(app::$_title);
-        $where = array('cookie' => $cookie);
+        $where       = array('cookie' => $cookie);
         $condiciones = array('limit' => 1);
-        $row = static::getAll($where, $condiciones);
+        $row         = static::getAll($where, $condiciones);
 
         if (count($row) != 1) {
             return false;
@@ -117,11 +117,11 @@ class administrador extends base_model
                     return false;
                 } else {
                     $_SESSION[static::$idname . $prefix_site] = $admin[0];
-                    $_SESSION["email" . $prefix_site] = $admin['email'];
-                    $_SESSION["nombre" . $prefix_site] = $admin['nombre'];
-                    $_SESSION["estado" . $prefix_site] = $admin['estado'];
-                    $_SESSION["tipo" . $prefix_site] = $admin['tipo'];
-                    $_SESSION['prefix_site'] = $prefix_site;
+                    $_SESSION["email" . $prefix_site]         = $admin['email'];
+                    $_SESSION["nombre" . $prefix_site]        = $admin['nombre'];
+                    $_SESSION["estado" . $prefix_site]        = $admin['estado'];
+                    $_SESSION["tipo" . $prefix_site]          = $admin['tipo'];
+                    $_SESSION['prefix_site']                  = $prefix_site;
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $admin);
                     return true;
                 }
@@ -132,7 +132,7 @@ class administrador extends base_model
 
     public static function login($email, $pass, $recordar)
     {
-        $connection = database::instance();
+        $connection  = database::instance();
         $prefix_site = functions::url_amigable(app::$_title);
         if ($email == '' || $pass == '') {
             return false;
@@ -140,10 +140,10 @@ class administrador extends base_model
 
         $where = array(
             'email' => strtolower($email),
-            'pass' => database::encript($pass),
+            'pass'  => database::encript($pass),
         );
         $condiciones = array('limit' => 1);
-        $row = static::getAll($where, $condiciones);
+        $row         = static::getAll($where, $condiciones);
 
         if (count($row) != 1) {
             return false;
@@ -157,11 +157,11 @@ class administrador extends base_model
                     return false;
                 } else {
                     $_SESSION[static::$idname . $prefix_site] = $admin[0];
-                    $_SESSION["email" . $prefix_site] = $admin['email'];
-                    $_SESSION["nombre" . $prefix_site] = $admin['nombre'];
-                    $_SESSION["estado" . $prefix_site] = $admin['estado'];
-                    $_SESSION["tipo" . $prefix_site] = $admin['tipo'];
-                    $_SESSION['prefix_site'] = $prefix_site;
+                    $_SESSION["email" . $prefix_site]         = $admin['email'];
+                    $_SESSION["nombre" . $prefix_site]        = $admin['nombre'];
+                    $_SESSION["estado" . $prefix_site]        = $admin['estado'];
+                    $_SESSION["tipo" . $prefix_site]          = $admin['tipo'];
+                    $_SESSION['prefix_site']                  = $prefix_site;
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $admin);
                     if ($recordar == 'on') {
                         return static::update_cookie($admin[0]);
@@ -176,9 +176,9 @@ class administrador extends base_model
     private static function update_cookie($id)
     {
         $prefix_site = functions::url_amigable(app::$_title);
-        $cookie = uniqid($prefix_site);
-        $data = array('id' => $id, 'cookie' => $cookie);
-        $exito = static::update($data);
+        $cookie      = uniqid($prefix_site);
+        $data        = array('id' => $id, 'cookie' => $cookie);
+        $exito       = static::update($data);
         if ($exito) {
             functions::set_cookie('cookieadmin' . $prefix_site, $cookie, time() + (31536000));
         }
@@ -206,7 +206,9 @@ class administrador extends base_model
 
         $admin = static::getById($_SESSION[static::$idname . $prefix_site]);
 
-        if ($admin[0] != $_SESSION[static::$idname . $prefix_site]) {
+        if (!isset($admin[0])) {
+            return false;
+        } elseif ($admin[0] != $_SESSION[static::$idname . $prefix_site]) {
             return false;
         } elseif ($admin['email'] != $_SESSION["email" . $prefix_site]) {
             return false;
@@ -231,9 +233,9 @@ class administrador extends base_model
             return false;
         }
 
-        $where = array('email' => strtolower($email));
+        $where       = array('email' => strtolower($email));
         $condiciones = array('limit' => 1);
-        $row = static::getAll($where, $condiciones);
+        $row         = static::getAll($where, $condiciones);
 
         if (count($row) != 1) {
             return false;
@@ -244,17 +246,17 @@ class administrador extends base_model
             } else {
                 $pass = functions::generar_pass();
                 $data = array('id' => $admin[0], 'pass' => $pass, 'pass_repetir' => $pass);
-                $row = static::update($data);
+                $row  = static::update($data);
 
                 if ($row) {
                     $body_email = array(
-                        'body' => view::get_theme() . 'mail/recuperar_password.html',
-                        'titulo' => "Recuperación de contraseña",
-                        'cabecera' => "Estimado usuario, se ha solicitado la recuperación de contraseña en " . $nombre_sitio,
-                        'campos' => array('Contraseña' => $pass),
+                        'body'          => view::get_theme() . 'mail/recuperar_password.html',
+                        'titulo'        => "Recuperación de contraseña",
+                        'cabecera'      => "Estimado usuario, se ha solicitado la recuperación de contraseña en " . $nombre_sitio,
+                        'campos'        => array('Contraseña' => $pass),
                         'campos_largos' => array(),
                     );
-                    $body = email::body_email($body_email);
+                    $body      = email::body_email($body_email);
                     $respuesta = email::enviar_email(array($email), 'Recuperación de contraseña', $body);
 
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $admin);

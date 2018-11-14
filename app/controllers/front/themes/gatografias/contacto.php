@@ -56,7 +56,6 @@ class contacto extends base
         $informacion[] = array('icono' => 'fas fa-envelope-open2', 'title' => $t['titulo'], 'text' => $t['texto'], 'is_link' => true, 'url' => 'mailto:' . $t['texto']);
 
         view::set('informacion', $informacion);
-        view::set('texto_contacto', strip_tags((texto::getById(7)['descripcion'])));
         view::set('title', $this->seo['titulo']);
         view::set('action', functions::generar_url(array('enviar')));
         $mapa = texto::getById(8);
@@ -69,6 +68,7 @@ class contacto extends base
         view::set('googlemaps_key', $config['googlemaps_key']);
         view::set('google_captcha', $config['google_captcha']);*/
 
+        view::set('texto_contacto', strip_tags((texto::getById(7)['descripcion'])));
 
         view::set('action', functions::generar_url(array('enviar')));
         view::render('contact');
