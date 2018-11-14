@@ -171,15 +171,15 @@ class table extends base_model
 
     public static function table_exists($tablename)
     {
+        $config            = app::getConfig();
         $connection = database::instance();
         $prefix = $connection->get_prefix();
         $connection->set_prefix('');
         $table = 'information_schema.tables';
-        $where = array('table_name' => $prefix . $tablename);
+        $where = array('table_schema' => $config["database"],'table_name' => $prefix . $tablename);
         $condiciones = array();
         $select = 'count(*) as count';
         $row = $connection->get($table, static::$idname, $where, $condiciones, $select);
-
         $connection->set_prefix($prefix);
         return ($row[0]['count'] == 1);
     }

@@ -69,8 +69,8 @@ function generar_backup_rapido(e) {
     habilitar(false);
     start();
     respaldo_finalizado = false;
-    tiempo_promedio_guardar=0;
-    tiempo_guardar=0;
+    tiempo_promedio_guardar = 0;
+    tiempo_guardar = 0;
     var accion = 'generar_backup';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', fin_backup);
@@ -86,8 +86,8 @@ function generar_backup(e) {
     habilitar(false);
     start();
     respaldo_finalizado = false;
-    tiempo_promedio_guardar=0;
-    tiempo_guardar=0;
+    tiempo_promedio_guardar = 0;
+    tiempo_guardar = 0;
     var accion = 'generar';
     barra(5);
     post_basic(create_url(modulo, accion), {}, 'Recuperando lista de archivos', lista_backup);
@@ -112,13 +112,17 @@ function leer_log(restaurar) {
                         notificacion_footer(data.mensaje);
                     }
                     if (data.porcentaje) {
-                        barra(data.porcentaje + tiempo_promedio_guardar);
+                        if (data.notificacion) {
+                            barra(data.porcentaje + tiempo_promedio_guardar);
+                        } else {
+                            barra(data.porcentaje);
+                        }
                         if (data.porcentaje == 100) {
-                            data.exito=true;
-                            data=JSON.stringify(data);
-                            if(restaurar){
+                            data.exito = true;
+                            data = JSON.stringify(data);
+                            if (restaurar) {
                                 fin_restaurar(data);
-                            }else{
+                            } else {
                                 fin_backup(data);
                             }
                         }
@@ -129,6 +133,7 @@ function leer_log(restaurar) {
                             if (tiempo_guardar == 0) tiempo_guardar = restante;
                             if (restante < 1) restante = 1;
                             notificacion(data.notificacion, 'Tiempo restante aproximado: ' + restante + ' segundos', 'warning');
+                            notificacion_footer('Tiempo restante aproximado: ' + restante + ' segundos');
                             tiempo_promedio_guardar = 40 - (restante / tiempo_guardar) * 40;
                             if (tiempo_promedio_guardar > 40) tiempo_promedio_guardar = 40;
                         } else {
@@ -194,6 +199,7 @@ function continuar_backup(data) {
 }
 
 function fin_backup(data) {
+    //console.log(data,end());
     if (!respaldo_finalizado) {
         habilitar(true);
         respaldo_finalizado = true;
@@ -209,6 +215,7 @@ function fin_backup(data) {
                 tipo_backup: tipo_backup
             });
             go_url(url);
+
         } else {
             var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);
             notificacion('Oh no!', mensaje, 'error');
@@ -222,14 +229,24 @@ function fin_backup(data) {
 function fin_restaurar(data) {
     //console.log(data,end());
     if (!respaldo_finalizado) {
-        habilitar(true);
-        respaldo_finalizado = true;
         var data = JSON.parse(data);
         if (data.exito) {
-            notificacion('Confirmacion', 'Restauracion completada', 'success');
-            barra(100);
-            go_url(url);
+            if (data.inicio) {
+                var accion = 'restaurar';
+                post_basic(create_url(modulo, accion), {
+                    id: $('.modal-restaurar input[name=id_restaurar]').val(),
+                    inicio: data.inicio
+                }, '', fin_restaurar);
+            } else {
+                habilitar(true);
+                respaldo_finalizado = true;
+                notificacion('Confirmacion', 'Restauracion completada', 'success');
+                barra(100);
+                go_url(url);
+            }
         } else {
+            habilitar(true);
+            respaldo_finalizado = true;
             var mensaje = (($.isArray(data['mensaje'])) ? data['mensaje'].join('<br/>') : data['mensaje']);
             notificacion('Oh no!', mensaje, 'error');
             barra(0);

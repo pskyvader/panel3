@@ -65,7 +65,7 @@ class backup
         } else {
             $tiempo_rapido = (int) $tiempo_rapido;
             $is_mensaje    = true;
-            if (!is_bool($tiempo_lento)) {
+            if ($tiempo_lento > 0) {
                 $mensaje .= ", ";
             }
             $mensaje .= $tiempo_rapido . " segundos (servidor rápido)";
@@ -82,7 +82,7 @@ class backup
             }
             return false;
         });
-        $url = app::get_dir(true) . 'backup/';
+        $url = app::get_url(true) . 'backup/';
 
         foreach ($files as $key => $f) {
             $extension = explode('.', $f);
@@ -116,8 +116,10 @@ class backup
 
     public function restaurar()
     {
+        $tiempo    = time();
         $respuesta = array('exito' => false, 'mensaje' => 'archivo no encontrado', 'errores' => array());
         $id        = $_POST['id'];
+        $inicio    = (isset($_POST['inicio'])) ? ((int) $_POST['inicio'] - 1) : 0;
         foreach (scandir($this->dir_backup) as $key => $files) {
             if (strpos($files, $id) !== false) {
                 $file = $files;
@@ -130,7 +132,7 @@ class backup
                 $zip  = new \ZipArchive();
                 if ($zip->open($file) === true) {
                     $total = $zip->numFiles;
-                    for ($i = 0; $i < $total; $i++) {
+                    for ($i = $inicio; $i < $total; $i++) {
                         $nombre = $zip->getNameIndex($i);
                         //$exito  = true;
                         $exito = $zip->extractTo($this->dir, array($nombre));
@@ -141,19 +143,25 @@ class backup
                             $log = array('mensaje' => 'Restaurando ' . functions::substring($nombre, 30) . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
                             file_put_contents($this->archivo_log, functions::encode_json($log));
                         }
+                        if (time() - $tiempo > 15) {
+                            $respuesta['inicio'] = $i;
+                            break;
+                        }
                     }
                     $zip->close();
-                    if (file_exists($this->dir . '/bdd.sql')) {
-                        $log = array('mensaje' => 'Restaurando Base de datos', 'porcentaje' => 95);
-                        file_put_contents($this->archivo_log, functions::encode_json($log));
-                        $connection             = database::instance();
-                        $exito                  = $connection->restore_backup($this->dir . '/bdd.sql');
-                        if(!$exito){
-                            $respuesta['errores'][] = $exito;
+                    if (!isset($respuesta['inicio'])) {
+                        if (file_exists($this->dir . '/bdd.sql')) {
+                            $log = array('mensaje' => 'Restaurando Base de datos', 'porcentaje' => 95);
+                            file_put_contents($this->archivo_log, functions::encode_json($log));
+                            $connection = database::instance();
+                            $exito      = $connection->restore_backup($this->dir . '/bdd.sql');
+                            if (!$exito) {
+                                $respuesta['errores'][] = $exito;
+                            }
+                        } else {
+                            $respuesta['mensaje']   = 'No existe base de datos';
+                            $respuesta['errores'][] = 'bdd.sql';
                         }
-                    } else {
-                        $respuesta['mensaje']   = 'No existe base de datos';
-                        $respuesta['errores'][] = 'bdd.sql';
                     }
                     $respuesta['exito'] = true;
                 } else {
@@ -164,8 +172,13 @@ class backup
             }
         }
 
-        $log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100);
-        file_put_contents($this->archivo_log, functions::encode_json($log));
+        if (!isset($respuesta['inicio'])) {
+            $c = new configuracion_administrador();
+            $c->json_update(false);
+
+            $log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100);
+            file_put_contents($this->archivo_log, functions::encode_json($log));
+        }
         echo json_encode($respuesta);
     }
 
@@ -247,6 +260,8 @@ class backup
 
     public function generar()
     {
+        $c = new configuracion_administrador();
+        $c->json(false);
         ini_set('memory_limit', '-1');
         $respuesta = array('exito' => true, 'mensaje' => '');
 
@@ -267,6 +282,8 @@ class backup
 
     public function generar_backup($log = true)
     {
+        $c = new configuracion_administrador();
+        $c->json(false);
         ini_set('memory_limit', '-1');
         $respuesta = array('exito' => true, 'mensaje' => '');
 

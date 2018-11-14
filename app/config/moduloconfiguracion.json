@@ -4220,7 +4220,7 @@
                 "tipo": "active"
             }
         ],
-        "orden": "10",
+        "orden": "11",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -4471,7 +4471,7 @@
                 "tipo": "active"
             }
         ],
-        "orden": "11",
+        "orden": "12",
         "estado": "1",
         "aside": "1",
         "tipos": "1",
@@ -5128,7 +5128,7 @@
                 "tipo": "text"
             }
         ],
-        "orden": "12",
+        "orden": "13",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -5317,7 +5317,7 @@
                 "tipo": "text"
             }
         ],
-        "orden": "13",
+        "orden": "14",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -5430,6 +5430,183 @@
                             "1": "true",
                             "2": "true",
                             "3": "false"
+                        }
+                    }
+                ],
+                "recortes": [],
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "aside": "1",
+                "hijos": "0"
+            }
+        ]
+    },
+    {
+        "icono": "system_update_alt",
+        "module": "update",
+        "titulo": "Actualizar",
+        "sub": "",
+        "padre": "",
+        "mostrar": [
+            {
+                "field": "variable",
+                "titulo": "Configuracion",
+                "tipo": "text"
+            },
+            {
+                "field": "valor",
+                "titulo": "Valor",
+                "tipo": "text"
+            },
+            {
+                "field": "copy",
+                "titulo": "Copiar",
+                "tipo": "action"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            },
+            {
+                "field": "delete",
+                "titulo": "Eliminar",
+                "tipo": "delete"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "variable",
+                "titulo": "Configuracion",
+                "tipo": "text"
+            },
+            {
+                "field": "valor",
+                "titulo": "Valor",
+                "tipo": "text"
+            }
+        ],
+        "orden": "15",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "0",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "16",
+                "tipo": "0",
+                "titulo": "Actualizar",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "variable",
+                        "tipo": "text",
+                        "titulo": "Configuracion",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "valor",
+                        "tipo": "text",
+                        "titulo": "Valor",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "variable",
+                        "tipo": "text",
+                        "titulo": "Configuracion",
+                        "texto_ayuda": "",
+                        "required": "",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "valor",
+                        "tipo": "text",
+                        "titulo": "Valor",
+                        "texto_ayuda": "",
+                        "required": "",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     }
                 ],

@@ -368,8 +368,9 @@ class database
             } else {
                 $tables = is_array($tables) ? $tables : explode(',', str_replace(' ', '', $tables));
             }
-            $sql = "CREATE DATABASE IF NOT EXISTS `" . $this->_dbName . "`;\n\n";
-            $sql .= 'USE `' . $this->_dbName . "`;\n\n";
+            $sql="";
+            //$sql .= "CREATE DATABASE IF NOT EXISTS `" . $this->_dbName . "`;\n\n";
+            //$sql .= 'USE `' . $this->_dbName . "`;\n\n";
             /**
              * Disable foreign key checks
              */
