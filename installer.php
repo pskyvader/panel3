@@ -7,7 +7,8 @@ $version_min = "5.6.30";
 $version_max = "7.3.0";
 $paso        = (isset($_GET['paso'])) ? (int) $_GET['paso'] : 1;
 $respuesta   = array('exito' => true, 'mensaje' => array());
-$debug       = true;
+
+$debug = true;
 if ($debug) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -44,7 +45,6 @@ switch ($paso) {
         if (!version_compare(PHP_VERSION, $version_max, '<=')) {
             $respuesta['mensaje'][] = 'La version maxima de php debe ser ' . $version_max;
         }
-
         if (function_exists('apache_get_modules')) {
             foreach ($required_modules as $key => $r) {
                 if (!in_array($r, $modules)) {
@@ -85,7 +85,7 @@ switch ($paso) {
             "www"                   => array('name' => "www", 'value' => '0', 'required' => true, 'visible' => true, 'title' => 'Dominio con WWW', 'type' => 'active'),
             "https"                 => array('name' => "https", 'value' => '0', 'required' => true, 'visible' => true, 'title' => 'Sitio seguro (debe instalar certificado SSL)', 'type' => 'active'),
             "theme"                 => array('name' => "theme", 'value' => '', 'required' => true, 'visible' => false),
-            "dir"                   => array('name' => "dir", 'value' => substr($folder, strlen(dirname(__DIR__)) + 1), 'required' => false, 'visible' => true, 'title' => 'Sub directorio (si existe)', 'fill' => false),
+            "dir"                   => array('name' => "dir", 'value' => strtolower(substr($folder, strlen(dirname(__DIR__)) + 1)), 'required' => false, 'visible' => true, 'title' => 'Sub directorio (si existe)', 'fill' => false),
             "title"                 => array('name' => "title", 'value' => '', 'required' => true, 'visible' => true, 'title' => 'Titulo del sitio'),
             "short_title"           => array('name' => "short_title", 'value' => '', 'required' => true, 'visible' => true, 'title' => 'Titulo corto del sitio (maximo 12 caracteres)'),
             "debug"                 => array('name' => "debug", 'value' => '0', 'required' => true, 'visible' => false, 'fill' => false),
@@ -168,22 +168,24 @@ switch ($paso) {
                 $total = $zip->numFiles;
                 for ($i = $inicio; $i < $total; $i++) {
                     $nombre = $zip->getNameIndex($i);
-                    //$exito  = true;
-                    $exito = $zip->extractTo($folder, array($nombre));
-                    if (!$exito) {
-                        $respuesta['errores'][] = $nombre;
-                    }
-                    if ($i % 100 == 0) {
-                        $n = substr(strip_tags($string), 0, 30);
-                        if (strlen(strip_tags($string)) > 30) {
-                            $n .= "...";
+                    if ($nombre != $name) {
+                        //$exito  = true;
+                        $exito = $zip->extractTo($folder, array($nombre));
+                        if (!$exito) {
+                            $respuesta['errores'][] = $nombre;
                         }
-                        $log = array('mensaje' => 'Restaurando ' . $n . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
-                        file_put_contents($archivo_log, json_encode($log));
-                    }
-                    if (time() - $tiempo > 20) {
-                        $respuesta['inicio'] = $i;
-                        break;
+                        if ($i % 100 == 0) {
+                            $n = substr(strip_tags($nombre), 0, 30);
+                            if (strlen(strip_tags($nombre)) > 30) {
+                                $n .= "...";
+                            }
+                            $log = array('mensaje' => 'Restaurando ' . $n . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
+                            file_put_contents($archivo_log, json_encode($log));
+                        }
+                        if (time() - $tiempo > 20) {
+                            $respuesta['inicio'] = $i;
+                            break;
+                        }
                     }
                 }
                 $zip->close();
@@ -229,7 +231,9 @@ switch ($paso) {
             foreach ($config as $key => $c) {
                 $config[$key] = trim($c);
             }
-            $url_restaurar = $url_admin . "configuracion_administrador/json";
+            $url           = 'http://' . $_SERVER['HTTP_HOST'] . '/' . substr($folder, strlen(dirname(__DIR__)) + 1);
+            $url_admin     = $url . "/" . $_POST['admin'] . '/';
+            $url_restaurar = $url_admin . "configuracion_administrador/json_update";
 
             if (file_exists('admin')) {
                 rename("admin", $config['admin']);
@@ -447,7 +451,6 @@ switch ($paso) {
                             <button type="submit" id="submit" class="btn btn-primary">Continuar</button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -462,12 +465,11 @@ switch ($paso) {
                 <div class="jumbotron">
                     <div class="row">
                         <div class="col-12">
-
-                        <div class="alert alert-success mt-2" role="alert">
-                            <svg style="height: 20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path d="M186.301 339.893L96 249.461l-32 30.507L186.301 402 448 140.506 416 110z" />
-                            </svg>
-                            Has completado la instalacion. Ahora puedes acceder a tu sitio y a tu panel de administración.
+                            <div class="alert alert-success mt-2" role="alert">
+                                <svg style="height: 20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M186.301 339.893L96 249.461l-32 30.507L186.301 402 448 140.506 416 110z" />
+                                </svg>
+                                Has completado la instalacion. Ahora puedes acceder a tu sitio y a tu panel de administración.
                             </div>
                         </div>
                         <div class="col-12">
