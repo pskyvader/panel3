@@ -15,7 +15,7 @@ class base
     protected $breadcrumb = array();
     protected $modulo     = array();
     protected $seo        = array();
-    public function __construct($seo)
+    public function __construct($idseo)
     {
         $this->seo               = seo_model::getById($idseo);
         $this->url               = array($this->seo['url']);

@@ -4,6 +4,7 @@ namespace app\controllers\front\themes\mdbootstrap;
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\banner as banner_model;
 use \app\models\seccion as seccion_model;
+use \app\models\seo;
 use \core\functions;
 use \core\image;
 use \core\view;
