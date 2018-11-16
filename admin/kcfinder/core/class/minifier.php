@@ -2,7 +2,7 @@
 
 /** This file is part of KCFinder project
   *
-  *      @desc Minify JS & CSS
+  *      @desc minify JS & CSS
   *   @package KCFinder
   *   @version 3.12
   *    @author Pavel Tzonkov <sunhater@sunhater.com>

@@ -42,7 +42,7 @@ sed -e "s/latest/$ver/g" -i "" bower.json
 git add "$js"
 git add "$css"
 
-echo "Minifying..."
+echo "minifying..."
 
 echo "/*" > "$mini"
 cat LICENSE | sed "$tokens" >> "$mini"

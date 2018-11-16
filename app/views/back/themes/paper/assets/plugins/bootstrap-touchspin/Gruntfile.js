@@ -40,7 +40,7 @@ module.exports = function (grunt) {
       }
     },
 
-    // Minify definitions
+    // minify definitions
     uglify: {
       js: {
         src: ["dist/jquery.bootstrap-touchspin.js"],

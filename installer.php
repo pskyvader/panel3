@@ -26,10 +26,10 @@ switch ($paso) {
         } else {
             $modules = array();
         }
-        $required_modules = array('mod_deflate', 'mod_expires', 'mod_headers', 'mod_include', 'mod_mime', 'mod_rewrite', 'mod_ssl');
+        $required_modules = array('mod_expires', 'mod_headers', 'mod_mime', 'mod_rewrite');
         $extensions       = get_loaded_extensions();
         //$required_extensions = array('date', 'ftp', 'json', 'mcrypt', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'openssl', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'mysqli', 'pdo_mysql', 'sockets', 'xmlrpc', 'mhash');
-        $required_extensions = array('date', 'json', 'mcrypt', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'mysqli', 'pdo_mysql');
+        $required_extensions = array('date', 'json', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'mysqli', 'pdo_mysql');
 
         if (basename(__FILE__) != $name) {
             $respuesta['mensaje'][] = 'El nombre de este archivo debe ser ' . $name;
@@ -85,7 +85,7 @@ switch ($paso) {
             "www"                   => array('name' => "www", 'value' => '0', 'required' => true, 'visible' => true, 'title' => 'Dominio con WWW', 'type' => 'active'),
             "https"                 => array('name' => "https", 'value' => '0', 'required' => true, 'visible' => true, 'title' => 'Sitio seguro (debe instalar certificado SSL)', 'type' => 'active'),
             "theme"                 => array('name' => "theme", 'value' => '', 'required' => true, 'visible' => false),
-            "dir"                   => array('name' => "dir", 'value' => strtolower(substr($folder, strlen(dirname(__DIR__)) + 1)), 'required' => false, 'visible' => true, 'title' => 'Sub directorio (si existe)', 'fill' => false),
+            "dir"                   => array('name' => "dir", 'value' => strtolower(trim(substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],$name)),'/')), 'required' => false, 'visible' => true, 'title' => 'Sub directorio (si existe)', 'fill' => false),
             "title"                 => array('name' => "title", 'value' => '', 'required' => true, 'visible' => true, 'title' => 'Titulo del sitio'),
             "short_title"           => array('name' => "short_title", 'value' => '', 'required' => true, 'visible' => true, 'title' => 'Titulo corto del sitio (maximo 12 caracteres)'),
             "debug"                 => array('name' => "debug", 'value' => '0', 'required' => true, 'visible' => false, 'fill' => false),
@@ -170,7 +170,9 @@ switch ($paso) {
                     $nombre = $zip->getNameIndex($i);
                     if ($nombre != $name) {
                         //$exito  = true;
-                        $exito = $zip->extractTo($folder, array($nombre));
+                        $exito        = $zip->extractTo($folder, array($nombre));
+                        $nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $folder . "/" . $nombre);
+                        rename($folder . "/" . $nombre, $nombre_final);
                         if (!$exito) {
                             $respuesta['errores'][] = $nombre;
                         }
@@ -231,7 +233,7 @@ switch ($paso) {
             foreach ($config as $key => $c) {
                 $config[$key] = trim($c);
             }
-            $url           = 'http://' . $_SERVER['HTTP_HOST'] . '/' . substr($folder, strlen(dirname(__DIR__)) + 1);
+            $url           = 'http://' . $_SERVER['HTTP_HOST'] . '/' . strtolower(trim(substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],$name)),'/'));
             $url_admin     = $url . "/" . $_POST['admin'] . '/';
             $url_restaurar = $url_admin . "configuracion_administrador/json_update";
 
@@ -264,7 +266,7 @@ switch ($paso) {
                 $query = $connection->prepare($sql);
                 $query->execute();
 
-                $url       = 'http://' . $_SERVER['HTTP_HOST'] . '/' . substr($folder, strlen(dirname(__DIR__)) + 1);
+                $url       = 'http://' . $_SERVER['HTTP_HOST'] . '/' . strtolower(trim(substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],$name)),'/'));
                 $url_admin = $url . "/" . $_POST['admin'] . '/';
 
             } catch (\PDOException $e) {

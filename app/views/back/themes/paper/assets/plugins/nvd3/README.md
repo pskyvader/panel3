@@ -52,7 +52,7 @@ We are currently changing our branch structure so that master will be gauranteed
 
 ---
 
-## Minifying your fork:
+## minifying your fork:
 
 ### Using Make
 The Makefile requires [UglifyJS](https://github.com/mishoo/UglifyJS) and [CSSMin](https://github.com/jbleuzen/node-cssmin)
@@ -64,9 +64,9 @@ fork's root directory will rebuild both `nv.d3.js` and `nv.d3.min.js`.
 
     make # build nv.d3.js and nv.d3.css and minify
     make nv.d3.js # Build nv.d3.js
-    make nv.d3.min.js # Minify nv.d3.js into nv.d3.min.js
+    make nv.d3.min.js # minify nv.d3.js into nv.d3.min.js
     make nv.d3.css # Build nv.d3.css
-    make nv.d3.min.css # Minify nv.d3.css into nv.d3.min.css
+    make nv.d3.min.css # minify nv.d3.css into nv.d3.min.css
     make clean # Delete nv.d3.*js and nv.d3.*css
 
 

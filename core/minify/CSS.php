@@ -9,9 +9,9 @@
  * @license MIT License
  */
 
-namespace core\Minify;
+namespace core\minify;
 
-use core\Minify\Exceptions\FileImportException;
+use core\minify\Exceptions\FileImportException;
 use core\PathConverter\ConverterInterface;
 use core\PathConverter\Converter;
 
@@ -20,13 +20,13 @@ use core\PathConverter\Converter;
  *
  * Please report bugs on https://github.com/matthiasmullie/minify/issues
  *
- * @package Minify
+ * @package minify
  * @author Matthias Mullie <minify@mullie.eu>
  * @author Tijs Verkoyen <minify@verkoyen.eu>
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-class CSS extends Minify
+class CSS extends minify
 {
     /**
      * @var int maximum inport size in kB
@@ -285,7 +285,7 @@ class CSS extends Minify
     }
 
     /**
-     * Minify the data.
+     * minify the data.
      * Perform CSS optimizations.
      *
      * @param string[optional] $path    Path to write the data to

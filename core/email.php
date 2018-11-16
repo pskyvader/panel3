@@ -27,7 +27,7 @@ class email
         $nombre_sitio = $config['title'];
         $color_primario = $config['color_primario'];
         $color_secundario = $config['color_secundario'];
-        $logo='logo';
+        $logo='cid:logo';
 
         $body = file_get_contents($body_email['body']);
 

@@ -342,9 +342,9 @@ class database
 
     public function restore_backup($backup)
     {
-        $sql = file_get_contents($backup);
-        $exito=$this->consulta($sql, false);
-        if($exito){
+        $sql   = file_get_contents($backup);
+        $exito = $this->consulta($sql, false);
+        if ($exito) {
             unlink($backup);
         }
         return $exito;
@@ -368,7 +368,7 @@ class database
             } else {
                 $tables = is_array($tables) ? $tables : explode(',', str_replace(' ', '', $tables));
             }
-            $sql="";
+            $sql = "";
             //$sql .= "CREATE DATABASE IF NOT EXISTS `" . $this->_dbName . "`;\n\n";
             //$sql .= 'USE `' . $this->_dbName . "`;\n\n";
             /**
@@ -397,7 +397,7 @@ class database
                 // Split table in batches in order to not exhaust system memory
                 $numBatches = intval($numRows / $this->batchSize) + 1; // Number of while-loop calls to perform
 
-                $campos = $this->consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_name='" . $table . "'", true);
+                $campos = $this->consulta("SELECT COLUMN_NAME,COLUMN_TYPE FROM information_schema.columns WHERE table_schema='" . $this->_dbName . "' AND table_name='" . $table . "'", true);
 
                 for ($b = 1; $b <= $numBatches; $b++) {
                     $query         = 'SELECT * FROM `' . $table . '` LIMIT ' . ($b * $this->batchSize - $this->batchSize) . ',' . $this->batchSize;
@@ -429,7 +429,6 @@ class database
                                 if ($k < ($numFields - 1)) {
                                     $sql .= ',';
                                 }
-
                             }
 
                             if ($rowCount == $realBatchSize) {

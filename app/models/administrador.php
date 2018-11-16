@@ -34,7 +34,7 @@ class administrador extends base_model
         return $row;
     }
 
-    public static function insert($data)
+    public static function insert($data,$log=true)
     {
         if (isset($data['pass']) && $data['pass'] != '') {
             if (isset($data['pass_repetir']) && $data['pass_repetir'] != '') {
@@ -62,7 +62,7 @@ class administrador extends base_model
         }
     }
 
-    public static function update($data)
+    public static function update($data, $log = true)
     {
         if (!isset($data['id']) || $data['id'] == '' || $data['id'] == 0) {
             echo 'Error, ID perdida';

@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-namespace MatthiasMullie\Minify\Exceptions;
+namespace MatthiasMullie\minify\Exceptions;
 
 /**
  * IO Exception Class
  *
- * @package Minify\Exception
+ * @package minify\Exception
  * @author Matthias Mullie <minify@mullie.eu>
  */
 class IOException extends BasicException
