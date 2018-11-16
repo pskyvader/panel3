@@ -56,7 +56,7 @@ class sitemap extends base
                 $mensaje_error='Debes dar permisos de escritura o eliminar el archivo '.$dir . 'sitemap.xml';
             }
         }elseif(!is_writable($dir)){
-            $mensaje_error='Debes dar permisos de escritura en '.$dir;
+            $mensaje_error='Debes dar permisos de escritura en '.$dir.' o crear el archivo sitemap.xml con permisos de escritura';
         }
         $is_error=($mensaje_error!='');
 

@@ -26,6 +26,8 @@ class app
      */
     public function __construct($front)
     {
+        $ds=DIRECTORY_SEPARATOR;
+        if($ds!="/") $ds="\\";
         session_start();
         $config       = self::getConfig();
         self::$_title = $config['title'];
@@ -47,8 +49,8 @@ class app
         self::$_url['base']  = self::$_path;
         self::$_url['admin'] = self::$_path . $config['admin'] . '/';
 
-        self::$_url['base_dir']  = PROJECTPATH . '\\';
-        self::$_url['admin_dir'] = PROJECTPATH . '\\' . $config['admin'] . '\\';
+        self::$_url['base_dir']  = PROJECTPATH . $ds;
+        self::$_url['admin_dir'] = PROJECTPATH . $ds . $config['admin'] . $ds;
 
         self::$_url['base_sub']  = $subdirectorio;
         self::$_url['admin_sub'] = $subdirectorio . $config['admin'] . '/';

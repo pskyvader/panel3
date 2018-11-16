@@ -4,7 +4,7 @@ namespace core;
 defined("APPPATH") or die("Access denied");
 
 use \core\app;
-use \core\Minify;
+use \core\Minify as mini_files;
 
 class view
 {
@@ -205,7 +205,7 @@ class view
         if ($combine && count($locales) > 0) {
             $dir  = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.js';
-            if (file_exists($dir . '\\' . $file)) {
+            if (file_exists($dir . '/' . $file)) {
                 if (isset($_COOKIE['loaded_js']) && $_COOKIE['loaded_js']) {
                     $defer = '';
                 } else {
@@ -221,13 +221,13 @@ class view
                     $minifier = null;
                     foreach ($locales as $key => $l) {
                         if ($minifier == null) {
-                            $minifier = new Minify\JS($l['url']);
+                            $minifier = new mini_files\JS($l['url']);
                         } else {
                             $minifier->add($l['url']);
                         }
                     }
-                    array_map('unlink', glob($dir . "\\*.js"));
-                    $minify = $minifier->minify($dir . '\\' . $file);
+                    array_map('unlink', glob($dir . "/*.js"));
+                    $minify = $minifier->minify($dir . '/' . $file);
 
                     $locales = array(array('url' => app::$_path . $file, 'defer' => 'async defer'));
                 } else {
@@ -293,7 +293,7 @@ class view
         if ($combine && count($locales) > 0) {
             $dir  = app::get_dir();
             $file = 'resources-' . $nuevo . '-' . count($locales) . '.css';
-            if (file_exists($dir . '\\' . $file)) {
+            if (file_exists($dir . '/' . $file)) {
                 if (isset($_COOKIE['loaded_css']) && $_COOKIE['loaded_css']) {
                     $defer = false;
                 } else {
@@ -309,13 +309,13 @@ class view
                     $minifier = null;
                     foreach ($locales as $key => $l) {
                         if ($minifier == null) {
-                            $minifier = new Minify\CSS($l['url']);
+                            $minifier = new mini_files\CSS($l['url']);
                         } else {
                             $minifier->add($l['url']);
                         }
                     }
-                    array_map('unlink', glob($dir . "\\*.css"));
-                    $minify  = $minifier->minify($dir . '\\' . $file);
+                    array_map('unlink', glob($dir . "/*.css"));
+                    $minify  = $minifier->minify($dir . '/' . $file);
                     $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true));
                 } else {
                     foreach ($locales as $key => $l) {

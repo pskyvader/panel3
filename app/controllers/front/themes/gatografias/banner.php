@@ -69,10 +69,9 @@ class banner
                 'foto'       => $foto,
                 'background' => image::generar_url($foto_base, 'color'),
             );
+            view::set_array($banner);
+            view::render('banner-seccion');
         }
-
-        view::set_array($banner);
-        view::render('banner-seccion');
     }
 
     public function srcset($foto_base)
