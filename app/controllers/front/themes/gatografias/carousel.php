@@ -14,6 +14,7 @@ class carousel
         array('foto' => 'foto3', 'size' => '768'),
         array('foto' => 'foto4', 'size' => '0'),
     );
+    
     public function normal($row_carousel = array(), $titulo)
     {
         if (count($row_carousel) > 0) {
