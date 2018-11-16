@@ -232,7 +232,7 @@ class sitemap extends base
         $respuesta = array('exito' => true, 'mensaje' => $this->validar_url($sitio, $sitio_base));
         if ($respuesta['mensaje'] == '') {
             $headers = get_headers($sitio, 1);
-            if ($headers[0] != 'HTTP/1.1 200 OK') {
+            if ($headers[0] != 'HTTP/1.1 200 OK' && $headers[0] != 'HTTP/1.0 200 OK') {
                 if ($headers[0] == 'HTTP/1.1 301 Moved Permanently') {
                     if(is_array($headers['Location'])){
                         $headers['Location']=$headers['Location'][0];
