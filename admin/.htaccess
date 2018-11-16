@@ -23,7 +23,7 @@ SetOutputFilter DEFLATE
 
 <IfModule mod_expires.c>
 ExpiresActive On
-ExpiresDefault A0
+ExpiresDefault "access plus 4 months"
 
 # 1 AÑO
 <FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|ttf|woff|woff2)$">
@@ -35,16 +35,9 @@ ExpiresDefault "access plus 1 years"
 ExpiresDefault "access plus 1 months"
 </FilesMatch>
 
-
-
 # 1 SEMANA
 <FilesMatch "\.(txt|xml|js|css|htm|png|jpg|jpeg|less)$">
 ExpiresDefault "access plus 4 months"
-</FilesMatch>
-
-
-<FilesMatch "\.(php)$">
-ExpiresDefault "access plus 1 days"
 </FilesMatch>
 
 </ifModule>
