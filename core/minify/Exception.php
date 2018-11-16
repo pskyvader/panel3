@@ -6,13 +6,13 @@
  *
  * @author Matthias Mullie <minify@mullie.eu>
  */
-namespace core\Minify;
+namespace core\minify;
 
 /**
  * Base Exception Class
  * @deprecated Use Exceptions\BasicException instead
  *
- * @package Minify
+ * @package minify
  * @author Matthias Mullie <minify@mullie.eu>
  */
 abstract class Exception extends \Exception

@@ -30,7 +30,7 @@ class minify
     {
         return preg_replace_callback('#<\s*([^\/\s]+)\s*(?:>|(\s[^<>]+?)\s*>)#', function ($m) {
             if (isset($m[2])) {
-                // Minify inline CSS declaration(s)
+                // minify inline CSS declaration(s)
                 if (stripos($m[2], ' style=') !== false) {
                     $m[2] = preg_replace_callback('#( style=)([\'"]?)(.*?)\2#i', function ($m) {
                         return $m[1] . $m[2] . self::minify_css($m[3]) . $m[2];
@@ -128,14 +128,14 @@ class minify
                 return $m[1] . preg_replace('#\s+#', X . '\s', $m[2]) . ')';
             }, $input);
         }
-        // Minify ...
+        // minify ...
         return preg_replace(
             array(
                 // Fix case for `#foo [bar="baz"]` and `#foo :first-child` [^1]
                 '#(?<![,\{\}])\s+(\[|:\w)#',
                 // Fix case for `[bar="baz"] .foo` and `url(foo.jpg) no-repeat` [^2]
                 '#\]\s+#', '#\)\s+\b#',
-                // Minify HEX color code ... [^3]
+                // minify HEX color code ... [^3]
                 '#\#([\da-f])\1([\da-f])\2([\da-f])\3\b#i',
                 // Remove white-space(s) around punctuation(s) [^4]
                 '#\s*([~!@*\(\)+=\{\}\[\]:;,>\/])\s*#',
@@ -287,7 +287,7 @@ class minify
         }
         $output = preg_replace(
             array(
-                // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}` [^1]
+                // minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}` [^1]
                 '#(' . $CC . ')|([\{,])([\'])(\d+|[a-z_]\w*)\3(?=:)#i',
                 // From `foo['bar']` to `foo.bar` [^2]
                 '#([\w\)\]])\[([\'"])([a-z_]\w*)\2\]#i',

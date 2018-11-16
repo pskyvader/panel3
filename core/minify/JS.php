@@ -8,20 +8,20 @@
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-namespace core\Minify;
+namespace core\minify;
 
 /**
  * JavaScript Minifier Class
  *
  * Please report bugs on https://github.com/matthiasmullie/minify/issues
  *
- * @package Minify
+ * @package minify
  * @author Matthias Mullie <minify@mullie.eu>
  * @author Tijs Verkoyen <minify@verkoyen.eu>
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-class JS extends Minify
+class JS extends minify
 {
     /**
      * Var-matching regex based on http://stackoverflow.com/a/9337047/802993.
@@ -137,7 +137,7 @@ class JS extends Minify
     }
 
     /**
-     * Minify the data.
+     * minify the data.
      * Perform JS optimizations.
      *
      * @param string[optional] $path Path to write the data to

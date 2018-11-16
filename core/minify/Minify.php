@@ -8,9 +8,9 @@
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-namespace core\Minify;
+namespace core\minify;
 
-use core\Minify\Exceptions\IOException;
+use core\minify\Exceptions\IOException;
 use Psr\Cache\CacheItemInterface;
 
 /**
@@ -18,12 +18,12 @@ use Psr\Cache\CacheItemInterface;
  *
  * Please report bugs on https://github.com/matthiasmullie/minify/issues
  *
- * @package Minify
+ * @package minify
  * @author Matthias Mullie <minify@mullie.eu>
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved
  * @license MIT License
  */
-abstract class Minify
+abstract class minify
 {
     /**
      * The data to be minified.
@@ -100,7 +100,7 @@ abstract class Minify
     }
 
     /**
-     * Minify the data & (optionally) saves it to a file.
+     * minify the data & (optionally) saves it to a file.
      *
      * @param string[optional] $path Path to write the data to
      *
@@ -119,7 +119,7 @@ abstract class Minify
     }
 
     /**
-     * Minify & gzip the data & (optionally) saves it to a file.
+     * minify & gzip the data & (optionally) saves it to a file.
      *
      * @param string[optional] $path  Path to write the data to
      * @param int[optional]    $level Compression level, from 0 to 9
@@ -140,7 +140,7 @@ abstract class Minify
     }
 
     /**
-     * Minify the data & write it to a CacheItemInterface object.
+     * minify the data & write it to a CacheItemInterface object.
      *
      * @param CacheItemInterface $item Cache item to write the data to
      *
@@ -155,7 +155,7 @@ abstract class Minify
     }
 
     /**
-     * Minify the data.
+     * minify the data.
      *
      * @param string[optional] $path Path to write the data to
      *

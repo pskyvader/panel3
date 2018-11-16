@@ -26,10 +26,10 @@ switch ($paso) {
         } else {
             $modules = array();
         }
-        $required_modules = array('mod_deflate', 'mod_expires', 'mod_headers', 'mod_include', 'mod_mime', 'mod_rewrite', 'mod_ssl');
+        $required_modules = array('mod_expires', 'mod_headers', 'mod_mime', 'mod_rewrite');
         $extensions       = get_loaded_extensions();
         //$required_extensions = array('date', 'ftp', 'json', 'mcrypt', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'openssl', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'mysqli', 'pdo_mysql', 'sockets', 'xmlrpc', 'mhash');
-        $required_extensions = array('date', 'json', 'mcrypt', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'mysqli', 'pdo_mysql');
+        $required_extensions = array('date', 'json', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'mysqli', 'pdo_mysql');
 
         if (basename(__FILE__) != $name) {
             $respuesta['mensaje'][] = 'El nombre de este archivo debe ser ' . $name;

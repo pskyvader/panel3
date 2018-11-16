@@ -4,7 +4,7 @@ namespace core;
 defined("APPPATH") or die("Access denied");
 
 use \core\app;
-use \core\Minify as mini_files;
+use \core\minify as mini_files;
 
 class view
 {
