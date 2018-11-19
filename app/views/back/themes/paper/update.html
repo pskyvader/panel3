@@ -14,7 +14,6 @@
         </h1>
     </div>
     <div class="container-fluid">
-        
         <div data-widget-group="group1">
             <div class="row">
                 <div class="col-md-12">
@@ -25,43 +24,27 @@
                             </h2>
                             <div class="panel-ctrls" data-actions-container="" data-action-collapse='{"target": ".panel-body, .panel-footer"}'></div>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" style="display:none;">
                             {if is_error}
-                            <div class="alert alert-danger" >
+                            <div class="alert alert-danger">
                                 Se ha encontrado el siguiente error:
                                 <p><b>{mensaje_error}</b></p>
                                 Por favor soluciona este error y actualiza la pagina
                             </div>
                             {else is_error}
                             <div class="row">
-                                <div class="col-md-6">
-                                    <button class="btn btn-default btn-block btn-raised nuevo_sitemap btn-md" data-id="1" data-action="vaciar" data-mensaje="Vaciar Sitemap">
-                                        Nuevo Sitemap
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button class="btn btn-default btn-block btn-raised generar_sitemap btn-md" data-id="1" data-action="generar" data-mensaje="Generando Sitemap">
-                                        Continuar Sitemap actual
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                
                                 <div class="col-md-12">
-                                    <a class="btn btn-primary btn-block btn-raised btn-md" href="{url_sitemap}" target="_blank" rel="noopener noreferrer">
-                                        Ver Sitemap
-                                    </a>
+                                    <button class="btn btn-primary btn-block btn-raised btn-md" data-toggle="modal" data-target=".modal-update">
+                                        Descargar e instalar actualizacion
+                                    </button>
                                 </div>
                             </div>
-                            
                             {/if is_error}
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-4">
                 <div class="centeredcontainer">
@@ -72,20 +55,41 @@
             <div class="col-md-8">
                 <div class="panel panel-default" data-widget='{"draggable": "false"}'>
                     <div class="panel-heading">
-                        <h2>URLs guardadas</h2>
+                        <h2>Actualizacion</h2>
                         <div class="panel-ctrls" data-actions-container="" data-action-collapse='{"target": ".panel-body"}'></div>
                     </div>
                     <div class="panel-body scroll-pane" style="height: 200px;">
-                        <div class="scroll-content" id="log_sitemap">
-                           {foreach log}
-                           <p>{url}</p>
-                           {/foreach log}
+                        <div class="scroll-content" id="update_content">
                         </div>
                     </div>
                 </div>
             </div>
-            
         </div>
-
+    </div>
+</div>
+<!--MODAL para eliminacion de elementos-->
+<div class="modal fade modal-update" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Confirmación</h2>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li><b>Antes de actualizar deberias realizar un respaldo y descargarlo</b></li>
+                    <li>Esta actualizacion modificara componentes del panel de administracion y podria modificar componentes del sitio</li>
+                    <li>Se recomienda realizar esta actualizacion en horas de baja demanda</li>
+                </ul>
+                <p>Si ocurre algun problema al realizar esta actualizacion, por favor notificar lo antes posible a
+                    <a href="mailto:contacto@mysitio.cl">contacto@mysitio.cl</a>
+                </p>
+                <input type="hidden" name="id_update" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-raised btn-warning" onclick="update_elemento();" data-dismiss="modal">Actualizar</button>
+            </div>
+        </div>
     </div>
 </div>
