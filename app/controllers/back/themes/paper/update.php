@@ -153,16 +153,16 @@ class update extends base
                         if (!in_array($nombre, $this->no_update)) {
                             //$exito = true;
                             $exito = $zip->extractTo($this->dir, array($nombre));
-                            if(is_writable($this->dir . "/" . $nombre)){
+                            /*if(is_writable($this->dir . "/" . $nombre)){
                                 $nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $this->dir . "/" . $nombre);
                                 rename($this->dir . "/" . $nombre, $nombre_final);
-                            }
+                            }*/
                             if (!$exito) {
                                 $respuesta['errores'][] = $nombre;
                             }
                         }
                         if ($i % 100 == 0) {
-                            $log = array('mensaje' => 'Restaurando ' . functions::substring($nombre, 30) . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
+                            $log = array('mensaje' => 'Actualizando ' . functions::substring($nombre, 30) . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
                             file_put_contents($this->archivo_log, functions::encode_json($log));
                         }
                         if (time() - $tiempo > 15) {

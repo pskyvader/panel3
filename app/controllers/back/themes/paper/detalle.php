@@ -105,6 +105,16 @@ class detalle
                     'icon' => (isset($fila[$campos['field']])) ? (($fila[$campos['field']]) ? 'fa-check' : 'fa-close') : 'fa-question-circle',
                 );
                 break;
+            case 'daterange':
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field' => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'required' => ($campos['required']) ? 'required="required"' : '',
+                    'help' => $campos['help'],
+                    'value' => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
+                );
+                break;
             case 'editor':
                 $data = array(
                     'title_field' => $campos['title_field'],
@@ -368,6 +378,7 @@ class detalle
                     'is_required' => $campos['required'],
                     'required' => ($campos['required']) ? 'required="required"' : '',
                     'value' => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
+                    'help' => (isset($campos['help'])) ? $campos['help'] : '',
                 );
                 break;
             case 'email':
@@ -410,12 +421,19 @@ class detalle
             case 'recursive_checkbox':
             case 'recursive_radio':
                 if ($level == 0) {
+                    if(isset($fila[$campos['field']])){
+                        $count=count($fila[$campos['field']]);
+                    }else{
+                        $count=0;
+                    }
                     $data = array(
                         'is_children' => false,
                         'title_field' => $campos['title_field'],
                         'field' => $campos['field'],
                         'is_required' => $campos['required'],
                         'children' => '',
+                        'required' => ($campos['required']) ? 'required="required"' : '',
+                        'count' => ($count>0)?$count:'',
                     );
                     foreach ($campos['parent'] as $key => $children) {
                         $data['children'] .= $this->field($campos, $fila, '', $children[0], 1);

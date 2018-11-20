@@ -138,10 +138,10 @@ class backup
                         if (!in_array($nombre, $this->no_restore)) {
                             //$exito  = true;
                             $exito = $zip->extractTo($this->dir, array($nombre));
-                            if(is_writable($this->dir . "/" . $nombre)){
+                            /*if(is_writable($this->dir . "/" . $nombre)){
                                 $nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $this->dir . "/" . $nombre);
                                 rename($this->dir . "/" . $nombre, $nombre_final);
-                            }
+                            }*/
                             if (!$exito) {
                                 $respuesta['errores'][] = $nombre;
                             }

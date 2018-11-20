@@ -201,7 +201,7 @@ class lista
                 return $content;
                 break;
             case 'image':
-                if (isset($fila[$th['field']]) && is_array($fila[$th['field']])) {
+                if (isset($fila[$th['field']]) && is_array($fila[$th['field']]) && count($fila[$th['field']])>0) {
                     $portada      = image::portada($fila[$th['field']]);
                     $thumb_url    = image::generar_url($portada, 'thumb');
                     $zoom_url     = image::generar_url($portada, 'zoom');

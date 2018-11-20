@@ -40,7 +40,14 @@ function inicio() {
     $('textarea.autosize').autosize({
         append: "\n"
     });
+    var update_content = $('#update_content');
+    notificacion(false);
+
+    if (update_content.length > 0) {
+        setTimeout(get_update, 1000);
+    }
 }
+
 function register_sw() {
     if ('serviceWorker' in navigator) {
         //console.log('sw');

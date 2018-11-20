@@ -71,10 +71,34 @@ function inicio_detail() {
         $('body').on('blur', 'form#formulario input[name=titulo]', function() {
             $('form#formulario input.url').first().val(urlamigable($(this).val()));
         });
-
     }
+    $('body').on('change', '.recursive-input', function() {
+        count_elementos($(this));
+    });
 
 
+    $('.daterange').daterangepicker({
+        timePicker: true,
+        timePicker24Hour: true,
+        timePickerIncrement: 15,
+        locale: {
+            format: 'DD/MM/YYYY HH:mm'
+        }
+    });
+
+
+}
+
+
+function count_elementos(e) {
+    setTimeout(function() {
+        var n = $('input:checked', e).length;
+        if (n > 0) {
+            $('.name', e).val(n);
+        } else {
+            $('.name', e).val('');
+        }
+    }, 100);
 }
 
 function generar(longitud) {

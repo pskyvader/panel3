@@ -1,10 +1,4 @@
-var update_content = $('#update_content');
 var update_finalizado = false;
-
-if (update_content.length > 0) {
-    get_update();
-}
-
 function get_update() {
     $.get(create_url(modulo, 'get_update')).done(function(data) {
         try {
@@ -68,9 +62,10 @@ function archivo_listo(data) {
         var archivo = $('input[name=id_update]').val();
         $('#progreso_sitemap').val(30).trigger('change');
         barra(30);
+        update_content.prepend($('<p>' + 'Actualizando Version ' + archivo + '</p>'));
         post_basic(create_url(modulo, 'update_file'), {
             file: archivo
-        }, 'Actualizando Sistema ' + archivo, fin_update);
+        }, 'Actualizando Version ' + archivo, fin_update);
 
         leer_log_update();
         setTimeout(function() {
@@ -95,6 +90,7 @@ function leer_log_update() {
                 //end();
                 if (typeof(data) == 'object') {
                     if (data.mensaje) {
+                        update_content.prepend($('<p>' + data.mensaje+ '</p>'));
                         notificacion_footer(data.mensaje);
                     }
                     if (data.porcentaje) {

@@ -32,6 +32,7 @@ class moduloconfiguracion extends base
         'map' => array('text' => 'Mapa', 'value' => 'map'),
         'multiple' => array('text' => 'Multiple', 'value' => 'multiple'),
         'number' => array('text' => 'Numero', 'value' => 'number'),
+        'daterange' => array('text' => 'Rango de fechas', 'value' => 'daterange'),
         'text' => array('text' => 'Texto', 'value' => 'text'),
         'textarea' => array('text' => 'Texto largo', 'value' => 'textarea'),
         'token' => array('text' => 'Token', 'value' => 'token'),

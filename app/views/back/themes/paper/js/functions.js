@@ -58,6 +58,7 @@ function notificacion(titulo, mensaje, tipo, callback) {
         });
         alerta.remove();
     }
+    if(titulo==false) return false;
     var options = {
         title: titulo,
         text: mensaje,
@@ -299,7 +300,7 @@ function activar_imagen() {
 
 
 function mover(elemento, tiempo, delay) {
-    var alto = 0;
+    var alto = 65;
     if (delay != 0) {
         setTimeout(function() {
             $('html, body').animate({

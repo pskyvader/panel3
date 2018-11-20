@@ -76,6 +76,7 @@ class base
         }
         if (isset($this->class_parent)) {
             $class_parent = $this->class_parent;
+                
             if (isset($_GET[$class_parent::$idname])) {
                 $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
             }
