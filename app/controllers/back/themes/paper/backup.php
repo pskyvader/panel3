@@ -17,6 +17,7 @@ class backup
     protected $dir         = '';
     protected $dir_backup  = '';
     protected $archivo_log = '';
+    protected $no_restore   = array('backup/');
     public function __construct()
     {
         $this->dir         = app::get_dir(true);
@@ -134,11 +135,19 @@ class backup
                     $total = $zip->numFiles;
                     for ($i = $inicio; $i < $total; $i++) {
                         $nombre = $zip->getNameIndex($i);
-                        //$exito  = true;
-                        $exito = $zip->extractTo($this->dir, array($nombre));
-                        if (!$exito) {
-                            $respuesta['errores'][] = $nombre;
+                        if (!in_array($nombre, $this->no_restore)) {
+                            //$exito  = true;
+                            $exito = $zip->extractTo($this->dir, array($nombre));
+                            if(is_writable($this->dir . "/" . $nombre)){
+                                $nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $this->dir . "/" . $nombre);
+                                rename($this->dir . "/" . $nombre, $nombre_final);
+                            }
+                            if (!$exito) {
+                                $respuesta['errores'][] = $nombre;
+                            }
                         }
+                        $respuesta['errores'][] = $nombre;
+                        
                         if ($i % 100 == 0) {
                             $log = array('mensaje' => 'Restaurando ' . functions::substring($nombre, 30) . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
                             file_put_contents($this->archivo_log, functions::encode_json($log));
@@ -234,6 +243,7 @@ class backup
         echo json_encode($respuesta);
     }
 
+    //Elimina archivos que no se lograron completar
     public function eliminar_error()
     {
         $respuesta = array('exito' => true);
@@ -340,6 +350,7 @@ class backup
                         $file = substr($file->getPathname(), $largo);
                         if (strpos($file, '.git') === false && strpos($file, '.zip') === false && strpos($file, '.sql') === false && $file != '.' && $file != '..' && substr($file, -1) != '.' && substr($file, -2) != '..') {
                             $count++;
+                            $file = str_replace(array("/", "\\"), "/", $file);
                             $lista_archivos[] = $file;
                             if ($log && $count % 1000 == 0) {
                                 file_put_contents($this->archivo_log, functions::encode_json(array('mensaje' => 'Recuperando archivo ' . $file, 'porcentaje' => 10)));

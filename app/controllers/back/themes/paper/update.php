@@ -10,12 +10,19 @@ use \core\view;
 
 class update extends base
 {
-    protected $url        = array('update');
-    protected $metadata   = array('title' => 'update', 'modulo' => 'update');
-    protected $breadcrumb = array();
+    protected $url         = array('update');
+    protected $metadata    = array('title' => 'update', 'modulo' => 'update');
+    protected $breadcrumb  = array();
+    protected $url_update  = "http://update.mysitio.cl/";
+    protected $dir         = '';
+    protected $dir_update  = '';
+    protected $archivo_log = '';
+    protected $no_update   = array('app\\config\\config.json');
     public function __construct()
     {
-        parent::__construct(null);
+        $this->dir         = app::get_dir(true);
+        $this->dir_update  = $this->dir . 'update';
+        $this->archivo_log = app::get_dir() . '/log.json';
     }
     public function index()
     {
@@ -32,11 +39,10 @@ class update extends base
         $aside = new aside();
         $aside->normal();
 
-        $dir           = app::get_dir(true);
         $mensaje_error = '';
-        if (file_exists($dir . 'update/')) {
-            if (!is_writable($dir . 'update/')) {
-                $mensaje_error = 'Debes dar permisos de escritura al directorio ' . $dir . 'update/';
+        if (file_exists($this->dir_update)) {
+            if (!is_writable($this->dir_update)) {
+                $mensaje_error = 'Debes dar permisos de escritura al directorio ' . $this->dir_update;
             }
         } elseif (!is_writable($dir)) {
             $mensaje_error = 'Debes dar permisos de escritura en ' . $dir . ' o crear el directorio update/ con permisos de escritura';
@@ -53,10 +59,16 @@ class update extends base
         $footer = new footer();
         $footer->normal();
     }
+
+    public function vaciar_log()
+    {
+        echo json_encode(unlink($this->archivo_log));
+    }
+
     public function get_update()
     {
         $respuesta     = array('exito' => false);
-        $url           = "http://update.mysitio.cl/";
+        $url           = $this->url_update;
         $file          = file_get_contents($url);
         $file          = functions::decode_json($file);
         $version_mayor = array('version' => '0.0.0');
@@ -82,14 +94,15 @@ class update extends base
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
         $file      = 'v' . $_POST['file'] . '.zip';
-        $url       = "http://update.mysitio.cl/" . $file;
-        $path      = app::get_dir(true) . 'update/' . $file;
-        if (is_writable(app::get_dir(true) . 'update/')) {
+        $url       = $this->url_update . $file;
+        $path      = $this->dir_update . "/" . $file;
+        if (is_writable($this->dir_update)) {
             $exito = $this->download($url, $path);
             if (!is_bool($exito)) {
                 $respuesta['mensaje'] = $exito;
             } else {
-                $respuesta['exito'] = $exito;
+                $respuesta['exito']   = $exito;
+                $respuesta['archivo'] = $_POST['file'];
             }
         } else {
             $respuesta['mensaje'] = 'Debes dar permiso de escritura a ' . $path;
@@ -115,6 +128,67 @@ class update extends base
         } else {
             return "Status Code: " . $statusCode;
         }
+    }
+
+    public function update_file()
+    {
+        $tiempo    = time();
+        $respuesta = array('exito' => false, 'mensaje' => 'archivo no encontrado', 'errores' => array());
+        $id        = 'v' . $_POST['file'] . '.zip';
+        $inicio    = (isset($_POST['inicio'])) ? ((int) $_POST['inicio'] - 1) : 0;
+        foreach (scandir($this->dir_update) as $key => $files) {
+            if (strpos($files, $id) !== false) {
+                $file = $files;
+                break;
+            }
+        }
+        if (isset($file)) {
+            if (extension_loaded('zip') === true) {
+                $file = $this->dir_update . '/' . $file;
+                $zip  = new \ZipArchive();
+                if ($zip->open($file) === true) {
+                    $total = $zip->numFiles;
+                    for ($i = $inicio; $i < $total; $i++) {
+                        $nombre = $zip->getNameIndex($i);
+                        if (!in_array($nombre, $this->no_update)) {
+                            //$exito = true;
+                            $exito = $zip->extractTo($this->dir, array($nombre));
+                            if(is_writable($this->dir . "/" . $nombre)){
+                                $nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $this->dir . "/" . $nombre);
+                                rename($this->dir . "/" . $nombre, $nombre_final);
+                            }
+                            if (!$exito) {
+                                $respuesta['errores'][] = $nombre;
+                            }
+                        }
+                        if ($i % 100 == 0) {
+                            $log = array('mensaje' => 'Restaurando ' . functions::substring($nombre, 30) . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
+                            file_put_contents($this->archivo_log, functions::encode_json($log));
+                        }
+                        if (time() - $tiempo > 15) {
+                            $respuesta['inicio'] = $i;
+                            break;
+                        }
+                    }
+                    $zip->close();
+                    $respuesta['exito'] = true;
+                } else {
+                    $respuesta['mensaje'] = 'Error al abrir archivo';
+                }
+            } else {
+                $respuesta['mensaje'] = 'Debes instalar la extension ZIP';
+            }
+        }
+
+        if (!isset($respuesta['inicio'])) {
+            $c = new configuracion_administrador();
+            $c->json_update(false);
+            $c->json(false);
+
+            $log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100);
+            file_put_contents($this->archivo_log, functions::encode_json($log));
+        }
+        echo json_encode($respuesta);
     }
 
 }

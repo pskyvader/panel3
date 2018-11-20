@@ -158,6 +158,7 @@ function leer_log(restaurar) {
 
 function lista_backup(data) {
     var data = JSON.parse(data);
+    //console.log(data);
     total_respaldo = data.lista.length;
     if (data.exito) {
         //end();
