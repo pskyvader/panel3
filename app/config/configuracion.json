@@ -1,22 +1,6 @@
 [
     {
         "variable": "version",
-        "valor": "0.19.0"
-    },
-    {
-        "variable": "cantidad_backup_rapido",
-        "valor": "13"
-    },
-    {
-        "variable": "tiempo_backup_rapido",
-        "valor": "64,769230769231"
-    },
-    {
-        "variable": "cantidad_backup_lento",
-        "valor": "2"
-    },
-    {
-        "variable": "tiempo_backup_lento",
-        "valor": "27,5"
+        "valor": "0.20.0"
     }
 ]

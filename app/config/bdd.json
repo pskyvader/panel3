@@ -563,5 +563,147 @@
             }
         ],
         "truncate": "0"
+    },
+    {
+        "tablename": "productocategoria",
+        "idname": "idproductocategoria",
+        "fields": [
+            {
+                "titulo": "idpadre",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "descuento",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "descuento_fecha",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "descripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "keywords",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "metadescripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "destacado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "producto",
+        "idname": "idproducto",
+        "fields": [
+            {
+                "titulo": "idproductocategoria",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "url",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "archivo",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "codigo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "precio",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "descuento",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "descuento_fecha",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "stock",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "descripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "keywords",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "metadescripcion",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "destacado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
     }
 ]
