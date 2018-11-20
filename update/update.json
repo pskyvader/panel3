@@ -1,5 +1,10 @@
 [
     {
+        "version": "0.19.0",
+        "descripcion": "Actualizacion de backup, respaldos y update",
+        "archivo":"v0.19.0.zip"
+    },
+    {
         "version": "0.18.0",
         "descripcion": "Correcciones menores",
         "archivo":"v0.18.0.zip"
