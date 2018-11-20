@@ -103,6 +103,7 @@ function generar_backup(e) {
 function leer_log(restaurar) {
     if (!respaldo_finalizado) {
         $.ajax({
+            cache: false,
             url: path + 'log.json',
             success: function(data) {
                 //console.log('leer', data);

@@ -1,7 +1,7 @@
 [
     {
         "variable": "version",
-        "valor": "0.16.0"
+        "valor": "0.19.0"
     },
     {
         "variable": "cantidad_backup_rapido",

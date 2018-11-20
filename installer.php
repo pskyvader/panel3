@@ -340,7 +340,7 @@ switch ($paso) {
                                         <?php if ($c['required']) {echo "*";}?>
                                     </b>
                                 </label>
-                                <input type="<?php echo $c['type']; ?>" class="form-control" name="<?php echo $c['name']; ?>" id="<?php echo $c['name']; ?>" placeholder="<?php echo $c['title']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required";}?>
+                                <input type="<?php echo $c['type']; ?>" class="form-control" name="<?php echo $c['name']; ?>" id="<?php echo $c['name']; ?>" placeholder="<?php echo $c['title']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required" ;}?>
                                 <?php if ($c['name'] == 'short_title') {
         echo "maxlength='12'";
     }
@@ -350,11 +350,11 @@ switch ($paso) {
                                     <?php echo $c['title']; ?>
                                 </label><br>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="<?php echo $c['name']; ?>SI" name="<?php echo $c['name']; ?>" class="custom-control-input" value="1" <?php if ($c['value'] == '1') {echo 'checked';}?>>
+                                    <input type="radio" id="<?php echo $c['name']; ?>SI" name="<?php echo $c['name']; ?>" class="custom-control-input" value="1" <?php if ($c['value']=='1' ) {echo 'checked' ;}?>>
                                     <label class="custom-control-label" for="<?php echo $c['name']; ?>SI">SI</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="<?php echo $c['name']; ?>NO" name="<?php echo $c['name']; ?>" class="custom-control-input" value="0" <?php if ($c['value'] == '0') {echo 'checked';}?>>
+                                    <input type="radio" id="<?php echo $c['name']; ?>NO" name="<?php echo $c['name']; ?>" class="custom-control-input" value="0" <?php if ($c['value']=='0' ) {echo 'checked' ;}?>>
                                     <label class="custom-control-label" for="<?php echo $c['name']; ?>NO">NO</label>
                                 </div>
                                 <?php }?>
@@ -384,7 +384,7 @@ switch ($paso) {
                             </div>
                         </div>
                         <?php } elseif (isset($c['visible'])) {?>
-                        <input type="hidden" name="<?php echo $c['name']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required";}?>>
+                        <input type="hidden" name="<?php echo $c['name']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required" ;}?>>
                         <?php }?>
                         <?php }?>
                         <div class="col-12 continuar">
@@ -623,6 +623,7 @@ switch ($paso) {
     function get_progress() {
         if (!finalizado) {
             $.ajax({
+                cache: false,
                 url: 'progress-installer.json',
                 success: function(data) {
                     if (typeof(data) == 'object') {

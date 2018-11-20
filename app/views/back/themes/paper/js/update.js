@@ -88,6 +88,7 @@ function archivo_listo(data) {
 function leer_log_update() {
     if (!update_finalizado) {
         $.ajax({
+            cache: false,
             url: path + 'log.json',
             success: function(data) {
                 //console.log('leer', data);
