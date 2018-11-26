@@ -128,7 +128,7 @@ function urlamigable(uri) {
         .split(/[ÙÚÜÛùúüû]/).join("u")
         .split(/[Çç]/).join("c")
         .split(/[Ññ]/).join("n")
-        .split(/[^a-z0-9:/.\-]/).join("-")
+        .split(/[^a-z0-9:/.\-\#]/).join("-")
         .split(/-+/).join("-")
         .replace(/^-*/, '')
         .replace(/-*$/, '');

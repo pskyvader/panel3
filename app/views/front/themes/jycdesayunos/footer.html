@@ -1,0 +1,177 @@
+</div>
+<!--#contenido-principal empieza en header-->
+
+
+
+
+<footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-4 m-b-30">
+                        <h4 class="title">Contact us</h4>
+                        <h6>015 S La Peer Dr, Los Angeles, CA 90048</h6>
+                        <ul>
+                            <li>123 456-7890</li>
+                            <li>info@example.com</li>
+                            <li>http://www.theme3x.com</li>
+                        </ul>
+                        <ul class="list list-inline m-l-ab-10">
+                            <li><a href="#" class="icon icon-35 f-20"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#" class="icon icon-35 f-20"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#" class="icon icon-35 f-20"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#" class="icon icon-35 f-20"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" class="icon icon-35 f-20"><i class="fa fa-github-alt"></i></a></li>
+                            <li><a href="#" class="icon icon-35 f-20"><i class="fa fa-vimeo"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-2 m-b-30">
+                        <h4 class="title">Shopping</h4>
+                        <ul>
+                            <li><a href="#">My Acount</a></li>
+                            <li><a href="#">Order History</a></li>
+                            <li><a href="#">Compare</a></li>
+                            <li><a href="#">Shopping cart</a></li>
+                            <li><a href="#">Check out</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-2 m-b-30">
+                        <h4 class="title">Infomation</h4>
+                        <ul>
+                            <li><a href="#">Brand</a></li>
+                            <li><a href="#">About Our Shop</a></li>
+                            <li><a href="#">Secure Shopping</a></li>
+                            <li><a href="#">Delivery infomation</a></li>
+                            <li><a href="#">Store Locations</a></li>
+                            <li><a href="#">Affiliates</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-2 m-b-30">
+                        <h4 class="title">Community</h4>
+                        <ul>
+                            <li><a href="#">Our Blog</a></li>
+                            <li><a href="#">Forum</a></li>
+                            <li><a href="#">FQAs</a></li>
+                            <li><a href="#">Gift Vouchers</a></li>
+                            <li><a href="#">Shipping &amp; Returns</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-2 m-b-30">
+                        <h4 class="title">Products</h4>
+                        <ul>
+                            <li><a href="#">Special product</a></li>
+                            <li><a href="#">Offer</a></li>
+                            <li><a href="#">New arrivel</a></li>
+                            <li><a href="#">Best seller</a></li>
+                            <li><a href="#">Deal of week</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>2017 Designed by <a href="#">theme3x</a>. All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="cargando" class="d-none">
+    <div class="preloader"><i class="fa fa-spinner"></i></div>
+</div>
+
+
+<footer class="text-left d-print-none">
+    <div class="before-footer"></div>
+    <div class="container pt-5 pb-4">
+        <div class="row">
+            <div class="col-lg pt-lg-4 pb-4 pb-lg-0 text-center">
+                <a href="{path}">
+                    <img src="{logo}" alt="{title}" class="img-fluid">
+                </a>
+            </div>
+            <div class="col-sm">
+                <h3 class="btn-desplegable">Contáctanos
+                    <div class="icono"><span></span><span></span></div>
+                </h3>
+                <ul class="list-unstyled desplegable" style='display:none;'>
+                    <li>
+                        <i class="fas fa-home2 fa-lg mr-1"></i>
+                        {direccion}
+                    </li>
+                    <li>
+                        <a href="tel:{telefono}">
+                            <i class="fas fa-mobile-alt fa-lg mr-1"></i>
+                            {telefono}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:{email}">
+                            <i class="far fa-envelope fa-lg mr-1"></i>
+                            {email}
+                        </a>
+                    </li>
+                    <li>
+                        {if is_social}
+                        <div class="social">
+                            <ul class="list-inline d-inline-block mr-4 mb-0">
+                                {foreach social}
+                                <li class="list-inline-item">
+                                    <a href="{url}" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="bottom" title="{title}">
+                                        <i class="fab {icon} mr-2"></i>
+                                        <span class="icon-text">{title}</span>
+                                        <span class="sr-only">{title}</span>
+                                    </a>
+                                </li>
+                                {/foreach social}
+                            </ul>
+                        </div>
+                        {/if is_social}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <hr>
+    </div>
+    <div class="after-footer col">
+        <div class="pt-2 pb-4 text-center">
+            <span> &copy; Todos los derechos reservados. {title} 2018</span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

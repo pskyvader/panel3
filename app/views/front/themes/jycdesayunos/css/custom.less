@@ -1,0 +1,70 @@
+@color_base: #fba1a1;
+@color_hover: #d11201;
+#cake header {
+    background: @color_base;
+    .top-header {
+        height: auto;
+    }
+    .logo {
+        img {
+            margin: 0px;
+            left: auto;
+            width: auto;
+            max-width: 100%;
+            position: relative;
+            top: 0px;
+        }
+        &:after {
+            display: none;
+        }
+    }
+}
+
+#cake .btn {
+    background: @color_base;
+    &:hover{
+        background: @color_hover;
+    }
+}
+
+#cake .card .btn {
+    background: @color_base;
+    &:hover{
+        background: @color_hover;
+    }
+}
+
+#cake .cart .cart-item {
+    background: @color_base;
+}
+
+#cake .banner .card {
+    background: @color_base;
+}
+
+#header-top {
+    background: @color_base;
+}
+
+.bg-line-w-2 {
+    height: 15px;
+    background-size: auto;
+    -webkit-animation: arrows 1s infinite;
+    animation: arrows 1s infinite;
+}
+
+@keyframes arrows {
+    from {
+        background-position: 0px 0px;
+    }
+    to {
+        background-position: 32px 0px;
+    }
+}
+
+.carousel-indicators li {
+    background: #fff;
+    &.active {
+        background: #999;
+    }
+}

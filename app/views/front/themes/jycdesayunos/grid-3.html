@@ -1,0 +1,31 @@
+<section class="grid-3 text-center py-4">
+    <div class="container">
+        <!--Grid row-->
+        <div class="row">
+            {foreach list}
+            <!--Grid column-->
+            <div class="col-lg-4 col-md-12 mb-4">
+                <!--Featured image-->
+                <div class="view overlay z-depth-2 mb-2">
+                    <picture>
+                        {foreach srcset}
+                        <source media="{media}" srcset="{src}" type="{type}">
+                        {/foreach srcset}
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{url}" class="img-fluid rounded" alt="{title}">
+                    </picture>
+                    <a href="{link}">
+                        <div class="mask waves-effect waves-light"></div>
+                    </a>
+                </div>
+                <h4 class="py-3 font-weight-bold dark-grey-text">
+                    <strong>{title}</strong>
+                </h4>
+                <p class="grey-text">{description}</p>
+                <a class="btn btn-rounded btn-md waves-effect waves-light" href="{link}">Ver más</a>
+            </div>
+            <!--Grid column-->
+            {/foreach list}
+        </div>
+        <!--Grid row-->
+    </div>
+</section>

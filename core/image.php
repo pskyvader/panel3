@@ -75,13 +75,19 @@ class image
     {
         $recortes   = self::get_recortes($folder);
         $folder_tmp = self::get_upload_dir() . $folder_tmp;
-        $folder     = self::get_upload_dir() . $folder . '/' . $name_final . '/' . $subfolder;
+        $base_folder= self::get_upload_dir() . $folder;
+        $folder     = $base_folder . '/' . $name_final . '/' . $subfolder;
+
         if (!file_exists($folder)) {
             if (!mkdir($folder, 0777, true)) {
                 echo "Error al crear directorio " . $folder;
                 exit();
             }
+            functions::protection_template($base_folder);
+            functions::protection_template($base_folder . '/' . $name_final);
+            functions::protection_template($folder);
         }
+
         $name      = explode(".", $file['tmp']);
         $extension = strtolower(array_pop($name));
 
@@ -155,6 +161,7 @@ class image
                     return $respuesta;
                 }
             }
+            functions::protection_template($folder);
             $respuesta['exito'] = move_uploaded_file($file['tmp_name'], $folder . '/' . $name_final . $extension);
             if (!$respuesta['exito']) {
                 $respuesta['mensaje'] = "Error al mover archivo. Permisos: " . substr(sprintf('%o', fileperms($folder)), -4) . ", carpeta: " . $folder;
@@ -571,7 +578,7 @@ class image
     public static function get_upload_dir()
     {
         if ('' == self::$upload_dir) {
-            self::$upload_dir = app::get_dir(true) . 'upload/img/';
+            self::$upload_dir = app::get_dir(true) . 'uploads/img/';
         }
 
         return self::$upload_dir;
@@ -579,7 +586,7 @@ class image
     public static function get_upload_url()
     {
         if ('' == self::$upload_url) {
-            self::$upload_url = app::get_url(true) . 'upload/img/';
+            self::$upload_url = app::get_url(true) . 'uploads/img/';
         }
 
         return self::$upload_url;

@@ -51,12 +51,16 @@ class file extends image
     public static function move($file, $folder, $subfolder, $name_final, $folder_tmp = 'tmp')
     {
         $folder_tmp = self::get_upload_dir() . $folder_tmp;
-        $folder     = self::get_upload_dir() . $folder . '/' . $name_final . '/' . $subfolder;
+        $base_folder= self::get_upload_dir() . $folder;
+        $folder     = $base_folder . '/' . $name_final . '/' . $subfolder;
         if (!file_exists($folder)) {
             if (!mkdir($folder, 0777, true)) {
                 echo "Error al crear directorio " . $folder;
                 exit();
             }
+            functions::protection_template($base_folder);
+            functions::protection_template($base_folder . '/' . $name_final);
+            functions::protection_template($folder);
         }
         $name      = explode(".", $file['tmp']);
         $extension = strtolower(array_pop($name));
@@ -77,14 +81,12 @@ class file extends image
         if ("" == $file && '' != $subfolder) {
             $url = self::get_upload_dir() . $folder . '/' . $subfolder . '/';
             if (file_exists($url)) {
-                array_map('unlink', glob("$url/*.*"));
-                rmdir($url);
+                self::removeDirectory($url);
             }
         } elseif ('' == $file && '' == $subfolder) {
             $url = self::get_upload_dir() . $folder . '/';
             if (file_exists($url)) {
-                array_map('unlink', glob("$url/*.*"));
-                rmdir($url);
+                self::removeDirectory($url);
             }
         } else {
             if ('' != $subfolder) {
@@ -97,8 +99,8 @@ class file extends image
             if (file_exists($url)) {
                 unlink($url);
             }
-
         }
     }
+
 
 }

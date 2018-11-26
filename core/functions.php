@@ -267,4 +267,19 @@ class functions
         return $final_size;
     }
 
+    public static function protection_template($folder)
+    {
+        if ($folder != "" && !file_exists($folder . "/index.php") && is_dir($folder) && is_writable($folder)) {
+            $a = '<?php
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Location: ../");
+exit;?>';
+            file_put_contents($folder . "/index.php", $a);
+        }
+    }
+
 }

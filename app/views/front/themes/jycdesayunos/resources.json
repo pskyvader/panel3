@@ -1,0 +1,29 @@
+{
+    "css" : [
+        {"url": "css/custom-head.css","local":true,"media":"all","combine":false,"defer":false},
+        {"url": "css/bootstrap/bootstrap.min.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/owl-coursel/owl.carousel.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/owl-coursel/owl.theme.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/owl-coursel/owl.transitions.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/magnific-popup/magnific-popup.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/font-awesome.min.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/animate.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/css.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/style.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/custom.css","local":true,"media":"all","combine":true,"defer":true},
+        {"url": "css/fonts.css","local":true,"media":"all","combine":true,"defer":true}
+    ],
+    "js" : [
+        {"url": "js/jquery-3.3.1.min.js","local":true,"defer":false,"combine":true},
+        {"url": "js/bootstrap/popper.min.js","local":true,"defer":false,"combine":true},
+        {"url": "js/bootstrap/bootstrap.min.js","local":true,"defer":false,"combine":true},
+        {"url": "js/owl-coursel/owl.carousel.js","local":true,"defer":false,"combine":true},
+        {"url": "js/magnific-popup/jquery.magnific-popup.min.js","local":true,"defer":false,"combine":true},
+        {"url": "js/script.js","local":true,"defer":false,"combine":true},
+        {"url": "js/functions.js","local":true,"defer":false,"combine":true},
+        {"url": "js/map.js","local":true,"defer":false,"combine":true},
+        {"url": "js/ajax.js","local":true,"defer":false,"combine":true},
+        {"url": "js/form.js","local":true,"defer":false,"combine":true},
+        {"url": "js/custom.js","local":true,"defer":false,"combine":true}
+    ]
+}

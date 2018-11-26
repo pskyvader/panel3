@@ -1,7 +1,7 @@
 sitemap.xml*
 upload/files/*
 upload/images/*
-upload/img/*
-upload/files/*
+uploads/img/*
+!/uploads/img/index.php
 backup/*
 !/backup/index.php
