@@ -460,6 +460,10 @@
                 "tipo": "char(255)"
             },
             {
+                "titulo": "subtitulo",
+                "tipo": "char(255)"
+            },
+            {
                 "titulo": "url",
                 "tipo": "char(255)"
             },

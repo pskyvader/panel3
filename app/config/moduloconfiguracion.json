@@ -226,7 +226,7 @@
                         "field": "foto",
                         "tipo": "image",
                         "titulo": "Foto",
-                        "texto_ayuda": "Imagen 1920x1080 px, formato jpg o png",
+                        "texto_ayuda": "Imagen 1920x700 px, formato jpg o png",
                         "required": "true",
                         "estado": {
                             "1": "true",
@@ -265,9 +265,9 @@
                         "texto_ayuda": "",
                         "required": "false",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -312,25 +312,25 @@
                         "tag": "foto1",
                         "titulo": "Foto 1",
                         "ancho": "1900",
-                        "alto": "1080",
+                        "alto": "700",
                         "calidad": "90",
-                        "tipo": "recortar"
+                        "tipo": "centrar"
                     },
                     {
                         "tag": "foto2",
                         "titulo": "Foto 2",
                         "ancho": "1200",
-                        "alto": "800",
+                        "alto": "600",
                         "calidad": "90",
-                        "tipo": "recortar"
+                        "tipo": "centrar"
                     },
                     {
                         "tag": "foto3",
                         "titulo": "Foto 3",
                         "ancho": "768",
-                        "alto": "600",
+                        "alto": "500",
                         "calidad": "90",
-                        "tipo": "recortar"
+                        "tipo": "centrar"
                     },
                     {
                         "tag": "foto4",
@@ -338,7 +338,7 @@
                         "ancho": "556",
                         "alto": "400",
                         "calidad": "90",
-                        "tipo": "recortar"
+                        "tipo": "centrar"
                     }
                 ],
                 "orden": "1",
@@ -572,13 +572,13 @@
                 "estado": [
                     {
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
-                "aside": "1",
+                "aside": "0",
                 "hijos": "0"
             }
         ]
@@ -679,8 +679,8 @@
             }
         ],
         "orden": "2",
-        "estado": "1",
-        "aside": "1",
+        "estado": "0",
+        "aside": "0",
         "tipos": "1",
         "hijo": [
             {
@@ -1062,8 +1062,8 @@
             }
         ],
         "orden": "3",
-        "estado": "1",
-        "aside": "1",
+        "estado": "0",
+        "aside": "0",
         "tipos": "1",
         "hijo": [
             {
@@ -1435,9 +1435,14 @@
                 "tipo": "url"
             },
             {
+                "field": "subtitulo",
+                "titulo": "Subtitulo",
+                "tipo": "text"
+            },
+            {
                 "field": "foto",
                 "titulo": "Foto",
-                "tipo": "multiple_image"
+                "tipo": "image"
             },
             {
                 "field": "archivo",
@@ -1638,6 +1643,18 @@
                             "1": "true",
                             "2": "true",
                             "3": "true"
+                        }
+                    },
+                    {
+                        "field": "subtitulo",
+                        "tipo": "text",
+                        "titulo": "Subtitulo",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -1975,6 +1992,18 @@
                         }
                     },
                     {
+                        "field": "subtitulo",
+                        "tipo": "text",
+                        "titulo": "Subtitulo",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
                         "field": "foto",
                         "tipo": "multiple_image",
                         "titulo": "Foto",
@@ -2100,19 +2129,19 @@
                 "estado": [
                     {
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
-                "aside": "1",
+                "aside": "0",
                 "hijos": "0"
             },
             {
                 "idmoduloconfiguracion": "12",
                 "tipo": "3",
-                "titulo": "Acerca de",
+                "titulo": "Secciones",
                 "menu": [
                     {
                         "field": "new",
@@ -2260,15 +2289,27 @@
                         }
                     },
                     {
-                        "field": "foto",
-                        "tipo": "multiple_image",
-                        "titulo": "Foto",
+                        "field": "subtitulo",
+                        "tipo": "text",
+                        "titulo": "Subtitulo",
                         "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen  formato jpg o png",
                         "required": "",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -2290,9 +2331,9 @@
                         "texto_ayuda": "",
                         "required": "",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -3624,9 +3665,9 @@
                         "tipo": "image",
                         "titulo": "Banner",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -3724,9 +3765,9 @@
                         "texto_ayuda": "Imagen 2000x400 px, formato jpg o png",
                         "required": "true",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -5130,8 +5171,8 @@
                     {
                         "tag": "sitio",
                         "titulo": "Logo del sitio",
-                        "ancho": "300",
-                        "alto": "75",
+                        "ancho": "230",
+                        "alto": "180",
                         "calidad": "90",
                         "tipo": "centrar"
                     },

@@ -26,8 +26,11 @@ class app
      */
     public function __construct($front)
     {
-        $ds=DIRECTORY_SEPARATOR;
-        if($ds!="/") $ds="\\";
+        $ds = DIRECTORY_SEPARATOR;
+        if ($ds != "/") {
+            $ds = "\\";
+        }
+
         session_start();
         $config       = self::getConfig();
         self::$_title = $config['title'];
@@ -122,7 +125,7 @@ class app
             return $url;
         } else {
             $seo = seo_model::getById(1);
-            if (count($seo) >0) {
+            if (count($seo) > 0) {
                 $url[0]            = $seo['modulo_front'];
                 $_REQUEST['idseo'] = $seo[0];
             }
