@@ -75,6 +75,7 @@ class view
 
     public static function render_template($data, $content)
     {
+        $data2=array();
         foreach ($data as $key => $d) {
             if (is_array($d)) { //arrray de elementos foreach en vista
                 $array_open  = "{foreach " . $key . "}";
@@ -96,16 +97,17 @@ class view
                     throw new \Exception("Array no encontrado {$array_open}", 1);
                 }
 
-            } else {
-                $res     = self::template_if($content, $key, $d);
-                $content = $res[0];
-                if (!$res[1]) {
-                    $content = str_replace('{' . $key . '}', $d, $content);
-                }
-
+            } else { //si no es array, se procesa despues para evitar conflictos de nombres repetidos dentro y fuera del bloque foreach en template
+                $data2[$key]=$d;
             }
         }
-
+        foreach ($data2 as $key => $d) {
+            $res     = self::template_if($content, $key, $d);
+            $content = $res[0];
+            if (!$res[1]) {
+                $content = str_replace('{' . $key . '}', $d, $content);
+            }
+        }
         return $content;
     }
     private static function template_if($content, $key, $d)
@@ -250,7 +252,7 @@ class view
 
     }
 
-    public static function css($return = false, $combine = true, $array_only = false)
+    public static function css($return = false, $combine = false, $array_only = false)
     {
         if (isset($_POST['ajax'])) {
             return;

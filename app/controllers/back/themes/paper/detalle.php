@@ -424,7 +424,11 @@ class detalle
                     if(isset($fila[$campos['field']])){
                         $count=count($fila[$campos['field']]);
                     }else{
-                        $count=0;
+                        if( $campos['type']=='recursive_radio' || isset($_GET[$campos['field']])){
+                            $count=1;
+                        }else{
+                            $count=0;
+                        }
                     }
                     $data = array(
                         'is_children' => false,
@@ -438,16 +442,13 @@ class detalle
                     foreach ($campos['parent'] as $key => $children) {
                         $data['children'] .= $this->field($campos, $fila, '', $children[0], 1);
                     }
-
                 } else {
                     $parent = $campos['parent'];
+                    $checked = ($idparent == 0) ? 'checked="checked"' : '';
                     if (!isset($fila[$campos['field']])) {
                         if (isset($_GET[$campos['field']])) {
                             $checked = ($idparent == $_GET[$campos['field']]) ? 'checked="checked"' : '';
-                        } else {
-                            $checked = ($idparent == 0) ? 'checked="checked"' : '';
                         }
-
                     } else {
                         $checked = (in_array($idparent,$fila[$campos['field']])) ? 'checked="checked"' : '';
                     }

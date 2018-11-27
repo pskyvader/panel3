@@ -33,14 +33,16 @@ class home extends base
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
 
-        $about = seccion_model::getById(9);
-        view::set('title', $about['titulo']);
-        view::set('subtitle', $about['subtitulo']);
-        view::set('text', $about['resumen']);
+        $secciones_destacadas = seccion_model::getAll(array('tipo'=>3,'destacado'=>true));
         $seo=seo::getById(7);
-        view::set('url', functions::url_seccion(array($seo['url'], 'detail'), $about));
-        view::set('image', image::generar_url(image::portada($about['foto']), ''));
-        view::render('home-text');
+        foreach ($secciones_destacadas as $key => $seccion) {
+            view::set('title', $seccion['titulo']);
+            view::set('subtitle', $seccion['subtitulo']);
+            view::set('text', $seccion['resumen']);
+            view::set('url', functions::url_seccion(array($seo['url'], 'detail'), $seccion));
+            view::set('image', image::generar_url(image::portada($seccion['foto']), ''));
+            view::render('home-text');
+        }
 
         $footer = new footer();
         $footer->normal();

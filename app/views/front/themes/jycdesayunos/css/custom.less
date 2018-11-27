@@ -1,5 +1,12 @@
-@color_base: #fba1a1;
-@color_hover: #d11201;
+@color_base: #ff9796;
+@color_secundario: #ff8431;
+@color_hover: #fff;
+@color_hover_secundario: #611e23;
+@background_hover: #d11201;
+a:hover {
+    color: @color_hover_secundario;
+}
+
 #cake header {
     background: @color_base;
     .top-header {
@@ -20,17 +27,26 @@
     }
 }
 
+#cake footer {
+    background: @color_base;
+    .footer-bottom {
+        background: @color_secundario;
+    }
+}
+
 #cake .btn {
     background: @color_base;
-    &:hover{
-        background: @color_hover;
+    &:hover {
+        background: @background_hover;
+        color: @color_hover;
     }
 }
 
 #cake .card .btn {
     background: @color_base;
-    &:hover{
-        background: @color_hover;
+    &:hover {
+        background: @background_hover;
+        color: @color_hover;
     }
 }
 
