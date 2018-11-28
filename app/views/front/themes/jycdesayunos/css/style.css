@@ -367,7 +367,7 @@ ul.list-inline>li>a{padding:0 .3rem}
 .dropdown-menu a.dropdown-item:last-child{border:none}
 .card{border:0;position:relative;margin-bottom:3rem}
 .card .card-img{display:block}
-.card img{width:100%}
+.card img{width:100%;}
 .card .card-header h3{font-size:1.5rem}
 .card .card-body{padding:2rem}
 .card .card-title{font-size:1.8rem;margin-bottom:1rem;margin-top:0}

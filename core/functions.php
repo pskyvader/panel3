@@ -155,6 +155,13 @@ class functions
             return file_exists($ac) ? $archivo . $c . filemtime($ac) : "";
         }
     }
+    //formato de precio en pesos
+    public static function formato_precio($precio)
+    {
+        $final = "$" . number_format($precio, 0, '', '.');
+        return $final;
+    }
+
     //fecha con formato
     public static function formato_fecha($fecha, $formato = '')
     {

@@ -78,7 +78,12 @@ class header
                         $row = $class::getAll($var);
                         $hijos = array();
                         foreach ($row as $key => $sub) {
-                            $hijos[] = array('titulo' => $sub['titulo'], 'link' => functions::url_seccion(array($s['url'], 'detail'), $sub), 'active' => $sub['url']);
+                            $sub_url = "detail";
+                            if (isset($s['link_menu']) && $s['link_menu'] != '') {
+                                $sub_url = $s['link_menu'];
+                            }
+
+                            $hijos[] = array('titulo' => $sub['titulo'], 'link' => functions::url_seccion(array($s['url'], $sub_url), $sub), 'active' => $sub['url']);
                         }
                         $menu['hijo'] = $hijos;
                     }
