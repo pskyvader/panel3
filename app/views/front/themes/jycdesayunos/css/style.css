@@ -592,7 +592,7 @@ img.mfp-img{padding:0!important;border:1.5rem solid #fff;background:#fff}
 .owl-pagination .owl-buttons div,.owl-pagination .owl-page{cursor:pointer;float:left}
 .owl-pagination{display:inline-block;margin-top:1rem}
 .preloader{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:#fff}
-.preloader i{position:absolute;top:50%;left:50%;margin:-4rem 0 0 -4rem;font-size:3rem;-webkit-animation:spin 2s linear infinite;-moz-animation:spin 2s linear infinite;animation:spin 2s linear infinite}
+.preloader i{position:absolute;top:50%;left:50%;margin:-4rem 0 0 -4rem;font-size:3rem;/* -webkit-animation:spin 2s linear infinite; */-moz-animation:spin 2s linear infinite;/* animation:spin 2s linear infinite */}
 @-moz-keyframes spin{
 100%{-moz-transform:rotate(360deg)}
 }

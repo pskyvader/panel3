@@ -44,6 +44,9 @@ class seo extends base_model
 
         }
 
+        if($select=='total'){
+            $return_total=true;
+        }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
         if ($select == '') {
             foreach ($row as $key => $value) {
@@ -54,6 +57,9 @@ class seo extends base_model
                     $row[$key]['banner'] = functions::decode_json($row[$key]['banner']);
                 }
             }
+        }
+        if(isset($return_total)){
+            return count($row);
         }
         return $row;
     }

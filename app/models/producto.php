@@ -19,6 +19,16 @@ class producto extends base_model
         if (isset($where['idproductocategoria'])) {
             $idproductocategoria = $where['idproductocategoria'];
             unset($where['idproductocategoria']);
+            if(isset($condiciones['limit'])){
+                $limit=$condiciones['limit'];
+                $limit2=0;
+                unset($condiciones['limit']);
+            }
+            if(isset($condiciones['limit2'])){
+                if(!isset($limit)) $limit=0;
+                $limit2=$condiciones['limit2'];
+                unset($condiciones['limit2']);
+            }
         }
 
         if (!isset($condiciones['order'])) {
@@ -46,12 +56,19 @@ class producto extends base_model
 
         }
 
+        if($select=='total'){
+            $return_total=true;
+            if(isset($idproductocategoria)){
+                $select='';
+            }
+        }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        if ($select == '') {
             foreach ($row as $key => $value) {
-                $row[$key]['idproductocategoria'] = functions::decode_json($row[$key]['idproductocategoria']);
-                if (isset($idproductocategoria) && !in_array($idproductocategoria, $row[$key]['idproductocategoria'])) {
-                    unset($row[$key]);
+                if(isset($row[$key]['idproductocategoria'])){
+                    $row[$key]['idproductocategoria'] = functions::decode_json($row[$key]['idproductocategoria']);
+                    if (isset($idproductocategoria) && !in_array($idproductocategoria, $row[$key]['idproductocategoria'])) {
+                        unset($row[$key]);
+                    }
                 }
                 if (isset($row[$key]) && isset($row[$key]['foto'])) {
                     $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
@@ -60,9 +77,16 @@ class producto extends base_model
                     $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
                 }
             }
-        }
+        
         if (isset($idproductocategoria)) {
             $row = array_values($row);
+        }
+
+        if(isset($limit)){
+            $row=array_slice($row,$limit2,$limit);
+        }
+        if(isset($return_total)){
+            return count($row);
         }
         return $row;
     }

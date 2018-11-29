@@ -1,6 +1,10 @@
 [
     {
         "variable": "version",
-        "valor": "0.21.0"
+        "valor": "0.23.0"
+    },
+    {
+        "variable": "orden_producto",
+        "valor": "orden:Recomendados,ventas:Más vendidos,precio ASC:Precio de menor a mayor,precio DESC:Precio de mayor a menor,titulo ASC:A-Z,titulo DESC:Z-A"
     }
 ]

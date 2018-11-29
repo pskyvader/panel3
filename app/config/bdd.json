@@ -90,6 +90,10 @@
                 "tipo": "int(11)"
             },
             {
+                "titulo": "link_menu",
+                "tipo": "char(255)"
+            },
+            {
                 "titulo": "keywords",
                 "tipo": "char(255)"
             },
@@ -677,6 +681,10 @@
             },
             {
                 "titulo": "stock",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "ventas",
                 "tipo": "int(11)"
             },
             {

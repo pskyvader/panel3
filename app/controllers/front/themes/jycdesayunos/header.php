@@ -64,7 +64,7 @@ class header
         foreach ($seo as $key => $s) {
             if ($s['submenu'] && $s['modulo_back'] != '' && $s['modulo_back'] != 'none') {
                 if ($s['menu']) {
-                    $url = functions::generar_url(array($s['url']));
+                    $url = functions::generar_url(array($s['url']),false);
                 } else {
                     $url = '';
                 }
@@ -99,7 +99,7 @@ class header
                 $lista_menu[] = $menu;
             } else {
                 if ($s['menu']) {
-                    $lista_menu[] = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url'])), 'active' => $s['url']);
+                    $lista_menu[] = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url']),false), 'active' => $s['url']);
                 }
             }
         }

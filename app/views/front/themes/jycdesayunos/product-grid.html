@@ -1,0 +1,30 @@
+<div class="row">
+{foreach lista_productos}
+<div class="col-sm-12 {col-md} {col-lg}">
+    <div class="card">
+        <a class="card-img" href="{url}">
+            <picture>
+                {foreach srcset}
+                <source media="{media}" srcset="{src}" type="{type}">
+                {/foreach srcset}
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{image}" class="img-fluid" alt="{title}">
+            </picture>
+        </a>
+        <div class="card-body">
+            <h3 class="card-title"><a href="{url}">{title}</a></h3>
+            <!--
+                        <ul class="rating">
+                            <li aria-expanded="false" class="active"><i class="fa fa-star-o"></i></li>
+                            <li class="active"><i class="fa fa-star-o"></i></li>
+                            <li class="active"><i class="fa fa-star-o"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                            <li></li>
+                        </ul>-->
+            <div class="card-price-group"><span class="card-price">{price}</span></div>
+            <button class="btn" onclick="add_cart({id});">Añadir al carro</button>
+        </div>
+    </div>
+</div>
+{/foreach lista_productos}
+</div>

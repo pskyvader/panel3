@@ -33,7 +33,7 @@ $('.dropdown-menu .dropdown-toggle').on('click', function(e) {
 $('body').on('click', '.disabled', function() {
     return false;
 });
-$('body').on('click', 'a', function(e) {
+$('body').on('click', 'a:not(.disabled)', function(e) {
     if ($(this).prop('target') != '_blank') {
         var href = $(this).prop('href');
         if (check_link(href)) {
@@ -241,6 +241,44 @@ function is_visible(images) {
 
     }
 }
+
+var createObjFromURI = function() {
+    var uri = decodeURI(location.search.substr(1));
+    var params = Object();
+    if (uri != '') {
+        var chunks = uri.split('&');
+        for (var i = 0; i < chunks.length; i++) {
+            var chunk = chunks[i].split('=');
+            if (chunk[0].search("\\[\\]") !== -1) {
+                if (typeof params[chunk[0]] === 'undefined') {
+                    params[chunk[0]] = [chunk[1]];
+                } else {
+                    params[chunk[0]].push(chunk[1]);
+                }
+            } else {
+                params[chunk[0]] = chunk[1];
+            }
+        }
+    }
+    return params;
+};
+
+function create_url(extra, data, url) {
+    if (typeof(url) == 'undefined' || url == null) {
+        url = location.origin + location.pathname;
+    }
+    if (typeof(extra) != 'undefined' && extra != null) {
+        url += '/' + extra;
+    }
+    if (typeof(data) != 'undefined' && data != null) {
+        url += '?' + $.param(data);
+    }else{
+        url += location.search;
+    }
+    url = url.replace("%20", "+").replace("%2B","+");
+    return url;
+}
+
 
 function mover(elemento, tiempo, delay) {
     var alto = 0;

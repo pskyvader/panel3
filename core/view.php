@@ -75,7 +75,7 @@ class view
 
     public static function render_template($data, $content)
     {
-        $data2=array();
+        $data2 = array();
         foreach ($data as $key => $d) {
             if (is_array($d)) { //arrray de elementos foreach en vista
                 $array_open  = "{foreach " . $key . "}";
@@ -98,7 +98,7 @@ class view
                 }
 
             } else { //si no es array, se procesa despues para evitar conflictos de nombres repetidos dentro y fuera del bloque foreach en template
-                $data2[$key]=$d;
+                $data2[$key] = $d;
             }
         }
         foreach ($data2 as $key => $d) {
@@ -126,18 +126,18 @@ class view
             if ($d) { //valor if true
                 if ($pos_else !== false && $pos_else < $pos_close) {
                     $subcontent = substr($content, $pos_else, ($pos_close - $pos_else));
-                    $content = implode("", explode($subcontent, $content, 2));
+                    $content    = implode("", explode($subcontent, $content, 2));
                 }
                 $content = implode("", explode($if_open, $content, 2));
                 $content = implode("", explode($if_close, $content, 2));
             } elseif ($pos_else !== false && $pos_else < $pos_close) { //valor if false y existe else
                 $subcontent = substr($content, $pos_open, ($pos_else - $pos_open));
-                $content = implode("", explode($subcontent, $content, 2));
+                $content    = implode("", explode($subcontent, $content, 2));
                 $content    = implode("", explode($if_else, $content, 2));
                 $content    = implode("", explode($if_close, $content, 2));
             } else { //valor if false y no existe else
                 $subcontent = substr($content, $pos_open, ($pos_close - $pos_open));
-                $content = implode("", explode($subcontent, $content, 2));
+                $content    = implode("", explode($subcontent, $content, 2));
                 $content    = implode("", explode($if_close, $content, 2));
             }
             $res     = self::template_if($content, $key, $d);
@@ -252,7 +252,7 @@ class view
 
     }
 
-    public static function css($return = false, $combine = false, $array_only = false)
+    public static function css($return = false, $combine = true, $array_only = false)
     {
         if (isset($_POST['ajax'])) {
             return;
@@ -267,6 +267,7 @@ class view
         $no_combinados = array();
         $nuevo         = 0;
         foreach (self::$resources['css'] as $key => $c) {
+            $c['is_content'] = false;
             if ($c['local']) {
                 $c['url'] = $theme . $c['url'];
                 if (file_exists($c['url'])) {
@@ -277,8 +278,12 @@ class view
                         }
                         $locales[] = $c;
                     } else {
-                        //$c['content_css'] = file_get_contents($c['url']);
-                        $c['url']        = app::$_path . functions::fecha_archivo($c['url']);
+                        if (filesize($c['url']) < 2000) {
+                            $c['content_css'] = file_get_contents($c['url']);
+                            $c['is_content']  = true;
+                        } else {
+                            $c['url'] = app::$_path . functions::fecha_archivo($c['url']);
+                        }
                         $no_combinados[] = $c;
                     }
                 } else {
@@ -302,7 +307,7 @@ class view
                     functions::set_cookie('loaded_css', true, time() + (31536000));
                     $defer = true;
                 }
-                $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => $defer));
+                $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => $defer, 'is_content' => false));
             } else {
                 if (isset($_COOKIE['loaded_css'])) {
                     functions::set_cookie('loaded_css', false, time() + (31536000));
@@ -318,7 +323,7 @@ class view
                     }
                     array_map('unlink', glob($dir . "/*.css"));
                     $minify  = $minifier->minify($dir . '/' . $file);
-                    $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true));
+                    $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => true, 'is_content' => false));
                 } else {
                     foreach ($locales as $key => $l) {
                         $locales[$key]['url'] = app::$_path . functions::fecha_archivo($l['url']);
@@ -332,7 +337,6 @@ class view
             return array($css, $nuevo);
         } else {
             self::set('js', array());
-            self::set('is_content', false);
             self::set('is_css', true);
             self::set('css', $css);
 

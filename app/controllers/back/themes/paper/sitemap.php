@@ -38,10 +38,8 @@ class sitemap extends base
         foreach ($row as $key => $r) {
             $log[] = array('url' => $r['url']);
         }
-        $row = sitemap_model::getAll(array('ready' => true), array(), 'COUNT(url) as count');
-        $listos = (int) $row[0]['count'];
-        $row = sitemap_model::getAll(array('ready' => false), array(), 'COUNT(url) as count');
-        $pendientes = (int) $row[0]['count'];
+        $listos = sitemap_model::getAll(array('ready' => true), array(), 'total');
+        $pendientes = sitemap_model::getAll(array('ready' => false), array(), 'total');
         if ($listos == 0 && $pendientes == 0) {
             $total = 0;
         } else {
@@ -145,16 +143,14 @@ class sitemap extends base
                 $respuesta['exito'] = true;
             }
         }
-        $row = sitemap_model::getAll(array('ready' => true), array(), 'COUNT(url) as count');
-        $listos = (int) $row[0]['count'];
+        $listos = sitemap_model::getAll(array('ready' => true), array(), 'total');
         $row = sitemap_model::getAll(array('ready' => true, 'valid' => ''), array('limit' => 1, 'order' => 'idsitemap DESC'));
         if(count($row)==1){
             $respuesta['ultimo'] = $row[0];
         }else{
             $respuesta['ultimo'] = null;
         }
-        $row = sitemap_model::getAll(array('ready' => false), array(), 'COUNT(url) as count');
-        $pendientes = (int) $row[0]['count'];
+        $pendientes = sitemap_model::getAll(array('ready' => false), array(), 'total');
         if ($listos == 0 && $pendientes == 0) {
             $total = 0;
         } else {
@@ -233,7 +229,7 @@ class sitemap extends base
         if ($respuesta['mensaje'] == '') {
             $headers = get_headers($sitio, 1);
             if ($headers[0] != 'HTTP/1.1 200 OK' && $headers[0] != 'HTTP/1.0 200 OK') {
-                if ($headers[0] == 'HTTP/1.1 301 Moved Permanently') {
+                if ($headers[0] == 'HTTP/1.1 301 Moved Permanently' || $headers[0] == 'HTTP/1.0 301 Moved Permanently') {
                     if(is_array($headers['Location'])){
                         $headers['Location']=$headers['Location'][0];
                     }

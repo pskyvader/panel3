@@ -156,7 +156,6 @@ class app
         } else {
             @ini_set('expose_php', 'off');
         }
-
         call_user_func_array([$this->_controller, $this->_method], $this->_params);
     }
 

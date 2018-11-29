@@ -13,7 +13,13 @@ class sitemap extends base_model
     public static function getAll($where = array(), $condiciones = array(), $select = "")
     {
         $connection = database::instance();
+        if($select=='total'){
+            $return_total=true;
+        }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
+        if(isset($return_total)){
+            return count($row);
+        }
         return $row;
     }
 

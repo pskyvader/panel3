@@ -2187,9 +2187,9 @@
                         "tipo": "text",
                         "titulo": "Orden",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -2217,9 +2217,9 @@
                         "tipo": "active",
                         "titulo": "Estado",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -2227,9 +2227,9 @@
                         "tipo": "active",
                         "titulo": "Destacado",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -2257,9 +2257,9 @@
                         "tipo": "delete",
                         "titulo": "Eliminar",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     }
                 ],
@@ -2269,7 +2269,7 @@
                         "tipo": "text",
                         "titulo": "Titulo",
                         "texto_ayuda": "",
-                        "required": "",
+                        "required": "true",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -2281,7 +2281,7 @@
                         "tipo": "url",
                         "titulo": "URL",
                         "texto_ayuda": "",
-                        "required": "",
+                        "required": "true",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -2389,11 +2389,11 @@
                         "tipo": "number",
                         "titulo": "Orden",
                         "texto_ayuda": "",
-                        "required": "",
+                        "required": "true",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -2401,11 +2401,11 @@
                         "tipo": "active",
                         "titulo": "Estado",
                         "texto_ayuda": "",
-                        "required": "",
+                        "required": "true",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -2413,11 +2413,11 @@
                         "tipo": "active",
                         "titulo": "Destacado",
                         "texto_ayuda": "",
-                        "required": "",
+                        "required": "true",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     }
                 ],
@@ -2611,9 +2611,9 @@
                         "tipo": "text",
                         "titulo": "ID",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -2661,9 +2661,9 @@
                         "tipo": "active",
                         "titulo": "Destacado",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -2671,9 +2671,9 @@
                         "tipo": "action",
                         "titulo": "Copiar",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -2867,11 +2867,11 @@
                         "tipo": "active",
                         "titulo": "Destacado",
                         "texto_ayuda": "",
-                        "required": "true",
+                        "required": "false",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -3066,7 +3066,7 @@
         ],
         "orden": "6",
         "estado": "1",
-        "aside": "0",
+        "aside": "1",
         "tipos": "1",
         "hijo": [
             {
@@ -3108,9 +3108,9 @@
                         "tipo": "text",
                         "titulo": "ID",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     },
                     {
@@ -3405,25 +3405,33 @@
                         "tag": "foto1",
                         "titulo": "Foto 1",
                         "ancho": "800",
-                        "alto": "600",
+                        "alto": "800",
                         "calidad": "90",
                         "tipo": "centrar"
                     },
                     {
                         "tag": "foto2",
                         "titulo": "Foto 2",
-                        "ancho": "370",
-                        "alto": "300",
+                        "ancho": "400",
+                        "alto": "400",
                         "calidad": "90",
                         "tipo": "centrar"
                     },
                     {
-                        "tag": "foto 3",
+                        "tag": "foto3",
                         "titulo": "Foto 3",
-                        "ancho": "220",
-                        "alto": "180",
+                        "ancho": "200",
+                        "alto": "200",
                         "calidad": "90",
-                        "tipo": "recortar"
+                        "tipo": "centrar"
+                    },
+                    {
+                        "tag": "cart",
+                        "titulo": "Carro",
+                        "ancho": "50",
+                        "alto": "50",
+                        "calidad": "90",
+                        "tipo": "centrar"
                     }
                 ],
                 "orden": "1",
@@ -3539,6 +3547,11 @@
                 "field": "tipo_modulo",
                 "titulo": "Tipo en modulo",
                 "tipo": "number"
+            },
+            {
+                "field": "link_menu",
+                "titulo": "Link en menu",
+                "tipo": "url"
             },
             {
                 "field": "keywords",
@@ -3800,6 +3813,18 @@
                         "titulo": "Tipo en modulo",
                         "texto_ayuda": "",
                         "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "link_menu",
+                        "tipo": "url",
+                        "titulo": "Link en menu",
+                        "texto_ayuda": "Normalmente 'detail'",
+                        "required": "false",
                         "estado": {
                             "1": "true",
                             "2": "false",

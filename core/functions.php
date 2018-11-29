@@ -49,9 +49,8 @@ class functions
     {
         $ruta     = self::generar_url($url);
         $current  = self::current_url();
-        $redirect = ($ruta != $current);
 
-        if ($redirect) {
+        if ($ruta != $current) {
             if (error_reporting()) {
                 exit("<a href='" . $ruta . "'>" . $ruta . "</a>");
             }
@@ -66,7 +65,7 @@ class functions
         $url = explode('-', $url, 2);
         return (int) $url[0];
     }
-    public static function url_seccion($url_base, $seccion, $return = false)
+    public static function url_seccion($url_base, $seccion, $return = false, $extra_variables = false)
     {
         $url   = $url_base;
         $extra = "";
@@ -82,7 +81,7 @@ class functions
         if ($return) {
             return $url;
         } else {
-            return self::generar_url($url);
+            return self::generar_url($url, $extra_variables);
         }
     }
 

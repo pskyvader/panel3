@@ -132,6 +132,8 @@ class database
     {
         if ($select == "") {
             $select = "*";
+        }elseif($select=='total'){
+            $select=$idname;
         }
 
         $sql = "SELECT " . $select . " FROM " . self::$_prefix . $table;

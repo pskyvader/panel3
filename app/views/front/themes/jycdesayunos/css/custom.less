@@ -86,12 +86,30 @@ a:hover {
     }
 }
 
-.product .card{
+.product .card {
+    transition: 0.3s all ease;
+    &:hover {
+        box-shadow: 3px 3px 3px #e8e8e8;
+    }
     img {
         width: auto;
     }
-    .card-title{
+    .card-title {
         text-transform: capitalize;
     }
 }
- 
+
+.product-filter {
+    .iconc {
+        &.active,
+        &:hover {
+            border-color: #8a8a8a;
+        }
+    }
+}
+
+@media (max-width: 767.98px) {
+    #cake .product .card {
+        text-align: center !important;
+    }
+}

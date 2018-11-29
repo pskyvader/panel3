@@ -25,11 +25,18 @@ class administrador extends base_model
         $condiciones['order'] = 'orden ASC';
         }*/
 
+        if($select=='total'){
+            $return_total=true;
+        }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        if ($select == '') {
             foreach ($row as $key => $value) {
-                $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
+                if(isset($row[$key]['foto'])){
+                    $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
+                }
             }
+        
+        if(isset($return_total)){
+            return count($row);
         }
         return $row;
     }

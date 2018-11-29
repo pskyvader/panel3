@@ -24,6 +24,7 @@
         {"url": "js/map.js","local":true,"defer":false,"combine":true},
         {"url": "js/ajax.js","local":true,"defer":false,"combine":true},
         {"url": "js/form.js","local":true,"defer":false,"combine":true},
+        {"url": "js/products.js","local":true,"defer":false,"combine":true},
         {"url": "js/custom.js","local":true,"defer":false,"combine":true}
     ]
 }

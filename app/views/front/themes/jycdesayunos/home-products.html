@@ -4,30 +4,8 @@
             <h2>{title}</h2>
             <p class="line-mix"><i class="fa fa-sun-o"></i></p>
         </div>
-        <div class="row">
-            {foreach lista_productos}
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <div class="card">
-                    <a class="card-img" href="{url}">
-                        <img src="{image}" alt="{title}" class="img-fluid">
-                    </a>
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="{url}">{title}</a></h3>
-                        <!--
-                        <ul class="rating">
-                            <li aria-expanded="false" class="active"><i class="fa fa-star-o"></i></li>
-                            <li class="active"><i class="fa fa-star-o"></i></li>
-                            <li class="active"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li></li>
-                        </ul>-->
-                        <div class="card-price-group"><span class="card-price">{price}</span></div>
-                        <button class="btn" onclick="add_cart({id});">Añadir al carro</button>
-                    </div>
-                </div>
-            </div>
-            {/foreach lista_productos}
+        <div class="product-lista">
+            {product_list}
         </div>
     </div>
 </section>

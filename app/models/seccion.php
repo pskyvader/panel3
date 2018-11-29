@@ -19,6 +19,16 @@ class seccion extends base_model
         if (isset($where['idseccioncategoria'])) {
             $idseccioncategoria = $where['idseccioncategoria'];
             unset($where['idseccioncategoria']);
+            if(isset($condiciones['limit'])){
+                $limit=$condiciones['limit'];
+                $limit2=0;
+                unset($condiciones['limit']);
+            }
+            if(isset($condiciones['limit2'])){
+                if(!isset($limit)) $limit=0;
+                $limit2=$condiciones['limit2'];
+                unset($condiciones['limit2']);
+            }
         }
 
         if (!isset($condiciones['order'])) {
@@ -46,12 +56,19 @@ class seccion extends base_model
 
         }
 
+        if($select=='total'){
+            $return_total=true;
+            if(isset($idseccioncategoria)){
+                $select='';
+            }
+        }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        if ($select == '') {
             foreach ($row as $key => $value) {
-                $row[$key]['idseccioncategoria'] = functions::decode_json($row[$key]['idseccioncategoria']);
-                if (isset($idseccioncategoria) && !in_array($idseccioncategoria, $row[$key]['idseccioncategoria'])) {
-                    unset($row[$key]);
+                if(isset($row[$key]['idseccioncategoria'])){
+                    $row[$key]['idseccioncategoria'] = functions::decode_json($row[$key]['idseccioncategoria']);
+                    if (isset($idseccioncategoria) && !in_array($idseccioncategoria, $row[$key]['idseccioncategoria'])) {
+                        unset($row[$key]);
+                    }
                 }
                 if (isset($row[$key]) && isset($row[$key]['foto'])) {
                     $row[$key]['foto'] = functions::decode_json($row[$key]['foto']);
@@ -59,10 +76,15 @@ class seccion extends base_model
                 if (isset($row[$key]) && isset($row[$key]['archivo'])) {
                     $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
                 }
-            }
         }
         if (isset($idseccioncategoria)) {
             $row = array_values($row);
+        }
+        if(isset($limit)){
+            $row=array_slice($row,$limit2,$limit);
+        }
+        if(isset($return_total)){
+            return count($row);
         }
         return $row;
     }

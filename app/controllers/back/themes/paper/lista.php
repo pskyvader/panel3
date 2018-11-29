@@ -85,8 +85,8 @@ class lista
             $condiciones['palabra'] = $search;
         }
 
-        $count = $class::getAll($where, $condiciones, 'COUNT(' . $class::$idname . ') as count');
-        $count = $count[0]['count'];
+        $count = $class::getAll($where, $condiciones, 'total');
+        $count = $count;
         $total = (int) ($count / $limit);
         if ($total < ($count / $limit)) {
             $total++;
@@ -124,7 +124,9 @@ class lista
             1000    => array('value' => 1000, 'text' => 1000, 'active' => ''),
             1000000 => array('value' => 1000000, 'text' => 'Todos', 'active' => ''),
         );
-        $limits[$data['limit']]['active'] = 'selected';
+        if(isset($limits[$data['limit']])){
+            $limits[$data['limit']]['active'] = 'selected';
+        }
         $data['limits']                   = $limits;
 
         $pagination = array();
