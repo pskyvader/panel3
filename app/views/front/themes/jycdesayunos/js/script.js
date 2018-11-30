@@ -1,22 +1,5 @@
 $(function() {
     'use strict';
-    //Owl
-    var $owl = $('.owl');
-    $owl.each(function() {
-        var $a = $(this);
-        $a.owlCarousel({
-            autoPlay: JSON.parse($a.attr('data-autoplay')),
-            singleItem: JSON.parse($a.attr('data-singleItem')),
-            items: $a.attr('data-items'),
-            itemsDesktop: [1199, $a.attr('data-itemsDesktop')],
-            itemsDesktopSmall: [992, $a.attr('data-itemsDesktopSmall')],
-            itemsTablet: [797, $a.attr('data-itemsTablet')],
-            itemsMobile: [479, $a.attr('data-itemsMobile')],
-            navigation: JSON.parse($a.attr('data-buttons')),
-            pagination: JSON.parse($a.attr('data-pag')),
-            navigationText: ['', '']
-        });
-    });
     //Menu
     $('.menu-btn').on('click', function(e) {
         if ($(this).hasClass('active')) {

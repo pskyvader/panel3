@@ -1,0 +1,79 @@
+<section class="product product-detail p-t-60">
+    <div class="container">
+        <div class="row">
+            {sidebar}
+            <div class="col-md-8 col-lg-9">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="img-desc">
+                            <div class="product-gallery owl-carousel">
+                                {foreach lista_imagenes}
+                                <div class="item">
+                                    <a data-fancybox-trigger="galeria" href="javascript:;">
+                                        <picture>
+                                            {foreach srcset}
+                                            <source media="{media}" srcset="{src}" type="{type}">
+                                            {/foreach srcset}
+                                            <img data-thumb='<img src="{thumb}" />' src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{image}" class="img-fluid" alt="{title}">
+                                        </picture>
+                                    </a>
+                                </div>
+                                {/foreach lista_imagenes}
+                            </div>
+                            {foreach thumb}
+                            <a class="d-none" href="{url}" data-fancybox="galeria" data-thumb="{thumb}"></a>
+                            {/foreach thumb}
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <h1 class="titulo">{title}</h1>
+                        <!--<ul class="rating text-left">
+                            <li aria-expanded="false" class="active"><i class="fa fa-star-o"></i></li>
+                            <li class="active"><i class="fa fa-star-o"></i></li>
+                            <li class="active"><i class="fa fa-star-o"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                            <li><i>(1 review)</i></li>
+                        </ul>-->
+                        <p class="card-price">{price}</p>
+                        <p id="nav-home2" class="resumen" role="tabpanel" aria-labelledby="nav-home-tab" aria-expanded="true">{text}</p>
+                        <div class="form-group d-flex m-t-20">
+                            <input type="number" min="1" value="1" class="form-control qlt" name="cantidad">
+                            <button class="btn btn-add-cart" onclick="add_cart({id},$('input[name=cantidad]').val());">Añadir al carro</button>
+                            <a href="#" class="btn"><i class="fa fa-heart-o"></i></a>
+                        </div>
+                        <div class="m-t-20 cate-tag">
+                            <strong>Categorías:</strong>
+                            <a href="#">cake</a>
+                            ,<a href="#">bakery</a>
+                            ,<a href="#">chocolate</a>
+                            ,<a href="#">chery</a>
+                            ,<a href="#">milk</a>
+                            ,<a href="#">dessert</a>
+                        </div>
+                        <div class="d-flex m-t-30 icon-group">
+                            <strong>Share this:</strong>
+                            <a href="#" class="btn bg-4f84c4"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="btn bg-f2552c"><i class="fa fa-google"></i></a>
+                            <a href="#" class="btn bg-d00e0e"><i class="fa fa-pinterest"></i></a>
+                            <a href="#" class="btn bg-95dee3"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabs-2 m-t-50">
+                    <nav class="nav nav-tabs" id="myTab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#descripcion" role="tab" aria-controls="nav-home" aria-expanded="true">Descripción</a>
+                         </nav>
+                    <div class="tab-content p-20 border-1x" id="nav-tabContent">
+                        <div class="tab-pane fade active show" id="descripcion" role="tabpanel" aria-labelledby="nav-home-tab" aria-expanded="false">
+                            <h3>Descripcion</h3>
+                           <div class="descripcion">
+                               {description}
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

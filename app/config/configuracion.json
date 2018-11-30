@@ -6,5 +6,13 @@
     {
         "variable": "orden_producto",
         "valor": "orden:Recomendados,ventas:Más vendidos,precio ASC:Precio de menor a mayor,precio DESC:Precio de mayor a menor,titulo ASC:A-Z,titulo DESC:Z-A"
+    },
+    {
+        "variable": "cantidad_backup_rapido",
+        "valor": "1"
+    },
+    {
+        "variable": "tiempo_backup_rapido",
+        "valor": "19"
     }
 ]

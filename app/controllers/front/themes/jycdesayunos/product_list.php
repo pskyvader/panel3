@@ -43,13 +43,24 @@ class product_list extends base
         foreach ($row as $key => $s) {
             $sidebar_categories[] = array('title' => $s['titulo'], 'active' => '', 'url' => functions::url_seccion(array($this->url[0], 'category'), $s, false, null));
         }
-        view::set('title', "Categorias");
-        view::set('is_sidebar_category', (count($sidebar_categories) > 0));
-        view::set('sidebar_categories', $sidebar_categories);
-        view::set('is_sidebar_prices', false);
-        view::set('is_sidebar', count($sidebar_categories) > 0);
-        view::set('active_grid', ($this->view == 'grid') ? 'active' : '');
-        view::set('active_list', ($this->view == 'list') ? 'active' : '');
+
+        $is_sidebar_categories = (count($sidebar_categories) > 0);
+        $is_sidebar_prices     = false;
+        if ($is_sidebar_categories || $is_sidebar_prices) {
+            $is_sidebar = true;
+        } else {
+            $is_sidebar = false;
+        }
+
+        if($is_sidebar){
+            view::set('title', "Categorias");
+            view::set('is_sidebar_category', $is_sidebar_categories);
+            view::set('sidebar_categories', $sidebar_categories);
+            view::set('is_sidebar_prices', $is_sidebar_prices);
+            return view::render('product-sidebar', false, true);
+        }else{
+            return "";
+        }
     }
 
     public function orden_producto()
@@ -91,15 +102,17 @@ class product_list extends base
             );
         }
 
+        view::set('active_grid', ($this->view == 'grid') ? 'active' : '');
+        view::set('active_list', ($this->view == 'list') ? 'active' : '');
         view::set('orden_producto', $orden_producto_mostrar);
     }
     public function limit_producto()
     {
         $limits = array(
             6   => array('action' => 6, 'title' => 6, 'active' => false),
-            10  => array('action' => 10, 'title' => 10, 'active' => false),
-            25  => array('action' => 25, 'title' => 25, 'active' => false),
-            100 => array('action' => 100, 'title' => 100, 'active' => false),
+            12  => array('action' => 12, 'title' => 12, 'active' => false),
+            30  => array('action' => 30, 'title' => 30, 'active' => false),
+            120 => array('action' => 120, 'title' => 120, 'active' => false),
         );
         if (isset($limits[$this->limit])) {
             $limits[$this->limit]['active'] = true;
@@ -156,7 +169,6 @@ class product_list extends base
                 $product_list = view::render('product-list', false, true);
             }
         }
-        view::set('product_list', $product_list);
         return $product_list;
     }
 

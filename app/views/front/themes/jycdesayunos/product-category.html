@@ -1,0 +1,45 @@
+<section class="product card-border">
+    <div class="container">
+        <div class="row">
+            {sidebar}
+            <div class="col">
+                <div class="product-filter">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="iconc {active_grid}" id="grid"><i class="fa fa-th"></i></div>
+                            <div class="iconc {active_list}" id="list"><i class="fa fa-list"></i></div>
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control form-control-sm" id="order">
+                                <option selected hidden disabled>Ordenar Por</option>
+                                {foreach orden_producto}
+                                <option value="{action}" {if active} selected="selected" {/if active}>{title}</option>
+                                {/foreach orden_producto}
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control form-control-sm" id="limit">
+                                <option selected hidden disabled>Productos por pagina</option>
+                                {foreach limit_producto}
+                                <option value="{action}" {if active} selected="selected" {/if active}>{title}</option>
+                                {/foreach limit_producto}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-lista">
+                    {product_list}
+                </div>
+                <nav>
+                    <ul class="pagination">
+                        {foreach pagination}
+                        <li class="page-item">
+                            <a class="page-link {class_page}" href="{url_page}">{text_page}</a>
+                        </li>
+                        {/foreach pagination}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>

@@ -367,7 +367,7 @@ ul.list-inline>li>a{padding:0 .3rem}
 .dropdown-menu a.dropdown-item:last-child{border:none}
 .card{border:0;position:relative;margin-bottom:3rem}
 .card .card-img{display:block}
-.card img{width:100%;}
+.card img{width:100%}
 .card .card-header h3{font-size:1.5rem}
 .card .card-body{padding:2rem}
 .card .card-title{font-size:1.8rem;margin-bottom:1rem;margin-top:0}
@@ -592,7 +592,7 @@ img.mfp-img{padding:0!important;border:1.5rem solid #fff;background:#fff}
 .owl-pagination .owl-buttons div,.owl-pagination .owl-page{cursor:pointer;float:left}
 .owl-pagination{display:inline-block;margin-top:1rem}
 .preloader{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:#fff}
-.preloader i{position:absolute;top:50%;left:50%;margin:-4rem 0 0 -4rem;font-size:3rem;/* -webkit-animation:spin 2s linear infinite; */-moz-animation:spin 2s linear infinite;/* animation:spin 2s linear infinite */}
+.preloader i{position:absolute;top:50%;left:50%;margin:-4rem 0 0 -4rem;font-size:3rem;-moz-animation:spin 2s linear infinite}
 @-moz-keyframes spin{
 100%{-moz-transform:rotate(360deg)}
 }
@@ -725,3 +725,7 @@ p{font-size:1.5rem!important}
 #cake .product .card{text-align:center!important}
 #cake .cart .cart-item{margin-top:1rem}
 }
+.owl-carousel .owl-thumbs .owl-thumb-item{background:0 0;border:1px solid #eee;margin:0 .2rem;cursor:pointer;outline:0}
+.owl-carousel .owl-thumbs .owl-thumb-item.active,.owl-carousel .owl-thumbs .owl-thumb-item:focus .owl-carousel .owl-thumbs .owl-thumb-item:hover{border-color:#aaa}
+.owl-carousel .owl-thumbs .owl-thumb-item:first-child{margin-left:0}
+.owl-carousel .owl-thumbs .owl-thumb-item:last-child{margin-right:0}

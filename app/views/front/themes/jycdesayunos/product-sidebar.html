@@ -1,81 +1,39 @@
-<section class="product card-border">
-    <div class="container">
-        <div class="row">
-            {if is_sidebar}
-            <div class="col-md-4 col-lg-3">
-                {if is_sidebar_category}
-                <div class="box">
-                    <h2 class="title">{title}</h2>
-                    <ul class="list list-md list-3">
-                        {foreach sidebar_categories}
-                        <li class="{active}"><a href="{url}">{title}</a></li>
-                        {/foreach sidebar_categories}
-                    </ul>
-                </div>
-                {/if is_sidebar_category}
-                {if is_sidebar_prices}
-                <div class="box">
-                    <h2 class="title">Price</h2>
-                    <form>
-                        <div class="radio radio-1" >
-                            <input type="radio" name="radio" checked id="radio0">
-                            <label for="radio0" class="fa fa-circle"></label>
-                        < 10$</div>
-                        <div class="radio radio-1">
-                            <input type="radio" name="radio" id="radio1">
-                            <label for="radio1" class="fa fa-circle"></label>
-                        < 100$</div>
-                        <div class="radio radio-1">
-                            <input type="radio" name="radio" id="radio2">
-                            <label for="radio2" class="fa fa-circle"></label>
-                        < 220$</div>
-                        <div class="radio radio-1">
-                            <input type="radio" name="radio" id="radio3">
-                            <label for="radio3" class="fa fa-circle"></label>
-                        < 300$</div>
-                    </form>
-                </div>
-                {/if is_sidebar_prices}
-            </div>
-            {/if is_sidebar}
-            <div class="col">
-                <div class="product-filter">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="iconc {active_grid}" id="grid"><i class="fa fa-th"></i></div>
-                            <div class="iconc {active_list}" id="list"><i class="fa fa-list"></i></div>
-                        </div>
-                        <div class="col-sm-4">
-                            <select class="form-control form-control-sm" id="order">
-                                <option selected hidden disabled>Ordenar Por</option>
-                                {foreach orden_producto}
-                                <option value="{action}" {if active} selected="selected" {/if active}>{title}</option>
-                                {/foreach orden_producto}
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <select class="form-control form-control-sm" id="limit">
-                                <option selected hidden disabled>Productos por pagina</option>
-                                {foreach limit_producto}
-                                <option value="{action}" {if active} selected="selected" {/if active}>{title}</option>
-                                {/foreach limit_producto}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-lista">
-                    {product_list}
-                </div>
-                <nav>
-                    <ul class="pagination">
-                        {foreach pagination}
-                        <li class="page-item">
-                            <a class="page-link {class_page}" href="{url_page}">{text_page}</a>
-                        </li>
-                        {/foreach pagination}
-                    </ul>
-                </nav>
-            </div>
-        </div>
+<div class="col-md-4 col-lg-3">
+    {if is_sidebar_category}
+    <div class="box">
+        <h2 class="title">{title}</h2>
+        <ul class="list list-md list-3">
+            {foreach sidebar_categories}
+            <li class="{active}"><a href="{url}">{title}</a></li>
+            {/foreach sidebar_categories}
+        </ul>
     </div>
-</section>
+    {/if is_sidebar_category}
+    {if is_sidebar_prices}
+    <div class="box">
+        <h2 class="title">Price</h2>
+        <form>
+            <div class="radio radio-1">
+                <input type="radio" name="radio" checked id="radio0" />
+                <label for="radio0" class="fa fa-circle"></label>
+                10$
+            </div>
+            <div class="radio radio-1">
+                <input type="radio" name="radio" id="radio1" />
+                <label for="radio1" class="fa fa-circle"></label>
+                100$
+            </div>
+            <div class="radio radio-1">
+                <input type="radio" name="radio" id="radio2" />
+                <label for="radio2" class="fa fa-circle"></label>
+                220$
+            </div>
+            <div class="radio radio-1">
+                <input type="radio" name="radio" id="radio3" />
+                <label for="radio3" class="fa fa-circle"></label>
+                300$
+            </div>
+        </form>
+    </div>
+    {/if is_sidebar_prices}
+</div>

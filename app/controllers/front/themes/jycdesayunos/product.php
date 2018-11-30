@@ -2,6 +2,7 @@
 namespace app\controllers\front\themes\jycdesayunos;
 
 defined("APPPATH") or die("Acceso denegado");
+use \app\models\producto as producto_model;
 use \app\models\productocategoria as productocategoria_model;
 use \core\functions;
 use \core\view;
@@ -28,13 +29,16 @@ class product extends base
 
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
-        $pl = new product_list(); //product_list.php
-        $pl->product_list(); //Lista de productos, renderiza vista (por lo tanto debe ir al principio para no pisar variables dela vista general)
-        $pl->sidebar(); // genera sidebar
+        $pl           = new product_list(); //product_list.php
+        $product_list = $pl->product_list(); //Lista de productos, renderiza vista
+        $sidebar      = $pl->sidebar(); // genera sidebar, renderiza vista
         $pl->orden_producto(); // genera lista de filtros
         $pl->limit_producto(); //genera lista de cantidad de productos por pagina
         $pl->pagination(); // genera paginador
-        view::render('product-sidebar');
+
+        view::set('product_list', $product_list);
+        view::set('sidebar', $sidebar);
+        view::render('product-category');
 
         $footer = new footer();
         $footer->normal();
@@ -64,13 +68,54 @@ class product extends base
 
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
-        $pl = new product_list();
-        $pl->product_list($categoria);
-        $pl->sidebar($categoria);
-        $pl->orden_producto();
-        $pl->limit_producto();
-        $pl->pagination();
-        view::render('product-sidebar');
+        $pl           = new product_list(); //product_list.php
+        $product_list = $pl->product_list($categoria); //Lista de productos, renderiza vista
+        $sidebar      = $pl->sidebar($categoria); // genera sidebar, renderiza vista
+        $pl->orden_producto(); // genera lista de filtros
+        $pl->limit_producto(); //genera lista de cantidad de productos por pagina
+        $pl->pagination(); // genera paginador
+
+        view::set('product_list', $product_list);
+        view::set('sidebar', $sidebar);
+        view::render('product-category');
+
+        $footer = new footer();
+        $footer->normal();
+    }
+
+    public function detail($var = array())
+    {
+        if (isset($var[0])) {
+            $id       = functions::get_idseccion($var[0]);
+            $producto = producto_model::getById($id);
+            if (isset($producto[0])) {
+                $this->url          = functions::url_seccion(array($this->url[0], 'detail'), $producto, true);
+                $this->breadcrumb[] = array('url' => functions::generar_url($this->url), 'title' => $producto['titulo']);
+            }
+        }
+        functions::url_redirect($this->url);
+        $this->meta($producto);
+
+        $head = new head($this->metadata);
+        $head->normal();
+
+        $header = new header();
+        $header->normal();
+
+        $banner = new banner();
+        $banner->individual($this->seo['banner'], $producto['titulo']);
+
+        //$breadcrumb = new breadcrumb();
+        //$breadcrumb->normal($this->breadcrumb);
+        $pl           = new product_list(); //product_list.php
+        $sidebar      = $pl->sidebar(); // genera sidebar, renderiza vista
+        $pd= new product_detail($producto);
+        $pd->galeria();
+        $pd->resumen();
+        
+
+        view::set('sidebar', $sidebar);
+        view::render('product-detail');
 
         $footer = new footer();
         $footer->normal();
