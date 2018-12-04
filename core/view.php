@@ -279,7 +279,9 @@ class view
                         $locales[] = $c;
                     } else {
                         if (filesize($c['url']) < 2000) {
-                            $c['content_css'] = file_get_contents($c['url']);
+                            $minifier = new mini_files\CSS($c['url']);
+                            //$c['content_css'] = file_get_contents($c['url']);
+                            $c['content_css'] = $minifier->minify();
                             $c['is_content']  = true;
                         } else {
                             $c['url'] = app::$_path . functions::fecha_archivo($c['url']);

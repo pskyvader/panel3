@@ -69,6 +69,7 @@ class base
                 'id'          => $v[0],
                 'title'       => $v['titulo'],
                 'price'       => functions::formato_precio($v['precio']),
+                'is_stock'       => ($v['stock']>0),
                 'image'       => image::generar_url($portada, $recorte),
                 'description' => strip_tags($v['resumen']),
                 'srcset'      => array(),

@@ -23,7 +23,12 @@ class product_list extends base
         $this->order  = (isset($_GET['order']) && $_GET['order'] != '') ? trim(strip_tags($_GET['order'])) : 'orden';
         $this->search = (isset($_GET['search'])) ? trim(strip_tags($_GET['search'])) : '';
         $this->page   = (isset($_GET['page']) && $_GET['page'] != '') ? (int) trim(strip_tags($_GET['page'])) : 1;
-        $this->limit  = (isset($_GET['limit']) && $_GET['limit'] != '') ? (int) trim(strip_tags($_GET['limit'])) : 2;
+        $this->limit  = (isset($_GET['limit']) && $_GET['limit'] != '') ? (int) trim(strip_tags($_GET['limit'])) : 6;
+    }
+    public function is_search(){
+        $is_search=($this->search!='');
+        view::set('is_search', $is_search);
+        view::set('search', $this->search);
     }
     public function sidebar($categoria = null)
     {
@@ -130,7 +135,7 @@ class product_list extends base
         }
         $condiciones = array('order' => $this->order);
         if ($this->search != '') {
-            $condiciones['palabra'] = $search;
+            $condiciones['palabra'] = $this->search;
         }
         $this->count = producto_model::getAll($where, $condiciones, 'total');
 
@@ -145,6 +150,7 @@ class product_list extends base
             $lista_productos = $this->lista_productos($productos, 'detail', 'foto2');
             view::set('lista_productos', $lista_productos);
             if ($this->view == 'grid') {
+                 // Comprobar si existe o no sidebar, para agrandar o achicar el tamaño del producto
                 $variables = array();
                 if ($this->seo['tipo_modulo'] != 0) {
                     $variables['tipo'] = $this->seo['tipo_modulo'];

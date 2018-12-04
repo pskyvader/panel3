@@ -3,6 +3,11 @@
         <div class="row">
             {sidebar}
             <div class="col">
+                {if is_search}
+                <h4 class="search">
+                    Buscando "{search}"
+                </h4>
+                {/if is_search}
                 <div class="product-filter">
                     <div class="row">
                         <div class="col-sm-4">

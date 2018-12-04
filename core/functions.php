@@ -65,7 +65,7 @@ class functions
         $url = explode('-', $url, 2);
         return (int) $url[0];
     }
-    public static function url_seccion($url_base, $seccion, $return = false, $extra_variables = false)
+    public static function url_seccion(array $url_base, $seccion, $return = false, $extra_variables = false)
     {
         $url   = $url_base;
         $extra = "";
@@ -85,7 +85,7 @@ class functions
         }
     }
 
-    public static function generar_url($url, $extra = null, $front_auto = true, $front = true)
+    public static function generar_url(array $url, $extra = null, $front_auto = true, $front = true)
     {
         $url = implode('/', $url);
         if (is_array($extra) && count($extra) > 0) {

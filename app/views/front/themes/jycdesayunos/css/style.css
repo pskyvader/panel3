@@ -725,7 +725,6 @@ p{font-size:1.5rem!important}
 #cake .product .card{text-align:center!important}
 #cake .cart .cart-item{margin-top:1rem}
 }
-.owl-carousel .owl-thumbs .owl-thumb-item{background:0 0;border:1px solid #eee;margin:0 .2rem;cursor:pointer;outline:0}
+.owl-carousel .owl-thumbs .owl-thumb-item{background:0 0;border:1px solid #eee;margin:.2rem;padding:.1rem;cursor:pointer;outline:0}
 .owl-carousel .owl-thumbs .owl-thumb-item.active,.owl-carousel .owl-thumbs .owl-thumb-item:focus .owl-carousel .owl-thumbs .owl-thumb-item:hover{border-color:#aaa}
-.owl-carousel .owl-thumbs .owl-thumb-item:first-child{margin-left:0}
-.owl-carousel .owl-thumbs .owl-thumb-item:last-child{margin-right:0}
+.owl-carousel .owl-stage-outer{border:1px solid #eee}

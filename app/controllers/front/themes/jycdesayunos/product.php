@@ -35,6 +35,7 @@ class product extends base
         $pl->orden_producto(); // genera lista de filtros
         $pl->limit_producto(); //genera lista de cantidad de productos por pagina
         $pl->pagination(); // genera paginador
+        $pl->is_search(); // Genera texto de busqueda, si existe
 
         view::set('product_list', $product_list);
         view::set('sidebar', $sidebar);
@@ -74,6 +75,7 @@ class product extends base
         $pl->orden_producto(); // genera lista de filtros
         $pl->limit_producto(); //genera lista de cantidad de productos por pagina
         $pl->pagination(); // genera paginador
+        $pl->is_search(); // Genera texto de busqueda, si existe
 
         view::set('product_list', $product_list);
         view::set('sidebar', $sidebar);
@@ -107,14 +109,16 @@ class product extends base
 
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
-        $pl           = new product_list(); //product_list.php
-        $sidebar      = $pl->sidebar(); // genera sidebar, renderiza vista
-        $pd= new product_detail($producto);
+        $pl      = new product_list(); //product_list.php
+        $sidebar = $pl->sidebar(); // genera sidebar, renderiza vista
+        $pd      = new product_detail($producto, $this->url);
+        $tabs    = $pd->tabs();
         $pd->galeria();
         $pd->resumen();
-        
 
         view::set('sidebar', $sidebar);
+        view::set('tabs', $tabs);
+        view::set('url', functions::generar_url($this->url));
         view::render('product-detail');
 
         $footer = new footer();

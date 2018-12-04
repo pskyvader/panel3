@@ -38,6 +38,6 @@ ExpiresDefault "access plus 4 months"
 
 
 Order allow,deny
-<Files ~ "\.(png|jpg|jpeg|webp)$">
+<Files ~ "\.(png|jpg|jpeg|webp|docx|pdf|xls|ppt)$">
    allow from all
 </Files>

@@ -12,7 +12,7 @@ class minify
     {
 
     }
-    private static $x = "\x1A"; // a placeholder character
+    private static $x  = "\x1A"; // a placeholder character
     private static $SS = '"(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'';
     private static $CC = '\/\*[\s\S]*?\*\/';
     private static $CH = '<\!--[\s\S]*?-->';
@@ -68,7 +68,7 @@ class minify
         // Keep important white-space(s) after self-closing HTML tag(s)
         $input = preg_replace('#(<(?:img|input)(?:\s[^<>]*?)?\s*\/?>)\s+#i', '$1' . self::$x . '\s', $input);
         // Create chunk(s) of HTML tag(s), ignored HTML group(s), HTML comment(s) and text
-        $input = preg_split('#(' . $CH . '|' . sprintf($TB, 'pre') . '|' . sprintf($TB, 'code') . '|' . sprintf($TB, 'script') . '|' . sprintf($TB, 'style') . '|' . sprintf($TB, 'textarea') . '|<[^<>]+?>)#i', $input, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $input  = preg_split('#(' . $CH . '|' . sprintf($TB, 'pre') . '|' . sprintf($TB, 'code') . '|' . sprintf($TB, 'script') . '|' . sprintf($TB, 'style') . '|' . sprintf($TB, 'textarea') . '|<[^<>]+?>)#i', $input, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         $output = "";
 
         foreach ($input as $v) {
@@ -98,7 +98,6 @@ class minify
                     $output .= preg_replace('#\s+#', ' ', $v);
                 }
             }
-
         }
         // Clean up ...
         $output = preg_replace(
@@ -117,6 +116,8 @@ class minify
             $output);
         $output = self::__minify_v($output);
         // Remove white-space(s) after ignored tag-open and before ignored tag-close (except `<textarea>`)
+
+        $output = preg_replace('/<!--(.|\s)*?-->/', '', $output);
         return preg_replace('#<(code|pre|script|style)(>|\s[^<>]*?>)\s*([\s\S]*?)\s*<\/\1>#i', '<$1$2$3</$1>', $output);
     }
 
@@ -194,7 +195,7 @@ class minify
         // Keep important white-space(s) between comment(s)
         $input = preg_replace('#(' . $CC . ')\s+(' . $CC . ')#', '$1' . self::$x . '\s$2', $input);
         // Create chunk(s) of string(s), comment(s) and text
-        $input = preg_split('#(' . $SS . '|' . $CC . ')#', $input, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $input  = preg_split('#(' . $SS . '|' . $CC . ')#', $input, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         $output = "";
         foreach ($input as $v) {
             if (trim($v) === "") {
@@ -262,9 +263,9 @@ class minify
         }
 
         // Create chunk(s) of string(s), comment(s), regex(es) and
-        $SS = self::$SS;
-        $CC = self::$CC;
-        $input = preg_split('#(' . $SS . '|' . $CC . '|\/[^\n]+?\/(?=[.,;]|[gimuy]|$))#', $input, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        $SS     = self::$SS;
+        $CC     = self::$CC;
+        $input  = preg_split('#(' . $SS . '|' . $CC . '|\/[^\n]+?\/(?=[.,;]|[gimuy]|$))#', $input, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         $output = "";
         foreach ($input as $v) {
             if (trim($v) === "") {

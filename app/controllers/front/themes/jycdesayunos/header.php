@@ -34,13 +34,15 @@ class header
             view::set('telefono', $telefono['texto']);
             $email = texto::getById(2);
             view::set('email', $email['texto']);
+            $seo = seo::getById(8);
+            view::set('product_url', functions::generar_url(array($seo['url']),false));
+            view::set('search', isset($_GET['search'])?strip_tags($_GET['search']):"");
 
             view::render('header');
         }
     }
     private function header_top()
     {
-
         $redes_sociales = array();
         $rss            = texto::getAll(array('tipo' => 2));
         foreach ($rss as $key => $r) {
@@ -50,7 +52,6 @@ class header
         view::set('social', $redes_sociales);
         view::set('is_social', (count($redes_sociales) > 0));
         view::set('is_social', false);
-
         return view::render('header-top', false, true);
     }
     private function header_cart()
@@ -64,7 +65,7 @@ class header
         foreach ($seo as $key => $s) {
             if ($s['submenu'] && $s['modulo_back'] != '' && $s['modulo_back'] != 'none') {
                 if ($s['menu']) {
-                    $url = functions::generar_url(array($s['url']),false);
+                    $url = functions::generar_url(array($s['url']), false);
                 } else {
                     $url = '';
                 }
@@ -99,7 +100,7 @@ class header
                 $lista_menu[] = $menu;
             } else {
                 if ($s['menu']) {
-                    $lista_menu[] = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url']),false), 'active' => $s['url']);
+                    $lista_menu[] = array('titulo' => $s['titulo'], 'link' => functions::generar_url(array($s['url']), false), 'active' => $s['url']);
                 }
             }
         }

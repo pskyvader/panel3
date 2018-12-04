@@ -12,7 +12,7 @@
                                     <a data-fancybox-trigger="galeria" href="javascript:;">
                                         <picture>
                                             {foreach srcset}
-                                            <source media="{media}" srcset="{src}" type="{type}">
+                                            <source media="{media}" data-srcset="{src}" type="{type}">
                                             {/foreach srcset}
                                             <img data-thumb='<img src="{thumb}" />' src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{image}" class="img-fluid" alt="{title}">
                                         </picture>
@@ -37,42 +37,35 @@
                         </ul>-->
                         <p class="card-price">{price}</p>
                         <p id="nav-home2" class="resumen" role="tabpanel" aria-labelledby="nav-home-tab" aria-expanded="true">{text}</p>
+                        {if is_stock}
+                        {else is_stock}
+                        <div class="alert alert-warning">Producto agotado</div>
+                        {/if is_stock}
                         <div class="form-group d-flex m-t-20">
-                            <input type="number" min="1" value="1" class="form-control qlt" name="cantidad">
+                            {if is_stock}
+                            <input type="number" min="1" max="{stock}" value="1" class="form-control qlt" name="cantidad">
                             <button class="btn btn-add-cart" onclick="add_cart({id},$('input[name=cantidad]').val());">Añadir al carro</button>
-                            <a href="#" class="btn"><i class="fa fa-heart-o"></i></a>
+                            {/if is_stock}
+                            <button class="btn" data-toggle="tooltip" title="Agregar a favoritos" onclick="add_wish({id});"><i class="fa fa-heart-o"></i></button>
                         </div>
+                        {if is_categoria}
                         <div class="m-t-20 cate-tag">
-                            <strong>Categorías:</strong>
-                            <a href="#">cake</a>
-                            ,<a href="#">bakery</a>
-                            ,<a href="#">chocolate</a>
-                            ,<a href="#">chery</a>
-                            ,<a href="#">milk</a>
-                            ,<a href="#">dessert</a>
+                            <strong>Categorías: </strong>
+                            {foreach categorias}
+                            <a href="{url}"> {title} </a>
+                            {if is_final}{else is_final},{/if is_final}
+                            {/foreach categorias}
                         </div>
+                        {/if is_categoria}
                         <div class="d-flex m-t-30 icon-group">
-                            <strong>Share this:</strong>
-                            <a href="#" class="btn bg-4f84c4"><i class="fa fa-facebook"></i></a>
-                            <a href="#" class="btn bg-f2552c"><i class="fa fa-google"></i></a>
-                            <a href="#" class="btn bg-d00e0e"><i class="fa fa-pinterest"></i></a>
-                            <a href="#" class="btn bg-95dee3"><i class="fa fa-instagram"></i></a>
+                            <strong>Compartir:</strong>
+                            <a href="https://www.facebook.com/sharer.php?u={url}" class="btn bg-4f84c4" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook"></i></a>
+                            <a href="https://plus.google.com/share?url={url}" class="btn bg-f2552c" target="_blank" rel="noopener noreferrer"><i class="fa fa-google"></i></a>
+                            <a href="https://twitter.com/intent/tweet?text={title} {url}" class="btn bg-95dee3" target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="tabs-2 m-t-50">
-                    <nav class="nav nav-tabs" id="myTab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#descripcion" role="tab" aria-controls="nav-home" aria-expanded="true">Descripción</a>
-                         </nav>
-                    <div class="tab-content p-20 border-1x" id="nav-tabContent">
-                        <div class="tab-pane fade active show" id="descripcion" role="tabpanel" aria-labelledby="nav-home-tab" aria-expanded="false">
-                            <h3>Descripcion</h3>
-                           <div class="descripcion">
-                               {description}
-                           </div>
-                        </div>
-                    </div>
-                </div>
+                {tabs}
             </div>
         </div>
     </div>

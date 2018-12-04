@@ -1,4 +1,4 @@
-$(document).on('submit', 'form', function(e) { // guardar formulario detalle
+$(document).on('submit', '.contacto form', function(e) { // guardar formulario detalle
     var asunto = $('select[name=asunto] option:selected', this).val();
     if (asunto == '') {
         toastr["error"]('Debes seleccionar un asunto');

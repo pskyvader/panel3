@@ -1,3 +1,7 @@
+function add_wish(id) {
+    console.log(id);
+}
+
 function add_cart(id, cantidad) {
     if (!cantidad) cantidad = 1;
     cantidad=parseInt(cantidad);

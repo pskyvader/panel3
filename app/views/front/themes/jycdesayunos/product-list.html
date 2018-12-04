@@ -1,21 +1,21 @@
 <div class="product-list">
-{foreach lista_productos}
-<div class="card">
-    <div class="row">
-        <div class="col-sm-12 col-md-5 col-lg-5">
-            <a class="card-img" href="{url}">
-                <picture>
-                    {foreach srcset}
-                    <source media="{media}" srcset="{src}" type="{type}">
-                    {/foreach srcset}
-                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{image}" class="img-fluid" alt="{title}">
-                </picture>
-            </a>
-        </div>
-        <div class="col-sm-12 col-md-7 col-lg-7">
-            <div class="card-body">
-                <h3 class="card-title"><a href="{url}">{title}</a></h3>
-                <!--<ul class="rating">
+    {foreach lista_productos}
+    <div class="card">
+        <div class="row">
+            <div class="col-sm-12 col-md-5 col-lg-5">
+                <a class="card-img" href="{url}">
+                    <picture>
+                        {foreach srcset}
+                        <source media="{media}" data-srcset="{src}" type="{type}">
+                        {/foreach srcset}
+                        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{image}" class="img-fluid" alt="{title}">
+                    </picture>
+                </a>
+            </div>
+            <div class="col-sm-12 col-md-7 col-lg-7">
+                <div class="card-body">
+                    <h3 class="card-title"><a href="{url}">{title}</a></h3>
+                    <!--<ul class="rating">
                     <li aria-expanded="false" class="active"><i class="fa fa-star-o"></i></li>
                     <li class="active"><i class="fa fa-star-o"></i></li>
                     <li class="active"><i class="fa fa-star-o"></i></li>
@@ -23,12 +23,16 @@
                     <li><i class="fa fa-star-o"></i></li>
                     <li></li>
                 </ul>-->
-                <div class="card-price-group"><span class="card-price">{price}</span></div>
-                <p>{description}</p>
-                <button class="btn btn-add-cart" onclick="add_cart({id});">Añadir al carro</button>
+                    <div class="card-price-group"><span class="card-price">{price}</span></div>
+                    <p>{description}</p>
+                    {if is_stock}
+                    <button class="btn btn-add-cart" onclick="add_cart({id});">Añadir al carro</button>
+                    {else is_stock}
+                    <button class="btn disabled">Producto agotado</button>
+                    {/if is_stock}
+                </div>
             </div>
         </div>
     </div>
-</div>
-{/foreach lista_productos}
+    {/foreach lista_productos}
 </div>
