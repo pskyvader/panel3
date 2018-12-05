@@ -29,6 +29,13 @@ $(document).on('submit', 'form.search-box', function(e) {
     return false;
 });
 
+
+$(document).on('click', '.product-share a', function(e) {
+    window.open(this.href,"Compartir","width=550, height=450");
+    return false;
+});
+
+
 function inicio_gallery() {
     var $owl = $('.product-gallery');
     $owl.each(function() {

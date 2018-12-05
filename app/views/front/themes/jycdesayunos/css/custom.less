@@ -36,6 +36,7 @@ a:hover {
 
 #cake .btn {
     background: @color_base;
+    color: @color_hover;
     cursor: pointer;
     &:hover {
         background: @background_hover;
@@ -48,8 +49,10 @@ a:hover {
 
 #cake .product-detail .btn {
     background: #f5f5f5;
+    color: #333;
     &:hover {
         background: @color_base;
+        color: @color_hover;
     }
 }
 
@@ -71,27 +74,36 @@ a:hover {
     background: @color_base;
 }
 
-#cake .tabs-2{
+#cake .tabs-2 {
     .nav-tabs {
         border-bottom-color: @color_base;
         .nav-item.show .nav-link,
         .nav-link.active {
             background: @color_base;
         }
-    
     }
-    .tab-content{
-        .descripcion .files{
-            h5{
+    .tab-content {
+        .descripcion .files {
+            h5 {
                 display: none;
             }
         }
-
     }
-} 
+}
 
 #header-top {
     background: @color_base;
+}
+
+.cuenta {
+    margin-top: 0.5rem;
+    margin-bottom: -2rem;
+    z-index: 1000;
+    position: relative;
+    text-align: right;
+    a {
+        font-size: 1.4rem;
+    }
 }
 
 .bg-line-w-2 {
@@ -136,6 +148,13 @@ a:hover {
         &:hover {
             border-color: #8a8a8a;
         }
+    }
+}
+
+@media (max-width: 991.98px) {
+    .cuenta {
+        margin: 1rem 0px;
+        text-align: center;
     }
 }
 

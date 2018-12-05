@@ -61,6 +61,8 @@ class database
      */
     private static $_prefix;
 
+    //public $llamadas=array();
+
     /**
      * [__construct]
      */
@@ -97,8 +99,11 @@ class database
     {
         return $this->_connection->prepare($sql);
     }
+     //Procesar consulta, sql=consulta,return=devolver resultados o solo true o false si se ejecuto la operacion
     private function consulta($sql, $return)
-    { //Procesar consulta, sql=consulta,return=devolver resultados o solo true o false si se ejecuto la operacion
+    {
+        //$ll=array('consulta'=>$sql);
+        //$t=microtime(true);
         try {
             $query = $this->prepare($sql);
             $query->execute();
@@ -120,6 +125,8 @@ class database
                 $rows = true;
             }
         }
+        //$ll['tiempo']=microtime(true)-$t;
+        //$this->llamadas[]=$ll;
         return $rows;
     }
 

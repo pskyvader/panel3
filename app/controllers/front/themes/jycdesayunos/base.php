@@ -20,7 +20,7 @@ class base
         $this->seo               = seo_model::getById($idseo);
         $this->url               = array($this->seo['url']);
         $this->breadcrumb[]      = array('url' => functions::generar_url(array($this->seo['url'])), 'title' => $this->seo['titulo']);
-        $this->metadata['image'] = image::generar_url($this->seo['foto'][0], 'social');
+        $this->metadata['image'] = image::generar_url(image::portada($this->seo['foto']), 'social');
         $this->metadata['class'] = (new \ReflectionClass($this))->getShortName();
         $moduloconfiguracion     = moduloconfiguracion_model::getByModulo($this->seo['modulo_back']);
         if (isset($moduloconfiguracion[0])) {
@@ -37,6 +37,12 @@ class base
         $this->metadata['description_text'] = (isset($meta['resumen']) && $meta['resumen'] != '') ? $meta['resumen'] : $this->metadata['description_text'];
         $this->metadata['description_text'] = (isset($meta['descripcion']) && $meta['descripcion'] != '') ? $meta['descripcion'] : $this->metadata['description_text'];
         $this->metadata['description_text'] = (isset($meta['metadescripcion']) && $meta['metadescripcion'] != '') ? $meta['metadescripcion'] : $this->metadata['description_text'];
+        if(isset($meta['foto']) && $meta['foto']!=''){
+            $social=image::generar_url(image::portada($meta['foto']), 'social');
+            if($social!=''){
+                $this->metadata['image'] = $social;
+            }
+        }
     }
 
     protected function lista($row, $url = 'detail', $recorte = 'foto1')

@@ -59,9 +59,9 @@ class footer
             $links_footer[]=$l;
             
             $l=array('title'=>'Mi cuenta','links'=>array(),'size'=>2);
-            $l['links'][]=array('url'=>functions::generar_url(array('cuenta','detail','mi-cuenta')),'title'=>"Mi cuenta");
-            $l['links'][]=array('url'=>functions::generar_url(array('cuenta','detail','direcciones')),'title'=>"Mis direcciones");
-            $l['links'][]=array('url'=>functions::generar_url(array('cuenta','detail','pedidos')),'title'=>"Mis pedidos");
+            $l['links'][]=array('url'=>functions::generar_url(array('cuenta','datos')),'title'=>"Mi cuenta");
+            $l['links'][]=array('url'=>functions::generar_url(array('cuenta','direcciones')),'title'=>"Mis direcciones");
+            $l['links'][]=array('url'=>functions::generar_url(array('cuenta','pedidos')),'title'=>"Mis pedidos");
             $links_footer[]=$l;
 
             view::set('links_footer', $links_footer);

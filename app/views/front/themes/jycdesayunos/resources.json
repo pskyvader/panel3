@@ -26,6 +26,7 @@
         {"url": "js/form.js","local":true,"defer":false,"combine":true},
         {"url": "js/products.js","local":true,"defer":false,"combine":true},
         {"url": "js/cart.js","local":true,"defer":false,"combine":true},
+        {"url": "js/user.js","local":true,"defer":false,"combine":true},
         {"url": "js/custom.js","local":true,"defer":false,"combine":true}
     ]
 }

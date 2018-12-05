@@ -119,6 +119,12 @@ class product extends base
         view::set('sidebar', $sidebar);
         view::set('tabs', $tabs);
         view::set('url', functions::generar_url($this->url));
+        if($this->metadata['image']!=''){
+            view::set('imagen_portada', $this->metadata['image']);
+        }else{
+            view::set('imagen_portada', $this->metadata['logo']);
+        }
+
         view::render('product-detail');
 
         $footer = new footer();

@@ -37,6 +37,9 @@ $('body').on('click', 'a:not(.disabled)', function(e) {
     if ($(this).prop('target') != '_blank') {
         var href = $(this).prop('href');
         if (check_link(href)) {
+            if($(this).closest('.menu-nav').length>0){
+                $('.menu-btn').click();
+            }
             cargar_ajax(href);
             e.preventDefault();
         }
@@ -269,7 +272,11 @@ function create_url(extra, data, url) {
         url = location.origin + location.pathname;
     }
     if (typeof(extra) != 'undefined' && extra != null) {
-        url += '/' + extra;
+        if(url==path){
+            url += extra;
+        }else{
+            url += '/' + extra;
+        }
     }
     if (typeof(data) != 'undefined' && data != null) {
         url += '?' + $.param(data);

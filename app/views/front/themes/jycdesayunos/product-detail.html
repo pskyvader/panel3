@@ -57,11 +57,20 @@
                             {/foreach categorias}
                         </div>
                         {/if is_categoria}
-                        <div class="d-flex m-t-30 icon-group">
+                        <div class="d-flex m-t-30 icon-group product-share">
                             <strong>Compartir:</strong>
-                            <a href="https://www.facebook.com/sharer.php?u={url}" class="btn bg-4f84c4" target="_blank" rel="noopener noreferrer"><i class="fa fa-facebook"></i></a>
-                            <a href="https://plus.google.com/share?url={url}" class="btn bg-f2552c" target="_blank" rel="noopener noreferrer"><i class="fa fa-google"></i></a>
-                            <a href="https://twitter.com/intent/tweet?text={title} {url}" class="btn bg-95dee3" target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.facebook.com/sharer.php?u={url}" class="btn bg-4f84c4" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="https://plus.google.com/share?url={url}" class="btn bg-f2552c" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-google"></i>
+                            </a>
+                            <a href="https://twitter.com/intent/tweet?text={title} {url}" class="btn bg-95dee3" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="https://www.pinterest.com/pin/create/button/?url={url}&description={title}&media={imagen_portada}" class="btn bg-d00e0e" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-pinterest"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

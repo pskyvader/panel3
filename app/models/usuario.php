@@ -8,11 +8,10 @@ use \core\email;
 use \core\functions;
 use \core\view;
 
-class administrador extends base_model
+class usuario extends base_model
 {
-    public static $idname = 'idadministrador',
-    $table                = 'administrador';
-    public $cookie;
+    public static $idname = 'idusuario',
+    $table                = 'usuario';
     public static function insert($data, $log = true)
     {
         if (isset($data['pass']) && $data['pass'] != '') {
@@ -89,21 +88,21 @@ class administrador extends base_model
         if (count($row) != 1) {
             return false;
         } else {
-            $admin = $row[0];
-            if (!$admin['estado']) {
+            $usuario = $row[0];
+            if (!$usuario['estado']) {
                 return false;
             } else {
-                $profile = profile::getByTipo($admin['tipo']);
+                $profile = profile::getByTipo($usuario['tipo']);
                 if (!isset($profile['tipo']) || $profile['tipo'] <= 0) {
                     return false;
                 } else {
-                    $_SESSION[static::$idname . $prefix_site] = $admin[0];
-                    $_SESSION["email" . $prefix_site]         = $admin['email'];
-                    $_SESSION["nombre" . $prefix_site]        = $admin['nombre'];
-                    $_SESSION["estado" . $prefix_site]        = $admin['estado'];
-                    $_SESSION["tipo" . $prefix_site]          = $admin['tipo'];
+                    $_SESSION[static::$idname . $prefix_site] = $usuario[0];
+                    $_SESSION["emailusuario" . $prefix_site]  = $usuario['email'];
+                    $_SESSION["nombreusuario" . $prefix_site] = $usuario['nombre'];
+                    $_SESSION["estadousuario" . $prefix_site] = $usuario['estado'];
+                    $_SESSION["tipousuario" . $prefix_site]   = $usuario['tipo'];
                     $_SESSION['prefix_site']                  = $prefix_site;
-                    log::insert_log(static::$table, static::$idname, __FUNCTION__, $admin);
+                    log::insert_log(static::$table, static::$idname, __FUNCTION__, $usuario);
                     return true;
                 }
             }
@@ -129,23 +128,23 @@ class administrador extends base_model
         if (count($row) != 1) {
             return false;
         } else {
-            $admin = $row[0];
-            if (!$admin['estado']) {
+            $usuario = $row[0];
+            if (!$usuario['estado']) {
                 return false;
             } else {
-                $profile = profile::getByTipo($admin['tipo']);
+                $profile = profile::getByTipo($usuario['tipo']);
                 if (!isset($profile['tipo']) || $profile['tipo'] <= 0) {
                     return false;
                 } else {
-                    $_SESSION[static::$idname . $prefix_site] = $admin[0];
-                    $_SESSION["email" . $prefix_site]         = $admin['email'];
-                    $_SESSION["nombre" . $prefix_site]        = $admin['nombre'];
-                    $_SESSION["estado" . $prefix_site]        = $admin['estado'];
-                    $_SESSION["tipo" . $prefix_site]          = $admin['tipo'];
+                    $_SESSION[static::$idname . $prefix_site] = $usuario[0];
+                    $_SESSION["emailusuario" . $prefix_site]  = $usuario['email'];
+                    $_SESSION["nombreusuario" . $prefix_site] = $usuario['nombre'];
+                    $_SESSION["estadousuario" . $prefix_site] = $usuario['estado'];
+                    $_SESSION["tipousuario" . $prefix_site]   = $usuario['tipo'];
                     $_SESSION['prefix_site']                  = $prefix_site;
-                    log::insert_log(static::$table, static::$idname, __FUNCTION__, $admin);
+                    log::insert_log(static::$table, static::$idname, __FUNCTION__, $usuario);
                     if ($recordar == 'on') {
-                        return static::update_cookie($admin[0]);
+                        return static::update_cookie($usuario[0]);
                     } else {
                         return true;
                     }
@@ -161,7 +160,7 @@ class administrador extends base_model
         $data        = array('id' => $id, 'cookie' => $cookie);
         $exito       = static::update($data);
         if ($exito) {
-            functions::set_cookie('cookieadmin' . $prefix_site, $cookie, time() + (31536000));
+            functions::set_cookie('cookiusuario' . $prefix_site, $cookie, time() + (31536000));
         }
         return $exito;
     }
@@ -170,12 +169,12 @@ class administrador extends base_model
     {
         $prefix_site = functions::url_amigable(app::$_title);
         unset($_SESSION[static::$idname . $prefix_site]);
-        unset($_SESSION["email" . $prefix_site]);
-        unset($_SESSION["nombre" . $prefix_site]);
-        unset($_SESSION["estado" . $prefix_site]);
-        unset($_SESSION["tipo" . $prefix_site]);
+        unset($_SESSION["emailusuario" . $prefix_site]);
+        unset($_SESSION["nombreusuario" . $prefix_site]);
+        unset($_SESSION["estadousuario" . $prefix_site]);
+        unset($_SESSION["tipousuario" . $prefix_site]);
         unset($_SESSION['prefix_site']);
-        functions::set_cookie('cookieadmin' . $prefix_site, 'aaa', time() + (31536000));
+        functions::set_cookie('cookiusuario' . $prefix_site, 'aaa', time() + (31536000));
     }
 
     public static function verificar_sesion()
@@ -185,20 +184,20 @@ class administrador extends base_model
             return false;
         }
 
-        $admin = static::getById($_SESSION[static::$idname . $prefix_site]);
+        $usuario = static::getById($_SESSION[static::$idname . $prefix_site]);
 
-        if (!isset($admin[0])) {
+        if (!isset($usuario[0])) {
             return false;
-        } elseif ($admin[0] != $_SESSION[static::$idname . $prefix_site]) {
+        } elseif ($usuario[0] != $_SESSION[static::$idname . $prefix_site]) {
             return false;
-        } elseif ($admin['email'] != $_SESSION["email" . $prefix_site]) {
+        } elseif ($usuario['email'] != $_SESSION["emailusuario" . $prefix_site]) {
             return false;
-        } elseif ($admin['estado'] != $_SESSION["estado" . $prefix_site] || !$_SESSION["estado" . $prefix_site]) {
+        } elseif ($usuario['estado'] != $_SESSION["estadousuario" . $prefix_site] || !$_SESSION["estadousuario" . $prefix_site]) {
             return false;
-        } elseif ($admin['tipo'] != $_SESSION["tipo" . $prefix_site] || !$_SESSION["tipo" . $prefix_site]) {
+        } elseif ($usuario['tipo'] != $_SESSION["tipousuario" . $prefix_site] || !$_SESSION["tipousuario" . $prefix_site]) {
             return false;
         } else {
-            $profile = profile::getByTipo($admin['tipo']);
+            $profile = profile::getByTipo($usuario['tipo']);
             if (!isset($profile['tipo']) || $profile['tipo'] <= 0) {
                 return false;
             } else {
@@ -221,12 +220,12 @@ class administrador extends base_model
         if (count($row) != 1) {
             return false;
         } else {
-            $admin = $row[0];
-            if (!$admin['estado']) {
+            $usuario = $row[0];
+            if (!$usuario['estado']) {
                 return false;
             } else {
                 $pass = functions::generar_pass();
-                $data = array('id' => $admin[0], 'pass' => $pass, 'pass_repetir' => $pass);
+                $data = array('id' => $usuario[0], 'pass' => $pass, 'pass_repetir' => $pass);
                 $row  = static::update($data);
 
                 if ($row) {
@@ -240,7 +239,7 @@ class administrador extends base_model
                     $body      = email::body_email($body_email);
                     $respuesta = email::enviar_email(array($email), 'Recuperación de contraseña', $body);
 
-                    log::insert_log(static::$table, static::$idname, __FUNCTION__, $admin);
+                    log::insert_log(static::$table, static::$idname, __FUNCTION__, $usuario);
                     return $respuesta;
                 } else {
                     return false;
