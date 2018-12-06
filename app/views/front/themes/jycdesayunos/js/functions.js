@@ -283,7 +283,9 @@ function create_url(extra, data, url) {
     }else{
         url += location.search;
     }
-    url = url.replace("%20", "+").replace("%2B","+");
+    
+    url= url.split("%20").join("+");
+    url= url.split("%2B").join("+");
     return url;
 }
 
@@ -303,11 +305,19 @@ function mover(elemento, tiempo, delay) {
     }
 }
 
-function notificacion(mensaje, tipo) {
-    //toastr.clear();
-    //toastr[tipo](mensaje);
-}
+var notify = null;
 
+function notificacion(mensaje, tipo) {
+    if (tipo == 'error') tipo = 'danger';
+    if (notify != null) {
+        notify.close();
+    }
+    notify = $.notify({
+        message: mensaje
+    }, {
+        type: tipo
+    });
+}
 function barra(porcentaje) {
     /*if (porcentaje >= 0 && porcentaje < 100) {
         $.skylo('show', function() {

@@ -3,6 +3,7 @@ namespace core;
 
 defined("APPPATH") or die("Acceso denegado");
 
+use \core\cache;
 use \app\models\seo as seo_model;
 
 class app
@@ -15,6 +16,7 @@ class app
     public static $_front   = true;
     private static $_config = array();
     private static $_url    = array();
+    private static $current_url    = "";
     const NAMESPACE_FRONT   = "app\controllers\\front\\themes\\";
     const NAMESPACE_BACK    = "app\controllers\\back\\themes\\";
     const CONTROLLERS_PATH  = "controllers/";
@@ -68,7 +70,13 @@ class app
             $namespace = self::NAMESPACE_BACK . $config['theme_back'] . '\\';
         }
         //obtenemos la url parseada
-        $url = $this->parseUrl();
+        $url =$this->parseUrl();
+        $cache=cache::get_cache(self::$current_url);
+        if($cache!=''){
+            echo $cache;
+            exit;
+        }
+
         //comprobamos que exista el archivo en el directorio controllers
         if (file_exists($path . ($url[0]) . ".php")) {
             //nombre del archivo a llamar
@@ -106,7 +114,7 @@ class app
      * [parseUrl Parseamos la url en trozos]
      * @return [type] [description]
      */
-    public function parseUrl()
+    private function parseUrl()
     {
         if (isset($_GET["url"])) {
             $url = explode("/", filter_var(rtrim($_GET["url"], "/"), FILTER_SANITIZE_URL));
@@ -121,15 +129,18 @@ class app
                     $_REQUEST['idseo'] = $seo[0][0];
                 }
             }
+            
+            self::$current_url= $_GET;
             unset($_GET["url"]);
             return $url;
         } else {
+            $url=array('');
             $seo = seo_model::getById(1);
             if (count($seo) > 0) {
                 $url[0]            = $seo['modulo_front'];
                 $_REQUEST['idseo'] = $seo[0];
+                self::$current_url= array('url'=>$url[0]);
             }
-
             return $url;
         }
     }
@@ -157,6 +168,7 @@ class app
             @ini_set('expose_php', 'off');
         }
         call_user_func_array([$this->_controller, $this->_method], $this->_params);
+        cache::save_cache(self::$current_url);
     }
 
     /**

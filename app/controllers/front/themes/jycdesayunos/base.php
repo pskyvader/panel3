@@ -5,6 +5,7 @@ defined("APPPATH") or die("Acceso denegado");
 use \app\models\modulo as modulo_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 use \app\models\seo as seo_model;
+use \core\cache;
 use \core\functions;
 use \core\image;
 
@@ -15,8 +16,11 @@ class base
     protected $breadcrumb = array();
     protected $modulo     = array();
     protected $seo        = array();
-    public function __construct($idseo)
+    public function __construct(int $idseo,bool $cache=true)
     {
+        if(!$cache){
+            cache::set_cache(false);
+        }
         $this->seo               = seo_model::getById($idseo);
         $this->url               = array($this->seo['url']);
         $this->breadcrumb[]      = array('url' => functions::generar_url(array($this->seo['url'])), 'title' => $this->seo['titulo']);

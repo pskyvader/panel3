@@ -219,7 +219,7 @@
 .dh-table{display:table!important}
 .bg-f{background-color:#fff!important;color:#333!important}
 .bg-fd{background-color:#fdfdfd!important;color:#333!important}
-.bg-fa{background-color:#fafafa!important;color:#333!important}
+.bg-fa{background-color:#fafafa!important;/* color:#333!important */}
 .bg-f5{background-color:#f5f5f5!important;color:#333!important}
 .bg-e{background-color:#eee!important;color:#333!important}
 .bg-d{background-color:#ddd!important;color:#333!important}

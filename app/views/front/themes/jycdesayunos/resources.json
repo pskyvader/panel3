@@ -19,6 +19,7 @@
         {"url": "js/owl-carousel/owl.carousel.min.js","local":true,"defer":false,"combine":true},
         {"url": "js/owl-carousel/OwlCarousel2Thumbs.min.js","local":true,"defer":false,"combine":true},
         {"url": "js/fancybox/jquery.fancybox.min.js","local":true,"defer":false,"combine":true},
+        {"url": "js/bootstrap-notify.min.js","local":true,"defer":false,"combine":true},
         {"url": "js/script.js","local":true,"defer":false,"combine":true},
         {"url": "js/functions.js","local":true,"defer":false,"combine":true},
         {"url": "js/map.js","local":true,"defer":false,"combine":true},

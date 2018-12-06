@@ -84,6 +84,7 @@ switch ($paso) {
             array('titulo' => 'Sitio'),
             "www"                   => array('name' => "www", 'value' => '0', 'required' => true, 'visible' => true, 'title' => 'Dominio con WWW', 'type' => 'active'),
             "https"                 => array('name' => "https", 'value' => '0', 'required' => true, 'visible' => true, 'title' => 'Sitio seguro (debe instalar certificado SSL)', 'type' => 'active'),
+            "cache"                 => array('name' => "cache", 'value' => '1', 'required' => true, 'visible' => true, 'title' => 'Activar cache de paginas (mejora velocidad del sitio, desactivar al hacer pruebas)', 'type' => 'active'),
             "theme"                 => array('name' => "theme", 'value' => '', 'required' => true, 'visible' => false),
             "dir"                   => array('name' => "dir", 'value' => strtolower(trim(substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],$name)),'/')), 'required' => false, 'visible' => true, 'title' => 'Sub directorio (si existe)', 'fill' => false),
             "title"                 => array('name' => "title", 'value' => '', 'required' => true, 'visible' => true, 'title' => 'Titulo del sitio'),

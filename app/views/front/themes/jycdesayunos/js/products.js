@@ -22,7 +22,7 @@ $('body').on('change', '.product-filter select#limit', function() {
 });
 
 $(document).on('submit', 'form.search-box', function(e) {
-    var data = createObjFromURI();
+    var data = {};//createObjFromURI();
     data.search = $('input[name=search]', $(this)).val();
     var url = create_url(null, data,$(this).prop('action'));
     go_url(url,"null");

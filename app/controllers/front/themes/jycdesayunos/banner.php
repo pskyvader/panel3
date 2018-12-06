@@ -21,15 +21,12 @@ class banner
             $thumb  = array();
             $banner = array();
             foreach ($row_banner as $key => $b) {
-                if (isset($b["foto"][0])) {
-                    $foto = image::generar_url($b["foto"][0], 'foto1');
-                } else {
-                    $foto = '';
-                }
+                $portada = image::portada($b["foto"]);
+                $foto      = image::generar_url($portada, 'foto1');
                 if ($foto != '') {
                     $thumb[] = array('id' => $key, 'active' => ($key == 0) ? 'active' : '');
 
-                    $srcset = $this->srcset($b["foto"][0]);
+                    $srcset = $this->srcset($portada);
 
                     $banner[] = array(
                         'srcset'     => $srcset,
@@ -43,7 +40,7 @@ class banner
                         'is_texto2'  => ($b['texto2'] != ''),
                         'link'       => functions::ruta($b['link']),
                         'is_link'    => ($b['link'] != ''),
-                        'background' => image::generar_url($b["foto"][0], 'color'),
+                        'background' => image::generar_url($portada, 'color'),
                     );
                 }
 

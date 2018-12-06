@@ -35,12 +35,13 @@ class unit_test_light
                 'time' => (int)($time*1000).'ms',
                 'time_block' => (int)($time_block*1000).'ms',
                 'time_total' => (int)($time_total*1000).'ms',
-                'memory' => self::convert($memory),
-                'memory_block' => self::convert($memory_block),
-                'memory_total' => self::convert($memory_total),
+                //'memory' => self::convert($memory),
+                //'memory_block' => self::convert($memory_block),
+                //'memory_total' => self::convert($memory_total),
             );
         }
         if ($return_array) {
+            //return self::$log;
             return $return;
         } else {
             $string = "";
@@ -56,6 +57,9 @@ class unit_test_light
     }
     private static function convert($size)
     {
+        if($size==0){
+            return $size;
+        }
         $sign=($size>=0)?'':'-';
         $size=abs($size);
         $unit=array('b','kb','mb','gb','tb','pb');

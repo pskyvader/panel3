@@ -71,9 +71,9 @@ Content of tables
 	7.Media query
 -------------------------*/
 /*!1.Reset*/
-html{font-size:62.5%;line-height:1.5}
-body{font-family:poppins,sans-serif;overflow-x:hidden!important}
-a,div,li,p,span,strong{font-size:1.6rem}
+html{font-size: 62.5%;line-height:1.5;}
+body{font-family:poppins,sans-serif; overflow-x:hidden!important}
+a,div,li,p,span,strong{font-size:1.6rem;}
 p{line-height:1.7}
 a.btn:hover,a:hover,button.btn{text-decoration:none;color:inherit}
 a,b,button,li,span,strong{color:inherit}
@@ -114,7 +114,7 @@ h1 a,h1 strong,h2 a,h2 strong,h3 a,h3 strong,h4 a,h4 strong,h5 a,h5 strong,h6 a,
 .logo-brand img{width:100%}
 form .btn{padding:1.2rem 2.5rem!important;margin-top:1rem}
 form textarea{height:20rem}
-.form-control{border:.1rem solid #eee;border-radius:0;box-shadow:0;font-size:1.6rem;padding:1rem 1.5rem}
+.form-control{border:.1rem solid #eee;/* border-radius:0; */box-shadow:0;font-size:1.6rem;padding:1rem 1.5rem;}
 select{height:auto!important}
 .form-control,.form-group{margin-bottom:1.5rem}
 .form-group-no-border .form-control{border:0}
@@ -127,6 +127,7 @@ input[type=checkbox],input[type=radio]{margin-right:.5rem}
 .checkbox-1 input[type=checkbox]{opacity:0}
 .checkbox-1{position:relative;margin-bottom:.7rem}
 .checkbox-1 label{position:absolute;left:-.2rem;top:.3rem;width:1.7rem;height:1.7rem;font-size:1.2rem;text-align:center;border-radius:.2rem;background:#eee;content:'';line-height:1.4;cursor:pointer}
+.checkbox-1 input[type=checkbox]+label+label{position: relative;width: auto;height: auto;font-size:inherit;background:none}
 .checkbox-1 input[type=checkbox]+label{color:#fff;background-color:#fff;border:1px solid #ddd}
 .checkbox-1 input[type=checkbox]:checked+label::before{color:#333}
 .checkbox-1 input[type=checkbox]{opacity:0}

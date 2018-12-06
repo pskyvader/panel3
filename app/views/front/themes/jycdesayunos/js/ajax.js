@@ -1,3 +1,9 @@
+/**
+ * Envia un post a la url_post designada, retorna a un callback
+ * @param  {string} url_post - url a enviar el post
+ * @param  {object} info - informacion adicional
+ * @param  {function} callback - function de retorno: callback(datos);
+ */
 function post_basic(url_post, info, callback) {
     $.post(url_post, info, function(data) {
         callback(data);
@@ -7,12 +13,21 @@ function post_basic(url_post, info, callback) {
         console.log(errorThrown);
     });
 }
-
+/**
+ * Envia un post a la url_post designada, inmediatamente despues de mostrar una notificacion
+ * acepta arrays de archivos (ver archivo form.js)
+ * @param  {string} url_post - url a enviar el post
+ * @param  {object} info - informacion adicional
+ * @param  {string} mensaje_inicial - mensaje para mostrar antes de enviar el post
+ * @param  {object} archivo - archivos opcionales
+ * @param  {function} callback - function de retorno: callback(datos, extra);
+ * @param  {object} extra - variables extras para enviar a la funcion de retorno: callback(datos, extra);
+ */
 function post(url_post, info, mensaje_inicial, archivo, callback, extra) {
     if (typeof(archivo) == 'undefined') {
         archivo = null;
     }
-    if (typeof(callback) == 'undefined') {
+    if (typeof(callback) != 'function') {
         callback = null;
     }
     var data = new FormData();

@@ -14,7 +14,7 @@ class enviar
     }
     public function index()
     {
-        $campos        = self::test_input($_POST['campos']);
+        $campos        = functions::test_input($_POST['campos']);
         $respuesta     = array('exito' => true, 'mensaje' => '');
         $nombre_sitio  = app::$_title;
         $config        = app::getConfig();
@@ -79,18 +79,5 @@ class enviar
             }
         }
         echo functions::encode_json($respuesta);
-    }
-    private static function test_input($data)
-    {
-        if (is_array($data)) {
-            foreach ($data as $key => $value) {
-                $data[$key] = self::test_input($value);
-            }
-        } else {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-        }
-        return $data;
     }
 }

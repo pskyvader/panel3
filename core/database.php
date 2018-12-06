@@ -4,6 +4,7 @@ namespace core;
 defined("APPPATH") or die("Acceso denegado");
 
 use \core\app;
+use \core\cache;
 use \core\functions;
 
 /**
@@ -102,13 +103,20 @@ class database
      //Procesar consulta, sql=consulta,return=devolver resultados o solo true o false si se ejecuto la operacion
     private function consulta($sql, $return)
     {
+        /*foreach ($this->llamadas as $key => $ll) {
+            if($ll['consulta']==$sql){
+                return $ll['resultado'];
+            }
+        }*/
         //$ll=array('consulta'=>$sql);
-        //$t=microtime(true);
+        //$t=microtime(true)*1000;
         try {
             $query = $this->prepare($sql);
             $query->execute();
             if ($return) {
                 $rows = $query->fetchAll();
+            }else{
+                cache::delete_cache();
             }
 
         } catch (\PDOException $e) {
@@ -125,8 +133,10 @@ class database
                 $rows = true;
             }
         }
-        //$ll['tiempo']=microtime(true)-$t;
+        //$ll['resultado']=$rows;
+       // $ll['tiempo']=(microtime(true)*1000)-$t;
         //$this->llamadas[]=$ll;
+
         return $rows;
     }
 

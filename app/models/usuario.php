@@ -153,6 +153,36 @@ class usuario extends base_model
         }
     }
 
+    public static function registro($nombre, $email, $pass, $pass_repetir)
+    {
+        $respuesta = array('exito' => false, 'mensaje' => '');
+        if ($nombre == "" || $email == "" || $pass == "" || $pass_repetir == "") {
+            $respuesta['mensaje'] = "Todos los datos son obligatorios";
+            return $respuesta;
+        }
+        $connection  = database::instance();
+        $prefix_site = functions::url_amigable(app::$_title);
+
+        $where = array(
+            'email' => strtolower($email),
+        );
+        $condiciones = array('limit' => 1);
+        $row         = static::getAll($where, $condiciones);
+
+        if (count($row) > 0) {
+            $respuesta['mensaje'] = "Este email ya existe. Puede recuperar la contraseña en el boton correspondiente";
+        } else {
+            $data = array('nombre' => $nombre, 'email' => $email, 'pass' => $pass, 'pass_repetir' => $pass_repetir, 'tipo' => 1, 'estado' => true);
+            $id   = self::insert($data);
+            if (!is_array($id)) {
+                $respuesta['exito'] = true;
+            } else {
+                $respuesta = $id;
+            }
+        }
+        return $respuesta;
+    }
+
     private static function update_cookie($id)
     {
         $prefix_site = functions::url_amigable(app::$_title);

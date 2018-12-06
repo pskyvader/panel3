@@ -11,7 +11,7 @@ class user extends base
 {
     public function __construct()
     {
-        parent::__construct($_REQUEST['idseo']);
+        parent::__construct($_REQUEST['idseo'], false);
     }
     public function index()
     {
@@ -30,9 +30,10 @@ class user extends base
         $footer = new footer();
         $footer->normal();
     }
-    public function registro(){
+    public function registro()
+    {
         $this->meta($this->seo);
-        $this->url[]='registro';
+        $this->url[] = 'registro';
         functions::url_redirect($this->url);
 
         $head = new head($this->metadata);
@@ -43,15 +44,46 @@ class user extends base
 
         $banner = new banner();
         $banner->individual($this->seo['banner'], 'Registro');
-        view::render('registro');
+
+        $token                      = sha1(uniqid(microtime(), true));
+        $_SESSION['registro_token'] = array('token' => $token, 'time' => time());
+        view::set('token', $token);
+        view::render('user-registro');
 
         $footer = new footer();
         $footer->normal();
-
     }
-    public function login(){
+    public function registro_process()
+    {
+        $respuesta = array('exito' => false, 'mensaje' => '');
+        $campos    = functions::test_input($_POST['campos']);
+
+        if (isset($campos['nombre']) && isset($campos['email']) && isset($campos['pass']) && isset($campos['pass_repetir']) && isset($campos['token'])) {
+            if (isset($_SESSION['registro_token']['token']) && $_SESSION['registro_token']['token'] == $campos['token']) {
+                if (time() - $_SESSION['registro_token']['time'] <= 120) {
+                    $respuesta = usuario_model::registro($campos['nombre'], $campos['email'], $campos['pass'], $campos['pass_repetir']);
+                    if ($respuesta['exito']) {
+                        $respuesta['exito'] = usuario_model::login($campos['email'], $campos['pass'], isset($campos['recordar']));
+                        if (!$respuesta['exito']) {
+                            $respuesta['mensaje'] = "Cuenta creada correctamente, pero ha ocurrido un error al ingresar. Intenta loguearte";
+                        }
+                    }
+                } else {
+                    $respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente';
+                }
+            } else {
+                $respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente';
+            }
+        } else {
+            $respuesta['mensaje'] = 'Debes llenar todos los campos';
+        }
+
+        echo json_encode($respuesta);
+    }
+    public function login()
+    {
         $this->meta($this->seo);
-        $this->url[]='login';
+        $this->url[] = 'login';
         functions::url_redirect($this->url);
 
         $head = new head($this->metadata);
@@ -62,26 +94,58 @@ class user extends base
 
         $banner = new banner();
         $banner->individual($this->seo['banner'], 'Login');
-        view::render('login');
+
+        $token                   = sha1(uniqid(microtime(), true));
+        $_SESSION['login_token'] = array('token' => $token, 'time' => time());
+        view::set('token', $token);
+        view::render('user-login');
 
         $footer = new footer();
         $footer->normal();
     }
+    public function login_process()
+    {
+        $respuesta = array('exito' => false, 'mensaje' => '');
+        $campos    = functions::test_input($_POST['campos']);
+
+        if (isset($campos['email']) && isset($campos['pass']) && isset($campos['token'])) {
+            if (isset($_SESSION['login_token']['token']) && $_SESSION['login_token']['token'] == $campos['token']) {
+                if (time() - $_SESSION['login_token']['time'] <= 120) {
+                    $respuesta['exito'] = usuario_model::login($campos['email'], $campos['pass'], isset($campos['recordar']));
+                    if (!$respuesta['exito']) {
+                        $respuesta['mensaje'] = "Cuenta creada correctamente, pero ha ocurrido un error al ingresar. Intenta loguearte";
+                    }
+                } else {
+                    $respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente';
+                }
+            } else {
+                $respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente';
+            }
+        } else {
+            $respuesta['mensaje'] = 'Debes llenar todos los campos';
+        }
+
+        echo json_encode($respuesta);
+    }
     public function verificar()
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
+        $prefix_site = functions::url_amigable(app::$_title);
         $logueado  = usuario_model::verificar_sesion();
         if (!$logueado) {
-            $prefix_site = functions::url_amigable(app::$_title);
             if (isset($_COOKIE['cookieusuario' . $prefix_site])) {
                 $logueado = usuario_model::login_cookie($_COOKIE['cookieusuario' . $prefix_site]);
             }
         }
         $respuesta['exito'] = $logueado;
         if ($logueado) {
-            $nombre=explode(" ",$_COOKIE['nombreusuario' . $prefix_site]);
+            $nombre               = explode(" ", $_SESSION['nombreusuario' . $prefix_site]);
             $respuesta['mensaje'] = $nombre[0];
         }
         echo json_encode($respuesta);
+    }
+    public function logout(){
+        usuario_model::logout();
+        echo json_encode(array('exito' => true, 'mensaje' => 'Gracias por visitar nuestro sitio'));
     }
 }

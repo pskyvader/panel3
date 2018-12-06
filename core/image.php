@@ -454,6 +454,9 @@ class image
         }
 
         $url  = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
+        if(!file_exists(self::get_upload_dir() . $url)){
+            return "";
+        }
         $time = functions::fecha_archivo(self::get_upload_dir() . $url, true);
         if (false != $time) {
             $archivo = self::get_upload_url() . $url . '?time=' . $time;

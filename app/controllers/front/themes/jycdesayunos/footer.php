@@ -7,6 +7,7 @@ use \app\models\seccion as seccion_model;
 use \app\models\seo;
 use \app\models\texto;
 use \core\app;
+use \core\database;
 use \core\functions;
 use \core\image;
 use \core\view;
@@ -67,6 +68,13 @@ class footer
             view::set('links_footer', $links_footer);
             view::render('footer');
             view::js();
+            /*$connection=database::instance();
+            $total=0;
+            foreach ($connection->llamadas as $key => $ll) {
+                $total+=$ll['tiempo'];
+            }
+            echo $total;
+            //print_r($connection->llamadas);*/
         }
     }
 }

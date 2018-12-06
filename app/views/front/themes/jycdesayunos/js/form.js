@@ -1,7 +1,7 @@
 $(document).on('submit', '.contacto form', function(e) { // guardar formulario detalle
     var asunto = $('select[name=asunto] option:selected', this).val();
     if (asunto == '') {
-        toastr["error"]('Debes seleccionar un asunto');
+        notificacion('Debes seleccionar un asunto', "error");
         return false;
     }
     habilitar(false);

@@ -4,6 +4,7 @@ namespace core;
 defined("APPPATH") or die("Access denied");
 
 use \core\app;
+use \core\cache;
 use \core\minify as mini_files;
 
 class view
@@ -70,6 +71,7 @@ class view
             $str = ob_get_contents();
             ob_end_clean();*/
             echo $str;
+            cache::add_cache($str);
         }
     }
 
@@ -216,6 +218,7 @@ class view
                 }
                 $locales = array(array('url' => app::$_path . $file, 'defer' => $defer));
             } else {
+                cache::delete_cache();
                 if (isset($_COOKIE['loaded_js'])) {
                     functions::set_cookie('loaded_js', false, time() + (31536000));
                 }
@@ -311,6 +314,7 @@ class view
                 }
                 $locales = array(array('url' => app::$_path . $file, 'media' => 'all', 'defer' => $defer, 'is_content' => false));
             } else {
+                cache::delete_cache();
                 if (isset($_COOKIE['loaded_css'])) {
                     functions::set_cookie('loaded_css', false, time() + (31536000));
                 }

@@ -141,6 +141,21 @@ class functions
         $url = strtolower($url);
         return $url;
     }
+    
+    public static function test_input($data)
+    {
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $data[$key] = self::test_input($value);
+            }
+        } else {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+        }
+        return $data;
+    }
+
     //agrega la fecha del archivo como variable al nombre del archivo: style.css=> style.css?time=23426421
     public static function fecha_archivo($archivo, $only_fecha = false)
     {
