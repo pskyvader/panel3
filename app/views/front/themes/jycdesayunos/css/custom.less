@@ -104,9 +104,9 @@ a:hover {
     a {
         font-size: 1.4rem;
     }
-    #logout{
+    #logout {
         border: none;
-        background:none;
+        background: none;
         font-size: 1.4rem;
         cursor: pointer;
     }
@@ -153,6 +153,26 @@ a:hover {
         &.active,
         &:hover {
             border-color: #8a8a8a;
+        }
+    }
+}
+
+.user {
+    .title-section{
+        font-size: 3rem;
+        margin-top: 0px;
+    }
+    .box {
+        padding: 0;
+        border: 0;
+        .list {
+            li {
+                &.active a,
+                a:hover {
+                    text-decoration: underline;
+                    color: @color_base;
+                }
+            }
         }
     }
 }

@@ -112,7 +112,6 @@ class usuario extends base_model
 
     public static function login($email, $pass, $recordar)
     {
-        $connection  = database::instance();
         $prefix_site = functions::url_amigable(app::$_title);
         if ($email == '' || $pass == '') {
             return false;
@@ -153,14 +152,13 @@ class usuario extends base_model
         }
     }
 
-    public static function registro($nombre, $email, $pass, $pass_repetir)
+    public static function registro($nombre, $telefono, $email, $pass, $pass_repetir)
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
         if ($nombre == "" || $email == "" || $pass == "" || $pass_repetir == "") {
             $respuesta['mensaje'] = "Todos los datos son obligatorios";
             return $respuesta;
         }
-        $connection  = database::instance();
         $prefix_site = functions::url_amigable(app::$_title);
 
         $where = array(
@@ -172,13 +170,47 @@ class usuario extends base_model
         if (count($row) > 0) {
             $respuesta['mensaje'] = "Este email ya existe. Puede recuperar la contraseña en el boton correspondiente";
         } else {
-            $data = array('nombre' => $nombre, 'email' => $email, 'pass' => $pass, 'pass_repetir' => $pass_repetir, 'tipo' => 1, 'estado' => true);
+            $data = array('nombre' => $nombre, 'telefono' => $telefono, 'email' => $email, 'pass' => $pass, 'pass_repetir' => $pass_repetir, 'tipo' => 1, 'estado' => true);
             $id   = self::insert($data);
             if (!is_array($id)) {
                 $respuesta['exito'] = true;
             } else {
                 $respuesta = $id;
             }
+        }
+        return $respuesta;
+    }
+
+    
+    public static function actualizar($datos)
+    {
+        $respuesta = array('exito' => false, 'mensaje' => '');
+        if ($datos['nombre'] == "" || $datos['telefono'] == "" || $datos['email'] == "" ) {
+            $respuesta['mensaje'] = "Todos los datos son obligatorios";
+            return $respuesta;
+        }
+        $prefix_site = functions::url_amigable(app::$_title);
+        $usuario= static::getById($_SESSION[static::$idname . $prefix_site]);
+
+        if($usuario['email']!=$datos['email']){
+            $where = array(
+                'email' => strtolower($datos['email']),
+            );
+            $condiciones = array('limit' => 1);
+            $row         = static::getAll($where, $condiciones);
+            if (count($row) > 0) {
+                $respuesta['mensaje'] = "Este email ya existe. No puedes modificar tu email.";
+                return $respuesta;
+            }else{
+                $respuesta['redirect']=true;
+            }
+        }
+        $datos['id']=$usuario[0];
+        $id   = self::update($datos);
+        if(isset($id['exito'])){
+            $respuesta=$id;
+        }else{
+            $respuesta['exito']=true;
         }
         return $respuesta;
     }

@@ -61,7 +61,7 @@ class product_detail
         view::set('is_extra', $is_extra);
         view::set('extra', $extra);
         if($is_description || $is_extra){
-            $tabs=view::render('product-tabs',false,true);
+            $tabs=view::render('product/tabs',false,true);
         }else{
             $tabs="";
         }

@@ -53,7 +53,7 @@ class home extends base
             view::set('lista_productos', $lista_productos);
             view::set('col-md','col-md-6');
             view::set('col-lg','col-lg-4');
-            $product_list=view::render('product-grid',false,true);
+            $product_list=view::render('product/grid',false,true);
             view::set('product_list',$product_list);
             //view::set('title',$seo['titulo']);
             view::set('title', "Nuestros productos destacados");

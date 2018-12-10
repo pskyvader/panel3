@@ -39,7 +39,7 @@ class product extends base
 
         view::set('product_list', $product_list);
         view::set('sidebar', $sidebar);
-        view::render('product-category');
+        view::render('product/category');
 
         $footer = new footer();
         $footer->normal();
@@ -79,7 +79,7 @@ class product extends base
 
         view::set('product_list', $product_list);
         view::set('sidebar', $sidebar);
-        view::render('product-category');
+        view::render('product/category');
 
         $footer = new footer();
         $footer->normal();
@@ -125,7 +125,7 @@ class product extends base
             view::set('imagen_portada', $this->metadata['logo']);
         }
 
-        view::render('product-detail');
+        view::render('product/detail');
 
         $footer = new footer();
         $footer->normal();

@@ -21,6 +21,26 @@ function inicio_login() {
     });
 }
 
+
+$(document).on('submit', 'form.update-datos', function() {
+    var modulo = "cuenta/";
+    var url = create_url(modulo + "datos_process", null, path);
+    var data = $(this).serializeObject();
+    post(url, data, "Modificando datos", null, function(datos) {
+        if (datos.exito) {
+            if (datos.redirect) {
+                var url = create_url(modulo + "logout", null, path);
+                post(url, {}, "", null, function() {
+                    inicio_login();
+                    var url = create_url(modulo + "login", null, path);
+                    go_url(url);
+                });
+            }
+        }
+    });
+    return false;
+});
+
 $(document).on('submit', 'form.registro', function() {
     var modulo = "cuenta/";
     var url = create_url(modulo + "registro_process", null, path);

@@ -1,22 +1,21 @@
 <?php
-namespace app\controllers\back\themes\{theme};
+namespace app\controllers\back\themes\paper;
 
 defined("APPPATH") or die("Acceso denegado");
-use \app\models\{name} as {name}_model;
+use \app\models\region as region_model;
 //use \app\models\administrador as administrador_model;
 //use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 //use \app\models\modulo as modulo_model;
-//use \app\models\table;
 //use \core\functions;
 //use \core\image;
 
-class {name} extends base
+class region extends base
 {
-    protected $url = array('{name}');
-    protected $metadata = array('title' => '{name}','modulo'=>'{name}');
+    protected $url = array('region');
+    protected $metadata = array('title' => 'region','modulo'=>'region');
     protected $breadcrumb = array();
     public function __construct()
     {
-        parent::__construct(new {name}_model);
+        parent::__construct(new region_model);
     }
 }

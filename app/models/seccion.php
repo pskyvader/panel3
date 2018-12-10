@@ -81,7 +81,11 @@ class seccion extends base_model
             $row = array_values($row);
         }
         if(isset($limit)){
-            $row=array_slice($row,$limit2,$limit);
+            if($limit2==0){
+                $row=array_slice($row,$limit2,$limit);
+            }else{
+                $row=array_slice($row,$limit,$limit2);
+            }
         }
         if(isset($return_total)){
             return count($row);

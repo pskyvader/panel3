@@ -5,16 +5,17 @@ defined("APPPATH") or die("Acceso denegado");
 use \app\models\administrador as administrador_model;
 use \app\models\modulo as modulo_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
+use \app\models\table;
+use \core\file;
 use \core\functions;
 use \core\image;
-use \core\file;
 
 class base
 {
-    protected $url = array();
-    protected $metadata = array();
-    protected $class = null;
-    protected $breadcrumb = array();
+    protected $url            = array();
+    protected $metadata       = array();
+    protected $class          = null;
+    protected $breadcrumb     = array();
     protected $contiene_tipos = false;
     protected $contiene_hijos = false;
     public function __construct($class)
@@ -22,8 +23,8 @@ class base
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($this->metadata['modulo']);
         if (isset($moduloconfiguracion[0])) {
             $this->contiene_tipos = (isset($moduloconfiguracion['tipos'])) ? $moduloconfiguracion['tipos'] : false;
-            $this->sub = (isset($moduloconfiguracion['sub'])) ? $moduloconfiguracion['sub'] : '';
-            $this->padre = (isset($moduloconfiguracion['padre'])) ? $moduloconfiguracion['padre'] : '';
+            $this->sub            = (isset($moduloconfiguracion['sub'])) ? $moduloconfiguracion['sub'] : '';
+            $this->padre          = (isset($moduloconfiguracion['padre'])) ? $moduloconfiguracion['padre'] : '';
             if ($this->contiene_tipos && isset($_GET['tipo'])) {
                 $tipo = $_GET['tipo'];
             } else {
@@ -31,16 +32,16 @@ class base
             }
 
             if ($this->padre != '') {
-                $parent = '\app\models\\' . $this->padre;
+                $parent             = '\app\models\\' . $this->padre;
                 $this->class_parent = new $parent();
             }
 
-            $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $tipo));
-            $this->contiene_hijos = (isset($modulo[0]['hijos'])) ? $modulo[0]['hijos'] : false;
+            $modulo                  = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $tipo));
+            $this->contiene_hijos    = (isset($modulo[0]['hijos'])) ? $modulo[0]['hijos'] : false;
             $this->metadata['title'] = $modulo[0]['titulo'];
         }
 
-        $this->class = $class;
+        $this->class      = $class;
         $this->breadcrumb = array(
             array('url' => functions::generar_url(array("home")), 'title' => 'Home', 'active' => ''),
             array('url' => functions::generar_url($this->url), 'title' => ($this->metadata['title']), 'active' => 'active'),
@@ -64,7 +65,7 @@ class base
         /* cabeceras y campos que se muestran en la lista:
         titulo,campo de la tabla a usar, tipo (ver archivo lista.php funcion "field") */
 
-        $list = new lista($this->metadata); //controlador de lista
+        $list          = new lista($this->metadata); //controlador de lista
         $configuracion = $list->configuracion($this->metadata['modulo']);
 
         $where = array();
@@ -76,19 +77,19 @@ class base
         }
         if (isset($this->class_parent)) {
             $class_parent = $this->class_parent;
-                
+
             if (isset($_GET[$class_parent::$idname])) {
                 $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
             }
         }
-        $condiciones = array();
-        $url_detalle = $this->url;
+        $condiciones   = array();
+        $url_detalle   = $this->url;
         $url_detalle[] = 'detail';
-        $respuesta = $list->get_row($class, $where, $condiciones, $url_detalle); //obtener unicamente elementos de la pagina actual
+        $respuesta     = $list->get_row($class, $where, $condiciones, $url_detalle); //obtener unicamente elementos de la pagina actual
 
         if (isset($configuracion['th']['copy'])) {
-            $configuracion['th']['copy']['action'] = $configuracion['th']['copy']['field'];
-            $configuracion['th']['copy']['field'] = 0;
+            $configuracion['th']['copy']['action']  = $configuracion['th']['copy']['field'];
+            $configuracion['th']['copy']['field']   = 0;
             $configuracion['th']['copy']['mensaje'] = 'Copiando';
         }
 
@@ -121,10 +122,10 @@ class base
         }
 
         $data = array( //informacion para generar la vista de la lista, arrays SIEMPRE antes de otras variables!!!!
-            'breadcrumb' => $this->breadcrumb,
-            'th' => $configuracion['th'],
+            'breadcrumb'  => $this->breadcrumb,
+            'th'          => $configuracion['th'],
             'current_url' => functions::generar_url($this->url),
-            'new_url' => functions::generar_url($url_detalle),
+            'new_url'     => functions::generar_url($url_detalle),
         );
         $data = array_merge($data, $respuesta, $configuracion['menu']);
 
@@ -133,16 +134,16 @@ class base
 
     public function detail($var = array())
     {
-        $class = $this->class; // Clase para enviar a controlador de detalle
-        $url_save = $url_list = $this->url;
-        $url_save[] = 'guardar';
+        $class       = $this->class; // Clase para enviar a controlador de detalle
+        $url_save    = $url_list    = $this->url;
+        $url_save[]  = 'guardar';
         $this->url[] = 'detail';
         if (isset($var[0])) {
-            $id = (int) $var[0];
-            $this->url[] = $id;
+            $id                      = (int) $var[0];
+            $this->url[]             = $id;
             $this->metadata['title'] = 'Editar ' . $this->metadata['title'];
         } else {
-            $id = 0;
+            $id                      = 0;
             $this->metadata['title'] = 'Nuevo ' . $this->metadata['title'];
         }
 
@@ -158,12 +159,12 @@ class base
         /* cabeceras y campos que se muestran en el detalle:
         titulo,campo de la tabla a usar, tipo (ver archivo detalle.php funcion "field") */
 
-        $detalle = new detalle($this->metadata); //controlador de detalle
+        $detalle       = new detalle($this->metadata); //controlador de detalle
         $configuracion = $detalle->configuracion($this->metadata['modulo']);
-        $row = ($id != 0) ? ($class::getById($id)) : array();
+        $row           = ($id != 0) ? ($class::getById($id)) : array();
         if ($this->contiene_tipos) {
             $configuracion['campos']['tipo'] = array('title_field' => 'tipo', 'field' => 'tipo', 'type' => 'hidden', 'required' => true);
-            $row['tipo'] = $_GET['tipo'];
+            $row['tipo']                     = $_GET['tipo'];
         }
         if ($this->contiene_hijos && isset($configuracion['campos']['idpadre'])) {
             $categorias = $class::getAll();
@@ -180,7 +181,7 @@ class base
             $configuracion['campos']['idpadre'] = array('title_field' => 'idpadre', 'field' => 'idpadre', 'type' => 'hidden', 'required' => true);
             if ($id == 0) {
                 if (isset($_GET['idpadre'])) {
-                    $row['idpadre'] = functions::encode_json(array((string)$_GET['idpadre']));
+                    $row['idpadre'] = functions::encode_json(array((string) $_GET['idpadre']));
                 } else {
                     $row['idpadre'] = functions::encode_json(array('0'));
                 }
@@ -191,32 +192,55 @@ class base
 
         if (isset($this->class_parent)) {
             $class_parent = $this->class_parent;
-            $idparent=$class_parent::$idname;
+            $idparent     = $class_parent::$idname;
+
+            $is_array = true;
+            $fields   = table::getByname($class::$table);
+            if (isset($fields[$idparent]) && $fields[$idparent]['tipo'] != 'longtext') {
+                $is_array = false;
+            }
             if (isset($configuracion['campos'][$idparent])) {
                 $categorias = $class_parent::getAll();
-                $configuracion['campos'][$idparent]['parent'] = functions::crear_arbol($categorias);
-            }else{
+                if ($is_array) {
+                    $configuracion['campos'][$idparent]['parent'] = functions::crear_arbol($categorias);
+                } else {
+                    $configuracion['campos'][$idparent]['parent'] = $categorias;
+                }
+            } else {
                 $configuracion['campos'][$idparent] = array('title_field' => $idparent, 'field' => $idparent, 'type' => 'hidden', 'required' => true);
                 if ($id == 0) {
                     if (isset($_GET[$idparent])) {
-                        $row[$idparent] = functions::encode_json(array((string)$_GET[$idparent]));
+                        if ($is_array) {
+                            $row[$idparent] = functions::encode_json(array((string) $_GET[$idparent]));
+                        } else {
+                            $row[$idparent] = (int) $_GET[$idparent];
+                        }
+
                     } else {
-                        $row[$idparent] = functions::encode_json(array('0'));
+                        if ($is_array) {
+                            $row[$idparent] = functions::encode_json(array('0'));
+                        } else {
+                            $row[$idparent] = 0;
+                        }
                     }
-                }else{
-                    $row[$idparent] = functions::encode_json($row[$idparent]);
+                } else {
+                    if ($is_array) {
+                        $row[$idparent] = functions::encode_json($row[$idparent]);
+                    } else {
+                        $row[$idparent] = $row[$idparent];
+                    }
                 }
             }
         }
 
         $data = array( //informacion para generar la vista del detalle, arrays SIEMPRE antes de otras variables!!!!
-            'breadcrumb' => $this->breadcrumb,
-            'campos' => $configuracion['campos'],
-            'row' => $row,
-            'id' => ($id != 0) ? $id : '',
+            'breadcrumb'  => $this->breadcrumb,
+            'campos'      => $configuracion['campos'],
+            'row'         => $row,
+            'id'          => ($id != 0) ? $id : '',
             'current_url' => functions::generar_url($this->url),
-            'save_url' => functions::generar_url($url_save),
-            'list_url' => functions::generar_url($url_list),
+            'save_url'    => functions::generar_url($url_save),
+            'list_url'    => functions::generar_url($url_list),
         );
 
         $detalle->normal($data, $class);
@@ -245,7 +269,7 @@ class base
     }
     public function excel()
     {
-        $respuesta=array('exito'=>false,'mensaje'=>'Debes recargar la pagina');
+        $respuesta = array('exito' => false, 'mensaje' => 'Debes recargar la pagina');
         if ($this->contiene_tipos && !isset($_GET['tipo'])) {
             echo json_encode($respuesta);
             return;
@@ -267,15 +291,14 @@ class base
                 $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
             }
         }
-        $select="";
-        $respuesta = lista::excel($this->class,$where,$select,$this->metadata['title']);
+        $select    = "";
+        $respuesta = lista::excel($this->class, $where, $select, $this->metadata['title']);
         echo json_encode($respuesta);
     }
 
-
     public function get_all()
     {
-        $respuesta=array('exito'=>false,'mensaje'=>'Debes recargar la pagina');
+        $respuesta = array('exito' => false, 'mensaje' => 'Debes recargar la pagina');
         if ($this->contiene_tipos && !isset($_GET['tipo'])) {
             echo json_encode($respuesta);
             return;
@@ -298,14 +321,15 @@ class base
             }
         }
         $condiciones = array();
-        $select="";
-        $class=$this->class;
-        $row=$class::getAll($where, $condiciones, $select);
+        $select      = "";
+        $class       = $this->class;
+        $row         = $class::getAll($where, $condiciones, $select);
         echo json_encode($row);
     }
 
-    public function regenerar(){
-        $respuesta=image::regenerar($_POST);
+    public function regenerar()
+    {
+        $respuesta = image::regenerar($_POST);
         echo json_encode($respuesta);
     }
 
@@ -320,7 +344,7 @@ class base
         $respuesta = image::upload_tmp($this->metadata['modulo']);
         echo json_encode($respuesta);
     }
-    
+
     public function upload_file()
     {
         $respuesta = file::upload_tmp();

@@ -62,7 +62,7 @@ class product_list extends base
             view::set('is_sidebar_category', $is_sidebar_categories);
             view::set('sidebar_categories', $sidebar_categories);
             view::set('is_sidebar_prices', $is_sidebar_prices);
-            return view::render('product-sidebar', false, true);
+            return view::render('product/sidebar', false, true);
         }else{
             return "";
         }
@@ -170,9 +170,9 @@ class product_list extends base
                 }
 
                 view::set('col-md', 'col-md-12');
-                $product_list = view::render('product-grid', false, true);
+                $product_list = view::render('product/grid', false, true);
             } else {
-                $product_list = view::render('product-list', false, true);
+                $product_list = view::render('product/list', false, true);
             }
         }
         return $product_list;
