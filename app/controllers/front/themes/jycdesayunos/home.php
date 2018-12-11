@@ -47,14 +47,15 @@ class home extends base
 
         $productos_destacados = producto_model::getAll(array('tipo' => 1, 'destacado' => true));
         if (count($productos_destacados > 0)) {
-            $seo             = seo::getById(8);
-            $this->url[0]=$seo['url'];
-            $lista_productos = $this->lista_productos($productos_destacados,'detail','foto2');
+            $seo          = seo::getById(8);
+            $this->url[0] = $seo['url'];
+            $pl              = new product_list(); //product_list.php
+            $lista_productos = $pl->lista_productos($productos_destacados, 'detail', 'foto2'); //Lista de productos, renderiza vista
             view::set('lista_productos', $lista_productos);
-            view::set('col-md','col-md-6');
-            view::set('col-lg','col-lg-4');
-            $product_list=view::render('product/grid',false,true);
-            view::set('product_list',$product_list);
+            view::set('col-md', 'col-md-6');
+            view::set('col-lg', 'col-lg-4');
+            $product_list = view::render('product/grid', false, true);
+            view::set('product_list', $product_list);
             //view::set('title',$seo['titulo']);
             view::set('title', "Nuestros productos destacados");
             view::render('home-products');

@@ -164,9 +164,9 @@ var after_guardar = function(data) {
     if (permanecer && typeof(data.id) != 'undefined') {
         id = data.id;
         if ($('form#formulario input[name=id]').val() == "") {
-            go_url(create_url(null, id));
+            go_url(create_url(null, id),'a');
         } else {
-            go_url(create_url(null));
+            go_url(create_url(null),'a');
         }
     } else {
         go_url(url_list);

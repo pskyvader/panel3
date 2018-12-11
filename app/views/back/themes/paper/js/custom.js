@@ -41,7 +41,6 @@ function inicio() {
         append: "\n"
     });
     var update_content = $('#update_content');
-    notificacion(false);
 
     if (update_content.length > 0) {
         setTimeout(get_update, 1000);

@@ -270,21 +270,25 @@ class usuario extends base_model
 
     public static function recuperar($email)
     {
+        $respuesta = array('exito' => false, 'mensaje' => '');
         $nombre_sitio = app::$_title;
         if ($email == '') {
-            return false;
+            $respuesta['mensaje']='Debes llenar tu email';
+            return $respuesta;
         }
 
         $where       = array('email' => strtolower($email));
         $condiciones = array('limit' => 1);
         $row         = static::getAll($where, $condiciones);
 
-        if (count($row) != 1) {
-            return false;
+        if (count($row) <1) {
+            $respuesta['mensaje']='Este email no existe, puedes registrarte en el link correspondiente';
+            return $respuesta;
         } else {
             $usuario = $row[0];
             if (!$usuario['estado']) {
-                return false;
+                $respuesta['mensaje']='Tu usuario existe pero ha sido desactivado. Por favor envia un mensaje en el formulario de contacto.';
+                return $respuesta;
             } else {
                 $pass = functions::generar_pass();
                 $data = array('id' => $usuario[0], 'pass' => $pass, 'pass_repetir' => $pass);
@@ -304,7 +308,8 @@ class usuario extends base_model
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $usuario);
                     return $respuesta;
                 } else {
-                    return false;
+                    $respuesta['mensaje']='Ha ocurrido un error al recuperar tu contraseña, por favor intentalo nuevamente en unos minutos.';
+                    return $respuesta;
                 }
 
             }

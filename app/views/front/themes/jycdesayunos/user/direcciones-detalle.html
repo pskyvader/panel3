@@ -1,0 +1,69 @@
+<section class="user user-direcciones-detalle p-t-60 pb-5">
+    <div class="container">
+        <div class="row">
+            {sidebar}
+            <div class="col-md-8 col-lg-9">
+                <h2 class="title-section">{title}</h2>
+                <form class="direccion my-4">
+                    <input type="hidden" name="token" value="{token}" required="">
+                    <input type="hidden" name="id" value="{id}">
+                    <div class="row">
+                        <div class="col-12 mt-5 mb-4">
+                            <h5>Informacion de envio</h5>
+                            <hr>
+                            <p>Informacion obligatoria.</p>
+                        </div>
+                        {foreach campos_requeridos}
+                        {if is_text}
+                        <div class="col-lg-6">
+                            <label>{texto_ayuda} &nbsp;</label>
+                            <input type="{tipo}" class="form-control" name="{field}" placeholder="{titulo} {if required} * {/if required}" {if required} required="" {/if required} value="{value}">
+                            
+                        </div>
+                        {else is_text}
+                        <div class="col-lg-6">
+                                <label>{texto_ayuda} &nbsp;</label>
+                            <select class="form-control" name="{field}" id="{field}" {if required} required="" {/if required}>
+                                <option value="" selected="" hidden="" disabled="">{titulo} {if required} * {/if required}</option>
+                                {foreach options}
+                                <option value="{value}" {if selected} selected="" {/if selected}>{title}</option>
+                                {/foreach options}
+                            </select>
+                           </div>
+                        {/if is_text}
+                        {/foreach campos_requeridos}
+                        <div class="col-12 mt-5 mb-4">
+                                <h5>Informacion opcional</h5>
+                                <hr>
+                            <p>Los siguientes campos son opcionales. <br> <em>Rogamos llenar la mayor cantidad de datos para proveer un mejor servicio de entrega.</em></p>
+                            <a class="btn btn-primary collapsed" data-toggle="collapse" href="#campos_opcionales" role="button" aria-expanded="false" aria-controls="campos_opcionales" onclick="$(this).hide();">
+                                Mostrar campos opcionales
+                            </a>
+                        </div>
+                        <div class="collapse col-12" id="campos_opcionales">
+                            <div class="row">
+                                {foreach campos_opcionales}
+                                {if is_text}
+                                <div class="col-lg-6">
+                                        <label>{texto_ayuda} &nbsp;</label>
+                                    <input type="{tipo}" class="form-control" name="{field}" placeholder="{titulo} {if required} * {/if required}" {if required} required="" {/if required} value="{value}">
+                                </div>
+                                {else is_text}
+                                <div class="col-12">
+                                    <label for="{field}">{titulo} {if required} * {/if required}</label>
+                                    <br />
+                                    <sub>{texto_ayuda} &nbsp;</sub>
+                                    <textarea name="{field}" class="form-control" id="{field}" cols="30" rows="10" {if required} required="" {/if required}>{value}</textarea>
+                                </div>
+                                {/if is_text}
+                                {/foreach campos_opcionales}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

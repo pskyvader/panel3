@@ -47,7 +47,7 @@ $(document).on('submit', 'form.registro', function() {
     var data = $(this).serializeObject();
     post(url, data, "Enviando datos de registro", null, function(datos) {
         if (datos.exito) {
-            var url = create_url(modulo + "datos", null, path);
+            var url = create_url(modulo + "direccion", null, path);
             inicio_login();
             go_url(url);
         }
@@ -62,6 +62,25 @@ $(document).on('submit', 'form.login', function() {
         if (datos.exito) {
             var url = create_url(modulo + "datos", null, path);
             inicio_login();
+            go_url(url);
+        }
+    });
+    return false;
+});
+$(document).on('submit', 'form.recuperar', function() {
+    var modulo = "cuenta/";
+    var url = create_url(modulo + "recuperar_process", null, path);
+    var data = $(this).serializeObject();
+    post(url, data, "Recuperando tu contraseña");
+    return false;
+});
+$(document).on('submit', 'form.direccion', function() {
+    var modulo = "cuenta/";
+    var url = create_url(modulo + "direccion_process", null, path);
+    var data = $(this).serializeObject();
+    post(url, data, "Guardando tu direccion", null, function(datos) {
+        if (datos.exito) {
+            var url = create_url(modulo + "direcciones", null, path);
             go_url(url);
         }
     });

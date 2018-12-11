@@ -23,7 +23,14 @@
                     <li><i class="fa fa-star-o"></i></li>
                     <li></li>
                 </ul>-->
-                    <div class="card-price-group"><span class="card-price">{price}</span></div>
+                <div class="card-price-group">
+                        {if is_descuento}
+                        <span class="old-price">{old_price}</span>
+                        <span class="card-price">{price}</span>
+                        {else is_descuento}
+                        <span class="card-price">{price}</span>
+                        {/if is_descuento}
+                    </div>
                     <p>{description}</p>
                     {if is_stock}
                     <button class="btn btn-add-cart" onclick="add_cart({id});">Añadir al carro</button>

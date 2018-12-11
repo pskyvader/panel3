@@ -35,7 +35,14 @@
                             <li><i class="fa fa-star-o"></i></li>
                             <li><i>(1 review)</i></li>
                         </ul>-->
-                        <p class="card-price">{price}</p>
+                        <div class="card-price-group">
+                                {if is_descuento}
+                                <span class="old-price">{old_price}</span>
+                                <span class="card-price">{price}</span>
+                                {else is_descuento}
+                                <span class="card-price">{price}</span>
+                                {/if is_descuento}
+                            </div>
                         <p id="nav-home2" class="resumen" role="tabpanel" aria-labelledby="nav-home-tab" aria-expanded="true">{text}</p>
                         {if is_stock}
                         {else is_stock}

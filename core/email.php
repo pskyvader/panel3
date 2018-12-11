@@ -75,7 +75,6 @@ class email
         $nombre_sitio = $config['title'];
         require_once(PROJECTPATH.'/phpmailer/PHPMailerAutoload.php');
         $mail = new PHPMailer;
-        $respuesta = array('exito' => false, 'mensaje' => '');
         $asunto = utf8_decode($asunto);
         $body = utf8_decode($body);
         $nombre_sitio = utf8_decode($nombre_sitio);
@@ -112,8 +111,8 @@ class email
         $logo = logo::getById(8);
         $mail->AddEmbeddedImage(image::generar_dir($logo['foto'][0], 'email'), 'logo');
 
+        $respuesta = array('exito' => false, 'mensaje' => '');
         if (!$mail->send()) {
-            $respuesta['exito'] = false;
             $respuesta['mensaje'] = "Mailer Error: " . $mail->ErrorInfo;
         } else {
             $respuesta['exito'] = true;

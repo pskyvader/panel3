@@ -5,6 +5,7 @@ defined("APPPATH") or die("Acceso denegado");
 use \app\models\configuracion as configuracion_model;
 use \app\models\producto as producto_model;
 use \app\models\productocategoria as productocategoria_model;
+use \core\image;
 use \core\functions;
 use \core\view;
 
@@ -227,4 +228,34 @@ class product_list extends base
         );
         view::set('pagination', $pagination);
     }
+
+    
+    protected function lista_productos($row, $url = 'detail', $recorte = 'foto1')
+    {
+        $lista = array();
+        foreach ($row as $key => $v) {
+            $portada = image::portada($v['foto']);
+            $c       = array(
+                'id'          => $v[0],
+                'title'       => $v['titulo'],
+                'is_descuento'       => ($v['precio_final']!=$v['precio']),
+                'price'       => functions::formato_precio($v['precio_final']),
+                'old_price'       => functions::formato_precio($v['precio']),
+                'is_stock'       => ($v['stock']>0),
+                'image'       => image::generar_url($portada, $recorte),
+                'description' => strip_tags($v['resumen']),
+                'srcset'      => array(),
+                'url'         => functions::url_seccion(array($this->url[0], $url), $v),
+            );
+            $src = image::generar_url($portada, $recorte, 'webp');
+            if ($src != '') {
+                $c['srcset'][] = array('media' => '', 'src' => $src, 'type' => 'image/webp');
+            }
+            if ($c['image'] != "") {
+                $lista[] = $c;
+            }
+        }
+        return $lista;
+    }
+
 }

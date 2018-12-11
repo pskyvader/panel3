@@ -134,9 +134,9 @@ function urlamigable(uri) {
         .replace(/-*$/, '');
 }
 
-function go_url(url) {
+function go_url(url,data) {
     if (check_link(url)) {
-        cargar_ajax(url);
+        cargar_ajax(url,true,data);
     } else {
         $(location).prop('href', url);
     }
@@ -255,6 +255,7 @@ function iniciar(body, head, data_form) {
         activar_imagen();
         if (data_form == '') {
             mover('body', 0);
+            notificacion(false);
         }
         barra(100);
     }

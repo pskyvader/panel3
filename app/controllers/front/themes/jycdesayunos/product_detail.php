@@ -71,7 +71,9 @@ class product_detail
         view::set('id', $this->producto[0]);
         view::set('title', $this->producto['titulo']);
         view::set('text', $this->producto['resumen']);
-        view::set('price', functions::formato_precio($this->producto['precio']));
+        view::set('is_descuento', ($this->producto['precio']!=$this->producto['precio_final']));
+        view::set('old_price', functions::formato_precio($this->producto['precio']));
+        view::set('price', functions::formato_precio($this->producto['precio_final']));
         view::set('stock', $this->producto['stock']);
         view::set('is_stock', ($this->producto['stock']>0));
 

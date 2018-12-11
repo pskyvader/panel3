@@ -2,6 +2,7 @@
 namespace app\controllers\front\themes\jycdesayunos;
 
 defined("APPPATH") or die("Acceso denegado");
+use \core\cache;
 use \core\view;
 
 class error
@@ -11,6 +12,7 @@ class error
     protected $breadcrumb = array();
     public function __construct()
     {
+        cache::set_cache(false);
     }
     public function index()
     {
