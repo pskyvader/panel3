@@ -48,7 +48,8 @@ class home extends base
         $productos_destacados = producto_model::getAll(array('tipo' => 1, 'destacado' => true));
         if (count($productos_destacados > 0)) {
             $seo          = seo::getById(8);
-            $this->url[0] = $seo['url'];
+            //$this->url[0] = $seo['url'];
+            $_REQUEST['idseo']=8;
             $pl              = new product_list(); //product_list.php
             $lista_productos = $pl->lista_productos($productos_destacados, 'detail', 'foto2'); //Lista de productos, renderiza vista
             view::set('lista_productos', $lista_productos);

@@ -207,7 +207,7 @@ class product_list extends base
         $_GET['page'] = $page - 1;
         $pagination[] = array(
             'class_page' => 'previous ' . (($page > 1) ? '' : 'disabled'),
-            'url_page'   => "?" . http_build_query($_GET),
+            'url_page'   => (($page > 1) ?  functions::generar_url($this->url) : functions::generar_url($this->url,false)),
             'text_page'  => '<i class="fa fa-angle-left"> </i>',
         );
 
@@ -215,7 +215,7 @@ class product_list extends base
             $_GET['page'] = $i;
             $pagination[] = array(
                 'class_page' => (($page == $i) ? 'active' : ''),
-                'url_page'   => "?" . http_build_query($_GET),
+                'url_page'   => functions::generar_url($this->url),
                 'text_page'  => $i,
             );
         }
@@ -223,14 +223,14 @@ class product_list extends base
         $_GET['page'] = $page + 1;
         $pagination[] = array(
             'class_page' => 'next ' . (($page < $total) ? '' : 'disabled'),
-            'url_page'   => "?" . http_build_query($_GET),
+            'url_page'   => (($page < $total) ? functions::generar_url($this->url) : functions::generar_url($this->url,false)) ,
             'text_page'  => '<i class="fa fa-angle-right"> </i> ',
         );
         view::set('pagination', $pagination);
     }
 
     
-    protected function lista_productos($row, $url = 'detail', $recorte = 'foto1')
+    public function lista_productos($row, $url = 'detail', $recorte = 'foto1')
     {
         $lista = array();
         foreach ($row as $key => $v) {

@@ -105,6 +105,16 @@ class detalle
                     'icon'        => (isset($fila[$campos['field']])) ? (($fila[$campos['field']]) ? 'fa-check' : 'fa-close') : 'fa-question-circle',
                 );
                 break;
+            case 'color':
+            $data = array(
+                'title_field' => $campos['title_field'],
+                'field'       => $campos['field'],
+                'is_required' => $campos['required'],
+                'required'    => ($campos['required']) ? 'required="required"' : '',
+                'value'       => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
+                'help'        => (isset($campos['help'])) ? $campos['help'] : '',
+            );
+            break;
             case 'daterange':
                 $data = array(
                     'title_field' => $campos['title_field'],

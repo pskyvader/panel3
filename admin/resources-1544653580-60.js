@@ -547,7 +547,7 @@ var option=$('<option value="'+v+'" '+selected+'>'+v+'</option>');iconos.append(
 if($('div.form-group.multiple').length>0){inicio_multiple()}
 if($('div.form-group.map').length>0){inicio_map()}
 if($('form#formulario input.url').length>0){$('body').on('keyup','form#formulario input.url',function(){$($(this)).val(urlamigable($(this).val()))});$('body').on('blur','form#formulario input.url',function(){$($(this)).val(urlamigable($(this).val()))});$('body').on('keyup','form#formulario input[name=titulo]',function(){$('form#formulario input.url').first().val(urlamigable($(this).val()))});$('body').on('blur','form#formulario input[name=titulo]',function(){$('form#formulario input.url').first().val(urlamigable($(this).val()))})}
-$('body').on('change','.recursive-input',function(){count_elementos($(this))});$('.daterange').daterangepicker({timePicker:!0,timePicker24Hour:!0,timePickerIncrement:15,locale:{format:'DD/MM/YYYY HH:mm'}})}
+$('body').on('change','.recursive-input',function(){count_elementos($(this))});$('.daterange').daterangepicker({timePicker:!0,timePicker24Hour:!0,timePickerIncrement:15,locale:{format:'DD/MM/YYYY HH:mm'}});$('.cpicker').colorpicker()}
 function count_elementos(e){setTimeout(function(){var n=$('input:checked',e).length;if(n>0){$('.name',e).val(n)}else{$('.name',e).val('')}},100)}
 function generar(longitud){var caracteres="abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123467890";var pass="";for(i=0;i<longitud;i++){pass+=caracteres.charAt(Math.floor(Math.random()*caracteres.length))}
 return pass}

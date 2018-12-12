@@ -26,7 +26,7 @@ class header
             $logo               = logo_model::getById(5);
             $data['logo']       = image::generar_url($logo['foto'][0], 'sitio');
             $seo                = seo::getById(1);
-            $data['path']       = functions::generar_url(array($seo['url']));
+            $data['path']       = functions::generar_url(array($seo['url']),false);
             $data['title']      = $config['title'];
             view::set_array($data);
 

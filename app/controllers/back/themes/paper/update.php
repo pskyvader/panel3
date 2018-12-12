@@ -5,6 +5,7 @@ defined("APPPATH") or die("Acceso denegado");
 use \app\models\administrador as administrador_model;
 use \app\models\configuracion as configuracion_model;
 use \core\app;
+use \core\cache;
 use \core\functions;
 use \core\view;
 
@@ -187,6 +188,7 @@ class update extends base
 
             $log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100);
             file_put_contents($this->archivo_log, functions::encode_json($log));
+            cache::delete_cache();
         }
         echo json_encode($respuesta);
     }

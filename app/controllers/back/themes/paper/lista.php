@@ -124,10 +124,10 @@ class lista
             1000    => array('value' => 1000, 'text' => 1000, 'active' => ''),
             1000000 => array('value' => 1000000, 'text' => 'Todos', 'active' => ''),
         );
-        if(isset($limits[$data['limit']])){
+        if (isset($limits[$data['limit']])) {
             $limits[$data['limit']]['active'] = 'selected';
         }
-        $data['limits']                   = $limits;
+        $data['limits'] = $limits;
 
         $pagination = array();
         $rango      = 5;
@@ -179,7 +179,6 @@ class lista
         $type = $th['type'];
         switch ($type) {
             case 'active':
-                $html = $this->templates[$type];
                 $data = array(
                     'field'  => $th['field'],
                     'active' => $fila[$th['field']],
@@ -187,23 +186,18 @@ class lista
                     'class'  => ($fila[$th['field']]) ? 'btn-success' : 'btn-danger',
                     'icon'   => ($fila[$th['field']]) ? 'fa-check' : 'fa-close',
                 );
-                $content = view::render_template($data, $html);
-                return $content;
+                break;
+            case 'color':
+                $data = array('value' => $fila[$th['field']]);
                 break;
             case 'delete':
-                $html    = $this->templates[$type];
-                $data    = array('id' => $fila[0]);
-                $content = view::render_template($data, $html);
-                return $content;
+                $data = array('id' => $fila[0]);
                 break;
             case 'link':
-                $html    = $this->templates[$type];
-                $data    = array('text' => $th['title_th'], 'url' => $fila[$th['field']]);
-                $content = view::render_template($data, $html);
-                return $content;
+                $data = array('text' => $th['title_th'], 'url' => $fila[$th['field']]);
                 break;
             case 'image':
-                if (isset($fila[$th['field']]) && is_array($fila[$th['field']]) && count($fila[$th['field']])>0) {
+                if (isset($fila[$th['field']]) && is_array($fila[$th['field']]) && count($fila[$th['field']]) > 0) {
                     $portada      = image::portada($fila[$th['field']]);
                     $thumb_url    = image::generar_url($portada, 'thumb');
                     $zoom_url     = image::generar_url($portada, 'zoom');
@@ -211,27 +205,25 @@ class lista
                 } else {
                     $thumb_url = $zoom_url = $original_url = '';
                 }
-                $html    = $this->templates[$type];
-                $data    = array('title' => $th['title_th'], 'url' => $thumb_url, 'zoom' => $zoom_url, 'original' => $original_url, 'id' => $fila[0]);
-                $content = view::render_template($data, $html);
-                return $content;
+                $data = array('title' => $th['title_th'], 'url' => $thumb_url, 'zoom' => $zoom_url, 'original' => $original_url, 'id' => $fila[0]);
                 break;
             case 'action':
-                $html = $this->templates[$type];
                 $data = array(
                     'text'    => $th['title_th'],
                     'id'      => $fila[$th['field']],
                     'action'  => $th['action'],
                     'mensaje' => $th['mensaje'],
                 );
-                $content = view::render_template($data, $html);
-                return $content;
                 break;
             case 'text':
             default:
                 return $fila[$th['field']];
                 break;
         }
+        
+        $html = $this->templates[$type];
+        $content = view::render_template($data, $html);
+        return $content;
     }
     public static function configuracion($modulo)
     {
@@ -310,18 +302,18 @@ class lista
         return $respuesta;
     }
 
-    public static function excel($class, $where, $select,$title)
+    public static function excel($class, $where, $select, $title)
     {
-        $respuesta   = array('exito' => false, 'mensaje' => 'No hay datos para exportar');
-        $condiciones = array();
-        $condiciones['limit'] = $_POST['limit'];
+        $respuesta             = array('exito' => false, 'mensaje' => 'No hay datos para exportar');
+        $condiciones           = array();
+        $condiciones['limit']  = $_POST['limit'];
         $condiciones['limit2'] = $_POST['limit2'];
-        $row         = $class::getAll($where, $condiciones, $select);
+        $row                   = $class::getAll($where, $condiciones, $select);
         if (count($row) > 0) {
             $head   = array();
             $delete = array();
             foreach ($row[0] as $k => $v) {
-                if (is_array($v) || is_int($k) || $k=='tipo' || $k=='orden' || $k=='estado' || $k==$class::$idname) {
+                if (is_array($v) || is_int($k) || $k == 'tipo' || $k == 'orden' || $k == 'estado' || $k == $class::$idname) {
                     $delete[] = $k;
                 } else {
                     $head[] = $k;
@@ -340,7 +332,7 @@ class lista
             $respuesta['mensaje']  = "Excel generado.";
             $respuesta['exportar'] = $row;
             $respuesta['head']     = $head;
-            $respuesta['title']     = $title;
+            $respuesta['title']    = $title;
         }
         return $respuesta;
     }

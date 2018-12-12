@@ -13,6 +13,7 @@ class moduloconfiguracion extends base
     protected $tipos_mostrar = array(
         'action' => array('text' => 'Accion', 'value' => 'action'),
         'active' => array('text' => 'Active', 'value' => 'active'),
+        'color' => array('text' => 'Color', 'value' => 'color'),
         'delete' => array('text' => 'Eliminar', 'value' => 'delete'),
         'image' => array('text' => 'Imagen', 'value' => 'image'),
         'link' => array('text' => 'Link', 'value' => 'link'),
@@ -24,6 +25,7 @@ class moduloconfiguracion extends base
         'multiple_file' => array('text' => 'Archivo multiple', 'value' => 'multiple_file'),
         'recursive_checkbox' => array('text' => 'Arbol de botones checkbox', 'value' => 'recursive_checkbox'),
         'recursive_radio' => array('text' => 'Arbol de botones radio', 'value' => 'recursive_radio'),
+        'color' => array('text' => 'Color', 'value' => 'color'),
         'password' => array('text' => 'Contraseña', 'value' => 'password'),
         'editor' => array('text' => 'Editor', 'value' => 'editor'),
         'email' => array('text' => 'Email', 'value' => 'email'),

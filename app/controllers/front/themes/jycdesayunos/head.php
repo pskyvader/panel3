@@ -11,20 +11,20 @@ use \core\view;
 class head
 {
     private $data = array(
-        'favicon' => '',
-        'keywords' => false,
-        'keywords_text' => '',
-        'description' => false,
+        'favicon'          => '',
+        'keywords'         => false,
+        'keywords_text'    => '',
+        'description'      => false,
         'description_text' => '',
-        'title' => '',
-        'current_url' => '',
-        'image' => false,
-        'image_url' => '',
-        'logo' => '',
-        'color_primario' => '',
-        'manifest_url' => '',
-        'path' => '',
-        'class' => '',
+        'title'            => '',
+        'current_url'      => '',
+        'image'            => false,
+        'image_url'        => '',
+        'logo'             => '',
+        'color_primario'   => '',
+        'manifest_url'     => '',
+        'path'             => '',
+        'class'            => '',
     );
 
     public function __construct($metadata)
@@ -34,16 +34,16 @@ class head
                 $this->data[$key] = $value;
             }
         }
-        $config = app::getConfig();
-        $this->data['current_url'] = functions::current_url();
-        $this->data['path'] = app::$_path;
+        $config                       = app::getConfig();
+        $this->data['current_url']    = functions::current_url();
+        $this->data['path']           = app::$_path;
         $this->data['color_primario'] = $config['color_primario'];
         $this->data['googlemaps_key'] = $config['googlemaps_key'];
         $this->data['google_captcha'] = $config['google_captcha'];
 
-        $title = $config['title'];
+        $title       = $config['title'];
         $short_title = $config['short_title'];
-        $titulo = $this->data['title'] . ' - ' . $title;
+        $titulo      = $this->data['title'] . ' - ' . $title;
         if (strlen($titulo) > 75) {
             $titulo = $this->data['title'] . ' - ' . $short_title;
         }
@@ -54,18 +54,18 @@ class head
         if (strlen($titulo) > 75) {
             $titulo = substr($this->data['title'], 0, 75);
         }
-        $this->data['title'] = $titulo;
+        $this->data['title']            = $titulo;
         $this->data['description_text'] = strip_tags($this->data['description_text']);
-        $this->data['keywords'] = strip_tags($this->data['keywords_text'] != '');
-        $this->data['description'] = strip_tags($this->data['description_text'] != '');
-        $logo = logo_model::getById(5);
-        $this->data['logo'] = image::generar_url($logo['foto'][0], 'social');
-        if (isset($metadata['image']) && $metadata['image']!='') {
+        $this->data['keywords']         = strip_tags($this->data['keywords_text'] != '');
+        $this->data['description']      = strip_tags($this->data['description_text'] != '');
+        $logo                           = logo_model::getById(5);
+        $this->data['logo']             = image::generar_url($logo['foto'][0], 'social');
+        if (isset($metadata['image']) && $metadata['image'] != '') {
             $this->data['image_url'] = $metadata['image'];
-            $this->data['image'] = true;
+            $this->data['image']     = true;
         }
-        $logo = logo_model::getById(1);
-        $this->data['favicon'] = image::generar_url($logo['foto'][0], 'favicon');
+        $logo                       = logo_model::getById(1);
+        $this->data['favicon']      = image::generar_url($logo['foto'][0], 'favicon');
         $this->data['manifest_url'] = app::get_url() . 'manifest.js';
     }
     public function normal()

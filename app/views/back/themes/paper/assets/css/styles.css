@@ -5724,7 +5724,7 @@ span[data-style=panel-brown]{background-color:#795548}
 .colorpicker.alpha .colorpicker-alpha{display:block}
 .colorpicker-color{height:10px;margin-top:5px;clear:both;background-image:url(../plugins/form-colorpicker/img/bootstrap-colorpicker/alpha.png);background-position:0 100%}
 .colorpicker-color div{height:10px}
-.input-group.color .input-group-addon i{display:block;cursor:pointer;width:16px;height:16px}
+.input-group.color .input-group-addon i{display:block;cursor:pointer;width:20px;height:20px}
 /*!
  * Datepicker for Bootstrap
  *
