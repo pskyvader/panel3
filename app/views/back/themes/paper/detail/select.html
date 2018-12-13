@@ -1,7 +1,7 @@
 <label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
 <div class="col-sm-8">
     <select id="{field}" name="{field}" class="form-control" {required}> 
-        <option value="" selected="selected">Selecciona</option> 
+        <option value="" selected="selected" {if is_required} hidden="" disabled="" {/if is_required}>Selecciona</option> 
         {foreach option}
             <option value="{value}" {selected}>{text}</option> 
         {/foreach option} 

@@ -23,6 +23,7 @@ class header
             $this->data['logo_min'] = image::generar_url($logo['foto'][0], 'panel_min');
             $this->data['url_exit'] = functions::generar_url(array('logout'), false);
             view::set_array($this->data);
+            view::set('date', date('Y-m-d H:i:s'));
             view::render('header');
         }
     }

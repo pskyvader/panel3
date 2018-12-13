@@ -31,14 +31,26 @@ class base
                 $tipo = 0;
             }
 
-            if ($this->padre != '') {
-                $parent             = '\app\models\\' . $this->padre;
-                $this->class_parent = new $parent();
-            }
 
             $modulo                  = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $tipo));
             $this->contiene_hijos    = (isset($modulo[0]['hijos'])) ? $modulo[0]['hijos'] : false;
             $this->metadata['title'] = $modulo[0]['titulo'];
+            
+            if ($this->padre != '') {
+                $parent             = '\app\models\\' . $this->padre;
+                $this->class_parent = new $parent();
+                if (isset($_GET[$this->class_parent::$idname])) {
+                    $p=$this->class_parent::getById($_GET[$this->class_parent::$idname]);
+                    if(count($p>0)){
+                        if(isset($p['titulo']) && $p['titulo']!=''){
+                            $this->metadata['title'].=' - '.$p['titulo'];
+                        }elseif(isset($p['nombre']) && $p['nombre']!=''){
+                            $this->metadata['title'].=' - '.$p['nombre'];
+                        }
+                    }
+
+                }
+            }
         }
 
         $this->class      = $class;

@@ -29,6 +29,8 @@ class moduloconfiguracion extends base
         'password' => array('text' => 'Contraseña', 'value' => 'password'),
         'editor' => array('text' => 'Editor', 'value' => 'editor'),
         'email' => array('text' => 'Email', 'value' => 'email'),
+        'date' => array('text' => 'Fecha', 'value' => 'date'),
+        'grupo_pedido' => array('text' => 'Grupos de pedido', 'value' => 'grupo_pedido'),
         'image' => array('text' => 'Imagen', 'value' => 'image'),
         'multiple_image' => array('text' => 'Imagen multiple', 'value' => 'multiple_image'),
         'map' => array('text' => 'Mapa', 'value' => 'map'),

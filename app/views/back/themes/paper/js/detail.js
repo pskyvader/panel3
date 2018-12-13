@@ -56,6 +56,7 @@ function inicio_detail() {
     if ($('div.form-group.map').length > 0) {
         inicio_map();
     }
+    inicio_pedido();
 
     if ($('form#formulario input.url').length > 0) {
         $('body').on('keyup', 'form#formulario input.url', function() {
@@ -86,6 +87,10 @@ function inicio_detail() {
         }
     });
 
+    $(".date").datetimepicker({
+        todayHighlight: true
+    });
+
     $('.cpicker').colorpicker();
 }
 
@@ -102,7 +107,7 @@ function count_elementos(e) {
 }
 
 function generar(longitud) {
-    var caracteres = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123467890";
+    var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     var pass = "";
     for (i = 0; i < longitud; i++) {
         pass += caracteres.charAt(Math.floor(Math.random() * caracteres.length));

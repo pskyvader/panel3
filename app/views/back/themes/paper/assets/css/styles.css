@@ -5754,7 +5754,7 @@ span[data-style=panel-brown]{background-color:#795548}
 .datepicker.months div.datepicker-months{display:block}
 .datepicker.years div.datepicker-years{display:block}
 .datepicker table{margin:0 auto;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
-.datepicker table tr td,.datepicker table tr th{text-align:center;width:30px;height:30px;border:none}
+.datepicker table tr td,.datepicker table tr th{text-align:center;width:30px;height:30px;border:none;font-size: 13px;}
 .datepicker table tr:first-child th:first-child{border-top-left-radius:2px}
 .datepicker table tr:first-child th:last-child{border-top-right-radius:2px}
 .table-striped .datepicker table tr td,.table-striped .datepicker table tr th{background-color:transparent}

@@ -3,7 +3,7 @@
         <div class="sidebar">
             <div class="widget" id="widget-profileinfo">
                 <div class="widget-body">
-                    <div class="userinfo ">
+                    <div class="userinfo">
                         <a href="{url_admin}">
                             <div class="avatar pull-left">
                                 <img src="{img_admin}" class="img-responsive img-circle" alt="{name}">
@@ -21,24 +21,39 @@
             </div>
             <div class="widget stay-on-collapse" id="widget-sidebar">
                 <nav role="navigation" class="widget-body">
-                    <ul class="acc-menu"> {foreach menu} {if separador} <li class="nav-separator"><span>{title}</span></li> {else separador} {if has_submenu} <li class="hasChild {if active} open active {/if active}">
+                    <ul class="acc-menu">
+                        {foreach menu}
+                        {if separador}
+                        <li class="nav-separator"><span>{title}</span></li>
+                        {else separador}
+                        {if has_submenu}
+                        <li class="hasChild {if active} open active {/if active}">
                             <a class="withripple" href="javascript:;">
                                 <span class="icon">
                                     <i class="material-icons">{icon} </i>
                                 </span>
                                 <span> {title} </span>
                             </a>
-                            <ul class="acc-menu"> {foreach submenu} <li class="{if active} active {/if active}">
+                            <ul class="acc-menu">
+                                {foreach submenu} <li class="{if active} active {/if active}">
                                     <a class="withripple" href="{url}">{sub_title} </a>
-                                </li> {/foreach submenu} </ul>
-                        </li> {else has_submenu} <li>
+                                </li>
+                                {/foreach submenu}
+                            </ul>
+                        </li>
+                        {else has_submenu}
+                        <li>
                             <a class="withripple {if active} active {/if active}" href="{url}">
                                 <span class="icon">
                                     <i class="material-icons">{icon}</i>
                                 </span>
                                 <span>{title}</span>
                             </a>
-                        </li> {/if has_submenu} {/if separador} {/foreach menu} </ul>
+                        </li>
+                        {/if has_submenu}
+                        {/if separador}
+                        {/foreach menu}
+                    </ul>
                 </nav>
             </div>
         </div>

@@ -717,5 +717,352 @@
             }
         ],
         "truncate": "1"
+    },
+    {
+        "tablename": "usuario",
+        "idname": "idusuario",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "nombre",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "telefono",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "email",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "pass",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            },
+            {
+                "titulo": "cookie",
+                "tipo": "char(255)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "usuariodireccion",
+        "idname": "idusuariodireccion",
+        "fields": [
+            {
+                "titulo": "idusuario",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "nombre",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "direccion",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "idcomuna",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "telefono",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "villa",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "edificio",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "departamento",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "condominio",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "casa",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "empresa",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "referencias",
+                "tipo": "longtext"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "region",
+        "idname": "idregion",
+        "fields": [
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "precio",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "comuna",
+        "idname": "idcomuna",
+        "fields": [
+            {
+                "titulo": "idregion",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "precio",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "pedidoestado",
+        "idname": "idpedidoestado",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "color",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "pedido",
+        "idname": "idpedido",
+        "fields": [
+            {
+                "titulo": "tipo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "cookie",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "fecha_creacion",
+                "tipo": "datetime"
+            },
+            {
+                "titulo": "fecha_pago",
+                "tipo": "datetime"
+            },
+            {
+                "titulo": "idusuario",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "idpedidoestado",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "idmediopago",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "nombre",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "email",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "telefono",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "total",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "comentarios",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "pedido_manual",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "pedidoproducto",
+        "idname": "idpedidoproducto",
+        "fields": [
+            {
+                "titulo": "idpedido",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "idpedidodireccion",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "idproducto",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "foto",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "mensaje",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "idproductoatributo",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo_atributo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "precio",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "cantidad",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "total",
+                "tipo": "int(11)"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "pedidodireccion",
+        "idname": "idpedidodireccion",
+        "fields": [
+            {
+                "titulo": "idpedido",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "idusuariodireccion",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "idpedidoestado",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "datos",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "fecha_entrega",
+                "tipo": "datetime"
+            }
+        ],
+        "truncate": "1"
+    },
+    {
+        "tablename": "mediopago",
+        "idname": "idmediopago",
+        "fields": [
+            {
+                "titulo": "titulo",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "resumen",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "orden",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "estado",
+                "tipo": "tinyint(1)"
+            }
+        ],
+        "truncate": "1"
     }
 ]

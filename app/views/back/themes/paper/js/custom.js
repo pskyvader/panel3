@@ -28,6 +28,7 @@ function inicio() {
         }
     });
 
+
     $('body').sidebarAccordion();
     $(window).trigger('resize');
     $.wijets.make();
@@ -41,11 +42,16 @@ function inicio() {
         append: "\n"
     });
     var update_content = $('#update_content');
-
     if (update_content.length > 0) {
         setTimeout(get_update, 1000);
     }
 }
+
+var day = moment($('#time').text());
+setInterval(function(){
+day =day.add(1, 'second');
+$('#time').text(day.format('D/MM/YYYY HH:mm:ss'));
+},1000);
 
 function register_sw() {
     if ('serviceWorker' in navigator) {

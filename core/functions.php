@@ -113,7 +113,7 @@ class functions
 
     public static function generar_pass()
     {
-        $pass = strtoupper(substr(str_shuffle(md5(uniqid())), -10, 8));
+        $pass = strtoupper(substr(md5(uniqid()), -10, 8));
         return $pass;
     }
     // formatea texto como url amigables

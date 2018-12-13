@@ -115,6 +115,16 @@ class detalle
                 'help'        => (isset($campos['help'])) ? $campos['help'] : '',
             );
             break;
+            case 'date':
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field'       => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'required'    => ($campos['required']) ? 'required="required"' : '',
+                    'help'        => $campos['help'],
+                    'value'       => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
+                );
+                break;
             case 'daterange':
                 $data = array(
                     'title_field' => $campos['title_field'],
@@ -160,6 +170,37 @@ class detalle
                 }
                 $editor_count++;
                 break;
+            case 'grupo_pedido':
+                $folder = $this->metadata['modulo'];
+                $fields = array();
+                if (isset($fila[$campos['field']])) {
+                    $count = count($fila[$campos['field']]);
+                    foreach ($fila[$campos['field']] as $key => $campo) {
+                        $field                = $campo;
+                        $field['title_field'] = $campos['title_field'];
+                        $field['field']       = $campos['field'];
+                        $field['image']       = image::generar_url($campo, 'thumb');
+                        $field['active']      = $campo['portada'];
+                        $field['class']       = ($campo['portada'] == 'true') ? 'btn-success' : 'btn-danger';
+                        $field['icon']        = ($campo['portada'] == 'true') ? 'fa-check' : 'fa-close';
+                        $fields[]             = $field;
+                    }
+                } else {
+                    $count = 0;
+                }
+
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field'       => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'help'        => $campos['help'],
+                    'required'    => ($campos['required']) ? 'required="required"' : '',
+                    'fields'      => $fields,
+                    'count'       => ($count > 0) ? $count : '',
+                );
+                break;
+
+
             case 'multiple':
                 $fields = array();
                 $count  = (isset($fila[$campos['field']]) && is_array($fila[$campos['field']])) ? count($fila[$campos['field']]) : 0;

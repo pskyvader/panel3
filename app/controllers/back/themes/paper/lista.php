@@ -188,7 +188,11 @@ class lista
                 );
                 break;
             case 'color':
-                $data = array('value' => $fila[$th['field']]);
+            if(is_array($fila[$th['field']])){
+                $data = $fila[$th['field']];
+            }else{
+                $data = array('color' => $fila[$th['field']],'text'=>'');
+            }
                 break;
             case 'delete':
                 $data = array('id' => $fila[0]);
