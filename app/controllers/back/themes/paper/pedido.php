@@ -10,6 +10,7 @@ use \app\models\pedido as pedido_model;
 use \app\models\pedidodireccion as pedidodireccion_model;
 use \app\models\pedidoestado as pedidoestado_model;
 use \app\models\pedidoproducto as pedidoproducto_model;
+use \app\models\producto as producto_model;
 use \app\models\table;
 use \app\models\usuario as usuario_model;
 use \app\models\usuariodireccion as usuariodireccion_model;
@@ -61,11 +62,11 @@ class pedido extends base
                 $where[$class_parent::$idname] = $_GET[$class_parent::$idname];
             }
         }
-        
-        if (isset($_GET['idpedidoestado']) && $_GET['idpedidoestado']!=0) {
+
+        if (isset($_GET['idpedidoestado']) && $_GET['idpedidoestado'] != 0) {
             $where['idpedidoestado'] = $_GET['idpedidoestado'];
         }
-        $condiciones   = array('order'=>'fecha_pago DESC,fecha_creacion DESC');
+        $condiciones   = array('order' => 'fecha_pago DESC,fecha_creacion DESC');
         $url_detalle   = $this->url;
         $url_detalle[] = 'detail';
         $respuesta     = $list->get_row($class, $where, $condiciones, $url_detalle); //obtener unicamente elementos de la pagina actual
@@ -75,12 +76,12 @@ class pedido extends base
             $configuracion['th']['copy']['field']   = 0;
             $configuracion['th']['copy']['mensaje'] = 'Copiando';
         }
-        
+
         if (isset($configuracion['th']['idpedidoestado'])) {
-            $pe=pedidoestado_model::getAll();
-            $pedidoestado=array();
+            $pe           = pedidoestado_model::getAll();
+            $pedidoestado = array();
             foreach ($pe as $key => $p) {
-                $pedidoestado[$p[0]]=array('color'=>$p['color'],'text'=>$p['titulo']);
+                $pedidoestado[$p[0]] = array('color' => $p['color'], 'text' => $p['titulo']);
             }
 
             foreach ($respuesta['row'] as $k => $v) {
@@ -229,13 +230,13 @@ class pedido extends base
         }
 
         if (isset($configuracion['campos']['idusuario'])) {
-            if($id==0 || $row['idusuario']==0){
+            if ($id == 0 || $row['idusuario'] == 0) {
                 $usuarios = usuario_model::getAll(array(), array('order' => 'nombre ASC'));
                 foreach ($usuarios as $key => $u) {
                     $usuarios[$key]['titulo'] = $u['nombre'] . ' (' . $u['email'] . ')' . ((!$u['estado']) ? ': desactivado' : '');
                 }
                 $configuracion['campos']['idusuario']['parent'] = $usuarios;
-            }else{
+            } else {
                 $configuracion['campos']['idusuario']['type'] = 'hidden';
             }
         }
@@ -248,21 +249,35 @@ class pedido extends base
             $estados                                          = mediopago_model::getAll();
             $configuracion['campos']['idmediopago']['parent'] = $estados;
         }
-        
-        if (isset($configuracion['campos']['cookie_pedido']) && $id!=0) {
-            $configuracion['campos']['cookie_pedido']['type']='text';
+
+        if (isset($configuracion['campos']['cookie_pedido']) && $id != 0) {
+            $configuracion['campos']['cookie_pedido']['type'] = 'text';
         }
-        
-        if (isset($configuracion['campos']['direcciones']) && $id!=0) {
-            $direcciones=pedidodireccion_model::getAll(array('idpedido'=>$id));
-            foreach ($direcciones as $key => $d) {
-                $productos=pedidoproducto_model::getAll(array('idpedido'=>$id,'idpedidodireccion'=>$d[0]));
-                $direcciones[$key]['productos']=$productos;
+
+        if (isset($configuracion['campos']['direcciones'])) {
+            $configuracion['campos']['direcciones']['direccion_entrega'] = array();
+            $lista_productos                                             = producto_model::getAll(array(),array('order'=>'titulo ASC'));
+            foreach ($lista_productos as $key => $lp) {
+                $lista_productos[$key]=array('titulo'=>$lp['titulo'],'idproducto'=>$lp['idproducto']);
             }
-            $row['direcciones']=$direcciones;
+            $configuracion['campos']['direcciones']['lista_productos']   = $lista_productos;
+
+            if ($id != 0) {
+                $direcciones = pedidodireccion_model::getAll(array('idpedido' => $id));
+                foreach ($direcciones as $key => $d) {
+                    $productos                      = pedidoproducto_model::getAll(array('idpedido' => $id, 'idpedidodireccion' => $d[0]));
+                    $direcciones[$key]['productos'] = $productos;
+                }
+                $row['direcciones'] = $direcciones;
+                if (isset($row['idusuario']) && $row['idusuario'] != '') {
+                    $direcciones_entrega = usuariodireccion_model::getAll(array('idusuario' => $row['idusuario']));
+                    foreach ($direcciones_entrega as $key => $de) {
+                        $direcciones_entrega[$key]['titulo'] = $de['titulo'] . ' (' . $de['direccion'] . ')';
+                    }
+                    $configuracion['campos']['direcciones']['direccion_entrega'] = $direcciones_entrega;
+                }
+            }
         }
-
-
 
         $data = array( //informacion para generar la vista del detalle, arrays SIEMPRE antes de otras variables!!!!
             'breadcrumb'  => $this->breadcrumb,
@@ -296,4 +311,28 @@ class pedido extends base
         }
         echo json_encode($respuesta);
     }
+
+    
+    public function guardar()
+    {
+        $class = $this->class;
+        $campos    = $_POST['campos'];
+        $respuesta = array('exito' => false, 'mensaje' => '');
+        print_r($campos);
+        exit;
+
+        if ($campos['id'] == '') {
+            $respuesta['id']      = $class::insert($campos);
+            $respuesta['mensaje'] = "Creado correctamente";
+        } else {
+            $respuesta['id']      = $class::update($campos);
+            $respuesta['mensaje'] = "Actualizado correctamente";
+        }
+        $respuesta['exito'] = true;
+        if (is_array($respuesta['id'])) {
+            return $respuesta['id'];
+        }
+        echo json_encode($respuesta);
+    }
+    
 }

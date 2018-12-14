@@ -172,7 +172,7 @@ class detalle
                 break;
             case 'grupo_pedido':
                 $folder = $this->metadata['modulo'];
-                $fields = array();
+                $direcciones = array();
                 if (isset($fila[$campos['field']])) {
                     $count = count($fila[$campos['field']]);
                     foreach ($fila[$campos['field']] as $key => $campo) {
@@ -183,7 +183,7 @@ class detalle
                         $field['active']      = $campo['portada'];
                         $field['class']       = ($campo['portada'] == 'true') ? 'btn-success' : 'btn-danger';
                         $field['icon']        = ($campo['portada'] == 'true') ? 'fa-check' : 'fa-close';
-                        $fields[]             = $field;
+                        $direcciones[]             = $field;
                     }
                 } else {
                     $count = 0;
@@ -195,7 +195,9 @@ class detalle
                     'is_required' => $campos['required'],
                     'help'        => $campos['help'],
                     'required'    => ($campos['required']) ? 'required="required"' : '',
-                    'fields'      => $fields,
+                    'direcciones'      => $direcciones,
+                    'direccion_entrega'      => $campos['direccion_entrega'],
+                    'lista_productos'      => $campos['lista_productos'],
                     'count'       => ($count > 0) ? $count : '',
                 );
                 break;

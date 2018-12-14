@@ -1,48 +1,58 @@
-<div class="form-group grupo_pedido">
-        <label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
-        <div class="col-sm-8">
-            <input id="{field}" class="name" name="" type="hidden" {required}  value="{count}">
-            <div class="multiple_image"></div>
-            <div class="alert alert-info">{help}</div>
-            <div class="image_list sorted_multiple row"> 
-                {foreach fields} 
-                <div class="campo fields col-sm-2">
-                    <div class="move"><i class="fa fa-arrows fa-lg"></i>
-                        <div class="portada_container">
-                            <button data-field="{field}" data-active="{active}" data-id="0" class="btn btn-raised active tooltips btn-md {class}" data-original-title="Portada">
-                                <i class="fa {icon}"></i>
-                            </button>
-                            <input class="portada" name="multiple[image][{field}][portada][]" type="hidden" value="{active}">
-                        </div>
-                        <img class="image" src="{image}" alt="{title_field}">
-                        <input type="hidden" class="id" name="multiple[image][{field}][id][]" value="{id}">
-                        <input type="hidden" class="url" name="multiple[image][{field}][url][]" value="{url}">
-                        <input type="hidden" class="parent" name="multiple[image][{field}][parent][]" value="{parent}">
-                        <input type="hidden" class="folder" name="multiple[image][{field}][folder][]" value="{folder}">
-                        <input type="hidden" class="subfolder" name="multiple[image][{field}][subfolder][]" value="{subfolder}">
-                        <input type="hidden" class="tmp" name="multiple[image][{field}][tmp][]" value="">
-                        <button class="btn btn-raised eliminar btn-danger btn-md" onclick="count_images($(this).closest('.image'));$(this).closest('.campo').remove();">
-                            <i class="material-icons">delete</i>
-                        </button>
-                    </div>
-                </div> 
-                {/foreach fields}
+<div class="grupo_pedido clearfix">
+    <label for="{field}" class="col-sm-2 control-label">{title_field} {if is_required} <sup>*</sup> {/if is_required}</label>
+    <div class="col-sm-8">
+        <input id="{field}" class="name" name="" type="hidden" {required} value="{count}">
+        <div class="alert alert-info">{help}</div>
+        <div class="direcciones_pedido row">
+            {foreach direcciones}
+            <div class="campo direccion col-xs-12">
+                {titulo}
             </div>
-            <div class="campo new_line col-sm-2">
-                <div class="move"><i class="fa fa-arrows fa-lg"></i>
-                    <div class="portada_container">
-                        <button data-field="{field}" data-active="false" data-id="0" class="btn btn-raised active tooltips btn-md btn-danger" data-original-title="Portada">
-                            <i class="fa fa-close"></i>
-                        </button>
-                        <input class="portada" name="multiple[image][{field}][portada][]" type="hidden" value="false">
-                    </div>
-                    <img class="image" src="" alt="{title_field}">
-                    <input type="hidden" class="id" name="multiple[image][{field}][id][]" value="">
-                    <input type="hidden" class="tmp" name="multiple[image][{field}][tmp][]" value="">
-                    <button class="btn btn-raised eliminar btn-danger btn-md" onclick="count_images($(this).closest('.image'));$(this).closest('.campo').remove();">
-                        <i class="material-icons">delete</i>
-                    </button>
+            {/foreach direcciones}
+        </div>
+        <div class="add">
+            <button class="add_direccion btn btn-block btn-primary btn-raised">Añadir dirección de envio</button>
+        </div>
+        <div class="campo direccion new_line col-xs-12 mt mb-lg">
+            <h4 class="title">Nueva dirección de envio</h4>
+            <hr>
+            <div class="row datos_direccion">
+                    <input type="hidden" name="datos_direcciones[][iddireccionpedido]" class="iddireccionpedido" value="">
+                <div class="col-md-4">
+                    <select name="datos_direcciones[][iddireccion]" class="form-control direccion_entrega">
+                        <option value="" selected="selected" hidden="" disabled="">Selecciona una direccion de entrega</option>
+                        {foreach direccion_entrega}
+                        <option value="{idusuariodireccion}">{titulo}</option>
+                        {/foreach direccion_entrega}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input placeholder="Fecha de entrega" name="datos_direcciones[][fecha_entrega]" type="text" class="form-control date fecha_entrega" value="" autocomplete="off">
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <hr>
+            <div class="add row">
+                <div class="col-sm-6 col-md-4">
+                    <select name="" class="form-control lista_productos">
+                        <option value="" disabled="" hidden="" selected="">Selecciona un producto</option>
+                        {foreach lista_productos}
+                        <option value="{idproducto}">{titulo}</option>
+                        {/foreach lista_productos}
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <button class="add_producto btn btn-success btn-raised ">Añadir producto</button>
+                </div>
+            </div>
+            <div class="datos_producto new_row">
+                <input type="hidden" name="datos_direcciones[][productos][][idproducto]" class="idproducto">
+                <div class="producto">
+                    <input type="number" name="datos_direcciones[][productos][][cantidad]" class="producto_cantidad">
+                    <input type="text" name="datos_direcciones[][productos][][mensaje]" class="producto_mensaje">
+                    <input type="text" name="datos_direcciones[][productos][][idproductoatributo]" class="producto_atributo">
                 </div>
             </div>
         </div>
     </div>
+</div>

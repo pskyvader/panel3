@@ -43,9 +43,7 @@ function inicio_file_multiple(e) {
     var id = [];
     var id_actual = 0;
     $('.file_list .campo.fields', e).each(function() {
-        if ($('.id', this).val() > id) {
-            id[$('.id', this).val()] = $('.id', this).val();
-        }
+        id[$('.id', this).val()] = $('.id', this).val();
     });
     $(".multiple_file", e).dropzone({
         addRemoveLinks: true,

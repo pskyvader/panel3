@@ -1,6 +1,6 @@
 {
     "css" : [
-            {"url": "css/custom.css","local":true,"media":"all","combine":false,"defer":false},
+            {"url": "css/custom-header.css","local":true,"media":"all","combine":false,"defer":false},
             {"url": "assets/css/styles.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/plugins/codeprettifier/prettify.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/plugins/dropdown.js/jquery.dropdown.css","local":true,"media":"all","combine":true,"defer":true},
@@ -16,6 +16,7 @@
             {"url": "assets/plugins/dropzone/css/dropzone.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/plugins/form-select2/select2.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/css/basictable.css","local":true,"media":"all","combine":true,"defer":true},
+            {"url": "css/custom.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "css/fonts.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/fonts/material/material.css","local":true,"media":"all","combine":true,"defer":true},
             {"url": "assets/fonts/font-awesome/css/font-awesome.min.css","local":true,"media":"all","combine":true,"defer":true}

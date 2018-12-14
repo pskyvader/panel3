@@ -54,9 +54,7 @@ function inicio_image_multiple(e) {
     var id = [];
     var id_actual = 0;
     $('.image_list .campo.fields', e).each(function() {
-        if ($('.id', this).val() > id) {
-            id[$('.id', this).val()] = $('.id', this).val();
-        }
+        id[$('.id', this).val()] = $('.id', this).val();
     });
     $('.campo.fields .active', e).each(function() {
         multiple_active($(this));
