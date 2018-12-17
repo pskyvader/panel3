@@ -198,7 +198,8 @@ function validar(form) { //validar campos al editar elemento
     $(requeridos).each(function() {
         if ($(this).val() == '') {
             $(this).parent().parent().addClass('has-error');
-            var n = $(this).prop('name');
+            var n = $(this).data('campo');
+            if (!n || n == '') n = $(this).prop('name');
             if (n == '') n = $(this).prop('id');
             nombres += "<br/><b>" + n + "</b>";
             error = true;

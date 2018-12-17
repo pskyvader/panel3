@@ -1,5 +1,12 @@
 function inicio_multiple() {
-    var table = $('.sorted_multiple').sortable({
+    inicio_sorted();
+    $('div.form-group.multiple').each(function() {
+        multiple($(this));
+    });
+}
+
+function inicio_sorted(){
+    $('.sorted_multiple').sortable({
         handle: '.move',
         itemSelector: '.campo',
         placeholder: '<div class="placeholder"/>',
@@ -20,9 +27,6 @@ function inicio_multiple() {
             });
         }
     });
-    $('div.form-group.multiple').each(function() {
-        multiple($(this));
-    });
 }
 
 function multiple(e) {
@@ -36,12 +40,13 @@ function multiple(e) {
     $(e).on('click', '.agregar_editar', function() {
         var new_l = new_line.clone();
         multiple_active($('.active', new_l));
-        $(this).parent().parent().after(new_l);
+        $('.sorted_multiple',$(this).parents('.multiple')).append(new_l);
         count++;
+        inicio_sorted();
         return false;
     });
     $(e).on('click', '.quitar_editar', function() {
-        $(this).parent().parent().remove();
+        $(this).parents('.campo').remove();
         count--;
         if (count == 0) {
             $('.new_field', e).show();

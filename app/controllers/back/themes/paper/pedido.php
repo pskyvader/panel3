@@ -15,8 +15,7 @@ use \app\models\table;
 use \app\models\usuario as usuario_model;
 use \app\models\usuariodireccion as usuariodireccion_model;
 use \core\functions;
-
-//use \core\image;
+use \core\image;
 
 class pedido extends base
 {
@@ -256,11 +255,21 @@ class pedido extends base
 
         if (isset($configuracion['campos']['direcciones'])) {
             $configuracion['campos']['direcciones']['direccion_entrega'] = array();
-            $lista_productos                                             = producto_model::getAll(array(),array('order'=>'titulo ASC'));
+            $lista_productos                                             = producto_model::getAll(array('tipo' => 1), array('order' => 'titulo ASC'));
             foreach ($lista_productos as $key => $lp) {
-                $lista_productos[$key]=array('titulo'=>$lp['titulo'],'idproducto'=>$lp['idproducto']);
+                $portada   = image::portada($lp['foto']);
+                $thumb_url = image::generar_url($portada, 'cart');
+                $lista_productos[$key] = array('titulo' => $lp['titulo'], 'idproducto' => $lp['idproducto'], 'foto' => $thumb_url,'precio'=>$lp['precio_final']);
             }
-            $configuracion['campos']['direcciones']['lista_productos']   = $lista_productos;
+            $configuracion['campos']['direcciones']['lista_productos'] = $lista_productos;
+
+            $lista_atributos = producto_model::getAll(array('tipo' => 2), array('order' => 'titulo ASC'));
+            foreach ($lista_atributos as $key => $lp) {
+                $portada   = image::portada($lp['foto']);
+                $thumb_url = image::generar_url($portada, 'cart');
+                $lista_atributos[$key] = array('titulo' => $lp['titulo'], 'idproducto' => $lp['idproducto'], 'foto' => $thumb_url);
+            }
+            $configuracion['campos']['direcciones']['lista_atributos'] = $lista_atributos;
 
             if ($id != 0) {
                 $direcciones = pedidodireccion_model::getAll(array('idpedido' => $id));
@@ -312,10 +321,9 @@ class pedido extends base
         echo json_encode($respuesta);
     }
 
-    
     public function guardar()
     {
-        $class = $this->class;
+        $class     = $this->class;
         $campos    = $_POST['campos'];
         $respuesta = array('exito' => false, 'mensaje' => '');
         print_r($campos);
@@ -334,5 +342,5 @@ class pedido extends base
         }
         echo json_encode($respuesta);
     }
-    
+
 }

@@ -130,7 +130,7 @@ class producto extends base_model
                             $precio_final = 1;
                         }
 
-                        $row[$key]['precio_final'] = $precio_final;
+                        $row[$key]['precio_final'] = (int)$precio_final;
                     }
                 }
             }
@@ -192,7 +192,7 @@ class producto extends base_model
                             $precio_final = 1;
                         }
 
-                        $row[0]['precio_final'] = $precio_final;
+                        $row[0]['precio_final'] = (int)$precio_final;
                     }
                 }
             }

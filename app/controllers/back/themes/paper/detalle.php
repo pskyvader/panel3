@@ -198,6 +198,8 @@ class detalle
                     'direcciones'      => $direcciones,
                     'direccion_entrega'      => $campos['direccion_entrega'],
                     'lista_productos'      => $campos['lista_productos'],
+                    'lista_atributos'      => $campos['lista_atributos'],
+                    'fecha'      => date('Y-m-d H:i:s'),
                     'count'       => ($count > 0) ? $count : '',
                 );
                 break;
@@ -528,6 +530,7 @@ class detalle
                     'field'       => $campos['field'],
                     'is_required' => $campos['required'],
                     'required'    => ($campos['required']) ? 'required="required"' : '',
+                    'help'        => (isset($campos['help'])) ? $campos['help'] : '',
                     'option'      => array(),
                 );
                 foreach ($campos['parent'] as $key => $children) {
