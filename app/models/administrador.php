@@ -76,6 +76,10 @@ class administrador extends base_model
         $connection = database::instance();
         $row        = $connection->update(static::$table, static::$idname, $set, $where);
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
+        
+        if(is_bool($row) && $row){
+            $row=$where[static::$idname];
+        }
         return $row;
     }
 

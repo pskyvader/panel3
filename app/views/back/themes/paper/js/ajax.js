@@ -43,7 +43,6 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
     if (typeof(callback) == 'undefined') {
         callback = null;
     }
-    console.log(info);
     var data = new FormData();
     appendArray(data, info, 'campos');
     if (archivo != null) {

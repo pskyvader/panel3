@@ -111,9 +111,9 @@ class functions
         return $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
-    public static function generar_pass()
+    public static function generar_pass($length=8)
     {
-        $pass = strtoupper(substr(md5(uniqid()), -10, 8));
+        $pass = strtoupper(substr(md5(uniqid()), -10, $length));
         return $pass;
     }
     // formatea texto como url amigables

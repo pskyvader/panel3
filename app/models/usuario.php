@@ -75,6 +75,10 @@ class usuario extends base_model
         $connection = database::instance();
         $row        = $connection->update(static::$table, static::$idname, $set, $where);
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
+
+        if (is_bool($row) && $row) {
+            $row = $where[static::$idname];
+        }
         return $row;
     }
 
@@ -181,18 +185,17 @@ class usuario extends base_model
         return $respuesta;
     }
 
-    
     public static function actualizar($datos)
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
-        if ($datos['nombre'] == "" || $datos['telefono'] == "" || $datos['email'] == "" ) {
+        if ($datos['nombre'] == "" || $datos['telefono'] == "" || $datos['email'] == "") {
             $respuesta['mensaje'] = "Todos los datos son obligatorios";
             return $respuesta;
         }
         $prefix_site = functions::url_amigable(app::$_title);
-        $usuario= static::getById($_SESSION[static::$idname . $prefix_site]);
+        $usuario     = static::getById($_SESSION[static::$idname . $prefix_site]);
 
-        if($usuario['email']!=$datos['email']){
+        if ($usuario['email'] != $datos['email']) {
             $where = array(
                 'email' => strtolower($datos['email']),
             );
@@ -201,16 +204,16 @@ class usuario extends base_model
             if (count($row) > 0) {
                 $respuesta['mensaje'] = "Este email ya existe. No puedes modificar tu email.";
                 return $respuesta;
-            }else{
-                $respuesta['redirect']=true;
+            } else {
+                $respuesta['redirect'] = true;
             }
         }
-        $datos['id']=$usuario[0];
-        $id   = self::update($datos);
-        if(isset($id['exito'])){
-            $respuesta=$id;
-        }else{
-            $respuesta['exito']=true;
+        $datos['id'] = $usuario[0];
+        $id          = self::update($datos);
+        if (isset($id['exito'])) {
+            $respuesta = $id;
+        } else {
+            $respuesta['exito'] = true;
         }
         return $respuesta;
     }
@@ -270,10 +273,10 @@ class usuario extends base_model
 
     public static function recuperar($email)
     {
-        $respuesta = array('exito' => false, 'mensaje' => '');
+        $respuesta    = array('exito' => false, 'mensaje' => '');
         $nombre_sitio = app::$_title;
         if ($email == '') {
-            $respuesta['mensaje']='Debes llenar tu email';
+            $respuesta['mensaje'] = 'Debes llenar tu email';
             return $respuesta;
         }
 
@@ -281,13 +284,13 @@ class usuario extends base_model
         $condiciones = array('limit' => 1);
         $row         = static::getAll($where, $condiciones);
 
-        if (count($row) <1) {
-            $respuesta['mensaje']='Este email no existe, puedes registrarte en el link correspondiente';
+        if (count($row) < 1) {
+            $respuesta['mensaje'] = 'Este email no existe, puedes registrarte en el link correspondiente';
             return $respuesta;
         } else {
             $usuario = $row[0];
             if (!$usuario['estado']) {
-                $respuesta['mensaje']='Tu usuario existe pero ha sido desactivado. Por favor envia un mensaje en el formulario de contacto.';
+                $respuesta['mensaje'] = 'Tu usuario existe pero ha sido desactivado. Por favor envia un mensaje en el formulario de contacto.';
                 return $respuesta;
             } else {
                 $pass = functions::generar_pass();
@@ -308,7 +311,7 @@ class usuario extends base_model
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $usuario);
                     return $respuesta;
                 } else {
-                    $respuesta['mensaje']='Ha ocurrido un error al recuperar tu contraseña, por favor intentalo nuevamente en unos minutos.';
+                    $respuesta['mensaje'] = 'Ha ocurrido un error al recuperar tu contraseña, por favor intentalo nuevamente en unos minutos.';
                     return $respuesta;
                 }
 

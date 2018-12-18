@@ -51,7 +51,7 @@ function inicio_usuarios_pedido(e) {
 
                         var direcciones = $('.direccion_entrega', new_line_direcciones);
                         $(data.direcciones).each(function(k, v) {
-                            var d = $('<option value="' + v[0] + '">' + v.titulo + ' (' + v.direccion + ')</option>');
+                            var d = $('<option value="' + v[0] + '" data-precio="'+v.precio+'">' + v.titulo + ' (' + v.direccion + ')</option>');
                             direcciones.append(d);
                         });
                         notificacion_footer(false);
@@ -107,7 +107,6 @@ function inicio_direcciones_pedido(e) {
     $('.direccion', contenedor).each(function() {
         var idd = $('.iddireccionpedido', this).val();
         id[idd] = idd;
-
     });
 
 
@@ -149,6 +148,8 @@ function inicio_direcciones_pedido(e) {
         count_direcciones(e);
         return false;
     });
+
+
     $(contenedor).on('click', '.add_producto', function() {
         var cantidad=$('.cantidad_producto',$(this).parents('.row')).val();
         var producto=$('.lista_productos',$(this).parents('.row')).select2('data');
@@ -159,6 +160,10 @@ function inicio_direcciones_pedido(e) {
         // add_producto(producto, cantidad, new_r,id_producto,id_producto_actual);
         count_productos(direccion);
         return false;
+    });
+    $(contenedor).on('change', '.direccion_entrega', function() {
+        var direccion = $(this).parents('.datos_direccion');
+        $('.direccion_precio',direccion).val($('option:selected',this).data('precio'));
     });
 
 }

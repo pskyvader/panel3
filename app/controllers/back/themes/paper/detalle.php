@@ -179,10 +179,6 @@ class detalle
                         $field                = $campo;
                         $field['title_field'] = $campos['title_field'];
                         $field['field']       = $campos['field'];
-                        $field['image']       = image::generar_url($campo, 'thumb');
-                        $field['active']      = $campo['portada'];
-                        $field['class']       = ($campo['portada'] == 'true') ? 'btn-success' : 'btn-danger';
-                        $field['icon']        = ($campo['portada'] == 'true') ? 'fa-check' : 'fa-close';
                         $direcciones[]             = $field;
                     }
                 } else {

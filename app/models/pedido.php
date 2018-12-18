@@ -25,7 +25,6 @@ class pedido extends base_model
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
             }
-
             return $last_id;
         } else {
             return $row;

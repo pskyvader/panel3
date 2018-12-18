@@ -38,8 +38,7 @@ class base_model implements crud
             }
         }
 
-
-        if (!isset($condiciones['order']) && isset($fields['order'])) {
+        if (!isset($condiciones['order']) && isset($fields['orden'])) {
             $condiciones['order'] = 'orden ASC';
         }
 
@@ -59,6 +58,14 @@ class base_model implements crud
 
             if (isset($fields['metadescripcion'])) {
                 $condiciones['buscar']['metadescripcion'] = $condiciones['palabra'];
+            }
+            
+            if (isset($fields['cookie_pedido'])) {
+                $condiciones['buscar']['cookie_pedido'] = $condiciones['palabra'];
+            }
+
+            if (count($condiciones['buscar']) == 0) {
+                unset($condiciones['buscar']);
             }
 
         }
@@ -87,11 +94,11 @@ class base_model implements crud
             $row = array_values($row);
         }
 
-        if(isset($limit)){
-            if($limit2==0){
-                $row=array_slice($row,$limit2,$limit);
-            }else{
-                $row=array_slice($row,$limit,$limit2);
+        if (isset($limit)) {
+            if ($limit2 == 0) {
+                $row = array_slice($row, $limit2, $limit);
+            } else {
+                $row = array_slice($row, $limit, $limit2);
             }
         }
         if (isset($return_total)) {
@@ -149,6 +156,9 @@ class base_model implements crud
         $row        = $connection->update(static::$table, static::$idname, $set, $where);
         if ($log) {
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
+        }
+        if (is_bool($row) && $row) {
+            $row = $where[static::$idname];
         }
 
         return $row;

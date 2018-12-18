@@ -3,6 +3,7 @@ namespace app\controllers\back\themes\paper;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\administrador as administrador_model;
+use \app\models\comuna as comuna_model;
 use \app\models\mediopago as mediopago_model;
 //use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 //use \app\models\modulo as modulo_model;
@@ -11,6 +12,7 @@ use \app\models\pedidodireccion as pedidodireccion_model;
 use \app\models\pedidoestado as pedidoestado_model;
 use \app\models\pedidoproducto as pedidoproducto_model;
 use \app\models\producto as producto_model;
+use \app\models\region as region_model;
 use \app\models\table;
 use \app\models\usuario as usuario_model;
 use \app\models\usuariodireccion as usuariodireccion_model;
@@ -254,19 +256,29 @@ class pedido extends base
         }
 
         if (isset($configuracion['campos']['direcciones'])) {
+            $com=comuna_model::getAll();
+            $comunas = array();
+            foreach ($com as $key => $c) {
+                if($c['precio']>1){
+                    $r=region_model::getById($c['idregion']);
+                    $c['precio']=$r['precio'];
+                }
+                $comunas[$c[0]] = $c;
+            }
+
             $configuracion['campos']['direcciones']['direccion_entrega'] = array();
             $lista_productos                                             = producto_model::getAll(array('tipo' => 1), array('order' => 'titulo ASC'));
             foreach ($lista_productos as $key => $lp) {
-                $portada   = image::portada($lp['foto']);
-                $thumb_url = image::generar_url($portada, 'cart');
-                $lista_productos[$key] = array('titulo' => $lp['titulo'], 'idproducto' => $lp['idproducto'], 'foto' => $thumb_url,'precio'=>$lp['precio_final']);
+                $portada               = image::portada($lp['foto']);
+                $thumb_url             = image::generar_url($portada, 'cart');
+                $lista_productos[$key] = array('titulo' => $lp['titulo'], 'idproducto' => $lp['idproducto'], 'foto' => $thumb_url, 'precio' => $lp['precio_final']);
             }
             $configuracion['campos']['direcciones']['lista_productos'] = $lista_productos;
 
             $lista_atributos = producto_model::getAll(array('tipo' => 2), array('order' => 'titulo ASC'));
             foreach ($lista_atributos as $key => $lp) {
-                $portada   = image::portada($lp['foto']);
-                $thumb_url = image::generar_url($portada, 'cart');
+                $portada               = image::portada($lp['foto']);
+                $thumb_url             = image::generar_url($portada, 'cart');
                 $lista_atributos[$key] = array('titulo' => $lp['titulo'], 'idproducto' => $lp['idproducto'], 'foto' => $thumb_url);
             }
             $configuracion['campos']['direcciones']['lista_atributos'] = $lista_atributos;
@@ -281,6 +293,7 @@ class pedido extends base
                 if (isset($row['idusuario']) && $row['idusuario'] != '') {
                     $direcciones_entrega = usuariodireccion_model::getAll(array('idusuario' => $row['idusuario']));
                     foreach ($direcciones_entrega as $key => $de) {
+                        $direcciones_entrega[$key]['precio'] = $comunas[$de['idcomuna']]['precio'];
                         $direcciones_entrega[$key]['titulo'] = $de['titulo'] . ' (' . $de['direccion'] . ')';
                     }
                     $configuracion['campos']['direcciones']['direccion_entrega'] = $direcciones_entrega;
@@ -307,9 +320,21 @@ class pedido extends base
         if (isset($campos['idusuario'])) {
             $usuario = usuario_model::getById($campos['idusuario']);
             if (count($usuario) > 0) {
+                $com=comuna_model::getAll();
+                $comunas = array();
+                foreach ($com as $key => $c) {
+                    if($c['precio']>1){
+                        $r=region_model::getById($c['idregion']);
+                        $c['precio']=$r['precio'];
+                    }
+                    $comunas[$c[0]] = $c;
+                }
                 $usuario                  = array($usuario[0], 'nombre' => $usuario['nombre'], 'email' => $usuario['email'], 'telefono' => $usuario['telefono']);
                 $respuesta['usuario']     = $usuario;
                 $direcciones              = usuariodireccion_model::getAll(array('idusuario' => $usuario[0]));
+                foreach ($direcciones as $key => $d) {
+                    $direcciones[$key]['precio'] = $comunas[$d['idcomuna']]['precio'];
+                }
                 $respuesta['direcciones'] = $direcciones;
                 $respuesta['exito']       = true;
             } else {
@@ -321,13 +346,22 @@ class pedido extends base
         echo json_encode($respuesta);
     }
 
+    /**
+     * guardar
+     * guarda pedido, direcciones de pedido y productos del pedido
+     *
+     * @return JSON
+     */
     public function guardar()
     {
         $class     = $this->class;
         $campos    = $_POST['campos'];
         $respuesta = array('exito' => false, 'mensaje' => '');
-        print_r($campos);
-        exit;
+        if (isset($campos['datos_direcciones'])) {
+            $direcciones = $campos['datos_direcciones'];
+            unset($campos['datos_direcciones']);
+            $respuesta['direcciones'] = $direcciones;
+        }
 
         if ($campos['id'] == '') {
             $respuesta['id']      = $class::insert($campos);
@@ -336,10 +370,86 @@ class pedido extends base
             $respuesta['id']      = $class::update($campos);
             $respuesta['mensaje'] = "Actualizado correctamente";
         }
-        $respuesta['exito'] = true;
         if (is_array($respuesta['id'])) {
-            return $respuesta['id'];
+            echo json_encode($respuesta['id']);
+            exit;
         }
+        $respuesta['exito'] = true;
+        $pedido             = pedido_model::getById($respuesta['id']);
+
+
+        $com=comuna_model::getAll();
+        $comunas = array();
+        foreach ($com as $key => $c) {
+            if($c['precio']>1){
+                $r=region_model::getById($c['idregion']);
+                $c['precio']=$r['precio'];
+            }
+            $comunas[$c[0]] = $c;
+        }
+
+        $dp                 = pedidodireccion_model::getAll(array('idpedido' => $pedido[0]));
+        $direcciones_pedido = array();
+        foreach ($dp as $key => $d) {
+            $direcciones_pedido[$d[0]] = $d;
+        }
+
+        $du                  = usuariodireccion_model::getAll(array('idusuario' => $pedido['idusuario']));
+        $direcciones_usuario = array();
+        foreach ($du as $key => $d) {
+            $d['comuna']=$comunas[$d['idcomuna']];
+            $direcciones_usuario[$d[0]] = $d;
+        }
+
+        foreach ($direcciones as $key => $d) {
+            if (!isset($direcciones_usuario[$d['iddireccion']])) {
+                $respuesta['exito']   = false;
+                $respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente';
+                break;
+            }else{
+                $du=$direcciones_usuario[$d['iddireccion']];
+            }
+            if (isset($direcciones_pedido[$d['iddireccionpedido']])) {
+                $new_d                  = $direcciones_pedido[$d['iddireccionpedido']];
+                $new_d['fecha_entrega'] = $d['fecha_entrega'];
+            } else {
+                $new_d                     = $d;
+                $new_d['cookie_direccion'] = $pedido['cookie_pedido'] . '-' . functions::generar_pass(2);
+                $new_d['idpedido'] = $pedido[0];
+                $new_d['idusuariodireccion'] = $du[0];
+            }
+            //4= pedido pagado
+            if ($pedido['idpedidoestado'] != 4) {
+                //9=envio no pagado aun
+                $new_d['idpedidoestado'] = 9;
+            } else {
+                //5=preparango producto
+                $new_d['idpedidoestado'] = 5;
+            }
+
+            $new_d['precio'] = $du['comuna']['precio'];
+            
+            $new_d['nombre'] = $du['nombre'];
+            $new_d['telefono'] = $du['telefono'];
+            $new_d['referencias'] = $du['referencias'];
+            $new_d['direccion_completa'] = $du['direccion'].', '.$du['comuna']['titulo'].';';
+            $new_d['direccion_completa'] .= ($du['villa']!='')?', villa '.$du['villa']:'';
+            $new_d['direccion_completa'] .= ($du['edificio']!='')?', edificio '.$du['edificio']:'';
+            $new_d['direccion_completa'] .= ($du['departamento']!='')?', departamento '.$du['departamento']:'';
+            $new_d['direccion_completa'] .= ($du['condominio']!='')?', condominio '.$du['condominio']:'';
+            $new_d['direccion_completa'] .= ($du['casa']!='')?', casa '.$du['casa']:'';
+            $new_d['direccion_completa'] .= ($du['empresa']!='')?', empresa '.$du['empresa']:'';
+
+            if (isset($direcciones_pedido[$d['iddireccionpedido']])) {
+                $new_d['id']=$new_d[0];
+                $iddireccion_pedido=pedidodireccion_model::update($new_d);
+            }else{
+                $iddireccion_pedido=pedidodireccion_model::insert($new_d);
+            }
+
+
+        }
+
         echo json_encode($respuesta);
     }
 
