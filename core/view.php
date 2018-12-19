@@ -75,7 +75,20 @@ class view
         }
     }
 
-    public static function render_template($data, $content)
+    /**
+     * render_template
+     *
+     * renderiza vista segun el array $data enviado
+     * IMPORTANTE: para evitar sobreescribir variables, se debe ingresar primero los arrays con mas profundidad primero
+     * luego los arrays con menos profundidad
+     * finalmente los if y datos planos
+     * 
+     * @param  array $data
+     * @param  string $content
+     *
+     * @return string
+     */
+    public static function render_template(array $data, string $content)
     {
         $data2 = array();
         foreach ($data as $key => $d) {

@@ -3,6 +3,18 @@ function inicio_pedido() {
         inicio_direcciones_pedido($(this));
         inicio_usuarios_pedido($(this).parents('form'));
     });
+    
+    $('.lista_productos').select2({
+        width: '100%',
+        templateResult: formato_imagen,
+        templateSelection: formato_imagen
+    });
+    
+    $('.producto_atributo').select2({
+        width: '100%',
+        templateResult: formato_imagen,
+        templateSelection: formato_imagen
+    });
 }
 var new_line_direcciones = null;
 
@@ -24,7 +36,7 @@ function inicio_usuarios_pedido(e) {
         minimumInputLength: min,
     });
     $(email).prop('disabled', true);
-    if(usuarios.length>0){
+    if (usuarios.length > 0) {
         $(nombre).prop('disabled', true);
         $(telefono).prop('disabled', true);
         $(add_direccion).prop('disabled', true);
@@ -51,7 +63,7 @@ function inicio_usuarios_pedido(e) {
 
                         var direcciones = $('.direccion_entrega', new_line_direcciones);
                         $(data.direcciones).each(function(k, v) {
-                            var d = $('<option value="' + v[0] + '" data-precio="'+v.precio+'">' + v.titulo + ' (' + v.direccion + ')</option>');
+                            var d = $('<option value="' + v[0] + '" data-precio="' + v.precio + '">' + v.titulo + ' (' + v.direccion + ')</option>');
                             direcciones.append(d);
                         });
                         notificacion_footer(false);
@@ -101,7 +113,7 @@ function inicio_direcciones_pedido(e) {
     $('.new_line', e).remove();
 
     $('.datos_producto', contenedor).each(function() {
-        var idp = $('.idproducto', this).val();
+        var idp = $('.idproductopedido', this).val();
         id_producto[idp] = idp;
     });
     $('.direccion', contenedor).each(function() {
@@ -128,11 +140,11 @@ function inicio_direcciones_pedido(e) {
         var iddireccion = $('.iddireccionpedido', new_l);
         iddireccion.prop('name', iddireccion.prop('name').replace("[]", "[" + id_actual + "]")).val(id_actual);
 
-        
+
         var cantidad_productos = $('.cantidad_productos', new_l);
         cantidad_productos.prop('name', cantidad_productos.prop('name').replace("[]", "[" + id_actual + "]"));
 
-        
+
 
         contenedor.append(new_l);
 
@@ -146,16 +158,17 @@ function inicio_direcciones_pedido(e) {
         });
 
         count_direcciones(e);
+        total_productos(e);
         return false;
     });
 
 
     $(contenedor).on('click', '.add_producto', function() {
-        var cantidad=$('.cantidad_producto',$(this).parents('.row')).val();
-        var producto=$('.lista_productos',$(this).parents('.row')).select2('data');
+        var cantidad = $('.cantidad_producto', $(this).parents('.add')).val();
+        var producto = $('.lista_productos', $(this).parents('.add')).select2('data');
         var direccion = $(this).parents('.direccion');
         for (let index = 0; index < cantidad; index++) {
-            add_producto(producto, 1, new_row.clone(),id_producto,id_producto_actual,direccion);
+            add_producto(producto, 1, new_row.clone(), id_producto, id_producto_actual, direccion);
         }
         // add_producto(producto, cantidad, new_r,id_producto,id_producto_actual);
         count_productos(direccion);
@@ -163,27 +176,35 @@ function inicio_direcciones_pedido(e) {
     });
     $(contenedor).on('change', '.direccion_entrega', function() {
         var direccion = $(this).parents('.datos_direccion');
-        $('.direccion_precio',direccion).val($('option:selected',this).data('precio'));
+        $('.direccion_precio', direccion).val($('option:selected', this).data('precio'));
+        total_productos(e);
     });
 
 }
 
-function add_producto(producto, cantidad, new_r,id_producto,id_producto_actual,direccion) {
+function add_producto(producto, cantidad, new_r, id_producto, id_producto_actual, direccion) {
     do {
         id_producto_actual++;
     } while (typeof(id_producto[id_producto_actual]) != 'undefined');
     id_producto[id_producto_actual] = id_producto_actual;
-    
+
     var iddireccionpedido = $('.iddireccionpedido', direccion).val();
 
     $('.titulo', new_r).text($(producto[0].element).text());
-    $('.imagen', new_r).prop('src',$(producto[0].element).data('foto'));
+    $('.imagen', new_r).prop('src', $(producto[0].element).data('foto'));
     $('.precio_unitario', new_r).val($(producto[0].element).data('precio'));
-    $('.precio', new_r).val($(producto[0].element).data('precio')*cantidad);
+    $('.precio', new_r).val($(producto[0].element).data('precio') * cantidad);
+
     var idproducto = $('.idproducto', new_r);
     idproducto.prop('name', idproducto.prop('name').replace("[]", "[" + iddireccionpedido + "]"));
     idproducto.prop('name', idproducto.prop('name').replace("[]", "[" + id_producto_actual + "]"));
     idproducto.val($(producto[0].element).val());
+
+
+    var idproductopedido = $('.idproductopedido', new_r);
+    idproductopedido.prop('name', idproductopedido.prop('name').replace("[]", "[" + iddireccionpedido + "]"));
+    idproductopedido.prop('name', idproductopedido.prop('name').replace("[]", "[" + id_producto_actual + "]"));
+    idproductopedido.val(id_producto_actual);
 
     var producto_cantidad = $('.producto_cantidad', new_r);
     producto_cantidad.prop('name', producto_cantidad.prop('name').replace("[]", "[" + iddireccionpedido + "]"));
@@ -200,13 +221,15 @@ function add_producto(producto, cantidad, new_r,id_producto,id_producto_actual,d
     producto_atributo.prop('required', true);
 
 
-    $('.lista_productos_pedido',direccion).append(new_r);
+    $('.lista_productos_pedido', direccion).append(new_r);
 
     $('.producto_atributo').select2({
         width: '100%',
         templateResult: formato_imagen,
         templateSelection: formato_imagen
     });
+
+    total_productos($('.grupo_pedido'));
 }
 
 $('body').on('change', '.lista_productos', function() {
@@ -214,23 +237,42 @@ $('body').on('change', '.lista_productos', function() {
 });
 
 $('body').on('change', '.producto_cantidad', function() {
-    var cantidad=$(this).val();
-    var precio=$('.precio_unitario',$(this).parents('.producto')).val();
-    $('.precio',$(this).parents('.producto')).val(precio*cantidad);
+    var cantidad = $(this).val();
+    var precio = $('.precio_unitario', $(this).parents('.producto')).val();
+    $('.precio', $(this).parents('.producto')).val(precio * cantidad);
+    total_productos($('.grupo_pedido'));
 });
 
 $('body').on('click', '.quitar_producto', function() {
     var direccion = $(this).parents('.direccion');
     $(this).parents('.datos_producto').remove();
     count_productos(direccion);
+    total_productos($('.grupo_pedido'));
 });
 
 $('body').on('click', '.quitar_direccion', function() {
     $(this).parents('.linea').remove();
     count_direcciones($('.grupo_pedido'));
+    total_productos($('.grupo_pedido'));
 });
 
 
+function total_productos(e) {
+    var total = 0;
+    var direcciones = $('.direcciones_pedido .direccion', e);
+    $(direcciones).each(function() {
+        var total_direccion = parseInt($('.direccion_precio', this).val());
+        if (total_direccion && total_direccion != '') {
+            total += total_direccion;
+        }
+        $('.lista_productos_pedido .datos_producto', this).each(function() {
+            var cantidad = parseInt($('.producto_cantidad', this).val());
+            var precio = parseInt($('.precio_unitario', this).val());
+            total += (cantidad * precio);
+        });
+    });
+    $('#total').val(total);
+}
 
 function count_direcciones(e) {
     setTimeout(function() {

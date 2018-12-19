@@ -184,7 +184,29 @@ class detalle
                 } else {
                     $count = 0;
                 }
+                foreach ($direcciones as $key => $d) {
+                    $direcciones[$key]['lista_productos']=$campos['lista_productos'];
+                    $direcciones[$key]['direccion_entrega']=$campos['direccion_entrega'];
+                    foreach ($direcciones[$key]['direccion_entrega'] as $k => $e) {
+                        if($e['idusuariodireccion']==$d['idusuariodireccion']){
+                            $direcciones[$key]['direccion_entrega'][$k]['selected']='selected=""';
+                        }else{
+                            $direcciones[$key]['direccion_entrega'][$k]['selected']='';
+                        }
+                    }
 
+                    foreach ($direcciones[$key]['productos'] as $k => $p) {
+                        $direcciones[$key]['productos'][$k]['lista_atributos']=$campos['lista_atributos'];
+                        foreach ($direcciones[$key]['productos'][$k]['lista_atributos'] as $f => $e) {
+                            if($e['idproducto']==$p['idproductoatributo']){
+                                $direcciones[$key]['productos'][$k]['lista_atributos'][$f]['selected']='selected=""';
+                            }else{
+                                $direcciones[$key]['productos'][$k]['lista_atributos'][$f]['selected']='';
+                            }
+                        }
+                    }
+                    
+                }
                 $data = array(
                     'title_field' => $campos['title_field'],
                     'field'       => $campos['field'],

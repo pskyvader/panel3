@@ -73,10 +73,10 @@ class image
     //mover archivo (normalmente) desde la carpeta temporal a la definitiva
     public static function move($file, $folder, $subfolder, $name_final, $folder_tmp = 'tmp')
     {
-        $recortes   = self::get_recortes($folder);
-        $folder_tmp = self::get_upload_dir() . $folder_tmp;
-        $base_folder= self::get_upload_dir() . $folder;
-        $folder     = $base_folder . '/' . $name_final . '/' . $subfolder;
+        $recortes    = self::get_recortes($folder);
+        $folder_tmp  = self::get_upload_dir() . $folder_tmp;
+        $base_folder = self::get_upload_dir() . $folder;
+        $folder      = $base_folder . '/' . $name_final . '/' . $subfolder;
 
         if (!file_exists($folder)) {
             if (!mkdir($folder, 0777, true)) {
@@ -103,6 +103,51 @@ class image
         unset($file['tmp']);
         $file['subfolder'] = $subfolder;
         return $file;
+    }
+    public static function copy($original_file, $id_final, $folder, $subfolder = "", $name_final = "", $tag = 'thumb')
+    {
+        $respuesta = array('exito' => false, 'mensaje' => '');
+
+        $name      = explode(".", $original_file['url']);
+        $extension = strtolower(array_pop($name));
+
+        $new_file = array('portada' => true, 'id' => 1, 'url' => $id_final . '.' . $extension, 'parent' => $name_final, 'folder' => $folder, 'subfolder' => $subfolder, 'tmp' => '');
+        $original = self::generar_dir($original_file, $tag);
+        if ($original != '') {
+            $base_folder = self::get_upload_dir() . $folder;
+            $folder      = $base_folder;
+            if ($name_final != '') {
+                $folder .= '/' . $name_final;
+            }
+            if ($subfolder != '') {
+                $folder .= '/' . $subfolder;
+            }
+
+            if (!file_exists($folder)) {
+                if (!mkdir($folder, 0777, true)) {
+                    $respuesta['mensaje'] = "Error al crear directorio " . $folder;
+                    return $respuesta;
+                }
+                functions::protection_template($base_folder);
+                if ($name_final != '') {
+                    functions::protection_template($base_folder . '/' . $name_final);
+                    if ($subfolder != '') {
+                        functions::protection_template($folder);
+                    }
+                }
+            }
+            $destino = $folder . '/' . $new_file['url'];
+            if (is_writable($folder)) {
+                copy($original, $destino);
+                $respuesta['exito'] = true;
+                $respuesta['file']  = array($new_file);
+            } else {
+                $respuesta['mensaje'] = 'La carpeta ' . $folder . ' no tiene permisos de escritura';
+            }
+        } else {
+            $respuesta['mensaje'] = 'El archivo original no existe';
+        }
+        return $respuesta;
     }
     //obtener recortes de fotos desde bdd, segun la seccion actual
     private static function get_recortes($modulo)
@@ -228,7 +273,7 @@ class image
         }
 
         // si es valido, se crea una imagen intermedia para acelerar el proceso de recorte de las demas imagenes
-        if (($alto > ($alto_valido * 1.5) && $alto_valido>0) || ($ancho > ($ancho_valido * 1.5) && $ancho_valido>0 )) {
+        if (($alto > ($alto_valido * 1.5) && $alto_valido > 0) || ($ancho > ($ancho_valido * 1.5) && $ancho_valido > 0)) {
             $alto_final  = ($alto / $ancho) * $ancho_valido; //alto proporcional segun mayor ancho valido
             $ancho_final = ($ancho / $alto) * $alto_valido; //ancho proporcional segun mayor alto valido
             if ($ancho_final >= $ancho_valido) {
@@ -335,7 +380,7 @@ class image
 
         $proporcion_imagen = $ancho / $alto;
         if (null == $ancho_maximo || 0 == $ancho_maximo) {
-            $ancho_maximo = (float) $alto_maximo *$proporcion_imagen;
+            $ancho_maximo = (float) $alto_maximo * $proporcion_imagen;
         }
         if (null == $alto_maximo || 0 == $alto_maximo) {
             $alto_maximo = (float) $ancho_maximo / $proporcion_imagen;
@@ -443,18 +488,24 @@ class image
     }
     public static function generar_url(array $file, $tag = 'thumb', $extension = "", $folder = "", $subfolder = "")
     {
-        if(empty($file)) return '';
+        if (empty($file)) {
+            return '';
+        }
+
         if ('' == $folder) {
             $folder = $file['folder'];
         }
         if ('' != $subfolder) {
             $subfolder .= '/';
-        } else {
-            $subfolder = $file['parent'] . '/' . $file['subfolder'] . '/';
+        } elseif ($file['parent'] != '') {
+            $subfolder = $file['parent'] . '/';
+            if ($file['subfolder'] != '') {
+                $subfolder .= $file['subfolder'] . '/';
+            }
         }
 
-        $url  = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
-        if(!file_exists(self::get_upload_dir() . $url)){
+        $url = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
+        if (!file_exists(self::get_upload_dir() . $url)) {
             return "";
         }
         $time = functions::fecha_archivo(self::get_upload_dir() . $url, true);
@@ -472,8 +523,11 @@ class image
         }
         if ('' != $subfolder) {
             $subfolder .= '/';
-        } else {
-            $subfolder = $file['parent'] . '/' . $file['subfolder'] . '/';
+        } elseif ($file['parent'] != '') {
+            $subfolder = $file['parent'] . '/';
+            if ($file['subfolder'] != '') {
+                $subfolder .= $file['subfolder'] . '/';
+            }
         }
 
         $url     = $folder . '/' . $subfolder . (self::nombre_archivo($file['url'], $tag, $extension));
@@ -499,23 +553,24 @@ class image
         return $portada;
     }
 
-    private static function removeDirectory($path) {
+    private static function removeDirectory($path)
+    {
         // The preg_replace is necessary in order to traverse certain types of folder paths (such as /dir/[[dir2]]/dir3.abc#/)
         // The {,.}* with GLOB_BRACE is necessary to pull all hidden files (have to remove or get "Directory not empty" errors)
-        $files = glob(preg_replace('/(\*|\?|\[)/', '[$1]', $path).'/{,.}*', GLOB_BRACE);
-        $s=true;
+        $files = glob(preg_replace('/(\*|\?|\[)/', '[$1]', $path) . '/{,.}*', GLOB_BRACE);
+        $s     = true;
         foreach ($files as $file) {
-            if ($file == $path.'/.' || $file == $path.'/..') { continue; } // skip special dir entries
-            $s=is_dir($file) ? self::removeDirectory($file) : unlink($file);
-            if(!$s){
-                echo 'Error :'.$file;
+            if ($file == $path . '/.' || $file == $path . '/..') {continue;} // skip special dir entries
+            $s = is_dir($file) ? self::removeDirectory($file) : unlink($file);
+            if (!$s) {
+                echo 'Error :' . $file;
                 exit;
             }
         }
-        if($s){
-            $s=rmdir($path);
-        }else{
-            echo 'Error :'.$path;
+        if ($s) {
+            $s = rmdir($path);
+        } else {
+            echo 'Error :' . $path;
         }
         return $s;
     }

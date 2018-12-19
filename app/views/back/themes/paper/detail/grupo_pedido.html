@@ -5,15 +5,151 @@
         <div class="alert alert-info">{help}</div>
         <div class="direcciones_pedido row">
             {foreach direcciones}
-            <div class="campo direccion col-xs-12">
-                {titulo}
-                
-            {foreach productos}
-            
-            {/foreach productos}
+            <div class="col-xs-12 mt mb-lg linea">
+                <div class="campo direccion">
+                    <h4 class="title pull-left">Direccion guardada</h4>
+                    <button class="quitar_direccion btn-raised btn-danger btn btn-md pull-right">
+                        <i class="material-icons">delete</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    <div class="clearfix"></div>
+                    <hr>
+                    <div class="row datos_direccion">
+                        <input type="hidden" name="datos_direcciones[{idpedidodireccion}][iddireccionpedido]" class="iddireccionpedido" value="{idpedidodireccion}">
+                        <input type="hidden" name="datos_direcciones[{idpedidodireccion}][cantidad]" class="cantidad_productos" data-campo="Todas las direcciones deben tener al menos 1 producto" value="{cantidad}" required="">
+                        <div class="col-md-4">
+                            <select name="datos_direcciones[{idpedidodireccion}][iddireccion]" class="form-control direccion_entrega">
+                                <option value="" selected="selected" hidden="" disabled="">Selecciona una direccion de entrega</option>
+                                {foreach direccion_entrega}
+                                <option value="{idusuariodireccion}" data-precio="{precio}" {selected}>{titulo}</option>
+                                {/foreach direccion_entrega}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input placeholder="Fecha de entrega" name="datos_direcciones[{idpedidodireccion}][fecha_entrega]" type="text" class="form-control date fecha_entrega" value="{fecha_entrega}" autocomplete="off">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control direccion_precio" value="{precio}" readonly="" placeholder="Valor de envio">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="add row">
+                        <div class="col-sm-6 col-md-4">
+                            <select name="" class="form-control lista_productos">
+                                <option value="" disabled="" hidden="" selected="">Selecciona un producto</option>
+                                {foreach lista_productos}
+                                <option value="{idproducto}" data-foto="{foto}" data-precio="{precio}">{titulo}</option>
+                                {/foreach lista_productos}
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-md-4 cantidad">
+                            <input type="number" min="1" name="" class="form-control cantidad_producto" placeholder="Cantidad" value="1">
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <button class="add_producto btn btn-success btn-raised disabled">Añadir producto</button>
+                        </div>
+                        <hr />
+                        <div class="lista_productos_pedido col-xs-12">
+                            {foreach productos}
+                            <div class="datos_producto">
+                                <input type="hidden" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproductopedido]" class="idproductopedido" value="{idpedidoproducto}">
+                                <input type="hidden" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproducto]" class="idproducto" value="{idproducto}">
+                                <div class="move">
+                                    <i class="fa fa-arrows fa-lg"></i>
+                                    <div class="producto">
+                                        <div class="clearfix">
+                                            <div class="col-sm-6 col-md-3">
+                                                <label class="titulo">{titulo}</label>
+                                                <br />
+                                                <img src="{foto}" alt="Imagen" class="imagen">
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label for="">Cantidad</label>
+                                                <input type="number" min="1" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][cantidad]" class="producto_cantidad form-control" value="{cantidad}" readonly="">
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label for="">Precio</label>
+                                                <br />
+                                                <input type="text" name="" class="precio form-control" value="{total}" readonly="">
+                                                <input type="hidden" name="" class="precio_unitario" value="{precio}">
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <label for="">Quitar</label>
+                                                <br />
+                                                <button class="quitar_producto btn-raised btn-danger btn btn-md">
+                                                    <i class="material-icons">delete</i>
+                                                    <div class="ripple-container"></div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="clearfix">
+                                            <div class="form-group">
+                                                <label for="" class="col-sm-2 control-label">Atributo</label>
+                                                <div class="col-sm-10">
+                                                    <select name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproductoatributo]" class="form-control producto_atributo">
+                                                        <option value="" disabled="" hidden="" selected="">Selecciona un Atributo</option>
+                                                        {foreach lista_atributos}
+                                                        <option value="{idproducto}" data-foto="{foto}" {selected}>{titulo}</option>
+                                                        {/foreach lista_atributos}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div class="form-group">
+                                                <label for="" class="col-sm-2 control-label">Mensaje de la tarjeta</label>
+                                                <div class="col-sm-10">
+                                                    <textarea name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][mensaje]" cols="30" rows="4" class="producto_mensaje form-control" >{mensaje}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/foreach productos}
+                        </div>
+                    </div>
+                </div>
             </div>
             {/foreach direcciones}
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         <div class="add">
             <button class="add_direccion btn btn-block btn-primary btn-raised">Añadir dirección de envio</button>
         </div>
@@ -21,10 +157,10 @@
             <div class="campo direccion">
                 <h4 class="title pull-left">Nueva dirección de envio</h4>
                 <button class="quitar_direccion btn-raised btn-danger btn btn-md pull-right">
-                        <i class="material-icons">delete</i>
-                        <div class="ripple-container"></div>
-                    </button>
-                    <div class="clearfix"></div>
+                    <i class="material-icons">delete</i>
+                    <div class="ripple-container"></div>
+                </button>
+                <div class="clearfix"></div>
                 <hr>
                 <div class="row datos_direccion">
                     <input type="hidden" name="datos_direcciones[][iddireccionpedido]" class="iddireccionpedido" value="">
@@ -60,11 +196,12 @@
                     <div class="col-sm-6 col-md-4">
                         <button class="add_producto btn btn-success btn-raised disabled">Añadir producto</button>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="lista_productos_pedido col-xs-12">
                     </div>
                 </div>
                 <div class="datos_producto new_row">
+                    <input type="hidden" name="datos_direcciones[][productos][][idproductopedido]" class="idproductopedido">
                     <input type="hidden" name="datos_direcciones[][productos][][idproducto]" class="idproducto">
                     <div class="move">
                         <i class="fa fa-arrows fa-lg"></i>

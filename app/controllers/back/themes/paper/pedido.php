@@ -16,6 +16,7 @@ use \app\models\region as region_model;
 use \app\models\table;
 use \app\models\usuario as usuario_model;
 use \app\models\usuariodireccion as usuariodireccion_model;
+use \core\database;
 use \core\functions;
 use \core\image;
 
@@ -256,12 +257,12 @@ class pedido extends base
         }
 
         if (isset($configuracion['campos']['direcciones'])) {
-            $com=comuna_model::getAll();
+            $com     = comuna_model::getAll();
             $comunas = array();
             foreach ($com as $key => $c) {
-                if($c['precio']>1){
-                    $r=region_model::getById($c['idregion']);
-                    $c['precio']=$r['precio'];
+                if ($c['precio'] > 1) {
+                    $r           = region_model::getById($c['idregion']);
+                    $c['precio'] = $r['precio'];
                 }
                 $comunas[$c[0]] = $c;
             }
@@ -284,12 +285,6 @@ class pedido extends base
             $configuracion['campos']['direcciones']['lista_atributos'] = $lista_atributos;
 
             if ($id != 0) {
-                $direcciones = pedidodireccion_model::getAll(array('idpedido' => $id));
-                foreach ($direcciones as $key => $d) {
-                    $productos                      = pedidoproducto_model::getAll(array('idpedido' => $id, 'idpedidodireccion' => $d[0]));
-                    $direcciones[$key]['productos'] = $productos;
-                }
-                $row['direcciones'] = $direcciones;
                 if (isset($row['idusuario']) && $row['idusuario'] != '') {
                     $direcciones_entrega = usuariodireccion_model::getAll(array('idusuario' => $row['idusuario']));
                     foreach ($direcciones_entrega as $key => $de) {
@@ -298,6 +293,24 @@ class pedido extends base
                     }
                     $configuracion['campos']['direcciones']['direccion_entrega'] = $direcciones_entrega;
                 }
+
+                $dir         = pedidodireccion_model::getAll(array('idpedido' => $id));
+                $direcciones = array();
+                foreach ($dir as $key => $d) {
+                    $new_d     = array('idpedidodireccion' => $d['idpedidodireccion'], 'idusuariodireccion' => $d['idusuariodireccion'], 'precio' => $d['precio'], 'fecha_entrega' => $d['fecha_entrega']);
+                    $prod      = pedidoproducto_model::getAll(array('idpedido' => $id, 'idpedidodireccion' => $d[0]));
+                    $productos = array();
+                    foreach ($prod as $v => $p) {
+                        $portada     = image::portada($p['foto']);
+                        $thumb_url   = image::generar_url($portada, '');
+                        $new_p       = array('idpedidoproducto' => $p['idpedidoproducto'], 'idproductoatributo' => $p['idproductoatributo'], 'titulo' => $p['titulo'], 'mensaje' => $p['mensaje'], 'idproducto' => $p['idproducto'], 'foto' => $thumb_url, 'precio' => $p['precio'], 'cantidad' => $p['cantidad'], 'total' => $p['total']);
+                        $productos[] = $new_p;
+                    }
+                    $new_d['productos'] = $productos;
+                    $new_d['cantidad']  = count($productos);
+                    $direcciones[]      = $new_d;
+                }
+                $row['direcciones'] = $direcciones;
             }
         }
 
@@ -320,18 +333,18 @@ class pedido extends base
         if (isset($campos['idusuario'])) {
             $usuario = usuario_model::getById($campos['idusuario']);
             if (count($usuario) > 0) {
-                $com=comuna_model::getAll();
+                $com     = comuna_model::getAll();
                 $comunas = array();
                 foreach ($com as $key => $c) {
-                    if($c['precio']>1){
-                        $r=region_model::getById($c['idregion']);
-                        $c['precio']=$r['precio'];
+                    if ($c['precio'] > 1) {
+                        $r           = region_model::getById($c['idregion']);
+                        $c['precio'] = $r['precio'];
                     }
                     $comunas[$c[0]] = $c;
                 }
-                $usuario                  = array($usuario[0], 'nombre' => $usuario['nombre'], 'email' => $usuario['email'], 'telefono' => $usuario['telefono']);
-                $respuesta['usuario']     = $usuario;
-                $direcciones              = usuariodireccion_model::getAll(array('idusuario' => $usuario[0]));
+                $usuario              = array($usuario[0], 'nombre' => $usuario['nombre'], 'email' => $usuario['email'], 'telefono' => $usuario['telefono']);
+                $respuesta['usuario'] = $usuario;
+                $direcciones          = usuariodireccion_model::getAll(array('idusuario' => $usuario[0]));
                 foreach ($direcciones as $key => $d) {
                     $direcciones[$key]['precio'] = $comunas[$d['idcomuna']]['precio'];
                 }
@@ -360,8 +373,8 @@ class pedido extends base
         if (isset($campos['datos_direcciones'])) {
             $direcciones = $campos['datos_direcciones'];
             unset($campos['datos_direcciones']);
-            $respuesta['direcciones'] = $direcciones;
         }
+        $campos['total_original'] = $campos['total'];
 
         if ($campos['id'] == '') {
             $respuesta['id']      = $class::insert($campos);
@@ -377,13 +390,12 @@ class pedido extends base
         $respuesta['exito'] = true;
         $pedido             = pedido_model::getById($respuesta['id']);
 
-
-        $com=comuna_model::getAll();
+        $com     = comuna_model::getAll();
         $comunas = array();
         foreach ($com as $key => $c) {
-            if($c['precio']>1){
-                $r=region_model::getById($c['idregion']);
-                $c['precio']=$r['precio'];
+            if ($c['precio'] > 1) {
+                $r           = region_model::getById($c['idregion']);
+                $c['precio'] = $r['precio'];
             }
             $comunas[$c[0]] = $c;
         }
@@ -397,25 +409,40 @@ class pedido extends base
         $du                  = usuariodireccion_model::getAll(array('idusuario' => $pedido['idusuario']));
         $direcciones_usuario = array();
         foreach ($du as $key => $d) {
-            $d['comuna']=$comunas[$d['idcomuna']];
+            $d['comuna']                = $comunas[$d['idcomuna']];
             $direcciones_usuario[$d[0]] = $d;
         }
 
+        $pa                 = pedidoproducto_model::getAll(array('idpedido' => $pedido[0]));
+        $productos_antiguos = array();
+        foreach ($pa as $key => $p) {
+            $productos_antiguos[$p[0]] = $p;
+        }
+
+        $total_pedido = 0;
+
+        //procesar direcciones
         foreach ($direcciones as $key => $d) {
             if (!isset($direcciones_usuario[$d['iddireccion']])) {
                 $respuesta['exito']   = false;
                 $respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente';
                 break;
-            }else{
-                $du=$direcciones_usuario[$d['iddireccion']];
+            } else {
+                $du = $direcciones_usuario[$d['iddireccion']];
             }
+            $productos = $d['productos'];
             if (isset($direcciones_pedido[$d['iddireccionpedido']])) {
-                $new_d                  = $direcciones_pedido[$d['iddireccionpedido']];
+                $existe_direccion  = true;
+                $fields            = table::getByname(pedidodireccion_model::$table);
+                $new_d             = database::create_data($fields, $direcciones_pedido[$d['iddireccionpedido']]);
+                $iddirecionpeddido = $direcciones_pedido[$d['iddireccionpedido']][0];
+                unset($direcciones_pedido[$d['iddireccionpedido']]);
                 $new_d['fecha_entrega'] = $d['fecha_entrega'];
             } else {
-                $new_d                     = $d;
-                $new_d['cookie_direccion'] = $pedido['cookie_pedido'] . '-' . functions::generar_pass(2);
-                $new_d['idpedido'] = $pedido[0];
+                $existe_direccion            = false;
+                $new_d                       = $d;
+                $new_d['cookie_direccion']   = $pedido['cookie_pedido'] . '-' . functions::generar_pass(2);
+                $new_d['idpedido']           = $pedido[0];
                 $new_d['idusuariodireccion'] = $du[0];
             }
             //4= pedido pagado
@@ -428,26 +455,102 @@ class pedido extends base
             }
 
             $new_d['precio'] = $du['comuna']['precio'];
-            
-            $new_d['nombre'] = $du['nombre'];
-            $new_d['telefono'] = $du['telefono'];
-            $new_d['referencias'] = $du['referencias'];
-            $new_d['direccion_completa'] = $du['direccion'].', '.$du['comuna']['titulo'].';';
-            $new_d['direccion_completa'] .= ($du['villa']!='')?', villa '.$du['villa']:'';
-            $new_d['direccion_completa'] .= ($du['edificio']!='')?', edificio '.$du['edificio']:'';
-            $new_d['direccion_completa'] .= ($du['departamento']!='')?', departamento '.$du['departamento']:'';
-            $new_d['direccion_completa'] .= ($du['condominio']!='')?', condominio '.$du['condominio']:'';
-            $new_d['direccion_completa'] .= ($du['casa']!='')?', casa '.$du['casa']:'';
-            $new_d['direccion_completa'] .= ($du['empresa']!='')?', empresa '.$du['empresa']:'';
 
-            if (isset($direcciones_pedido[$d['iddireccionpedido']])) {
-                $new_d['id']=$new_d[0];
-                $iddireccion_pedido=pedidodireccion_model::update($new_d);
-            }else{
-                $iddireccion_pedido=pedidodireccion_model::insert($new_d);
+            $new_d['nombre']             = $du['nombre'];
+            $new_d['telefono']           = $du['telefono'];
+            $new_d['referencias']        = $du['referencias'];
+            $new_d['direccion_completa'] = $du['direccion'] . ', ' . $du['comuna']['titulo'] . ';';
+            $new_d['direccion_completa'] .= ($du['villa'] != '') ? ', villa ' . $du['villa'] : '';
+            $new_d['direccion_completa'] .= ($du['edificio'] != '') ? ', edificio ' . $du['edificio'] : '';
+            $new_d['direccion_completa'] .= ($du['departamento'] != '') ? ', departamento ' . $du['departamento'] : '';
+            $new_d['direccion_completa'] .= ($du['condominio'] != '') ? ', condominio ' . $du['condominio'] : '';
+            $new_d['direccion_completa'] .= ($du['casa'] != '') ? ', casa ' . $du['casa'] : '';
+            $new_d['direccion_completa'] .= ($du['empresa'] != '') ? ', empresa ' . $du['empresa'] : '';
+
+            if ($existe_direccion) {
+                $new_d['id']       = $iddirecionpeddido;
+                $idpedidodireccion = pedidodireccion_model::update($new_d);
+            } else {
+                $idpedidodireccion = pedidodireccion_model::insert($new_d);
             }
+            $total_pedido += $new_d['precio'];
 
+            foreach ($productos as $key => $p) {
+                if (isset($productos_antiguos[$p['idproductopedido']])) {
+                    $existe = true;
+                    $fields = table::getByname(pedidoproducto_model::$table);
+                    $new_p  = database::create_data($fields, $productos_antiguos[$p['idproductopedido']]);
+                    unset($productos_antiguos[$p['idproductopedido']]);
+                    if ($new_p['idproducto'] != $p['idproducto']) {
+                        $change = true;
+                    } else {
+                        $change = false;
+                    }
+                    $new_p['idproducto']         = $p['idproducto'];
+                    $new_p['cantidad']           = $p['cantidad'];
+                    $new_p['idproductoatributo'] = $p['idproductoatributo'];
+                    $new_p['mensaje']            = $p['mensaje'];
+                } else {
+                    $existe            = false;
+                    $change            = true;
+                    $new_p             = $p;
+                    $new_p['idpedido'] = $pedido[0];
+                    unset($new_p['idproductopedido']);
+                }
 
+                if ($change) {
+                    $producto_usuario = producto_model::getById($new_p['idproducto']);
+                    if (count($producto_usuario) == 0) {
+                        $respuesta['exito']   = false;
+                        $respuesta['mensaje'] = 'Una dirección no es valida, por favor recarga la pagina e intenta nuevamente';
+                        break 2; // salir de ambos foreach
+                    }
+                    $new_p['titulo'] = $producto_usuario['titulo'];
+                    $new_p['precio'] = $producto_usuario['precio_final'];
+                }
+
+                $new_p['idpedidodireccion'] = $idpedidodireccion;
+                $atributo                   = producto_model::getById($new_p['idproductoatributo']);
+                $new_p['titulo_atributo']   = $atributo['titulo'];
+                $new_p['total']             = $new_p['precio'] * $new_p['cantidad'];
+
+                if ($existe) {
+                    $new_p['id']      = $p['idproductopedido'];
+                    $new_p['foto']    = json_encode($new_p['foto']);
+                    $idpedidoproducto = pedidoproducto_model::update($new_p);
+                } else {
+                    $idpedidoproducto = pedidoproducto_model::insert($new_p);
+                }
+
+                if ($change) {
+                    $new_p['id'] = $idpedidoproducto;
+                    $portada     = image::portada($producto_usuario['foto']);
+                    $copiar      = image::copy($portada, $new_p['id'], pedidoproducto_model::$table, '', '', 'cart');
+                    if ($copiar['exito']) {
+                        $new_p['foto']    = json_encode($copiar['file']);
+                        $idpedidoproducto = pedidoproducto_model::update($new_p);
+                    } else {
+                        $respuesta = $copiar;
+                        break 2; // salir de ambos foreach
+                    }
+                }
+
+                $total_pedido += $new_p['total'];
+            }
+        }
+
+        //borrar productos y direcciones si fueron eliminados en la vista
+        foreach ($productos_antiguos as $key => $pa) {
+            pedidoproducto_model::delete($pa[0]);
+        }
+        foreach ($direcciones_pedido as $key => $dp) {
+            pedidodireccion_model::delete($dp[0]);
+        }
+
+        if ($pedido['total'] != $total_pedido) {
+            $campos['total_original'] = $total_pedido;
+            $campos['id']             = $pedido[0];
+            $respuesta['id']          = $class::update($campos);
         }
 
         echo json_encode($respuesta);
