@@ -308,7 +308,11 @@ class pedido extends base
                     }
                     $new_d['productos'] = $productos;
                     $new_d['cantidad']  = count($productos);
-                    $direcciones[]      = $new_d;
+                    if ($new_d['cantidad'] == 0) {
+                        $new_d['cantidad'] = '';
+                    }
+
+                    $direcciones[] = $new_d;
                 }
                 $row['direcciones'] = $direcciones;
             }
@@ -478,7 +482,7 @@ class pedido extends base
             $total_pedido += $new_d['precio'];
 
             foreach ($productos as $key => $p) {
-                $cantidad_antigua=0;
+                $cantidad_antigua = 0;
                 if (isset($productos_antiguos[$p['idproductopedido']])) {
                     $existe = true;
                     $fields = table::getByname(pedidoproducto_model::$table);
@@ -489,7 +493,7 @@ class pedido extends base
                     } else {
                         $change = false;
                     }
-                    $cantidad_antigua=$new_p['cantidad'];
+                    $cantidad_antigua            = $new_p['cantidad'];
                     $new_p['idproducto']         = $p['idproducto'];
                     $new_p['cantidad']           = $p['cantidad'];
                     $new_p['idproductoatributo'] = $p['idproductoatributo'];
@@ -508,7 +512,7 @@ class pedido extends base
                     $respuesta['mensaje'] = 'Un producto no es valido, por favor recarga la pagina e intenta nuevamente';
                     break 2; // salir de ambos foreach
                 }
-                $producto_detalle['stock']-=($new_p['cantidad']-$cantidad_antigua);
+                $producto_detalle['stock'] -= ($new_p['cantidad'] - $cantidad_antigua);
 
                 if ($change) {
                     $new_p['titulo'] = $producto_detalle['titulo'];
@@ -541,7 +545,7 @@ class pedido extends base
                     }
                 }
 
-                producto_model::update(array('id'=>$new_p['idproducto'],'stock'=>$producto_detalle['stock']));
+                producto_model::update(array('id' => $new_p['idproducto'], 'stock' => $producto_detalle['stock']));
                 $total_pedido += $new_p['total'];
             }
         }
@@ -549,9 +553,9 @@ class pedido extends base
         //borrar productos y direcciones si fueron eliminados en la vista
         foreach ($productos_antiguos as $key => $pa) {
             $producto_detalle = producto_model::getById($pa['idproducto']);
-            $producto_detalle['stock']+=($pa['cantidad']);
-            $producto_detalle['id']=$pa['idproducto'];
-            producto_model::update(array('id'=>$pa['idproducto'],'stock'=>$producto_detalle['stock']));
+            $producto_detalle['stock'] += ($pa['cantidad']);
+            $producto_detalle['id'] = $pa['idproducto'];
+            producto_model::update(array('id' => $pa['idproducto'], 'stock' => $producto_detalle['stock']));
             pedidoproducto_model::delete($pa[0]);
         }
         foreach ($direcciones_pedido as $key => $dp) {

@@ -259,6 +259,9 @@ function add_producto(producto, cantidad, new_r, id_producto, id_producto_actual
 
     $('.lista_productos_pedido', direccion).append(new_r);
 
+    $('textarea.autosize').autosize({
+        append: "\n"
+    });
     inicio_select_atributos();
 
     total_productos($('.grupo_pedido'));
@@ -371,6 +374,7 @@ function inicio_sorted_pedido() {
             var direccion = $(ui.item).parents('.direccion');
             idfinal = $('.iddireccionpedido', direccion).val();
             cambiar_id_productopedido(ui.item, idinicial, idfinal);
+            count_productos(direccion);
         }
     });
 }

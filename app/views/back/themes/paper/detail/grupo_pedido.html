@@ -61,23 +61,38 @@
                                     </div>
                                     <div class="producto">
                                         <div class="row">
-                                            <div class="col-sm-6 col-md-3">
+                                            <div class="col-xs-6 col-md-2">
                                                 <img src="{foto}" alt="Imagen" class="imagen">
                                             </div>
-                                            <div class="col-sm-6 col-md-3">
-                                                <label for="">Cantidad</label>
-                                                <input type="number" min="1" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][cantidad]" class="producto_cantidad form-control" value="{cantidad}" readonly="">
+                                            <div class="col-xs-6 col-md-2 visible-sm visible-xs">
+                                                <button class="quitar_producto btn-raised btn-danger btn btn-md pull-right">
+                                                    <i class="material-icons">delete</i>
+                                                    <div class="ripple-container"></div>
+                                                </button>
                                             </div>
-                                            <div class="clearfix visible-sm"></div>
-                                            <div class="col-sm-6 col-md-3">
-                                                <label for="">Precio</label>
-                                                <br />
-                                                <input type="text" name="" class="precio form-control" value="{total}" readonly="">
-                                                <input type="hidden" name="" class="precio_unitario" value="{precio}">
+                                            <div class="clearfix visible-sm visible-xs" style="margin-bottom: 10px;"></div>
+                                            <div class="col-sm-6 col-md-4 margen-top">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label for="">Cantidad</label>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <input type="number" min="1" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][cantidad]" class="producto_cantidad form-control" value="{cantidad}" readonly="">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-6 col-md-3">
-                                                <label for="">Quitar</label>
-                                                <br />
+                                            <div class="col-sm-6 col-md-4 margen-top">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label for="">Precio</label>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <input type="text" name="" class="precio form-control" value="{total}" readonly="">
+                                                        <input type="hidden" name="" class="precio_unitario" value="{precio}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 hidden-sm hidden-xs margen-top">
                                                 <button class="quitar_producto btn-raised btn-danger btn btn-md">
                                                     <i class="material-icons">delete</i>
                                                     <div class="ripple-container"></div>
@@ -99,10 +114,10 @@
                                             </div>
                                         </div>
                                         <div class="clearfix">
-                                            <div class="form-group">
+                                            <div class="form-group mensaje">
                                                 <label for="" class="col-sm-2 control-label">Mensaje de la tarjeta</label>
                                                 <div class="col-sm-10">
-                                                    <textarea name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][mensaje]" cols="30" rows="2" class="producto_mensaje form-control">{mensaje}</textarea>
+                                                    <textarea name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][mensaje]" cols="30" rows="2" class="producto_mensaje form-control autosize">{mensaje}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,24 +191,39 @@
                         </div>
                         <div class="producto">
                             <div class="row">
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-xs-6 col-md-2">
                                     <img src="" alt="Imagen" class="imagen">
                                 </div>
-                                <div class="col-sm-6 col-md-3">
-                                    <label for="">Cantidad</label>
-                                    <input type="number" min="1" name="datos_direcciones[][productos][][cantidad]" class="producto_cantidad form-control" value="0" readonly="">
+                                <div class="col-xs-6 col-md-2 visible-sm visible-xs">
+                                    <button class="quitar_producto btn-raised btn-danger btn btn-md pull-right">
+                                        <i class="material-icons">delete</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
                                 </div>
-                                <div class="clearfix visible-sm"></div>
-                                <div class="col-sm-6 col-md-3">
-                                    <label for="">Precio</label>
-                                    <br />
-                                    <input type="text" name="" class="precio form-control" value="0" readonly="">
-                                    <input type="hidden" name="" class="precio_unitario" value="0">
+                                <div class="clearfix visible-sm visible-xs" style="margin-bottom: 10px;"></div>
+                                <div class="col-sm-6 col-md-4 margen-top">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label for="">Cantidad</label>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <input type="number" min="1" name="datos_direcciones[][productos][][cantidad]" class="producto_cantidad form-control" value="0" readonly="">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 col-md-3">
-                                    <label for="">Quitar</label>
-                                    <br />
-                                    <button class="quitar_producto btn-raised btn-danger btn btn-md">
+                                <div class="col-sm-6 col-md-4 margen-top">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label for="">Precio</label>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <input type="text" name="" class="precio form-control" value="0" readonly="">
+                                            <input type="hidden" name="" class="precio_unitario" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 margen-top">
+                                    <button class="quitar_producto btn-raised btn-danger btn btn-md hidden-sm hidden-xs">
                                         <i class="material-icons">delete</i>
                                         <div class="ripple-container"></div>
                                     </button>
@@ -214,10 +244,10 @@
                                 </div>
                             </div>
                             <div class="clearfix">
-                                <div class="form-group">
+                                <div class="form-group mensaje">
                                     <label for="" class="col-sm-2 control-label">Mensaje de la tarjeta</label>
                                     <div class="col-sm-10">
-                                        <textarea name="datos_direcciones[][productos][][mensaje]" cols="30" rows="2" class="producto_mensaje form-control"></textarea>
+                                        <textarea name="datos_direcciones[][productos][][mensaje]" cols="30" rows="2" class="producto_mensaje form-control autosize"></textarea>
                                     </div>
                                 </div>
                             </div>

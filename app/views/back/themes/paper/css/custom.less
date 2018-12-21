@@ -159,9 +159,30 @@ table .tooltip.top {
         textarea {
             background-color: white;
             border: 1px solid #aaa;
+            padding: 7px 15px;
+            margin-bottom: 0px;
         }
         hr {
             margin: 5px 0px;
+        }
+        input{
+            padding: 0px;
+            height: auto;
+        }
+        button{
+            margin: 0px;
+        }
+        @media screen and (min-width:992px){
+            .margen-top{
+                margin-top: 10px;
+            }
+        }
+        
+        .imagen{
+            float: right;
+            @media screen and (max-width:991px){
+                float: left;
+            }
         }
         .move {
             cursor: initial;
@@ -182,6 +203,9 @@ table .tooltip.top {
         }
         .form-group {
             margin-top: 0px;
+            &.mensaje{
+                padding-bottom: 0px;
+            }
         }
     }
     .placeholder_producto {

@@ -3791,8 +3791,8 @@ body.sidebar-collapsed #topnav .navbar-brand img:not(.show-on-collapse){opacity:
 #topnav .navbar-brand .img-logo-dark{opacity:1!important}
 #topnav .navbar-brand .img-logo-white{opacity:1!important}
 }
-#topnav .navbar-brand img:not(.show-on-collapse){-webkit-filter:brightness(0) invert(100%);filter:brightness(0) invert(100%);margin:0 auto;height:64px;transition:opacity .3s linear;opacity:1}
-#topnav .navbar-brand img.show-on-collapse{-webkit-filter:brightness(0) invert(100%);filter:brightness(0) invert(100%);position:absolute;opacity:0;transition:opacity .3s linear;margin:0 auto;height:50px;left:7px;top:7px}
+#topnav .navbar-brand img:not(.show-on-collapse){margin:0 auto;height:64px;transition:opacity .3s linear;opacity:1}
+#topnav .navbar-brand img.show-on-collapse{position:absolute;opacity:0;transition:opacity .3s linear;margin:0 auto;height:50px;left:7px;top:7px}
 #topnav .navbar-brand img.show-on-collapse.img-logo-white{display:1}
 #topnav .navbar-brand img.show-on-collapse.img-logo-dark{display:none}
 #topnav .dropdown-menu,#topnav .tt-dropdown-menu{background-color:#fff;border:1px solid #ccc;border:1px solid #eee;border-radius:2px;box-shadow:none}

@@ -6,27 +6,22 @@ function inicio_multiple() {
 }
 
 function inicio_sorted(){
-    $('.sorted_multiple').sortable_jquery({
+
+
+
+
+
+    $(".sorted_multiple").sortable({
+        cursor: "move",
+        placeholder: "placeholder",
+        forcePlaceholderSize :true,
         handle: '.move',
-        itemSelector: '.campo',
-        placeholder: '<div class="placeholder"/>',
-        containerSelector: '.sorted_multiple',
-        distance: 20,
-        tolerance: 2,
-        onDrop: function($item, container, _super) {
-            var $clonedItem = $('<div/>').css({
-                height: 0
-            });
-            $item.before($clonedItem);
-            $clonedItem.animate({
-                'height': $item.height()
-            });
-            $item.animate($clonedItem.position(), function() {
-                $clonedItem.detach();
-                _super($item, container);
-            });
-        }
+        revert: true,
+        scrollSensitivity: 120,
+        scrollSpeed: 30,
     });
+
+
 }
 
 function multiple(e) {
@@ -40,7 +35,8 @@ function multiple(e) {
     $(e).on('click', '.agregar_editar', function() {
         var new_l = new_line.clone();
         multiple_active($('.active', new_l));
-        $('.sorted_multiple',$(this).parents('.multiple')).append(new_l);
+        $(this).parent().parent().after(new_l);
+        //$('.sorted_multiple',$(this).parents('.multiple')).append(new_l);
         count++;
         inicio_sorted();
         return false;
