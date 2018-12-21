@@ -93,7 +93,7 @@ function inicio_file_multiple(e) {
                 })
         }
     });
-    $(".file_list.sorted_multiple").sortable({
+    $(".file_list.sorted_multiple").sortable_jquery({
         handle: ".move",
         vertical: !1,
         itemSelector: ".campo",

@@ -24,6 +24,8 @@
     "js" : [
         {"url": "assets/js/jquery-3.3.1.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/js/jquery-ui-1.12.1.min.js","local":true,"defer":false,"combine":true},
+        {"url": "assets/js/jquery.ui.touch-punch.min.js","local":true,"defer":false,"combine":true},
+        {"url": "assets/js/mobile_browser.js","local":true,"defer":false,"combine":true},
         {"url": "assets/js/bootstrap.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/js/enquire.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/velocityjs/velocity.min.js","local":true,"defer":false,"combine":true},

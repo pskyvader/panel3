@@ -38,7 +38,7 @@
                             <select name="" class="form-control lista_productos">
                                 <option value="" disabled="" hidden="" selected="">Selecciona un producto</option>
                                 {foreach lista_productos}
-                                <option value="{idproducto}" data-foto="{foto}" data-precio="{precio}">{titulo}</option>
+                                <option value="{idproducto}" data-foto="{foto}" data-precio="{precio}" data-stock="{stock}">{titulo}</option>
                                 {/foreach lista_productos}
                             </select>
                         </div>
@@ -55,18 +55,20 @@
                                 <input type="hidden" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproductopedido]" class="idproductopedido" value="{idpedidoproducto}">
                                 <input type="hidden" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][idproducto]" class="idproducto" value="{idproducto}">
                                 <div class="move">
-                                    <i class="fa fa-arrows fa-lg"></i>
+                                    <div class="handle">
+                                        <i class="fa fa-arrows fa-lg"></i>
+                                        <label class="titulo">{titulo}</label>
+                                    </div>
                                     <div class="producto">
-                                        <div class="clearfix">
+                                        <div class="row">
                                             <div class="col-sm-6 col-md-3">
-                                                <label class="titulo">{titulo}</label>
-                                                <br />
                                                 <img src="{foto}" alt="Imagen" class="imagen">
                                             </div>
                                             <div class="col-sm-6 col-md-3">
                                                 <label for="">Cantidad</label>
                                                 <input type="number" min="1" name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][cantidad]" class="producto_cantidad form-control" value="{cantidad}" readonly="">
                                             </div>
+                                            <div class="clearfix visible-sm"></div>
                                             <div class="col-sm-6 col-md-3">
                                                 <label for="">Precio</label>
                                                 <br />
@@ -100,7 +102,7 @@
                                             <div class="form-group">
                                                 <label for="" class="col-sm-2 control-label">Mensaje de la tarjeta</label>
                                                 <div class="col-sm-10">
-                                                    <textarea name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][mensaje]" cols="30" rows="4" class="producto_mensaje form-control" >{mensaje}</textarea>
+                                                    <textarea name="datos_direcciones[{idpedidodireccion}][productos][{idpedidoproducto}][mensaje]" cols="30" rows="2" class="producto_mensaje form-control">{mensaje}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,42 +116,6 @@
             </div>
             {/foreach direcciones}
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
         <div class="add">
             <button class="add_direccion btn btn-block btn-primary btn-raised">Añadir dirección de envio</button>
         </div>
@@ -186,7 +152,7 @@
                         <select name="" class="form-control lista_productos">
                             <option value="" disabled="" hidden="" selected="">Selecciona un producto</option>
                             {foreach lista_productos}
-                            <option value="{idproducto}" data-foto="{foto}" data-precio="{precio}">{titulo}</option>
+                            <option value="{idproducto}" data-foto="{foto}" data-precio="{precio}" data-stock="{stock}">{titulo}</option>
                             {/foreach lista_productos}
                         </select>
                     </div>
@@ -204,18 +170,20 @@
                     <input type="hidden" name="datos_direcciones[][productos][][idproductopedido]" class="idproductopedido">
                     <input type="hidden" name="datos_direcciones[][productos][][idproducto]" class="idproducto">
                     <div class="move">
-                        <i class="fa fa-arrows fa-lg"></i>
+                        <div class="handle">
+                            <i class="fa fa-arrows fa-lg"></i>
+                            <label class="titulo">Titulo</label>
+                        </div>
                         <div class="producto">
-                            <div class="clearfix">
+                            <div class="row">
                                 <div class="col-sm-6 col-md-3">
-                                    <label class="titulo">Titulo</label>
-                                    <br />
                                     <img src="" alt="Imagen" class="imagen">
                                 </div>
                                 <div class="col-sm-6 col-md-3">
                                     <label for="">Cantidad</label>
                                     <input type="number" min="1" name="datos_direcciones[][productos][][cantidad]" class="producto_cantidad form-control" value="0" readonly="">
                                 </div>
+                                <div class="clearfix visible-sm"></div>
                                 <div class="col-sm-6 col-md-3">
                                     <label for="">Precio</label>
                                     <br />
@@ -249,7 +217,7 @@
                                 <div class="form-group">
                                     <label for="" class="col-sm-2 control-label">Mensaje de la tarjeta</label>
                                     <div class="col-sm-10">
-                                        <textarea name="datos_direcciones[][productos][][mensaje]" cols="30" rows="4" class="producto_mensaje form-control"></textarea>
+                                        <textarea name="datos_direcciones[][productos][][mensaje]" cols="30" rows="2" class="producto_mensaje form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -259,3 +227,4 @@
             </div>
         </div>
     </div>
+</div>

@@ -3,19 +3,46 @@ function inicio_pedido() {
         inicio_direcciones_pedido($(this));
         inicio_usuarios_pedido($(this).parents('form'));
     });
-    
-    $('.lista_productos').select2({
-        width: '100%',
-        templateResult: formato_imagen,
-        templateSelection: formato_imagen
-    });
-    
-    $('.producto_atributo').select2({
-        width: '100%',
-        templateResult: formato_imagen,
-        templateSelection: formato_imagen
-    });
+    inicio_sorted_pedido();
+    inicio_select_productos();
+    inicio_select_atributos();
 }
+
+function inicio_select_productos() {
+    var options = {
+        width: '100%',
+        templateResult: formato_imagen,
+        templateSelection: formato_imagen,
+    };
+    if (is_mobile) {
+        options.minimumResultsForSearch = Infinity;
+    }
+
+    $('.lista_productos').select2(options);
+}
+
+
+function inicio_select_atributos() {
+    var options = {
+        width: '100%',
+        templateResult: formato_imagen,
+        templateSelection: formato_imagen,
+    };
+    if (is_mobile) {
+        options.minimumResultsForSearch = Infinity;
+    }
+    $('.producto_atributo').select2(options);
+}
+
+function formato_imagen(e) {
+    if (!$(e.element).data('foto')) {
+        return e.text;
+    }
+    var i = $('<span><img src="' + $(e.element).data('foto') + '"> ' + e.text + '</span><span>');
+    return i;
+};
+
+
 var new_line_direcciones = null;
 
 function inicio_usuarios_pedido(e) {
@@ -31,10 +58,14 @@ function inicio_usuarios_pedido(e) {
             min = 3;
         }
     }
-    usuarios.select2({
+    var options = {
         width: '100%',
         minimumInputLength: min,
-    });
+    };
+    if (is_mobile) {
+        options.minimumResultsForSearch = Infinity;
+    }
+    usuarios.select2(options);
     $(email).prop('disabled', true);
     if (usuarios.length > 0) {
         $(nombre).prop('disabled', true);
@@ -91,14 +122,6 @@ function inicio_usuarios_pedido(e) {
     });
 }
 
-function formato_imagen(icono) {
-    if (!$(icono.element).data('foto')) {
-        return icono.text;
-    }
-    var i = $('<span><img src="' + $(icono.element).data('foto') + '"> ' + icono.text + '</span><span>');
-    return i;
-};
-
 function inicio_direcciones_pedido(e) {
     var boton = $('button.add_direccion', e);
     var contenedor = $('.direcciones_pedido', e);
@@ -151,14 +174,11 @@ function inicio_direcciones_pedido(e) {
         $(".date").datetimepicker({
             todayHighlight: true
         });
-        $('.lista_productos').select2({
-            width: '100%',
-            templateResult: formato_imagen,
-            templateSelection: formato_imagen
-        });
+        inicio_select_productos();
 
         count_direcciones(e);
         total_productos(e);
+        inicio_sorted_pedido();
         return false;
     });
 
@@ -167,9 +187,16 @@ function inicio_direcciones_pedido(e) {
         var cantidad = $('.cantidad_producto', $(this).parents('.add')).val();
         var producto = $('.lista_productos', $(this).parents('.add')).select2('data');
         var direccion = $(this).parents('.direccion');
+        var exito = true;
         for (let index = 0; index < cantidad; index++) {
-            add_producto(producto, 1, new_row.clone(), id_producto, id_producto_actual, direccion);
+            exito = add_producto(producto, 1, new_row.clone(), id_producto, id_producto_actual, direccion);
+            if (!exito) {
+                break;
+            }
         }
+
+        inicio_select_productos();
+
         // add_producto(producto, cantidad, new_r,id_producto,id_producto_actual);
         count_productos(direccion);
         return false;
@@ -179,10 +206,19 @@ function inicio_direcciones_pedido(e) {
         $('.direccion_precio', direccion).val($('option:selected', this).data('precio'));
         total_productos(e);
     });
-
 }
 
 function add_producto(producto, cantidad, new_r, id_producto, id_producto_actual, direccion) {
+    var stock = $(producto[0].element).data('stock') - cantidad;
+    var idpro = $(producto[0].element).val();
+    if (stock < 0) {
+        notificacion('Oh no!', 'Producto ' + $(producto[0].element).text() + ' agotado', 'error');
+        return false;
+    } else {
+        $('.lista_productos option[value=' + idpro + ']').data('stock', stock);
+        $('.lista_productos option[value=' + idpro + ']', new_line_direcciones)[0].dataset.stock = stock;
+    }
+
     do {
         id_producto_actual++;
     } while (typeof(id_producto[id_producto_actual]) != 'undefined');
@@ -198,7 +234,7 @@ function add_producto(producto, cantidad, new_r, id_producto, id_producto_actual
     var idproducto = $('.idproducto', new_r);
     idproducto.prop('name', idproducto.prop('name').replace("[]", "[" + iddireccionpedido + "]"));
     idproducto.prop('name', idproducto.prop('name').replace("[]", "[" + id_producto_actual + "]"));
-    idproducto.val($(producto[0].element).val());
+    idproducto.val(idpro);
 
 
     var idproductopedido = $('.idproductopedido', new_r);
@@ -223,13 +259,11 @@ function add_producto(producto, cantidad, new_r, id_producto, id_producto_actual
 
     $('.lista_productos_pedido', direccion).append(new_r);
 
-    $('.producto_atributo').select2({
-        width: '100%',
-        templateResult: formato_imagen,
-        templateSelection: formato_imagen
-    });
+    inicio_select_atributos();
 
     total_productos($('.grupo_pedido'));
+    inicio_sorted_pedido();
+    return true;
 }
 
 $('body').on('change', '.lista_productos', function() {
@@ -245,15 +279,26 @@ $('body').on('change', '.producto_cantidad', function() {
 
 $('body').on('click', '.quitar_producto', function() {
     var direccion = $(this).parents('.direccion');
-    $(this).parents('.datos_producto').remove();
+    var producto = $(this).parents('.datos_producto');
+    var idproducto = $('.idproducto', producto).val();
+    var cantidad = parseInt($('.producto_cantidad', producto).val());
+    var stock = parseInt($('.lista_productos option[value=' + idproducto + ']', new_line_direcciones)[0].dataset.stock);
+    producto.remove();
+    $('.lista_productos option[value=' + idproducto + ']').data('stock', stock + cantidad);
+    $('.lista_productos option[value=' + idproducto + ']', new_line_direcciones)[0].dataset.stock = stock + cantidad;
     count_productos(direccion);
     total_productos($('.grupo_pedido'));
 });
 
 $('body').on('click', '.quitar_direccion', function() {
-    $(this).parents('.linea').remove();
+    var direccion = $(this).parents('.linea');
+    $('.quitar_producto', direccion).each(function() {
+        $(this).click();
+    });
+    direccion.remove();
     count_direcciones($('.grupo_pedido'));
     total_productos($('.grupo_pedido'));
+    inicio_sorted_pedido();
 });
 
 
@@ -294,4 +339,46 @@ function count_productos(e) {
             $('.cantidad_productos', e).val('');
         }
     }, 100);
+}
+
+
+function inicio_sorted_pedido() {
+    var idinicial = 0;
+    var idfinal = 0;
+    
+    $(".grupo_pedido .lista_productos_pedido").sortable({
+        connectWith: ".lista_productos_pedido",
+        cursor: "move",
+        placeholder: "placeholder_producto",
+        tolerance: "pointer",
+        forcePlaceholderSize :true,
+        handle: '.handle',
+        revert: true,
+        scrollSensitivity: 120,
+        scrollSpeed: 30,
+        start: function(event, ui) {
+            $('.producto').hide();
+        },
+        stop: function(event, ui) {
+            $('.producto').show();
+            var idproductopedido=$('.idproductopedido', ui.item).val();
+            $(ui.item).addClass('idproductopedido-'+idproductopedido);
+            mover('.idproductopedido-'+idproductopedido, 200, 0);
+        },
+        receive: function(event, ui) {
+            var direccion = $(ui.sender).parents('.direccion');
+            idinicial = $('.iddireccionpedido', direccion).val();
+            var direccion = $(ui.item).parents('.direccion');
+            idfinal = $('.iddireccionpedido', direccion).val();
+            cambiar_id_productopedido(ui.item, idinicial, idfinal);
+        }
+    });
+}
+
+function cambiar_id_productopedido(e, idinicial, idfinal) {
+    $('.idproducto', e).prop('name', $('.idproducto', e).prop('name').replace("datos_direcciones[" + idinicial + "]", "datos_direcciones[" + idfinal + "]"));
+    $('.idproductopedido', e).prop('name', $('.idproductopedido', e).prop('name').replace("datos_direcciones[" + idinicial + "]", "datos_direcciones[" + idfinal + "]"));
+    $('.producto_cantidad', e).prop('name', $('.producto_cantidad', e).prop('name').replace("datos_direcciones[" + idinicial + "]", "datos_direcciones[" + idfinal + "]"));
+    $('.producto_mensaje', e).prop('name', $('.producto_mensaje', e).prop('name').replace("datos_direcciones[" + idinicial + "]", "datos_direcciones[" + idfinal + "]"));
+    $('.producto_atributo', e).prop('name', $('.producto_atributo', e).prop('name').replace("datos_direcciones[" + idinicial + "]", "datos_direcciones[" + idfinal + "]"));
 }

@@ -7,10 +7,12 @@ var path = $("meta[property='path']").prop("content");
 var modulo = $("meta[property='modulo']").prop("content");
 var url = $("meta[property='og:url']").prop("content");
 var googlemaps_key = $("meta[property='googlemaps_key']").prop("content");
+var is_mobile=$.browser.mobile;
 $.skylo('start');
 $.skylo('set', 50);
 
 function inicio() {
+    is_mobile=$.browser.mobile;
     $.material.init();
     $.skylo('end');
     modulo = $("meta[property='modulo']").prop("content");

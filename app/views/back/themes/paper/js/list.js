@@ -1,6 +1,6 @@
 function inicio_list() {
     // Sortable rows
-    var table = $('.sorted_table').sortable({
+    var table = $('.sorted_table').sortable_jquery({
         containerSelector: 'table',
         handle: 'td.move',
         itemPath: '> tbody',
@@ -20,7 +20,7 @@ function inicio_list() {
                 $clonedItem.detach();
                 _super($item, container);
             });
-            var data = table.sortable("serialize").get();
+            var data = table.sortable_jquery("serialize").get();
             update_orden(data);
         }
     });

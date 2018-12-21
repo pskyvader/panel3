@@ -110,7 +110,7 @@ function inicio_image_multiple(e) {
                 })
         }
     });
-    $(".image_list.sorted_multiple").sortable({
+    $(".image_list.sorted_multiple").sortable_jquery({
         handle: ".move",
         vertical: !1,
         itemSelector: ".campo",

@@ -6,7 +6,7 @@ function inicio_multiple() {
 }
 
 function inicio_sorted(){
-    $('.sorted_multiple').sortable({
+    $('.sorted_multiple').sortable_jquery({
         handle: '.move',
         itemSelector: '.campo',
         placeholder: '<div class="placeholder"/>',
