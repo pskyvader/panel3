@@ -37,7 +37,7 @@ $('body').on('click', 'a:not(.disabled)', function(e) {
     if ($(this).prop('target') != '_blank') {
         var href = $(this).prop('href');
         if (check_link(href)) {
-            if($(this).closest('.menu-nav').length>0){
+            if ($(this).closest('.menu-nav').length > 0) {
                 $('.menu-btn').click();
             }
             cargar_ajax(href);
@@ -53,9 +53,9 @@ $(window).on('popstate', function(e) {
 });
 
 
-function go_url(url,data_form) {
+function go_url(url, data_form) {
     if (check_link(url)) {
-        cargar_ajax(url,true,data_form);
+        cargar_ajax(url, true, data_form);
     } else {
         $(location).prop('href', url);
     }
@@ -272,20 +272,22 @@ function create_url(extra, data, url) {
         url = location.origin + location.pathname;
     }
     if (typeof(extra) != 'undefined' && extra != null) {
-        if(url==path){
+        if (url == path) {
             url += extra;
-        }else{
+        } else {
             url += '/' + extra;
         }
     }
     if (typeof(data) != 'undefined' && data != null) {
-        url += '?' + $.param(data);
-    }else{
+        if (Object.keys(data).length > 0) {
+            url += '?' + $.param(data);
+        }
+    } else {
         url += location.search;
     }
-    
-    url= url.split("%20").join("+");
-    url= url.split("%2B").join("+");
+
+    url = url.split("%20").join("+");
+    url = url.split("%2B").join("+");
     return url;
 }
 
@@ -318,6 +320,7 @@ function notificacion(mensaje, tipo) {
         type: tipo
     });
 }
+
 function barra(porcentaje) {
     /*if (porcentaje >= 0 && porcentaje < 100) {
         $.skylo('show', function() {

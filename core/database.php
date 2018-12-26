@@ -142,7 +142,7 @@ class database
 
     public function get_last_insert_id()
     { //ultimo elemento insertado
-        return $this->_connection->lastInsertId();
+        return (int)$this->_connection->lastInsertId();
     }
 
     public function get($table, $idname, $where, $condiciones = array(), $select = "")

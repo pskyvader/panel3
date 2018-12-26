@@ -13,9 +13,18 @@ function inicio_login() {
         if (data.exito) {
             var a = $('<a href="' + path + modulo + 'datos">Bienvenido ' + data.mensaje + ' / </a>');
             var b = $('<button id="logout">Salir</button>');
+            $('#carro-header .accion').text('Comprar').prop('href', path + 'pedido/1');
+            $('#carro-header .accion-2').hide();
         } else {
-            var a = $('<a href="' + path + modulo + 'login">Login / </a>');
-            var b = $('<a href="' + path + modulo + 'registro">Registro</a>');
+            var a = $('<a href="' + create_url(modulo + 'login', null, path) + '">Login / </a>');
+            var b = $('<a href="' + create_url(modulo + 'registro', null, path) + '">Registro</a>');
+
+            $('#carro-header .accion').text('Ingresa').prop('href', create_url(modulo + 'login', {
+                next_url: 'pedido/1'
+            }, path));
+            $('#carro-header .accion-2').text('Registrate').prop('href', create_url(modulo + 'registro', {
+                next_url: 'pedido/1'
+            }, path)).show();
         }
         $('#cuenta').empty().append(a).append(b);
     });
@@ -43,11 +52,19 @@ $(document).on('submit', 'form.update-datos', function() {
 
 $(document).on('submit', 'form.registro', function() {
     var modulo = "cuenta/";
-    var url = create_url(modulo + "registro_process", null, path);
+    var extra = createObjFromURI();
+    if (extra.next_url) {
+        extra = {
+            next_url: extra.next_url
+        };
+    } else {
+        extra = {};
+    }
+    var url = create_url(modulo + "registro_process", {}, path);
     var data = $(this).serializeObject();
     post(url, data, "Enviando datos de registro", null, function(datos) {
         if (datos.exito) {
-            var url = create_url(modulo + "direccion", null, path);
+            var url = create_url(modulo + "direccion", extra, path);
             inicio_login();
             go_url(url);
         }
@@ -56,11 +73,23 @@ $(document).on('submit', 'form.registro', function() {
 });
 $(document).on('submit', 'form.login', function() {
     var modulo = "cuenta/";
-    var url = create_url(modulo + "login_process", null, path);
+    var extra = createObjFromURI();
+    if (extra.next_url) {
+        extra = {
+            next_url: extra.next_url
+        };
+    } else {
+        extra = {};
+    }
+    var url = create_url(modulo + "login_process", extra, path);
     var data = $(this).serializeObject();
     post(url, data, "Enviando datos de login", null, function(datos) {
         if (datos.exito) {
-            var url = create_url(modulo + "datos", null, path);
+            if (datos.next_url) {
+                var url = create_url(datos.next_url, {}, path);
+            } else {
+                var url = create_url(modulo + "datos", {}, path);
+            }
             inicio_login();
             go_url(url);
         }
@@ -69,18 +98,30 @@ $(document).on('submit', 'form.login', function() {
 });
 $(document).on('submit', 'form.recuperar', function() {
     var modulo = "cuenta/";
-    var url = create_url(modulo + "recuperar_process", null, path);
+    var url = create_url(modulo + "recuperar_process", {}, path);
     var data = $(this).serializeObject();
     post(url, data, "Recuperando tu contraseña");
     return false;
 });
 $(document).on('submit', 'form.direccion', function() {
     var modulo = "cuenta/";
-    var url = create_url(modulo + "direccion_process", null, path);
+    var extra = createObjFromURI();
+    if (extra.next_url) {
+        extra = {
+            next_url: extra.next_url
+        };
+    } else {
+        extra = {};
+    }
+    var url = create_url(modulo + "direccion_process", extra, path);
     var data = $(this).serializeObject();
     post(url, data, "Guardando tu direccion", null, function(datos) {
         if (datos.exito) {
-            var url = create_url(modulo + "direcciones", null, path);
+            if (datos.next_url) {
+                var url = create_url(datos.next_url, {}, path);
+            } else {
+                var url = create_url(modulo + "direcciones", {}, path);
+            }
             go_url(url);
         }
     });
@@ -89,7 +130,7 @@ $(document).on('submit', 'form.direccion', function() {
 
 $(document).on('click', '#cuenta #logout', function() {
     var modulo = "cuenta/";
-    var url = create_url(modulo + "logout", null, path);
+    var url = create_url(modulo + "logout", {}, path);
     post(url, {}, "", null, function() {
         inicio_login();
     });

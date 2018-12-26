@@ -9,12 +9,12 @@ use \core\database;
 class pedido extends base_model
 {
     public static $idname = 'idpedido',
-    $table = 'pedido';
+    $table                = 'pedido';
 
     public static function insert($data, $log = true)
     {
-        if(!isset($data['fecha_creacion'])){
-            $data['fecha_creacion']=date('Y-m-d H:i:s');
+        if (!isset($data['fecha_creacion'])) {
+            $data['fecha_creacion'] = date('Y-m-d H:i:s');
         }
         $fields     = table::getByname(static::$table);
         $insert     = database::create_data($fields, $data);
@@ -29,5 +29,26 @@ class pedido extends base_model
         } else {
             return $row;
         }
+    }
+    public static function getByCookie($cookie, $carro = true)
+    {
+        $where = array("cookie_pedido" => $cookie);
+        if ($carro) {
+            $where['idpedidoestado'] = 1;
+        }
+        $connection = database::instance();
+        $row        = $connection->get(static::$table, static::$idname, $where);
+        return (count($row) == 1) ? $row[0] : $row;
+    }
+    public static function getByIdusuario($idusuario, $carro = true)
+    {
+        $where = array("idusuario" => $idusuario);
+        if ($carro) {
+            $where['idpedidoestado'] = 1;
+        }
+        $condition  = array('order' => static::$idname . ' DESC');
+        $connection = database::instance();
+        $row        = $connection->get(static::$table, static::$idname, $where, $condition);
+        return (count($row) > 0) ? $row[0] : $row;
     }
 }

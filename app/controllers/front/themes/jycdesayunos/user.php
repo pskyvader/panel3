@@ -315,6 +315,10 @@ class user extends base
                     }
                     if ($respuesta['exito']) {
                         $respuesta['mensaje'] = "Direccion guardada correctamente";
+                        
+                        if(isset($_GET['next_url'])){
+                            $respuesta['next_url'] = $_GET['next_url'];
+                        }
                     }else{
                         $respuesta['mensaje'] = "Hubo un error al guardar la direccion, comprueba los campos obligatorios e intentalo nuevamente";
                     }
@@ -501,6 +505,9 @@ class user extends base
                         $respuesta['mensaje'] = "Ha ocurrido un error al ingresar. Revisa tus datos e intenta nuevamente";
                     } else {
                         $respuesta['mensaje'] = "Bienvenido";
+                        if(isset($_GET['next_url'])){
+                            $respuesta['next_url'] = $_GET['next_url'];
+                        }
                     }
                 } else {
                     $respuesta['mensaje'] = 'Error de token, recarga la pagina e intenta nuevamente'.(time() - $_SESSION['login_token']['time']);
