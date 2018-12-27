@@ -11,7 +11,7 @@ class pedido extends base_model
     public static $idname = 'idpedido',
     $table                = 'pedido';
 
-    public static function insert($data, $log = true)
+    public static function insert(array $data, bool $log = true)
     {
         if (!isset($data['fecha_creacion'])) {
             $data['fecha_creacion'] = date('Y-m-d H:i:s');
@@ -30,7 +30,7 @@ class pedido extends base_model
             return $row;
         }
     }
-    public static function getByCookie($cookie, $carro = true)
+    public static function getByCookie(string $cookie, bool $carro = true)
     {
         $where = array("cookie_pedido" => $cookie);
         if ($carro) {
@@ -40,7 +40,7 @@ class pedido extends base_model
         $row        = $connection->get(static::$table, static::$idname, $where);
         return (count($row) == 1) ? $row[0] : $row;
     }
-    public static function getByIdusuario($idusuario, $carro = true)
+    public static function getByIdusuario(int $idusuario, bool $carro = true)
     {
         $where = array("idusuario" => $idusuario);
         if ($carro) {

@@ -11,7 +11,7 @@ class log extends base_model
     public static $idname = 'idlog',
     $table = 'log';
 
-    public static function getAll($where = array(), $condiciones = array(), $select = "")
+    public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
         if (!isset($condiciones['order'])) {
             $condiciones['order'] = 'fecha DESC';
@@ -36,9 +36,9 @@ class log extends base_model
         return $row;
     }
 
-    public static function insert_log($tabla, $idname, $funcion, $row)
+    public static function insert_log(string $tabla, string $idname, $funcion, $row)
     {
-        if ($tabla != static::$table) {
+        if ($tabla != static::$table && !app::$_front) {
             $administrador = $_SESSION['nombre' . functions::url_amigable(app::$_title)].' ('.$_SESSION['email' . functions::url_amigable(app::$_title)].')';
 
             $accion = 'metodo: ' . $funcion;

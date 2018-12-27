@@ -3,6 +3,10 @@
 @color_hover: #fff;
 @color_hover_secundario: #611e23;
 @background_hover: #d11201;
+button {
+    cursor: pointer;
+}
+
 a:hover {
     color: @color_hover_secundario;
 }
@@ -34,7 +38,8 @@ a:hover {
     }
 }
 
-#cake .btn {
+#cake .btn-primary,
+.btn-cart {
     background: @color_base;
     color: @color_hover;
     cursor: pointer;
@@ -66,8 +71,23 @@ a:hover {
     }
 }
 
-#cake .cart .cart-item {
-    background: @color_base;
+#cake .cart {
+    .dropdown-menu {
+        margin-top: 2.5rem;
+        .lista-productos {
+            max-height: 25rem;
+            overflow-y: auto;
+            @media screen and (max-height:568px){
+                max-height: 17rem;
+            }
+            @media screen and (max-height:320px){
+                max-height: 12rem;
+            }
+        }
+    }
+    .cart-item {
+        background: @color_base;
+    }
 }
 
 #cake .banner .card {
@@ -95,22 +115,26 @@ a:hover {
     background: @color_base;
 }
 
-.cuenta {
-    margin-top: 0.5rem;
-    margin-bottom: -2rem;
+.cuenta-container{
     z-index: 1000;
-    position: relative;
-    text-align: right;
-    a {
-        font-size: 1.4rem;
-    }
-    #logout {
-        border: none;
-        background: none;
-        font-size: 1.4rem;
-        cursor: pointer;
+    .cuenta {
+        margin-top: 0.5rem;
+        margin-bottom: -2rem;
+        z-index: 1000;
+        position: relative;
+        text-align: right;
+        a {
+            font-size: 1.4rem;
+        }
+        #logout {
+            border: none;
+            background: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
     }
 }
+
 
 .bg-line-w-2 {
     height: 15px;

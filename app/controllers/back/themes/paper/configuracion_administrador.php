@@ -9,6 +9,7 @@ use \app\models\modulo as modulo_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
 use \app\models\table as table_model;
 use \core\app;
+use \core\cache;
 use \core\database;
 use \core\functions;
 use \core\view;
@@ -54,6 +55,7 @@ class configuracion_administrador extends base
         if (isset($_POST['campos'])) {
             $campos    = $_POST['campos'];
             $respuesta = table_model::truncate($campos);
+            cache::delete_cache();
         } else {
             $respuesta = array('exito' => false, 'mensaje' => 'Debe seleccionar una tabla para vaciar');
         }
@@ -226,6 +228,7 @@ class configuracion_administrador extends base
             $row = configuracion_model::getByVariable($configuracion['variable']);
             configuracion_model::setByVariable($configuracion['variable'], $configuracion['valor']);
         }
+        cache::delete_cache();
         if ($responder) {
             echo json_encode($respuesta);
         }

@@ -13,7 +13,7 @@ class administrador extends base_model
     public static $idname = 'idadministrador',
     $table                = 'administrador';
     public $cookie;
-    public static function insert($data, $log = true)
+    public static function insert(array $data, bool $log = true)
     {
         if (isset($data['pass']) && $data['pass'] != '') {
             if (isset($data['pass_repetir']) && $data['pass_repetir'] != '') {
@@ -43,7 +43,7 @@ class administrador extends base_model
         }
     }
 
-    public static function update($data, $log = true)
+    public static function update(array $data, bool $log = true)
     {
         if (!isset($data['id']) || $data['id'] == '' || $data['id'] == 0) {
             echo 'Error, ID perdida';
@@ -83,7 +83,7 @@ class administrador extends base_model
         return $row;
     }
 
-    public static function login_cookie($cookie)
+    public static function login_cookie(string $cookie)
     {
         $prefix_site = functions::url_amigable(app::$_title);
         $where       = array('cookie' => $cookie);
@@ -115,7 +115,7 @@ class administrador extends base_model
         return false;
     }
 
-    public static function login($email, $pass, $recordar)
+    public static function login(string $email, string $pass, bool $recordar)
     {
         $connection  = database::instance();
         $prefix_site = functions::url_amigable(app::$_title);
@@ -158,7 +158,7 @@ class administrador extends base_model
         }
     }
 
-    private static function update_cookie($id)
+    private static function update_cookie(int $id)
     {
         $prefix_site = functions::url_amigable(app::$_title);
         $cookie      = uniqid($prefix_site);
@@ -211,7 +211,7 @@ class administrador extends base_model
         }
     }
 
-    public static function recuperar($email)
+    public static function recuperar(string $email)
     {
         $nombre_sitio = app::$_title;
         if ($email == '') {

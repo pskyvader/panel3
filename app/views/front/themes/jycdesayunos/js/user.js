@@ -26,7 +26,7 @@ function inicio_login() {
                 next_url: 'pedido/1'
             }, path)).show();
         }
-        $('#cuenta').empty().append(a).append(b);
+        $('.cuenta').empty().append(a).append(b);
     });
 }
 

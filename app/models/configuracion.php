@@ -9,28 +9,28 @@ use \core\database;
 class configuracion extends base_model
 {
     public static $idname = 'idconfiguracion',
-    $table = 'configuracion';
+    $table                = 'configuracion';
 
-    public static function getByVariable($variable)
+    public static function getByVariable(string $variable)
     {
-        $where = array('variable' => $variable);
-        $condicion=array('limit'=>1);
+        $where      = array('variable' => $variable);
+        $condicion  = array('limit' => 1);
         $connection = database::instance();
-        $row        = $connection->get(static::$table, static::$idname, $where,$condicion);
+        $row        = $connection->get(static::$table, static::$idname, $where, $condicion);
         return (count($row) == 1) ? $row[0]['valor'] : false;
     }
-    
-    public static function setByVariable($variable,$valor)
-    {
-        $where = array('variable' => $variable);
-        $condicion=array('limit'=>1);
-        $connection = database::instance();
-        $row        = $connection->get(static::$table, static::$idname, $where,$condicion);
 
-        if(count($row) == 0){
-            $row=self::insert(array('variable'=>$variable,'valor'=>$valor));
-        }else{
-            $row=self::update(array('variable'=>$variable,'valor'=>$valor,'id'=>$row[0][0]));
+    public static function setByVariable(string $variable, string $valor)
+    {
+        $where      = array('variable' => $variable);
+        $condicion  = array('limit' => 1);
+        $connection = database::instance();
+        $row        = $connection->get(static::$table, static::$idname, $where, $condicion);
+
+        if (count($row) == 0) {
+            $row = self::insert(array('variable' => $variable, 'valor' => $valor));
+        } else {
+            $row = self::update(array('variable' => $variable, 'valor' => $valor, 'id' => $row[0][0]));
         }
         return $row;
     }

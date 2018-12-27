@@ -10,7 +10,7 @@ class sitemap extends base_model
 {
     public static $idname = 'idsitemap',
     $table = 'sitemap';
-    public static function getAll($where = array(), $condiciones = array(), $select = "")
+    public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
         $connection = database::instance();
         if($select=='total'){

@@ -12,7 +12,7 @@ class base_model implements crud
     public static $idname = '',
     $table                = '';
 
-    public static function getAll($where = array(), $condiciones = array(), $select = "")
+    public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
         $connection = database::instance();
         $fields     = table::getByname(static::$table);
@@ -107,7 +107,7 @@ class base_model implements crud
         return $row;
     }
 
-    public static function getById($id)
+    public static function getById(int $id)
     {
         $where = array(static::$idname => $id);
         if (app::$_front) {
@@ -130,7 +130,7 @@ class base_model implements crud
         return (count($row) == 1) ? $row[0] : $row;
     }
 
-    public static function insert($data, $log = true)
+    public static function insert(array $data, bool $log = true)
     {
         $fields     = table::getByname(static::$table);
         $insert     = database::create_data($fields, $data);
@@ -141,14 +141,13 @@ class base_model implements crud
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
             }
-
             return $last_id;
         } else {
             return $row;
         }
     }
 
-    public static function update($set, $log = true)
+    public static function update(array $set, bool $log = true)
     {
         $where = array(static::$idname => $set['id']);
         unset($set['id']);
@@ -164,7 +163,7 @@ class base_model implements crud
         return $row;
     }
 
-    public static function delete($id)
+    public static function delete(int $id)
     {
         $where      = array(static::$idname => $id);
         $connection = database::instance();
@@ -172,7 +171,7 @@ class base_model implements crud
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
         return $row;
     }
-    public static function copy($id)
+    public static function copy(int $id)
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {

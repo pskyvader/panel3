@@ -551,7 +551,7 @@ footer .border-top{border-top:1px solid #333;margin-top:3rem;padding-top:3rem;fo
 .cart .dropdown-menu .media a img{width:5rem;margin-right:1rem}
 .cart .cart-item>span{padding:.3rem .5rem;line-height:.9;display:inline-block;position:absolute;top:0;color:#fff;font-size:1.3rem;border-radius:3rem;background:#dc4c46;right:-.5rem}
 .cart p{color:#dc4c46;margin-bottom:0}
-.cart .dropdown-menu .btn{padding:1rem 1.5rem;color:#fff;font-size:1.3rem;border-radius:.3rem;width:100%}
+.cart .dropdown-menu .btn-cart{padding:1rem 1.5rem;color:#fff;font-size:1.3rem;border-radius:.3rem;}
 .cart .dropdown-menu li{border-bottom:1px solid #eee;width:100%;padding:1.5rem}
 .cart .dropdown-menu li span{color:#ccc}
 .cart .dropdown-menu li:last-child{border:0}

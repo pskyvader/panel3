@@ -4,29 +4,32 @@
         <i class="fa fa-shopping-bag"></i>
     </a>
     <ul class="dropdown-menu carro-productos" aria-labelledby="dropdownMenu2" x-placement="bottom-start">
+        <div class="lista-productos">
+        </div>
         <li>
-            <div class="media">
-                <a href="#">
-                    <img class="media-object" src="../../images/default.png" width="50" alt="image">
-                </a>
-                <div class="media-body">
-                    <h4>
-                        <a href="#">Simple cakecups</a>
-                    </h4>
-                    <p>$15.0<span>x 3</span><i class="fa fa-remove"></i></p>
-                </div>
-            </div>
-        </li>
-        
-        <li class="no-remove">
             <div class="d-flex">
-                <strong>Total:</strong>
+                <strong>Productos:</strong>
                 <div class="f-right f-bold carro-total">$0</div>
             </div>
         </li>
-        <li class="no-remove">
+        <li>
             <a href="#" class="btn btn-cart w-100 accion mb-3">Ingreso</a>
             <a href="#" class="btn btn-cart w-100 accion-2">Registro</a>
         </li>
     </ul>
+    <div id="template_cart-item" class="d-none">
+        <li>
+            <div class="media">
+                <a href="{url_producto}">
+                    <img class="media-object" data-src="{imagen_producto}" width="50" alt="{titulo_producto}">
+                </a>
+                <div class="media-body">
+                    <h4>
+                        <a href="{url_producto}">{titulo_producto}</a>
+                    </h4>
+                    <p>{precio_producto}<span>x {cantidad_producto}</span> <i onclick="remove_cart({id});" class="fa fa-remove"></i></p>
+                </div>
+            </div>
+        </li>
+    </div>
 </div>

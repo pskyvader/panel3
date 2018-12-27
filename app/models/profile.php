@@ -9,7 +9,7 @@ class profile extends base_model
     public static $idname = 'idprofile',
     $table = 'profile';
 
-    public static function getByTipo($tipo)
+    public static function getByTipo(int $tipo)
     {
         $where = array('tipo' => $tipo, 'estado' => true);
         $condition = array('limit' => 1);

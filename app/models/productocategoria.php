@@ -11,7 +11,7 @@ class productocategoria extends base_model
     public static $idname = 'idproductocategoria',
     $table                = 'productocategoria';
 
-    public static function getById($id)
+    public static function getById(int $id)
     {
         $where = array(static::$idname => $id);
         if (app::$_front) {
@@ -32,7 +32,7 @@ class productocategoria extends base_model
         return (count($row) == 1) ? $row[0] : $row;
     }
 
-    public static function copy($id)
+    public static function copy(int $id)
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {

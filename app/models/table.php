@@ -29,7 +29,7 @@ class table extends base_model
         return static::$table;
     }
 
-    public static function getAll($where = array(), $condiciones = array(), $select = "")
+    public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
         $connection = database::instance();
         if ($select == 'total') {
@@ -48,7 +48,7 @@ class table extends base_model
         return $row;
     }
 
-    public static function getById($id)
+    public static function getById(int $id)
     {
         $where      = array(static::$idname => $id);
         $connection = database::instance();
@@ -59,7 +59,7 @@ class table extends base_model
         return (count($row) == 1) ? $row[0] : $row;
     }
 
-    public static function getByname($name)
+    public static function getByname(string $name)
     {
         if ($name == static::$table) {
             return static::$data;
@@ -79,7 +79,7 @@ class table extends base_model
         }
     }
 
-    public static function copy($id)
+    public static function copy(int $id)
     {
         $row           = static::getById($id);
         $row['fields'] = functions::encode_json($row['fields']);
@@ -96,7 +96,7 @@ class table extends base_model
         }
     }
 
-    public static function validate($id, $log = true)
+    public static function validate(int $id, bool $log = true)
     {
         $respuesta = array('exito' => true, 'mensaje' => array());
         $row       = static::getById($id);
@@ -179,7 +179,7 @@ class table extends base_model
         return $respuesta;
     }
 
-    public static function table_exists($tablename)
+    public static function table_exists(string $tablename)
     {
         $config     = app::getConfig();
         $connection = database::instance();
@@ -225,7 +225,7 @@ class table extends base_model
         return $respuesta;
     }
 
-    public static function truncate($tables)
+    public static function truncate(array $tables)
     {
         $respuesta = array('exito' => true, 'mensaje' => array());
         foreach ($tables as $key => $table) {

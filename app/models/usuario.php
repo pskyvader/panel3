@@ -12,7 +12,7 @@ class usuario extends base_model
 {
     public static $idname = 'idusuario',
     $table                = 'usuario';
-    public static function insert($data, $log = true)
+    public static function insert(array $data, bool $log = true)
     {
         if (isset($data['pass']) && $data['pass'] != '') {
             if (isset($data['pass_repetir']) && $data['pass_repetir'] != '') {
@@ -42,7 +42,7 @@ class usuario extends base_model
         }
     }
 
-    public static function update($data, $log = true)
+    public static function update(array $data, bool $log = true)
     {
         if (!isset($data['id']) || $data['id'] == '' || $data['id'] == 0) {
             echo 'Error, ID perdida';
@@ -82,7 +82,7 @@ class usuario extends base_model
         return $row;
     }
 
-    public static function login_cookie($cookie)
+    public static function login_cookie(string $cookie)
     {
         $prefix_site = functions::url_amigable(app::$_title);
         $where       = array('cookie' => $cookie);
@@ -114,7 +114,7 @@ class usuario extends base_model
         return false;
     }
 
-    public static function login($email, $pass, $recordar)
+    public static function login(string $email, string $pass, bool $recordar)
     {
         $prefix_site = functions::url_amigable(app::$_title);
         if ($email == '' || $pass == '') {
@@ -156,7 +156,7 @@ class usuario extends base_model
         }
     }
 
-    public static function registro($nombre, $telefono, $email, $pass, $pass_repetir)
+    public static function registro(string $nombre, string $telefono, string $email, string $pass, string $pass_repetir)
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
         if ($nombre == "" || $email == "" || $pass == "" || $pass_repetir == "") {
@@ -185,7 +185,7 @@ class usuario extends base_model
         return $respuesta;
     }
 
-    public static function actualizar($datos)
+    public static function actualizar(array $datos)
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
         if ($datos['nombre'] == "" || $datos['telefono'] == "" || $datos['email'] == "") {
@@ -218,7 +218,7 @@ class usuario extends base_model
         return $respuesta;
     }
 
-    private static function update_cookie($id)
+    private static function update_cookie(int $id)
     {
         $prefix_site = functions::url_amigable(app::$_title);
         $cookie      = uniqid($prefix_site);
@@ -271,7 +271,7 @@ class usuario extends base_model
         }
     }
 
-    public static function recuperar($email)
+    public static function recuperar(string $email)
     {
         $respuesta    = array('exito' => false, 'mensaje' => '');
         $nombre_sitio = app::$_title;

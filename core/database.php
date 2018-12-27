@@ -79,7 +79,7 @@ class database
             self::$_prefix     = $config["prefix"] . "_";
             $this->conect();
         } catch (\PDOException $e) {
-            print "Error!: " . $e->getMessage();
+            throw new \Exception("Error {$e->getMessage()}", 1);
             die();
         }
     }
