@@ -31,10 +31,6 @@ $(function() {
             $(this).find('.sub-menu').hide();
         }
     });
-    //Cart
-    $('.cart .dropdown-menu').on('click', function(e) {
-        e.stopPropagation();
-    });
     //Search
     $('.icon-search').on('click', function(e) {
         if ($(this).hasClass('icon-search-1')) {

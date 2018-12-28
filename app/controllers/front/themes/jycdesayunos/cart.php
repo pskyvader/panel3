@@ -14,7 +14,6 @@ use \core\functions;
 
 class cart extends base
 {
-    private $tipo        = 1;
     public function __construct()
     {
         parent::__construct($_REQUEST['idseo'], false);
@@ -113,16 +112,30 @@ class cart extends base
                     'foto' => $thumb_url, 
                     'precio' => functions::formato_precio($p['precio']), 
                     'cantidad' => $p['cantidad'], 
-                    'total' => $p['total'], 
+                    'mensaje' => $p['mensaje'], 
+                    'idproductoatributo' => $p['idproductoatributo'], 
+                    'total' => functions::formato_precio($p['total']), 
                     'url'         => $url_producto
                 );
                 $productos[] = $new_p;
             }
+            $total_direcciones=0;
+            $direcciones= pedidodireccion_model::getAll(array('idpedido' => $pedido[0]));
+            foreach ($direcciones as $key => $d) {
+                $total_direcciones+=$d['precio'];
+            }
+            $subtotal=$pedido['total']-$total_direcciones;
+            if($total_direcciones==0){
+                $total_direcciones='Por definir';
+            }else{
+                $total_direcciones=functions::formato_precio($total_direcciones);
+            }
             $pedido              = array(
                 'idpedido'=>$pedido[0],
                 'total' => functions::formato_precio( $pedido['total']), 
-                'total_original' => functions::formato_precio( $pedido['total_original']), 
-                'descuento' => functions::formato_precio( $pedido['total_original'] - $pedido['total'])
+                'total_original' => functions::formato_precio( $pedido['total_original']),
+                'total_direcciones' => $total_direcciones,
+                'subtotal' => $subtotal
             );
             $pedido['productos'] = $productos;
             return $pedido;

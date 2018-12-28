@@ -12,18 +12,18 @@ function inicio_login() {
         }
         if (data.exito) {
             var a = $('<a href="' + path + modulo + 'datos">Bienvenido ' + data.mensaje + ' / </a>');
-            var b = $('<button id="logout">Salir</button>');
-            $('#carro-header .accion').text('Comprar').prop('href', path + 'pedido/1');
+            var b = $('<button class="logout">Salir</button>');
+            $('#carro-header .accion').text('Comprar').prop('href', path + 'pedido/step/1');
             $('#carro-header .accion-2').hide();
         } else {
             var a = $('<a href="' + create_url(modulo + 'login', null, path) + '">Login / </a>');
             var b = $('<a href="' + create_url(modulo + 'registro', null, path) + '">Registro</a>');
 
             $('#carro-header .accion').text('Ingresa').prop('href', create_url(modulo + 'login', {
-                next_url: 'pedido/1'
+                next_url: 'pedido/step/1'
             }, path));
             $('#carro-header .accion-2').text('Registrate').prop('href', create_url(modulo + 'registro', {
-                next_url: 'pedido/1'
+                next_url: 'pedido/step/1'
             }, path)).show();
         }
         $('.cuenta').empty().append(a).append(b);
@@ -86,7 +86,9 @@ $(document).on('submit', 'form.login', function() {
     post(url, data, "Enviando datos de login", null, function(datos) {
         if (datos.exito) {
             if (datos.next_url) {
+                console.log(datos.next_url);
                 var url = create_url(datos.next_url, {}, path);
+                console.log(url);
             } else {
                 var url = create_url(modulo + "datos", {}, path);
             }
@@ -128,7 +130,7 @@ $(document).on('submit', 'form.direccion', function() {
     return false;
 });
 
-$(document).on('click', '#cuenta #logout', function() {
+$(document).on('click', '.cuenta .logout', function() {
     var modulo = "cuenta/";
     var url = create_url(modulo + "logout", {}, path);
     post(url, {}, "", null, function() {

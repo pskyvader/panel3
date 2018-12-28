@@ -6,7 +6,7 @@
     "prefix": "seo",
     "www": false,
     "https": false,
-    "cache": true,
+    "cache": false,
     "theme": "jycdesayunos",
     "dir": "",
     "title": "JYC Desayunos",

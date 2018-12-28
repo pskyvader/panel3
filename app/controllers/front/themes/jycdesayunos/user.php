@@ -20,7 +20,7 @@ class user extends base
     public function index()
     {
         $this->meta($this->seo);
-        $verificar = $this->verificar(true);
+        $verificar = self::verificar(true);
         if (!$verificar['exito']) {
             $this->url[] = 'login';
         }
@@ -52,7 +52,7 @@ class user extends base
     {
         $prefix_site = functions::url_amigable(app::$_title);
         $this->meta($this->seo);
-        $verificar = $this->verificar(true);
+        $verificar = self::verificar(true);
         if ($verificar['exito']) {
             $this->url[] = 'datos';
         } else {
@@ -101,7 +101,7 @@ class user extends base
     public function datos_process()
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
-        $verificar = $this->verificar(true);
+        $verificar = self::verificar(true);
         if(!$verificar['exito']){
             $respuesta['mensaje']='Debes ingresar a tu cuenta';
             return $respuesta;
@@ -143,7 +143,7 @@ class user extends base
     public function direcciones(){
         $prefix_site = functions::url_amigable(app::$_title);
         $this->meta($this->seo);
-        $verificar = $this->verificar(true);
+        $verificar = self::verificar(true);
         if ($verificar['exito']) {
             $this->url[] = 'direcciones';
         } else {
@@ -198,7 +198,7 @@ class user extends base
     public function direccion($var=array()){
         $prefix_site = functions::url_amigable(app::$_title);
         $this->meta($this->seo);
-        $verificar = $this->verificar(true);
+        $verificar = self::verificar(true);
         if ($verificar['exito']) {
             if(isset($var[0])){
                 $direccion=usuariodireccion_model::getById($var[0]);
@@ -295,7 +295,7 @@ class user extends base
     {
         $prefix_site = functions::url_amigable(app::$_title);
         $respuesta = array('exito' => false, 'mensaje' => '');
-        $verificar = $this->verificar(true);
+        $verificar = self::verificar(true);
         if(!$verificar['exito']){
             $respuesta['mensaje']='Debes ingresar a tu cuenta';
             return $respuesta;
@@ -346,7 +346,17 @@ class user extends base
     public function registro()
     {
         $this->meta($this->seo);
-        $this->url[] = 'registro';
+        
+        $verificar = self::verificar(true);
+        if($verificar['exito']){
+            if(isset($_GET['next_url'])){
+                $this->url = explode('/',$_GET['next_url']);
+            }else{
+                $this->url[] = 'datos';
+            }
+        }else{
+            $this->url[] = 'registro';
+        }
         functions::url_redirect($this->url);
 
         $head = new head($this->metadata);
@@ -463,7 +473,16 @@ class user extends base
     public function login()
     {
         $this->meta($this->seo);
-        $this->url[] = 'login';
+        $verificar = self::verificar(true);
+        if($verificar['exito']){
+            if(isset($_GET['next_url'])){
+                $this->url = explode('/',$_GET['next_url']);
+            }else{
+                $this->url[] = 'datos';
+            }
+        }else{
+            $this->url[] = 'login';
+        }
         functions::url_redirect($this->url);
 
         $head = new head($this->metadata);
@@ -528,7 +547,7 @@ class user extends base
      *
      * @return array o json
      */
-    public function verificar(bool $return = false)
+    public static function verificar(bool $return = false)
     {
         $respuesta   = array('exito' => false, 'mensaje' => '');
         $prefix_site = functions::url_amigable(app::$_title);

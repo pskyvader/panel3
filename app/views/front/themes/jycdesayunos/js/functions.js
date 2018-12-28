@@ -288,6 +288,7 @@ function create_url(extra, data, url) {
 
     url = url.split("%20").join("+");
     url = url.split("%2B").join("+");
+    url = url.split("%2F").join("/");
     return url;
 }
 

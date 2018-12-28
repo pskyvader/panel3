@@ -95,6 +95,7 @@ class functions
                 $url .= "?" . http_build_query($_GET);
             }
         }
+        $url=str_replace("%2F","/",$url);
         $url = (($front_auto) ? (app::get_url()) : (app::get_url($front))) . $url;
 
         return $url;

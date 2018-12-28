@@ -1,0 +1,46 @@
+<section class="p-b-60 p-t-60">
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="over-x m-b-30">
+                        <div class="responsive_grid">
+                            <div class="row grid-table-heading">
+                                <div class="col-2 grid-item"></div>
+                                <div class="col-5 grid-item"><b>Producto</b></div>
+                                <div class="col-2 grid-item"><b>Cantidad</b></div>
+                                <div class="col-2 grid-item"><b>Precio total</b></div>
+                            </div>
+                            {foreach productos}
+                            <div class="row grid-table">
+                                <div class="col-2 grid-item img"><img src="{foto}" alt="{titulo}"></div>
+                                <div class="col-5 grid-item">
+                                    <h3><a href="{url}">{titulo}</a></h3>
+                                    <!--<p class="ml"></p>-->
+                                </div>
+                                <div class="col-2 grid-item"><input type="number" value="{cantidad}" class="form-control"></div>
+                                <div class="col-2 grid-item"><b class="card-price">{total}</b></div>
+                                <div class="col-1 grid-item text-center"><i onclick="remove_cart({idpedidoproducto});$(this).parent().parent().remove();" class="fa fa-remove"></i></div>
+                            </div>
+                            {/foreach productos}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="box border-1x">
+                        <h3 class="title">Resumen</h3>
+                        <ul class="list list-md list-3 list-li">
+                            <li><b class="d-inline-block w-15r">Subtotal:</b>{subtotal}</li>
+                            <li><b class="d-inline-block w-15r">Ship cost:</b>{total_direcciones}</li>
+                            <!--<li><b class="d-inline-block w-15r">Taxt:</b>+$10,00</li>
+                            <li><b class="d-inline-block w-15r">Coupon code:</b>HYTGNJ7 (-10%)</li>-->
+                        </ul>
+                        <p class="cart-total"><b class="d-inline-block ht-w-12">Total: </b> {total}</p>
+                        <a href="#" class="btn m-r-10 m-t-20 btn-primary">Comprar</a>
+                        <a href="#" class="btn bg-3 m-t-20">Continuar comprando</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
