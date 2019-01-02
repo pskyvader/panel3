@@ -25,17 +25,17 @@ class carousel
                 } else {
                     $foto = '';
                 }
-                if ($foto != '') {
+                if ('' != $foto) {
                     $foto_w = image::generar_url($c, 'thumb_carousel', 'webp');
-                    if ($foto_w != '') {
+                    if ('' != $foto_w) {
                         $srcset = array(array('url' => $foto_w, 'type' => 'image/webp'));
                     }
                     $thumb[] = array(
                         'srcset' => $srcset,
-                        'id' => $key,
-                        'title' => $titulo,
-                        'active' => ($key == 0) ? 'active' : '',
-                        'foto' => $foto,
+                        'id'     => $key,
+                        'title'  => $titulo,
+                        'active' => (0 == $key) ? 'active' : '',
+                        'foto'   => $foto,
                     );
                 }
             }
@@ -47,17 +47,17 @@ class carousel
                 } else {
                     $foto = '';
                 }
-                if ($foto != '') {
+                if ('' != $foto) {
 
                     $srcset = $this->srcset($c);
 
                     $carousel[] = array(
-                        'id' => $key,
-                        'srcset' => $srcset,
-                        'title' => $titulo,
-                        'active' => ($key == 0) ? 'active' : '',
-                        'data' => ($key != 0) ? 'data-' : '',
-                        'foto' => $foto,
+                        'id'       => $key,
+                        'srcset'   => $srcset,
+                        'title'    => $titulo,
+                        'active'   => (0 == $key) ? 'active' : '',
+                        'data'     => (0 != $key) ? 'data-' : '',
+                        'foto'     => $foto,
                         'original' => image::generar_url($c, ''),
                     );
                 }
@@ -74,13 +74,13 @@ class carousel
         $srcset = array();
         foreach ($images as $k => $size) {
             $foto = image::generar_url($foto_base, $size['foto'], 'webp');
-            if ($foto != '') {
+            if ('' != $foto) {
                 $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/webp');
             }
         }
         foreach ($images as $k => $size) {
             $foto = image::generar_url($foto_base, $size['foto']);
-            if ($foto != '') {
+            if ('' != $foto) {
                 $srcset[] = array('media' => '(min-width: ' . $size['size'] . 'px)', 'url' => $foto, 'type' => 'image/jpg');
             }
         }

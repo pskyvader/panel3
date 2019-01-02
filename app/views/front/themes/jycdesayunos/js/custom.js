@@ -8,9 +8,11 @@ var modulo = $("meta[property='modulo']").prop("content");
 var url = $("meta[property='og:url']").prop("content");
 var googlemaps_key = $("meta[property='googlemaps_key']").prop("content");
 var google_captcha = $("meta[property='google_captcha']").prop("content");
+var is_mobile=$.browser.mobile;
 
 
 function inicio() {
+    is_mobile=$.browser.mobile;
     modulo = $("meta[property='modulo']").prop("content");
     url = $("meta[property='og:url']").prop("content");
     $('[data-toggle="tooltip"]').tooltip();
@@ -49,6 +51,10 @@ function inicio() {
     if ($('.product-gallery').length > 0) {
         inicio_gallery();
     }
+    if ($('.order').length > 0) {
+        inicio_pedido();
+    }
+    
 }
 
 

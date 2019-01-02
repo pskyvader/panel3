@@ -76,9 +76,9 @@ class administrador extends base_model
         $connection = database::instance();
         $row        = $connection->update(static::$table, static::$idname, $set, $where);
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
-        
-        if(is_bool($row) && $row){
-            $row=$where[static::$idname];
+
+        if (is_bool($row) && $row) {
+            $row = $where[static::$idname];
         }
         return $row;
     }
@@ -90,17 +90,13 @@ class administrador extends base_model
         $condiciones = array('limit' => 1);
         $row         = static::getAll($where, $condiciones);
 
-        if (count($row) != 1) {
-            return false;
-        } else {
+        if (count($row) == 1) {
             $admin = $row[0];
-            if (!$admin['estado']) {
-                return false;
-            } else {
+            if ($admin['estado']) {
+
                 $profile = profile::getByTipo($admin['tipo']);
-                if (!isset($profile['tipo']) || $profile['tipo'] <= 0) {
-                    return false;
-                } else {
+                if (isset($profile['tipo']) && $profile['tipo'] > 0) {
+
                     $_SESSION[static::$idname . $prefix_site] = $admin[0];
                     $_SESSION["email" . $prefix_site]         = $admin['email'];
                     $_SESSION["nombre" . $prefix_site]        = $admin['nombre'];
@@ -112,6 +108,7 @@ class administrador extends base_model
                 }
             }
         }
+        functions::set_cookie($cookie, 'aaa', time() + (31536000));
         return false;
     }
 
@@ -185,30 +182,32 @@ class administrador extends base_model
     public static function verificar_sesion()
     {
         $prefix_site = functions::url_amigable(app::$_title);
-        if (!isset($_SESSION[static::$idname . $prefix_site]) || $_SESSION[static::$idname . $prefix_site] == '') {
-            return false;
-        }
+        if (isset($_SESSION[static::$idname . $prefix_site]) && $_SESSION[static::$idname . $prefix_site] != '') {
 
-        $admin = static::getById($_SESSION[static::$idname . $prefix_site]);
-
-        if (!isset($admin[0])) {
-            return false;
-        } elseif ($admin[0] != $_SESSION[static::$idname . $prefix_site]) {
-            return false;
-        } elseif ($admin['email'] != $_SESSION["email" . $prefix_site]) {
-            return false;
-        } elseif ($admin['estado'] != $_SESSION["estado" . $prefix_site] || !$_SESSION["estado" . $prefix_site]) {
-            return false;
-        } elseif ($admin['tipo'] != $_SESSION["tipo" . $prefix_site] || !$_SESSION["tipo" . $prefix_site]) {
-            return false;
-        } else {
-            $profile = profile::getByTipo($admin['tipo']);
-            if (!isset($profile['tipo']) || $profile['tipo'] <= 0) {
+            $admin = static::getById($_SESSION[static::$idname . $prefix_site]);
+            if (isset($admin[0]) && $admin[0] != $_SESSION[static::$idname . $prefix_site]) {
+                return false;
+            } elseif ($admin['email'] != $_SESSION["email" . $prefix_site]) {
+                return false;
+            } elseif ($admin['estado'] != $_SESSION["estado" . $prefix_site] || !$_SESSION["estado" . $prefix_site]) {
+                return false;
+            } elseif ($admin['tipo'] != $_SESSION["tipo" . $prefix_site] || !$_SESSION["tipo" . $prefix_site]) {
                 return false;
             } else {
-                return true;
+                $profile = profile::getByTipo($admin['tipo']);
+                if (!isset($profile['tipo']) || $profile['tipo'] <= 0) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
         }
+
+        if (isset($_COOKIE['cookieadmin' . $prefix_site]) && $_COOKIE['cookieadmin' . $prefix_site] != '' && $_COOKIE['cookieadmin' . $prefix_site] != 'aaa') {
+            return self::login_cookie($_COOKIE['cookieadmin' . $prefix_site]);
+        }
+
+        return false;
     }
 
     public static function recuperar(string $email)

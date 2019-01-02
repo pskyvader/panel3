@@ -225,7 +225,7 @@ class usuario extends base_model
         $data        = array('id' => $id, 'cookie' => $cookie);
         $exito       = static::update($data);
         if ($exito) {
-            functions::set_cookie('cookiusuario' . $prefix_site, $cookie, time() + (31536000));
+            functions::set_cookie('cookieusuario' . $prefix_site, $cookie, time() + (31536000));
         }
         return $exito;
     }
@@ -238,8 +238,9 @@ class usuario extends base_model
         unset($_SESSION["nombreusuario" . $prefix_site]);
         unset($_SESSION["estadousuario" . $prefix_site]);
         unset($_SESSION["tipousuario" . $prefix_site]);
+        unset($_SESSION["cookie_pedido" . $prefix_site]);
         unset($_SESSION['prefix_site']);
-        functions::set_cookie('cookiusuario' . $prefix_site, 'aaa', time() + (31536000));
+        functions::set_cookie('cookieusuario' . $prefix_site, 'aaa', time() + (31536000));
     }
 
     public static function verificar_sesion()

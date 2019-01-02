@@ -36,7 +36,7 @@ $('body').on('click', '.disabled', function() {
 $('body').on('click', 'a:not(.disabled)', function(e) {
     if ($(this).prop('target') != '_blank') {
         var href = $(this).prop('href');
-        if (check_link(href)) {
+        if (check_link(href) && $(location).prop('href') != href) {
             if ($(this).closest('.menu-nav').length > 0) {
                 $('.menu-btn').click();
             }
@@ -54,7 +54,7 @@ $(window).on('popstate', function(e) {
 
 
 function go_url(url, data_form) {
-    if (check_link(url)) {
+    if (check_link(url) && $(location).prop('href') != url) {
         cargar_ajax(url, true, data_form);
     } else {
         $(location).prop('href', url);
@@ -65,7 +65,6 @@ function go_url(url, data_form) {
 function check_link(href) {
     if (href.indexOf(path) < 0) return false;
     else if (href == '') return false;
-    else if (href == $(location).prop('href')) return false;
     else if (href.indexOf('#') >= 0) return false;
     else if (href.indexOf('jpg') >= 0) return false;
     else if (href.indexOf('png') >= 0) return false;

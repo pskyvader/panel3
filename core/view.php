@@ -59,7 +59,7 @@ class view
         }
         $str = self::render_template(self::$data, $content);
         if ($minify) {
-            $str = minify::minify_html($str);
+            $str = mini::html($str);
         }
 
         self::reset();

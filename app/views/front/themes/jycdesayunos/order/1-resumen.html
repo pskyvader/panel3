@@ -1,43 +1,66 @@
-<section class="p-b-60 p-t-60">
+<section class="p-b-60 p-t-60 order">
     <div class="container">
         <div class="content">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="over-x m-b-30">
-                        <div class="responsive_grid">
-                            <div class="row grid-table-heading">
-                                <div class="col-2 grid-item"></div>
-                                <div class="col-5 grid-item"><b>Producto</b></div>
-                                <div class="col-2 grid-item"><b>Cantidad</b></div>
-                                <div class="col-2 grid-item"><b>Precio total</b></div>
-                            </div>
+                        <div class="responsive_grid-">
                             {foreach productos}
-                            <div class="row grid-table">
-                                <div class="col-2 grid-item img"><img src="{foto}" alt="{titulo}"></div>
-                                <div class="col-5 grid-item">
-                                    <h3><a href="{url}">{titulo}</a></h3>
-                                    <!--<p class="ml"></p>-->
+                            <div class="producto">
+                                <div class="row grid-table-heading d-none d-md-flex">
+                                    <div class="col-md-2 grid-item"></div>
+                                    <div class="col-md-3 grid-item"><b>Producto</b></div>
+                                    <div class="col-md-3 grid-item"><b>Globo</b></div>
+                                    <div class="col-md-2 grid-item d-none"><b>Cantidad</b></div>
+                                    <div class="col-md-3 grid-item"><b>Precio total</b></div>
                                 </div>
-                                <div class="col-2 grid-item"><input type="number" value="{cantidad}" class="form-control"></div>
-                                <div class="col-2 grid-item"><b class="card-price">{total}</b></div>
-                                <div class="col-1 grid-item text-center"><i onclick="remove_cart({idpedidoproducto});$(this).parent().parent().remove();" class="fa fa-remove"></i></div>
+                                <div class="row grid-table">
+                                    <div class="col-6 d-md-none grid-item"></div>
+                                    <div class="col-6 col-md-2 grid-item img"><img src="{foto}" alt="{titulo}"></div>
+                                    <div class="col-6 d-md-none grid-item"><b>Producto</b></div>
+                                    <div class="col-6 col-md-3 grid-item">
+                                        <h3><a href="{url}">{titulo}</a></h3>
+                                        <!--<p class="ml"></p>-->
+                                    </div>
+                                    <div class="col-6 d-md-none grid-item"><b>Globo</b></div>
+                                    <div class="col-6 col-md-3 grid-item">
+                                        <select name="" id="" required="" class="form-control producto_atributo" data-id="{idpedidoproducto}">
+                                            <option value="" selected="" disabled="" hidden="">Selecciona un globo para tu desayuno</option>
+                                            {foreach atributos}
+                                            <option value="{idproducto}" data-foto="{foto}" {if selected} selected="" {/if selected}>{titulo}</option>
+                                            {/foreach atributos}
+                                        </select>
+                                    </div>
+                                    <div class="col-6 d-md-none grid-item d-none"><b>Cantidad</b></div>
+                                    <div class="col-6 col-md-2 grid-item d-none"><input type="number" value="{cantidad}" min="1" max="{stock}" class="form-control"></div>
+                                    <div class="col-6 d-md-none grid-item"><b>Precio total</b></div>
+                                    <div class="col-6 col-md-3 grid-item"><b class="card-price">{total}</b></div>
+                                    <div class="col-6 d-md-none grid-item"><b>Quitar</b></div>
+                                    <div class="col-6 col-md-1 grid-item text-center" data-toggle="tooltip" title="Quitar"><i onclick="remove_cart({idpedidoproducto});$(this).parent().parent().parent().remove();" class="fa fa-remove"></i></div>
+                                </div>
+                                <div class="row grid-table mb-5 last">
+                                    <div class="col-12 d-md-none grid-item"><b>Mensaje</b></div>
+                                    <div class="col-12 grid-item">
+                                        <textarea class="form-control mensaje_pedido" data-id="{idpedidoproducto}" name="" id="" cols="30" rows="3" placeholder="Escribe tu mensaje para este desayuno">{mensaje}</textarea>
+                                    </div>
+                                </div>
                             </div>
                             {/foreach productos}
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="box border-1x">
+                    <div class="box border-1x sticky-top">
                         <h3 class="title">Resumen</h3>
                         <ul class="list list-md list-3 list-li">
                             <li><b class="d-inline-block w-15r">Subtotal:</b>{subtotal}</li>
-                            <li><b class="d-inline-block w-15r">Ship cost:</b>{total_direcciones}</li>
+                            <li><b class="d-inline-block w-15r">Envío:</b>{total_direcciones}</li>
                             <!--<li><b class="d-inline-block w-15r">Taxt:</b>+$10,00</li>
                             <li><b class="d-inline-block w-15r">Coupon code:</b>HYTGNJ7 (-10%)</li>-->
                         </ul>
                         <p class="cart-total"><b class="d-inline-block ht-w-12">Total: </b> {total}</p>
-                        <a href="#" class="btn m-r-10 m-t-20 btn-primary">Comprar</a>
-                        <a href="#" class="btn bg-3 m-t-20">Continuar comprando</a>
+                        <a href="{url_next}" class="btn m-r-10 m-t-20 btn-primary" id="next_step">Comprar</a>
+                        <a href="{url_product}" class="btn bg-3 m-t-20">Volver</a>
                     </div>
                 </div>
             </div>
