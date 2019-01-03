@@ -73,7 +73,7 @@ class TinyHtmlMinifier {
     // Walk trough html
     function walk(&$part) {
         $tag_parts = explode('>', $part);
-        $tag_content = $tag_parts[0];
+        $tag_content = trim($tag_parts[0]);
         
         if(!empty($tag_content)) {
             $name = $this->findName($tag_content);

@@ -84,7 +84,7 @@ class usuario extends base_model
 
     public static function login_cookie(string $cookie)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         $where       = array('cookie' => $cookie);
         $condiciones = array('limit' => 1);
         $row         = static::getAll($where, $condiciones);
@@ -105,7 +105,6 @@ class usuario extends base_model
                     $_SESSION["nombreusuario" . $prefix_site] = $usuario['nombre'];
                     $_SESSION["estadousuario" . $prefix_site] = $usuario['estado'];
                     $_SESSION["tipousuario" . $prefix_site]   = $usuario['tipo'];
-                    $_SESSION['prefix_site']                  = $prefix_site;
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $usuario);
                     return true;
                 }
@@ -116,7 +115,7 @@ class usuario extends base_model
 
     public static function login(string $email, string $pass, bool $recordar)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         if ($email == '' || $pass == '') {
             return false;
         }
@@ -144,7 +143,6 @@ class usuario extends base_model
                     $_SESSION["nombreusuario" . $prefix_site] = $usuario['nombre'];
                     $_SESSION["estadousuario" . $prefix_site] = $usuario['estado'];
                     $_SESSION["tipousuario" . $prefix_site]   = $usuario['tipo'];
-                    $_SESSION['prefix_site']                  = $prefix_site;
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $usuario);
                     if ($recordar == 'on') {
                         return static::update_cookie($usuario[0]);
@@ -163,7 +161,6 @@ class usuario extends base_model
             $respuesta['mensaje'] = "Todos los datos son obligatorios";
             return $respuesta;
         }
-        $prefix_site = functions::url_amigable(app::$_title);
 
         $where = array(
             'email' => strtolower($email),
@@ -192,8 +189,7 @@ class usuario extends base_model
             $respuesta['mensaje'] = "Todos los datos son obligatorios";
             return $respuesta;
         }
-        $prefix_site = functions::url_amigable(app::$_title);
-        $usuario     = static::getById($_SESSION[static::$idname . $prefix_site]);
+        $usuario     = static::getById($_SESSION[static::$idname . app::$prefix_site]);
 
         if ($usuario['email'] != $datos['email']) {
             $where = array(
@@ -220,56 +216,51 @@ class usuario extends base_model
 
     private static function update_cookie(int $id)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
         $cookie      = uniqid($prefix_site);
         $data        = array('id' => $id, 'cookie' => $cookie);
         $exito       = static::update($data);
         if ($exito) {
-            functions::set_cookie('cookieusuario' . $prefix_site, $cookie, time() + (31536000));
+            functions::set_cookie('cookieusuario' . app::$prefix_site, $cookie, time() + (31536000));
         }
         return $exito;
     }
 
     public static function logout()
     {
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         unset($_SESSION[static::$idname . $prefix_site]);
         unset($_SESSION["emailusuario" . $prefix_site]);
         unset($_SESSION["nombreusuario" . $prefix_site]);
         unset($_SESSION["estadousuario" . $prefix_site]);
         unset($_SESSION["tipousuario" . $prefix_site]);
         unset($_SESSION["cookie_pedido" . $prefix_site]);
-        unset($_SESSION['prefix_site']);
         functions::set_cookie('cookieusuario' . $prefix_site, 'aaa', time() + (31536000));
     }
 
+    
     public static function verificar_sesion()
     {
-        $prefix_site = functions::url_amigable(app::$_title);
-        if (!isset($_SESSION[static::$idname . $prefix_site]) || $_SESSION[static::$idname . $prefix_site] == '') {
-            return false;
-        }
-
-        $usuario = static::getById($_SESSION[static::$idname . $prefix_site]);
-
-        if (!isset($usuario[0])) {
-            return false;
-        } elseif ($usuario[0] != $_SESSION[static::$idname . $prefix_site]) {
-            return false;
-        } elseif ($usuario['email'] != $_SESSION["emailusuario" . $prefix_site]) {
-            return false;
-        } elseif ($usuario['estado'] != $_SESSION["estadousuario" . $prefix_site] || !$_SESSION["estadousuario" . $prefix_site]) {
-            return false;
-        } elseif ($usuario['tipo'] != $_SESSION["tipousuario" . $prefix_site] || !$_SESSION["tipousuario" . $prefix_site]) {
-            return false;
-        } else {
-            $profile = profile::getByTipo($usuario['tipo']);
-            if (!isset($profile['tipo']) || $profile['tipo'] <= 0) {
+        $prefix_site = app::$prefix_site;
+        if (isset($_SESSION[static::$idname . $prefix_site]) && $_SESSION[static::$idname . $prefix_site] != '') {
+            $usuario = static::getById($_SESSION[static::$idname . $prefix_site]);
+            if (isset($usuario[0]) && $usuario[0] != $_SESSION[static::$idname . $prefix_site]) {
+                return false;
+            } elseif ($usuario['email'] != $_SESSION["emailusuario" . $prefix_site]) {
+                return false;
+            } elseif ($usuario['estado'] != $_SESSION["estadousuario" . $prefix_site] || !$_SESSION["estadousuario" . $prefix_site]) {
+                return false;
+            } elseif ($usuario['tipo'] != $_SESSION["tipousuario" . $prefix_site] || !$_SESSION["tipousuario" . $prefix_site]) {
                 return false;
             } else {
                 return true;
             }
         }
+
+        if (isset($_COOKIE['cookieusuario' . $prefix_site]) && $_COOKIE['cookieusuario' . $prefix_site] != '' && $_COOKIE['cookieusuario' . $prefix_site] != 'aaa') {
+            return self::login_cookie($_COOKIE['cookieusuario' . $prefix_site]);
+        }
+
+        return false;
     }
 
     public static function recuperar(string $email)

@@ -39,7 +39,7 @@ class log extends base_model
     public static function insert_log(string $tabla, string $idname, $funcion, $row)
     {
         if ($tabla != static::$table && !app::$_front) {
-            $administrador = $_SESSION['nombre' . functions::url_amigable(app::$_title)].' ('.$_SESSION['email' . functions::url_amigable(app::$_title)].')';
+            $administrador = $_SESSION['nombre' . app::$prefix_site].' ('.$_SESSION['email' . app::$prefix_site].')';
 
             $accion = 'metodo: ' . $funcion;
             if (isset($row['titulo'])) {

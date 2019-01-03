@@ -358,7 +358,7 @@ class backup
                         }
                     }
                     $respuesta['lista']          = $lista_archivos;
-                    $respuesta['archivo_backup'] = $this->dir_backup . '/' . functions::url_amigable(app::$_title) . '-' . time() . '.zip';
+                    $respuesta['archivo_backup'] = $this->dir_backup . '/' . app::$prefix_site . '-' . time() . '.zip';
                     $respuesta['exito']          = true;
                 } else {
                     $respuesta['mensaje'] = 'Directorio no valido';

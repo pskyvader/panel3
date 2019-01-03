@@ -16,8 +16,7 @@ class aside
     public function normal()
     {
         if (!isset($_POST['ajax'])) {
-            $prefix_site         = functions::url_amigable(app::$_title);
-            $administrador       = administrador_model::getById($_SESSION[administrador_model::$idname . $prefix_site]);
+            $administrador       = administrador_model::getById($_SESSION[administrador_model::$idname . app::$prefix_site]);
             $tipo_admin          = $administrador["tipo"];
             $moduloconfiguracion = moduloconfiguracion_model::getAll(array('estado' => true, 'aside' => true));
             $modulo              = modulo_model::getAll(array('aside' => true));

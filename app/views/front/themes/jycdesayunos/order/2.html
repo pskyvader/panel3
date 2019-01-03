@@ -1,0 +1,66 @@
+<section class="p-b-60 p-t-60 order">
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="over-x m-b-30">
+                        <div class="">
+                            <a href="{url_new}" class="btn btn-primary">Nueva dirección</a>
+                            {foreach direcciones}
+                            <div class="direccion">
+                                <div class="row grid-table-heading d-none d-md-flex">
+                                    <div class="col-md-4 grid-item"><b>Direccion</b></div>
+                                    <div class="col-md-4 grid-item"><b>Fecha de entrega</b></div>
+                                    <div class="col-md-4 grid-item"><b>Valor de envio</b></div>
+                                </div>
+                                <div class="row grid-table">
+                                    <div class="col-6 d-md-none grid-item heading-item"><b>Direccion</b></div>
+                                    <div class="col-6 col-md-4 grid-item">
+                                        <select name="" id="">
+                                            <option value=""></option>
+                                            {foreach direccion_entrega}
+                                            <option data-precio="{precio}" value="" {if selected} selected="" {/if selected}>{titulo}</option>
+                                            {/foreach direccion_entrega}
+                                        </select>
+                                    </div>
+                                    <div class="col-6 d-md-none grid-item heading-item"><b>Fecha de entrega</b></div>
+                                    <div class="col-6 col-md-4 grid-item">
+                                        <input type="date" name="" id="">
+                                    </div>
+                                    <div class="col-6 d-md-none grid-item heading-item"><b>valor de envio</b></div>
+                                    <div class="col-6 col-md-4 grid-item">
+                                        <span>{precio}</span>
+                                    </div>
+                                </div>
+                                <div class="row grid-table pt-5 mb-5 last">
+                                    <div class="col-12">
+                                        {foreach productos}
+                                        <div class="producto">
+                                            <div class="row grid-table">
+                                                <div class="col-6 col-md-2 grid-item img"><img src="{foto}" alt="{titulo}"></div>
+                                                <div class="col-6 col-md-3 grid-item">
+                                                    <h3><a href="{url}">{titulo}</a></h3>
+                                                </div>
+                                                <div class="col-6 col-md-3 grid-item">
+                                                    <span>{atributo}</span>
+                                                </div>
+                                                <div class="col-12 grid-item">
+                                                    <span>{mensaje}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/foreach productos}
+                                    </div>
+                                </div>
+                            </div>
+                            {/foreach direcciones}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {sidebar}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

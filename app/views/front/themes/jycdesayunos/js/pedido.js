@@ -1,4 +1,6 @@
 function inicio_pedido() {
+    
+    mover('.order',400,500);
     if ($('.producto_atributo').length > 0) {
         inicio_pedido_atributos();
     }
@@ -7,20 +9,34 @@ function inicio_pedido() {
     }
     pedido_proceso = false;
     pedido_exito = true;
+
+    $('#next_step').on('click', function() {
+        if (pedido_proceso) {
+            setTimeout(function() {
+                $('#next_step').trigger("click");
+            }, 200);
+            return false;
+        } else if (!pedido_exito) {
+            return false;
+        }
+        var error=false;
+        $('.producto_atributo').each(function() {
+            if ($(this).val() == null) {
+                notificacion("Debes elegir un globo", 'error');
+                mover($(this).parents('.producto')[0]);
+                error=true;
+                return false;
+            }
+        });
+        if(error){
+            return false;
+        }
+    });
+
 }
 var pedido_proceso = false;
 var pedido_exito = true;
 
-$('#next_step').on('click', function() {
-    if (pedido_proceso) {
-        setTimeout(function() {
-            $('#next_step').trigger("click");
-        }, 200);
-        return false;
-    } else if (!pedido_exito) {
-        return false;
-    }
-});
 
 function inicio_pedido_atributos() {
     var options = {
@@ -61,7 +77,7 @@ function inicio_pedido_mensaje() {
     $('.mensaje_pedido').on('change', function() {
         var mensaje = $(this).val();
         var idpedidoproducto = $(this).data('id');
-        console.log(mensaje,idpedidoproducto);
+        console.log(mensaje, idpedidoproducto);
         var modulo = "carro/";
         var url = create_url(modulo + "change_mensaje", {}, path);
         pedido_proceso = true;
@@ -79,7 +95,7 @@ function inicio_pedido_mensaje() {
                 console.log(e, data);
                 data = {};
             }
-    
+
             pedido_exito = data.exito;
             if (!data.exito) {
                 notificacion(data.mensaje, 'error');

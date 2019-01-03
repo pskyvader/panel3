@@ -49,7 +49,7 @@ class cart extends base
      */
     public static function current_cart($return = false)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         if (!isset($_SESSION['cookie_pedido' . $prefix_site]) || '' == $_SESSION['cookie_pedido' . $prefix_site]) {
             $logueado = usuario_model::verificar_sesion();
             if (!$logueado) {
@@ -107,8 +107,9 @@ class cart extends base
                 $url_producto = functions::url_seccion(array($seo_producto['url'], 'detail'), $producto);
                 $new_p        = array(
                     'idpedidoproducto'   => $p['idpedidoproducto'],
-                    'titulo'             => $p['titulo'],
+                    'idpedidodireccion'  => $p['idpedidodireccion'],
                     'idproducto'         => $p['idproducto'],
+                    'titulo'             => $p['titulo'],
                     'foto'               => $thumb_url,
                     'precio'             => functions::formato_precio($p['precio']),
                     'cantidad'           => $p['cantidad'],
@@ -133,6 +134,7 @@ class cart extends base
             }
             $pedido = array(
                 'idpedido'          => $pedido[0],
+                'cookie_pedido'          => $pedido['cookie_pedido'],
                 'total'             => functions::formato_precio($pedido['total']),
                 'total_original'    => functions::formato_precio($pedido['total_original']),
                 'total_direcciones' => $total_direcciones,
@@ -151,7 +153,6 @@ class cart extends base
      */
     private static function new_cart()
     {
-        $prefix_site   = functions::url_amigable(app::$_title);
         $cookie_pedido = functions::generar_pass();
         $insert        = array(
             'tipo'           => 1,
@@ -162,8 +163,8 @@ class cart extends base
             'pedido_manual'  => false,
             'cookie_pedido'  => $cookie_pedido,
         );
-        if (isset($_SESSION[usuario_model::$idname . $prefix_site])) {
-            $usuario = usuario_model::getById($_SESSION[usuario_model::$idname . $prefix_site]);
+        if (isset($_SESSION[usuario_model::$idname . app::$prefix_site])) {
+            $usuario = usuario_model::getById($_SESSION[usuario_model::$idname . app::$prefix_site]);
             if (count($usuario) > 0) {
                 $insert['idusuario'] = $usuario[0];
                 $insert['nombre']    = $usuario['nombre'];
@@ -173,7 +174,7 @@ class cart extends base
         }
         $idpedido = pedido_model::insert($insert);
         if (is_int($idpedido)) {
-            $_SESSION['cookie_pedido' . $prefix_site] = $cookie_pedido;
+            $_SESSION['cookie_pedido' . app::$prefix_site] = $cookie_pedido;
             return self::get_cart($cookie_pedido);
         }
         return false;
@@ -356,7 +357,6 @@ class cart extends base
      */
     public static function update_cart(int $idpedido)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
         $pedido      = pedido_model::getById($idpedido);
         $total       = 0;
         $productos   = pedidoproducto_model::getAll(array('idpedido' => $pedido[0]));
@@ -369,8 +369,8 @@ class cart extends base
         }
 
         $update = array('total' => $total, 'total_original' => $total);
-        if (isset($_SESSION[usuario_model::$idname . $prefix_site])) {
-            $usuario = usuario_model::getById($_SESSION[usuario_model::$idname . $prefix_site]);
+        if (isset($_SESSION[usuario_model::$idname . app::$prefix_site])) {
+            $usuario = usuario_model::getById($_SESSION[usuario_model::$idname . app::$prefix_site]);
             if (count($usuario) > 0) {
                 $update['idusuario'] = $usuario[0];
                 $update['nombre']    = $usuario['nombre'];
@@ -436,7 +436,7 @@ class cart extends base
             if (isset($cart['productos'])) {
                 foreach ($cart['productos'] as $key => $p) {
                     if ($p['idpedidoproducto'] == $campos['idpedidoproducto']) {
-                        $update             = array('id' => $p['idpedidoproducto'], 'mensaje' => nl2br($campos['mensaje']));
+                        $update             = array('id' => $p['idpedidoproducto'], 'mensaje' => ($campos['mensaje']));
                         $idpedidoproducto   = pedidoproducto_model::update($update);
                         $respuesta['exito'] = true;
                         break;

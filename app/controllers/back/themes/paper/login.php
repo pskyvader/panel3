@@ -16,9 +16,8 @@ class login
     public function index($url=array())
     {
         $this->url=array_merge($this->url,$url);
-        $prefix_site = functions::url_amigable(app::$_title);
-        if (isset($_COOKIE['cookieadmin' . $prefix_site])) {
-            $logueado = administrador_model::login_cookie($_COOKIE['cookieadmin' . $prefix_site]);
+        if (isset($_COOKIE['cookieadmin' . app::$prefix_site])) {
+            $logueado = administrador_model::login_cookie($_COOKIE['cookieadmin' . app::$prefix_site]);
             if ($logueado) {
                 if(empty($url)) $this->url = array('home');
                 else $this->url=$url;

@@ -66,6 +66,7 @@ class footer
 
             view::set('links_footer', $links_footer);
             view::render('footer');
+            view::reset();
             view::js();
             /*$connection=database::instance();
         $total=0;

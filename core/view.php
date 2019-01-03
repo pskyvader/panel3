@@ -109,7 +109,7 @@ class view
                     $content = str_replace($subcontent1, $sub, $content);
                     $content = str_replace($array_close, "", $content);
                 } elseif (error_reporting()) {
-                    throw new \Exception("Array no encontrado {$array_open}", 1);
+                    throw new \Exception("Array no encontrado {$array_open}, o Tag mal cerrado", 1);
                 }
 
             } else { //si no es array, se procesa despues para evitar conflictos de nombres repetidos dentro y fuera del bloque foreach en template

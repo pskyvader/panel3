@@ -1,7 +1,8 @@
-var template_cart=null;
+var template_cart = null;
+
 function inicio_cart() {
     var tc = $('#template_cart-item');
-    template_cart = $('li',tc);
+    template_cart = $('li', tc);
     tc.remove();
     var modulo = "carro/";
     var url = create_url(modulo + "current_cart", {}, path);
@@ -9,7 +10,7 @@ function inicio_cart() {
         try {
             data = JSON.parse(data);
         } catch (e) {
-            console.log(e,data);
+            console.log(e, data);
             data = {};
         }
         generar_cart(data);
@@ -17,16 +18,16 @@ function inicio_cart() {
 }
 
 
-function generar_cart(data){
+function generar_cart(data) {
     var elementos = [];
-    var cantidad=0;
-    var total="$0";
+    var cantidad = 0;
+    var total = "$0";
     if (Object.keys(data).length > 0) {
-        total=data.total;
+        total = data.total;
         if (data.productos && Object.keys(data.productos).length > 0) {
-            $(data.productos).each(function(k,v){
-                cantidad+=parseInt(v.cantidad);
-                var e=template_cart.clone();
+            $(data.productos).each(function(k, v) {
+                cantidad += parseInt(v.cantidad);
+                var e = template_cart.clone();
                 e.html(
                     e.html().replace(/{url_producto}/ig, v.url)
                     .replace(/{imagen_producto}/ig, v.foto)
@@ -34,7 +35,7 @@ function generar_cart(data){
                     .replace(/{precio_producto}/ig, v.precio)
                     .replace(/{cantidad_producto}/ig, v.cantidad)
                     .replace(/{id}/ig, v.idpedidoproducto)
-                    .replace('data-src','src')
+                    .replace('data-src', 'src')
                 );
                 elementos.push(e);
             });
@@ -46,7 +47,7 @@ function generar_cart(data){
     }
     $('#carro-header .carro-cantidad').text(cantidad);
     $('#carro-header .carro-total').text(total);
-    
+
     $('#carro-header .carro-productos .lista-productos').empty().prepend(elementos);
 }
 
@@ -61,40 +62,68 @@ function add_cart(id, cantidad) {
 
     var modulo = "carro/";
     var url = create_url(modulo + "add_cart", {}, path);
-    post_basic(url, {id:id,cantidad:cantidad}, function(data) {
+    post_basic(url, {
+        id: id,
+        cantidad: cantidad
+    }, function(data) {
         try {
             data = JSON.parse(data);
         } catch (e) {
-            console.log(e,data);
+            console.log(e, data);
             data = {};
         }
-        if(data.exito){
+        if (data.exito) {
             notificacion(data.mensaje, 'success');
-        }else{
+        } else {
             notificacion(data.mensaje, 'error');
         }
         generar_cart(data.carro);
-        $('#carro-header .dropdown-toggle').click();
+        mover('#carro-header .dropdown-toggle', 200);
+        setTimeout(function() {
+            $('#carro-header .dropdown-toggle').click();
+        }, 200);
     });
 }
 
 
 
-function remove_cart(id) {
+function remove_cart(id, e) {
     var modulo = "carro/";
     var url = create_url(modulo + "remove_cart", {}, path);
-    post_basic(url, {id:id}, function(data) {
+    post_basic(url, {
+        id: id
+    }, function(data) {
         try {
             data = JSON.parse(data);
         } catch (e) {
-            console.log(e,data);
+            console.log(e, data);
             data = {};
         }
-        if(data.exito){
+        if (data.exito) {
             notificacion(data.mensaje, 'success');
-        }else{
+            if (e) {
+                $('[data-toggle="tooltip"]').tooltip('dispose');
+                e.parents('.producto').remove();
+                $('[data-toggle="tooltip"]').tooltip();
+                var total = 0;
+                $('.order .producto .card-price').each(function() {
+                    total += parseInt($(this).text().substring(1).replace(".", ""));
+                });
+                if(total==0){
+                    var mensaje=$('<div class="alert alert-danger" role="alert"> Tu carro está vacío. Por favor agrega productos para continuar tu compra </div>');
+                    $('.order .content').html(mensaje);
+                }
+                $('.precio_subtotal').text(formato_precio(total, 0));
+                var envio = parseInt($('.precio_envio').text().substring(1).replace(".", ""));
+                if (isNaN(envio)) {
+                    envio = 0;
+                }
+                $('.precio_total').text(formato_precio(total+envio, 0));
+            }
+        } else {
             notificacion(data.mensaje, 'error');
         }
         generar_cart(data.carro);
+
     });
 }

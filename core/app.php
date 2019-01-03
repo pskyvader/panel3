@@ -12,6 +12,7 @@ class app
     private $_method        = "index";
     private $_params        = array();
     public static $_title   = "";
+    public static $prefix_site   = "";
     public static $_path    = "";
     public static $_front   = true;
     private static $_config = array();
@@ -36,6 +37,7 @@ class app
         session_start();
         $config       = self::getConfig();
         self::$_title = $config['title'];
+        self::$prefix_site = functions::url_amigable(self::$_title);
         self::$_front = $front;
 
         $site          = str_replace("www.", "", $_SERVER['HTTP_HOST']);

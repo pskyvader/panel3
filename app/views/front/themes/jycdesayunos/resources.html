@@ -20,5 +20,5 @@
 {/if defer}
 {/foreach css} 
 {else is_css} 
-{foreach js} <script src="{url}" {defer}></script> {/foreach js} 
+{foreach js} <script type='text/javascript' src="{url}" {defer}></script> {/foreach js} 
 {/if is_css}

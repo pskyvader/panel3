@@ -231,8 +231,7 @@ class lista
     }
     public static function configuracion($modulo)
     {
-        $prefix_site         = functions::url_amigable(app::$_title);
-        $tipo_admin          = $_SESSION["tipo" . $prefix_site];
+        $tipo_admin          = $_SESSION["tipo" . app::$prefix_site];
         $moduloconfiguracion = moduloconfiguracion_model::getByModulo($modulo);
         $var                 = array('idmoduloconfiguracion' => $moduloconfiguracion[0]);
         if (isset($_GET['tipo'])) {

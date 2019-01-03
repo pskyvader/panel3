@@ -35,9 +35,9 @@ class user extends base
         $banner = new banner();
         $banner->individual($this->seo['banner'], $this->metadata['title']);
         $sidebar   = array();
-        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'datos')));
-        $sidebar[] = array('title' => "Mis direcciones", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'direcciones')));
-        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'pedidos')));
+        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'datos')));
+        $sidebar[] = array('title' => "Mis direcciones", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
+        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'pedidos')));
 
         view::set('sidebar_user', $sidebar);
         $sidebar=view::render('user/sidebar', false, true);
@@ -50,7 +50,6 @@ class user extends base
 
     public function datos()
     {
-        $prefix_site = functions::url_amigable(app::$_title);
         $this->meta($this->seo);
         $verificar = self::verificar(true);
         if ($verificar['exito']) {
@@ -69,15 +68,15 @@ class user extends base
         $banner = new banner();
         $banner->individual($this->seo['banner'], $this->metadata['title']);
         $sidebar   = array();
-        $sidebar[] = array('title' => "Mis datos", 'active' => 'active', 'url' => functions::generar_url(array('cuenta', 'datos')));
-        $sidebar[] = array('title' => "Mis direcciones", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'direcciones')));
-        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'pedidos')));
+        $sidebar[] = array('title' => "Mis datos", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'datos')));
+        $sidebar[] = array('title' => "Mis direcciones", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
+        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'pedidos')));
 
         view::set('sidebar_user', $sidebar);
         $sidebar=view::render('user/sidebar', false, true);
         view::set('sidebar',$sidebar);
         
-        $usuario= usuario_model::getById($_SESSION[usuario_model::$idname . $prefix_site]);
+        $usuario= usuario_model::getById($_SESSION[usuario_model::$idname . app::$prefix_site]);
         view::set('nombre', $usuario['nombre']);
         view::set('telefono',$usuario['telefono']);
         view::set('email',$usuario['email']);
@@ -141,7 +140,6 @@ class user extends base
      * @return void
      */
     public function direcciones(){
-        $prefix_site = functions::url_amigable(app::$_title);
         $this->meta($this->seo);
         $verificar = self::verificar(true);
         if ($verificar['exito']) {
@@ -160,14 +158,14 @@ class user extends base
         $banner = new banner();
         $banner->individual($this->seo['banner'], $this->metadata['title']);
         $sidebar   = array();
-        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'datos')));
-        $sidebar[] = array('title' => "Mis direcciones", 'active' => 'active', 'url' => functions::generar_url(array('cuenta', 'direcciones')));
-        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'pedidos')));
+        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'datos')));
+        $sidebar[] = array('title' => "Mis direcciones", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
+        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'pedidos')));
 
         view::set('sidebar_user', $sidebar);
         $sidebar=view::render('user/sidebar', false, true);
         view::set('sidebar',$sidebar);
-        $dir=usuariodireccion_model::getAll(array('idusuario'=>$_SESSION[usuario_model::$idname . $prefix_site]));
+        $dir=usuariodireccion_model::getAll(array('idusuario'=>$_SESSION[usuario_model::$idname . app::$prefix_site]));
         $direcciones=array();
         foreach ($dir as $key => $d) {
             $direcciones[]=array(
@@ -175,11 +173,11 @@ class user extends base
                 'nombre'=>$d['nombre'],
                 'direccion'=>$d['direccion'],
                 'telefono'=>$d['telefono'],
-                'url'=>functions::generar_url(array('cuenta', 'direccion',$d[0]))
+                'url'=>functions::generar_url(array($this->url[0], 'direccion',$d[0]))
             );
         }
         view::set('direcciones',$direcciones);
-        view::set('url_new',functions::generar_url(array('cuenta', 'direccion')));
+        view::set('url_new',functions::generar_url(array($this->url[0], 'direccion')));
         
         view::render('user/direcciones-lista');
 
@@ -196,13 +194,12 @@ class user extends base
      * @return void
      */
     public function direccion($var=array()){
-        $prefix_site = functions::url_amigable(app::$_title);
         $this->meta($this->seo);
         $verificar = self::verificar(true);
         if ($verificar['exito']) {
             if(isset($var[0])){
                 $direccion=usuariodireccion_model::getById($var[0]);
-                if($direccion['idusuario']==$_SESSION[usuario_model::$idname . $prefix_site]){
+                if($direccion['idusuario']==$_SESSION[usuario_model::$idname . app::$prefix_site]){
                     $this->url[] = 'direccion';
                     $this->url[] = $var[0];
                 }else{
@@ -225,9 +222,9 @@ class user extends base
         $banner = new banner();
         $banner->individual($this->seo['banner'], $this->metadata['title']);
         $sidebar   = array();
-        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'datos')));
-        $sidebar[] = array('title' => "Mis direcciones", 'active' => 'active', 'url' => functions::generar_url(array('cuenta', 'direcciones')));
-        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array('cuenta', 'pedidos')));
+        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'datos')));
+        $sidebar[] = array('title' => "Mis direcciones", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
+        $sidebar[] = array('title' => "Mis pedidos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'pedidos')));
 
         view::set('sidebar_user', $sidebar);
         $sidebar=view::render('user/sidebar', false, true);
@@ -293,7 +290,6 @@ class user extends base
      */
     public function direccion_process()
     {
-        $prefix_site = functions::url_amigable(app::$_title);
         $respuesta = array('exito' => false, 'mensaje' => '');
         $verificar = self::verificar(true);
         if(!$verificar['exito']){
@@ -306,7 +302,7 @@ class user extends base
             if (isset($_SESSION['direccion_token']['token']) && $_SESSION['direccion_token']['token'] == $campos['token']) {
                 if (time() - $_SESSION['direccion_token']['time'] <= 360) {
                     unset($campos['token']);
-                    $campos['idusuario']=$_SESSION[usuario_model::$idname . $prefix_site];
+                    $campos['idusuario']=$_SESSION[usuario_model::$idname . app::$prefix_site];
                     $campos['tipo']=1;
                     if($campos['id']!=''){
                         $respuesta['exito'] = usuariodireccion_model::update($campos);
@@ -371,7 +367,7 @@ class user extends base
         $token                      = sha1(uniqid(microtime(), true));
         $_SESSION['registro_token'] = array('token' => $token, 'time' => time());
         view::set('token', $token);
-        view::set('url_login', functions::generar_url(array('cuenta', 'login')));
+        view::set('url_login', functions::generar_url(array($this->url[0], 'login')));
         view::render('user/registro');
 
         $footer = new footer();
@@ -431,7 +427,7 @@ class user extends base
         $token                   = sha1(uniqid(microtime(), true));
         $_SESSION['recuperar_token'] = array('token' => $token, 'time' => time());
         view::set('token', $token);
-        view::set('url_registro', functions::generar_url(array('cuenta', 'registro')));
+        view::set('url_registro', functions::generar_url(array($this->url[0], 'registro')));
         view::render('user/recuperar');
 
         $footer = new footer();
@@ -497,7 +493,7 @@ class user extends base
         $token                   = sha1(uniqid(microtime(), true));
         $_SESSION['login_token'] = array('token' => $token, 'time' => time());
         view::set('token', $token);
-        view::set('url_recuperar', functions::generar_url(array('cuenta', 'recuperar')));
+        view::set('url_recuperar', functions::generar_url(array($this->url[0], 'recuperar')));
         view::render('user/login');
 
         $footer = new footer();
@@ -550,16 +546,15 @@ class user extends base
     public static function verificar(bool $return = false)
     {
         $respuesta   = array('exito' => false, 'mensaje' => '');
-        $prefix_site = functions::url_amigable(app::$_title);
         $logueado    = usuario_model::verificar_sesion();
         if (!$logueado) {
-            if (isset($_COOKIE['cookieusuario' . $prefix_site])) {
-                $logueado = usuario_model::login_cookie($_COOKIE['cookieusuario' . $prefix_site]);
+            if (isset($_COOKIE['cookieusuario' . app::$prefix_site])) {
+                $logueado = usuario_model::login_cookie($_COOKIE['cookieusuario' . app::$prefix_site]);
             }
         }
         $respuesta['exito'] = $logueado;
         if ($logueado) {
-            $nombre               = explode(" ", $_SESSION['nombreusuario' . $prefix_site]);
+            $nombre               = explode(" ", $_SESSION['nombreusuario' . app::$prefix_site]);
             $respuesta['mensaje'] = $nombre[0];
         }
         if ($return) {

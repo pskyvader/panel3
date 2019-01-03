@@ -85,7 +85,7 @@ class administrador extends base_model
 
     public static function login_cookie(string $cookie)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         $where       = array('cookie' => $cookie);
         $condiciones = array('limit' => 1);
         $row         = static::getAll($where, $condiciones);
@@ -115,7 +115,7 @@ class administrador extends base_model
     public static function login(string $email, string $pass, bool $recordar)
     {
         $connection  = database::instance();
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         if ($email == '' || $pass == '') {
             return false;
         }
@@ -157,19 +157,18 @@ class administrador extends base_model
 
     private static function update_cookie(int $id)
     {
-        $prefix_site = functions::url_amigable(app::$_title);
         $cookie      = uniqid($prefix_site);
         $data        = array('id' => $id, 'cookie' => $cookie);
         $exito       = static::update($data);
         if ($exito) {
-            functions::set_cookie('cookieadmin' . $prefix_site, $cookie, time() + (31536000));
+            functions::set_cookie('cookieadmin' . app::$prefix_site, $cookie, time() + (31536000));
         }
         return $exito;
     }
 
     public static function logout()
     {
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         unset($_SESSION[static::$idname . $prefix_site]);
         unset($_SESSION["email" . $prefix_site]);
         unset($_SESSION["nombre" . $prefix_site]);
@@ -181,7 +180,7 @@ class administrador extends base_model
 
     public static function verificar_sesion()
     {
-        $prefix_site = functions::url_amigable(app::$_title);
+        $prefix_site = app::$prefix_site;
         if (isset($_SESSION[static::$idname . $prefix_site]) && $_SESSION[static::$idname . $prefix_site] != '') {
 
             $admin = static::getById($_SESSION[static::$idname . $prefix_site]);
