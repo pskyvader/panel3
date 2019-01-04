@@ -3,6 +3,7 @@
 @color_hover: #fff;
 @color_hover_secundario: #611e23;
 @background_hover: #d11201;
+@background_lista_productos: #e9ebec;
 button {
     cursor: pointer;
 }
@@ -270,6 +271,38 @@ a:hover {
             }
             &.heading-item {
                 background: #fdfdfd;
+            }
+        }
+    }
+    .direccion {
+        .grid-table {
+            .lista_productos_pedido {
+                min-height: 5rem;
+                background: @background_lista_productos;
+                &:empty {
+                    &:before {
+                        padding: 2rem;
+                        display: block;
+                        text-align: center;
+                        content: "Puedes mover productos de otras direcciones aquí";
+                    }
+                }
+                .producto {
+                    .grid-table {
+                        background: @background_lista_productos;
+                    }
+                    .handle {
+                        cursor: move;
+                        +.titulo {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                    &:last-child {
+                        border-bottom: 1px solid #eee;
+                    }
+                }
             }
         }
     }

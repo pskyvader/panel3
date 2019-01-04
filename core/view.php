@@ -59,7 +59,7 @@ class view
         }
         $str = self::render_template(self::$data, $content);
         if ($minify) {
-            $str = mini::html($str);
+            $str = mini::html($str,array('collapse_whitespace'=>true));
         }
 
         self::reset();

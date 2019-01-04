@@ -352,21 +352,20 @@ function inicio_sorted_pedido() {
     $(".grupo_pedido .lista_productos_pedido").sortable({
         connectWith: ".lista_productos_pedido",
         cursor: "move",
+        axis:"y",
         placeholder: "placeholder_producto",
         tolerance: "pointer",
         forcePlaceholderSize :true,
         handle: '.handle',
         revert: true,
         scrollSensitivity: 120,
-        scrollSpeed: 30,
+        scrollSpeed: 15,
         start: function(event, ui) {
             $('.producto').hide();
         },
         stop: function(event, ui) {
-            $('.producto').show();
-            var idproductopedido=$('.idproductopedido', ui.item).val();
-            $(ui.item).addClass('idproductopedido-'+idproductopedido);
-            mover('.idproductopedido-'+idproductopedido, 200, 0);
+          $('.producto').show();
+            mover(ui.item, 200, 0);
         },
         receive: function(event, ui) {
             var direccion = $(ui.sender).parents('.direccion');

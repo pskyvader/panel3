@@ -133,6 +133,17 @@ class order extends base
     {
         $sidebar = self::sidebar($carro);
 
+        $horarios_entrega = array();
+        $hora_minima      = strtotime("08:00");
+        $hora_maxima      = strtotime("12:00");
+        $hora_actual      = $hora_minima;
+        do {
+            $hora1              = strftime("%R", $hora_actual);
+            $hora2              = strftime("%R", strtotime("+1 hours", $hora_actual));
+            $horarios_entrega[$hora1] = array('hora'=>$hora1,'titulo'=>$hora1 . '-' . $hora2);
+            $hora_actual        = strftime(strtotime("+15 minutes", $hora_actual));
+        } while (strtotime($hora2) < $hora_maxima);
+
         $atributos = producto_model::getAll(array('tipo' => 2), array('order' => 'titulo ASC'));
         foreach ($carro['productos'] as $key => $p) {
             foreach ($atributos as $k => $a) {
@@ -155,7 +166,7 @@ class order extends base
         $direcciones_entrega = usuariodireccion_model::getAll(array('idusuario' => $_SESSION[usuario_model::$idname . app::$prefix_site]));
         foreach ($direcciones_entrega as $key => $de) {
             $direcciones_entrega[$key]['precio'] = $comunas[$de['idcomuna']]['precio'];
-            $direcciones_entrega[$key]['titulo'] = $de['titulo'] . ' (' . $de['direccion'] . ')';
+            $direcciones_entrega[$key]['titulo'] = $de['titulo'] . ' (' . $de['direccion']." , " . $comunas[$de['idcomuna']]['titulo'].')';
         }
 
         $direcciones_pedido = pedidodireccion_model::getAll(array('idpedido' => $carro['idpedido']));
@@ -179,13 +190,19 @@ class order extends base
             $new_d['direccion_completa'] .= ('' != $du['condominio']) ? ', condominio ' . $du['condominio'] : '';
             $new_d['direccion_completa'] .= ('' != $du['casa']) ? ', casa ' . $du['casa'] : '';
             $new_d['direccion_completa'] .= ('' != $du['empresa']) ? ', empresa ' . $du['empresa'] : '';
-            $idnew_d = pedidodireccion_model::insert($new_d);
-            foreach ($carro['productos'] as $key => $p) {
-                $update = array('id' => $p['idpedidoproducto'], 'idpedidodireccion' => $idnew_d);
-                pedidoproducto_model::update($update);
-                $carro['productos'][$key]['idpedidodireccion'] = $idnew_d;
-            }
+            pedidodireccion_model::insert($new_d);
             $direcciones_pedido = pedidodireccion_model::getAll(array('idpedido' => $carro['idpedido']));
+        }
+
+        $iddireccion = reset($direcciones_pedido);
+        $iddireccion = $iddireccion[0];
+
+        foreach ($carro['productos'] as $key => $p) {
+            if (0 == $p['idpedidodireccion']) {
+                $update = array('id' => $p['idpedidoproducto'], 'idpedidodireccion' => $iddireccion);
+                pedidoproducto_model::update($update);
+                $carro['productos'][$key]['idpedidodireccion'] = $iddireccion;
+            }
         }
 
         $direcciones = array();
@@ -197,11 +214,14 @@ class order extends base
                     unset($carro['productos'][$k]);
                 }
             }
-
-            $d = array(
+            $fecha_entrega = (strtotime($dp['fecha_entrega']) < time()) ? "" : functions::formato_fecha(strtotime($dp['fecha_entrega']), '%F');
+            $hora_entrega  = (strtotime($dp['fecha_entrega']) < time()) ? "" : functions::formato_fecha(strtotime($dp['fecha_entrega']), '%R');
+            $d             = array(
+                'idpedidodireccion'         => $dp['idpedidodireccion'],
                 'productos'         => $lista_productos,
                 'direccion_entrega' => $direcciones_entrega,
-                'fecha_entrega'     => $dp['fecha_entrega'],
+                'fecha_entrega'     => $fecha_entrega,
+                'horarios_entrega'      => $horarios_entrega,
                 'precio'            => functions::formato_precio($dp['precio']),
             );
             foreach ($d['direccion_entrega'] as $key => $dir) {
@@ -209,6 +229,13 @@ class order extends base
                     $d['direccion_entrega'][$key]['selected'] = true;
                 } else {
                     $d['direccion_entrega'][$key]['selected'] = false;
+                }
+            }
+            foreach ($d['horarios_entrega'] as $key => $h) {
+                if ($hora_entrega == $key) {
+                    $d['horarios_entrega'][$key]['selected'] = true;
+                } else {
+                    $d['horarios_entrega'][$key]['selected'] = false;
                 }
             }
             $direcciones[] = $d;
@@ -222,4 +249,39 @@ class order extends base
         view::set('url_product', functions::generar_url(array($seo_producto['url'])));
         view::set('url_next', functions::generar_url(array($url[0], 'step', 3)));
     }
+
+
+
+    /**
+     * change_productodireccion
+     * cambia el mensaje en el producto correspondiente al pedido actual
+     * si el producto no corresponde al pedido, lanza error
+     *
+     * @param  POST $id
+     * @param  POST $cantidad
+     *
+     * @return json
+     */
+
+    public static function change_productodireccion()
+    {
+        $respuesta = array('exito' => false, 'mensaje' => 'No has modificado un producto valido. Por favor recarga la pagina e intenta nuevamente');
+        $campos    = functions::test_input($_POST);
+        if (isset($campos['idfinal']) && isset($campos['idpedidoproducto'])) {
+            $cart = cart::current_cart(true);
+            if (isset($cart['productos'])) {
+                foreach ($cart['productos'] as $key => $p) {
+                    if ($p['idpedidoproducto'] == $campos['idpedidoproducto']) {
+                        $update             = array('id' => $p['idpedidoproducto'], 'idpedidodireccion' => ($campos['idfinal']));
+                        $idpedidoproducto   = pedidoproducto_model::update($update);
+                        $respuesta['exito'] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        echo json_encode($respuesta);
+        exit;
+    }
+
 }

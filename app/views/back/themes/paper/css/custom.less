@@ -165,22 +165,21 @@ table .tooltip.top {
         hr {
             margin: 5px 0px;
         }
-        input{
+        input {
             padding: 0px;
             height: auto;
         }
-        button{
+        button {
             margin: 0px;
         }
-        @media screen and (min-width:992px){
-            .margen-top{
+        @media screen and (min-width:992px) {
+            .margen-top {
                 margin-top: 10px;
             }
         }
-        
-        .imagen{
+        .imagen {
             float: right;
-            @media screen and (max-width:991px){
+            @media screen and (max-width: 991px) {
                 float: left;
             }
         }
@@ -203,7 +202,7 @@ table .tooltip.top {
         }
         .form-group {
             margin-top: 0px;
-            &.mensaje{
+            &.mensaje {
                 padding-bottom: 0px;
             }
         }
@@ -221,8 +220,10 @@ table .tooltip.top {
         min-height: 60px;
         &:empty {
             background: #dbe2e6;
-            margin: 0px 15px;
             &:before {
+                padding: 2rem;
+                display: block;
+                text-align: center;
                 content: "Puedes mover productos de otras direcciones aquí";
             }
         }
