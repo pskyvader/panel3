@@ -1,0 +1,9 @@
+<div class="steps mb-5">
+    <div class="btn-group w-100 d-block d-md-flex" role="group" aria-label="Pasos de compra">
+        {foreach steps}
+        <a href="{url}" class="btn {if active} btn-danger text-white {else active} {if disabled} btn-light disabled{else disabled} btn-primary text-white{/if disabled} {/if active} col {if disabled} disabled {/if disabled}">
+            {title}
+        </a>
+        {/foreach steps}
+    </div>
+</div>

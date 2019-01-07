@@ -21,8 +21,12 @@ function inicio_cart() {
 function generar_cart(data) {
     var elementos = [];
     var cantidad = 0;
+    var total_productos = "$0";
+    var total_envio = "Por definir";
     var total = "$0";
     if (Object.keys(data).length > 0) {
+        total_productos = data.subtotal;
+        total_envio = data.total_direcciones;
         total = data.total;
         if (data.productos && Object.keys(data.productos).length > 0) {
             $(data.productos).each(function(k, v) {
@@ -46,6 +50,8 @@ function generar_cart(data) {
         elementos = $('<li><div class="media">Carro vacío</div></li>');
     }
     $('#carro-header .carro-cantidad').text(cantidad);
+    $('#carro-header .carro-total-productos').text(total_productos);
+    $('#carro-header .carro-envio').text(total_envio);
     $('#carro-header .carro-total').text(total);
 
     $('#carro-header .carro-productos .lista-productos').empty().prepend(elementos);

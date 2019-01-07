@@ -63,6 +63,24 @@ function formato_precio(n, c, d, t) {
     return "$" + s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
+function formato_fecha(fecha) {
+    fecha=new Date(fecha);
+    var mm = fecha.getMonth() + 1; //January is 0!
+    var yyyy = fecha.getFullYear();
+    var dd = fecha.getDate();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    fecha=yyyy+'-'+mm+'-'+dd;
+    return fecha;
+}
+
 
 function go_url(url, data_form) {
     if (check_link(url) && $(location).prop('href') != url) {

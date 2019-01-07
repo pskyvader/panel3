@@ -300,7 +300,7 @@ class cart extends base
      *
      * @return json
      */
-    public function remove_cart()
+    public static function remove_cart()
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
         $campos    = functions::test_input($_POST);
