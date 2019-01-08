@@ -54,6 +54,9 @@ function inicio() {
     if ($('.order').length > 0) {
         inicio_pedido();
     }
+    if ($('.user').length > 0) {
+        inicio_user();
+    }
     
 }
 

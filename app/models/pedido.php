@@ -49,6 +49,6 @@ class pedido extends base_model
         $condition  = array('order' => static::$idname . ' DESC');
         $connection = database::instance();
         $row        = $connection->get(static::$table, static::$idname, $where, $condition);
-        return (count($row) > 0) ? $row[0] : $row;
+        return ($carro && count($row) > 0) ? $row[0] : $row;
     }
 }

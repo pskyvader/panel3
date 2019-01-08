@@ -64,7 +64,7 @@ function formato_precio(n, c, d, t) {
 };
 
 function formato_fecha(fecha) {
-    fecha=new Date(fecha);
+    fecha = new Date(fecha);
     var mm = fecha.getMonth() + 1; //January is 0!
     var yyyy = fecha.getFullYear();
     var dd = fecha.getDate();
@@ -77,7 +77,7 @@ function formato_fecha(fecha) {
         mm = '0' + mm;
     }
 
-    fecha=yyyy+'-'+mm+'-'+dd;
+    fecha = yyyy + '-' + mm + '-' + dd;
     return fecha;
 }
 
@@ -338,14 +338,19 @@ function mover(elemento, tiempo, delay) {
 
 var notify = null;
 
-function notificacion(mensaje, tipo) {
+function notificacion(mensaje, tipo, url) {
     if (tipo == 'error') tipo = 'danger';
     if (notify != null) {
         notify.close();
     }
-    notify = $.notify({
+    var options = {
         message: mensaje
-    }, {
+    };
+    if (url) {
+        options.url = url;
+        options.target= '_self';
+    }
+    notify = $.notify(options, {
         type: tipo
     });
 }

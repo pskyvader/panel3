@@ -83,7 +83,7 @@ class cms extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'], $this->seo['titulo']);
+        $banner->individual($this->seo['banner'], $this->seo['titulo'],$this->metadata['title']);
 
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);

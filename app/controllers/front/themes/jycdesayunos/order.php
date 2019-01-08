@@ -3,6 +3,7 @@ namespace app\controllers\front\themes\jycdesayunos;
 
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\comuna as comuna_model;
+use \app\models\pedido as pedido_model;
 use \app\models\pedidodireccion as pedidodireccion_model;
 use \app\models\pedidoproducto as pedidoproducto_model;
 use \app\models\producto as producto_model;
@@ -20,7 +21,7 @@ class order extends base
     private static $steps = array(
         1 => 'Paso 1: resumen del carro',
         2 => 'Paso 2: Direcciones',
-        3 => 'Paso 3: Confirmación'
+        3 => 'Paso 3: Confirmación',
     );
     public function __construct()
     {
@@ -143,8 +144,6 @@ class order extends base
 
     private static function step2($carro, $url)
     {
-        $sidebar = self::sidebar($carro);
-
         $horarios_entrega = array();
         $hora_minima      = strtotime("08:00");
         $hora_maxima      = strtotime("12:00");
@@ -197,6 +196,8 @@ class order extends base
             $new_d['cookie_direccion'] = $carro['cookie_pedido'] . '-' . functions::generar_pass(2);
 
             pedidodireccion_model::insert($new_d);
+            cart::update_cart($carro['idpedido']);
+            $carro              = cart::current_cart(true);
             $direcciones_pedido = pedidodireccion_model::getAll(array('idpedido' => $carro['idpedido']));
         }
 
@@ -247,6 +248,7 @@ class order extends base
             $direcciones[] = $d;
         }
 
+        $sidebar = self::sidebar($carro);
         view::set('direcciones', $direcciones);
         view::set('fechas_bloqueadas', json_encode($fechas_bloqueadas));
         view::set('fechas_especiales', json_encode($fechas_especiales));
@@ -260,10 +262,10 @@ class order extends base
 
     private static function step3($carro, $url)
     {
-        $sidebar = self::sidebar($carro);
+        $sidebar   = self::sidebar($carro);
         $atributos = producto_model::getAll(array('tipo' => 2), array('order' => 'titulo ASC'));
         foreach ($carro['productos'] as $key => $p) {
-            $carro['productos'][$key]['mensaje']=nl2br($p['mensaje']);
+            $carro['productos'][$key]['mensaje'] = nl2br($p['mensaje']);
             foreach ($atributos as $k => $a) {
                 if ($a['idproducto'] == $p['idproductoatributo']) {
                     $carro['productos'][$key]['atributo'] = $a['titulo'];
@@ -295,18 +297,18 @@ class order extends base
 
             foreach ($direcciones_entrega as $key => $dir) {
                 if ($dir[0] == $dp['idusuariodireccion']) {
-                    $direccion_entrega        = $dir['titulo'];
+                    $direccion_entrega = $dir['titulo'];
                     break;
                 }
             }
 
             $d = array(
-                'idpedidodireccion'        => $dp['idpedidodireccion'],
-                'productos'                => $lista_productos,
-                'direccion_entrega'        => $direccion_entrega,
-                'fecha_entrega'            => $fecha_entrega,
-                'hora_entrega'             => $hora_entrega,
-                'precio'                   => functions::formato_precio($dp['precio']),
+                'idpedidodireccion' => $dp['idpedidodireccion'],
+                'productos'         => $lista_productos,
+                'direccion_entrega' => $direccion_entrega,
+                'fecha_entrega'     => $fecha_entrega,
+                'hora_entrega'      => $hora_entrega,
+                'precio'            => functions::formato_precio($dp['precio']),
             );
             $direcciones[] = $d;
         }
@@ -317,7 +319,7 @@ class order extends base
         view::set('url_direcciones', functions::generar_url(array($seo_cuenta['url'], 'direcciones'), array('next_url' => implode('/', array($url[0], 'step', 2)))));
         $seo_producto = seo_model::getById(8);
         view::set('url_product', functions::generar_url(array($seo_producto['url'])));
-        view::set('url_next', functions::generar_url(array($url[0], 'step', 3)));
+        view::set('url_next', '');
     }
 
     /**
@@ -561,6 +563,45 @@ class order extends base
         $respuesta['exito']   = true;
         echo json_encode($respuesta);
         exit;
+    }
+
+    /**
+     * crear_pedido
+     * Modifica el estado del pedido actual. Esto elimina el carro actual.
+     * actualiza el precio y los datos basicos del pedido
+     * genera la url para ver el detalle del pedido y pagarlo
+     *
+     * @return json
+     */
+    public function crear_pedido(): json
+    {
+        $respuesta = array('exito' => false, 'mensaje' => '');
+        $carro     = cart::current_cart(true);
+        if (count($carro) == 0) {
+            $respuesta['mensaje'] = 'Tu pedido ya fue guardado, por favor ve a la seccion "Mis pedidos" en tu cuenta';
+            echo json_encode($respuesta);
+            exit;
+        } else {
+            $attr      = producto_model::getAll(array('tipo' => 2), array('order' => 'titulo ASC'));
+            $atributos = array();
+            foreach ($attr as $key => $lp) {
+                $atributos[$lp['idproducto']] = $lp['titulo'];
+            }
+            foreach ($carro['productos'] as $key => $p) {
+                $update = array('id' => $p['idproducto'], 'titulo_atributo' => $atributos[$p['idproductoatributo']]);
+                pedidoproducto_model::update($update);
+            }
+            $update = array('idpedidoestado' => 3, 'id' => $carro['idpedido']); //estado PAGO PENDIENTE
+            pedido_model::update($update);
+            cart::update_cart($carro['idpedido']);
+            $seo_cuenta         = seo_model::getById(9);
+            $url                = functions::generar_url(array($seo_cuenta['url'], 'pedido', $carro['cookie_pedido']));
+            $respuesta['url']   = $url;
+            $respuesta['exito'] = true;
+            echo json_encode($respuesta);
+            exit;
+
+        }
     }
 
 }

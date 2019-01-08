@@ -93,7 +93,7 @@ class cart extends base
      *
      * @return array
      */
-    private static function get_cart(string $cookie_pedido): array
+    protected static function get_cart(string $cookie_pedido): array
     {
         $pedido = pedido_model::getByCookie($cookie_pedido);
         if (count($pedido) > 0) {
@@ -286,7 +286,7 @@ class cart extends base
         $actualizar_producto = array('id' => $producto[0], 'stock' => $cantidad_final);
         producto_model::update($actualizar_producto);
         $respuesta['carro']   = self::current_cart(true);
-        $respuesta['mensaje'] = $producto['titulo'] . ' agregado al carro';
+        $respuesta['mensaje'] = $producto['titulo'] . ' agregado al carro.<br/> Puedes Comprar haciendo click aqui';
         $respuesta['exito']   = true;
         echo json_encode($respuesta);
         exit;
@@ -335,13 +335,18 @@ class cart extends base
             }
         }
 
-        $cantidad_final = $producto['stock'] + $cantidad;
         self::update_cart($cart['idpedido']);
 
-        $actualizar_producto = array('id' => $producto[0], 'stock' => $cantidad_final);
-        producto_model::update($actualizar_producto);
+        $producto_titulo='';
+
+        if(isset($producto)){
+            $cantidad_final = $producto['stock'] + $cantidad;
+            $actualizar_producto = array('id' => $producto[0], 'stock' => $cantidad_final);
+            producto_model::update($actualizar_producto);
+            $producto_titulo=$producto['titulo'] ;
+        }
         $respuesta['carro']   = self::current_cart(true);
-        $respuesta['mensaje'] = $producto['titulo'] . ' eliminado del carro';
+        $respuesta['mensaje'] = $producto_titulo. ' eliminado del carro';
         $respuesta['exito']   = true;
         echo json_encode($respuesta);
         exit;

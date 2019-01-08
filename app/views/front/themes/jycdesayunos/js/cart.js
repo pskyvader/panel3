@@ -1,10 +1,13 @@
 var template_cart = null;
+var modulo_carro="carro/";
 
 function inicio_cart() {
-    var tc = $('#template_cart-item');
-    template_cart = $('li', tc);
-    tc.remove();
-    var modulo = "carro/";
+    if(template_cart==null){
+        var tc = $('#template_cart-item');
+        template_cart = $('li', tc);
+        tc.remove();
+    }
+    var modulo = modulo_carro;
     var url = create_url(modulo + "current_cart", {}, path);
     post_basic(url, "", function(data) {
         try {
@@ -66,7 +69,7 @@ function add_cart(id, cantidad) {
     cantidad = parseInt(cantidad);
     if (cantidad < 1) cantidad = 1;
 
-    var modulo = "carro/";
+    var modulo = modulo_carro;
     var url = create_url(modulo + "add_cart", {}, path);
     post_basic(url, {
         id: id,
@@ -79,30 +82,30 @@ function add_cart(id, cantidad) {
             data = {};
         }
         if (data.exito) {
-            notificacion(data.mensaje, 'success');
+            notificacion(data.mensaje, 'success',path + 'pedido/step/1');
         } else {
             notificacion(data.mensaje, 'error');
         }
         generar_cart(data.carro);
-        mover('#carro-header .dropdown-toggle', 200);
+        /*mover('#carro-header .dropdown-toggle', 200);
         setTimeout(function() {
             $('#carro-header .dropdown-toggle').click();
-        }, 200);
+        }, 200);*/
     });
 }
 
 
 
 function remove_cart(id, e) {
-    var modulo = "carro/";
+    var modulo = modulo_carro;
     var url = create_url(modulo + "remove_cart", {}, path);
     post_basic(url, {
         id: id
     }, function(data) {
         try {
             data = JSON.parse(data);
-        } catch (e) {
-            console.log(e, data);
+        } catch (error) {
+            console.log(error, data);
             data = {};
         }
         if (data.exito) {

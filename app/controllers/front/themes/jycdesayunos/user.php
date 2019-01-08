@@ -4,10 +4,17 @@ namespace app\controllers\front\themes\jycdesayunos;
 defined("APPPATH") or die("Acceso denegado");
 use \app\models\comuna as comuna_model;
 use \app\models\modulo as modulo_model;
+use \app\models\mediopago as mediopago_model;
 use \app\models\moduloconfiguracion as moduloconfiguracion_model;
+use \app\models\pedido as pedido_model;
+use \app\models\pedidodireccion as pedidodireccion_model;
+use \app\models\pedidoestado as pedidoestado_model;
+use \app\models\pedidoproducto as pedidoproducto_model;
 use \app\models\usuario as usuario_model;
 use \app\models\usuariodireccion as usuariodireccion_model;
+use \app\models\seo as seo_model;
 use \core\app;
+use \core\image;
 use \core\functions;
 use \core\view;
 
@@ -66,7 +73,7 @@ class user extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'], $this->metadata['title']);
+        $banner->individual($this->seo['banner'], $this->metadata['title'],'Mis datos');
         $sidebar   = array();
         $sidebar[] = array('title' => "Mis datos", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'datos')));
         $sidebar[] = array('title' => "Mis direcciones", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
@@ -156,7 +163,7 @@ class user extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'], $this->metadata['title']);
+        $banner->individual($this->seo['banner'], $this->metadata['title'],'Mis Direcciones');
         $sidebar   = array();
         $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'datos')));
         $sidebar[] = array('title' => "Mis direcciones", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
@@ -220,7 +227,7 @@ class user extends base
         $header->normal();
 
         $banner = new banner();
-        $banner->individual($this->seo['banner'], $this->metadata['title']);
+        $banner->individual($this->seo['banner'], $this->metadata['title'],'Modificar dirección');
         $sidebar   = array();
         $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'datos')));
         $sidebar[] = array('title' => "Mis direcciones", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
@@ -331,6 +338,165 @@ class user extends base
         echo json_encode($respuesta);
     }
 
+
+
+    
+    /**
+     * lista de pedidos
+     *
+     * @return void
+     */
+    public function pedidos(){
+        $this->meta($this->seo);
+        $verificar = self::verificar(true);
+        if ($verificar['exito']) {
+            $this->url[] = 'pedidos';
+        } else {
+            $this->url[] = 'login';
+        }
+        functions::url_redirect($this->url);
+
+        $head = new head($this->metadata);
+        $head->normal();
+
+        $header = new header();
+        $header->normal();
+
+        $banner = new banner();
+        $banner->individual($this->seo['banner'], $this->metadata['title'],'Mis Pedidos');
+        $sidebar   = array();
+        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'datos')));
+        $sidebar[] = array('title' => "Mis direcciones", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
+        $sidebar[] = array('title' => "Mis pedidos", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'pedidos')));
+
+        view::set('sidebar_user', $sidebar);
+        $sidebar=view::render('user/sidebar', false, true);
+        view::set('sidebar',$sidebar);
+        $ep=pedidoestado_model::getAll(array('tipo'=>1));
+        $estados_pedido=array();
+        foreach ($ep as $key => $e) {
+            $estados_pedido[$e[0]]=$e;
+        }
+
+
+        $usuario= usuario_model::getById($_SESSION[usuario_model::$idname . app::$prefix_site]);
+        $pedidos=pedido_model::getByIdusuario($usuario[0],false);//obtiene todos los pedidos del usuario actual, con cualquier estado del pedido
+        foreach ($pedidos as $key => $p) {
+            if($p['idpedidoestado']==1){ //Quita cualquier pedido que este en carro
+                unset($pedidos[$key]);
+            }else{
+                $pedidos[$key]['total']=functions::formato_precio($p['total']);
+                $pedidos[$key]['fecha']=($p['fecha_pago']!=0)?$p['fecha_pago']:$p['fecha_creacion'];
+                $pedidos[$key]['url']=functions::generar_url(array($this->url[0], 'pedido',$p['cookie_pedido']));
+                $pedidos[$key]['estado']=$estados_pedido[$p['idpedidoestado']]['titulo'];
+                $pedidos[$key]['background_estado']=$estados_pedido[$p['idpedidoestado']]['color'];
+                $pedidos[$key]['color_estado']=functions::getContrastColor($estados_pedido[$p['idpedidoestado']]['color']);
+            }
+        }
+        view::set('pedidos',$pedidos);        
+        view::render('user/pedidos-lista');
+
+        $footer = new footer();
+        $footer->normal();
+    }
+
+
+   /**
+     * Ver o pagar pedido
+     *
+     * @param  array $var
+     *
+     * @return void
+     */
+    public function pedido($var=array()){
+        $this->meta($this->seo);
+        $verificar = self::verificar(true);
+        if ($verificar['exito']) {
+            if(isset($var[0])){
+                $pedido=pedido_model::getByCookie($var[0],false);
+                //Podria desaparecer si se necesita que cualquier pedido sea publico
+                if(isset($pedido['idusuario']) && $pedido['idusuario']==$_SESSION[usuario_model::$idname . app::$prefix_site]){
+                    $this->url[] = 'pedido';
+                    $this->url[] = $var[0];
+                }else{
+                //Podria desaparecer si se necesita que cualquier pedido sea publico
+                    $this->url[] = 'pedidos';
+                }
+            }else{
+                $this->url[] = 'pedido';
+            }
+        } else {
+            $this->url[] = 'login';
+        }
+        functions::url_redirect($this->url);
+
+        $head = new head($this->metadata);
+        $head->normal();
+
+        $header = new header();
+        $header->normal();
+
+        $banner = new banner();
+        $banner->individual($this->seo['banner'], $this->metadata['title'],'Detalle del pedido');
+        $sidebar   = array();
+        $sidebar[] = array('title' => "Mis datos", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'datos')));
+        $sidebar[] = array('title' => "Mis direcciones", 'active' => '', 'url' => functions::generar_url(array($this->url[0], 'direcciones')));
+        $sidebar[] = array('title' => "Mis pedidos", 'active' => 'active', 'url' => functions::generar_url(array($this->url[0], 'pedidos')));
+
+        view::set('sidebar_user', $sidebar);
+        $sidebar=view::render('user/sidebar', false, true);
+
+        $ep=pedidoestado_model::getAll();
+        $estados_pedido=array();
+        foreach ($ep as $key => $e) {
+            $estados_pedido[$e[0]]=$e;
+        }
+        $direcciones_pedido = pedidodireccion_model::getAll(array('idpedido' => $pedido['idpedido']));
+        $productos_pedido=pedidoproducto_model::getAll(array('idpedido' => $pedido['idpedido']));
+        foreach ($direcciones_pedido as $key => $dp) {
+            $direcciones_pedido[$key]['precio']=functions::formato_precio($dp['precio']);
+            $direcciones_pedido[$key]['estado']=$estados_pedido[$dp['idpedidoestado']]['titulo'];
+            $direcciones_pedido[$key]['background_estado']=$estados_pedido[$dp['idpedidoestado']]['color'];
+            $direcciones_pedido[$key]['color_estado']=functions::getContrastColor($estados_pedido[$dp['idpedidoestado']]['color']);
+            $lista_productos = array();
+            foreach ($productos_pedido as $k => $p) {
+                if ($p['idpedidodireccion'] == $dp[0]) {
+                    $portada      = image::portada($p['foto']);
+                    $thumb_url    = image::generar_url($portada, '');
+                    $p['total']=functions::formato_precio($p['total']);
+                    $p['foto']=$thumb_url;
+                    $lista_productos[] = $p;
+                    unset($productos_pedido[$k]);
+                }
+            }
+            $direcciones_pedido[$key]['lista_productos']=$lista_productos;
+        }
+        $pedido['total']=functions::formato_precio($pedido['total']);
+        $pedido['direcciones_pedido']=$direcciones_pedido;
+        $pedido['estado']=$estados_pedido[$pedido['idpedidoestado']]['titulo'];
+        $pedido['background_estado']=$estados_pedido[$pedido['idpedidoestado']]['color'];
+        $pedido['color_estado']=functions::getContrastColor($estados_pedido[$pedido['idpedidoestado']]['color']);
+
+        view::set_array($pedido);
+        view::set('sidebar',$sidebar);
+
+        $medios_pago=array();
+        if($pedido['idpedidoestado']==3){ // Solo si hay pago pendiente
+            $medios_pago=mediopago_model::getAll();
+            $seo_pago=seo_model::getById(12); //seo medios de pago
+            foreach ($medios_pago as $key => $mp) {
+                $url=functions::generar_url(array($seo_pago['url'],'medio'.$mp[0],$pedido['cookie_pedido']));
+                $medios_pago[$key]['url']=$url;
+            }
+        }
+        view::set('medios_pago',$medios_pago);
+        view::set('pago',count($medios_pago)>0 );
+
+        view::render('user/pedidos-detalle');
+
+        $footer = new footer();
+        $footer->normal();
+    }
 
 
 

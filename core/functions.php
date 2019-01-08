@@ -190,6 +190,53 @@ class functions
         return $fecha_final;
     }
 
+    /**
+     * getContrastColor
+     * retorna blanco o negro, dependiendo de que color de un mejor contraste
+     * 
+     * @param  string $hexColor
+     *
+     * @return string
+     */
+    public static function getContrastColor(string $hexColor):string {
+
+        //////////// hexColor RGB
+        $R1 = hexdec(substr($hexColor, 1, 2));
+        $G1 = hexdec(substr($hexColor, 3, 2));
+        $B1 = hexdec(substr($hexColor, 5, 2));
+
+        //////////// Black RGB
+        $blackColor = "#000000";
+        $R2BlackColor = hexdec(substr($blackColor, 1, 2));
+        $G2BlackColor = hexdec(substr($blackColor, 3, 2));
+        $B2BlackColor = hexdec(substr($blackColor, 5, 2));
+
+         //////////// Calc contrast ratio
+         $L1 = 0.2126 * pow($R1 / 255, 2.2) +
+               0.7152 * pow($G1 / 255, 2.2) +
+               0.0722 * pow($B1 / 255, 2.2);
+
+        $L2 = 0.2126 * pow($R2BlackColor / 255, 2.2) +
+              0.7152 * pow($G2BlackColor / 255, 2.2) +
+              0.0722 * pow($B2BlackColor / 255, 2.2);
+
+        $contrastRatio = 0;
+        if ($L1 > $L2) {
+            $contrastRatio = (int)(($L1 + 0.05) / ($L2 + 0.05));
+        } else {
+            $contrastRatio = (int)(($L2 + 0.05) / ($L1 + 0.05));
+        }
+
+        //////////// If contrast is more than 5, return black color
+        if ($contrastRatio > 5) {
+            return '#000';
+        } else { //////////// if not, return white color.
+            return '#fff';
+        }
+}
+
+
+
     //formato de url
     public static function ruta($texto)
     {
@@ -221,19 +268,11 @@ class functions
 
     public static function encode_json($array, $pretty = false)
     {
-        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
             if ($pretty) {
                 $json = json_encode($array, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
             } else {
                 $json = json_encode($array, JSON_UNESCAPED_UNICODE);
             }
-        } else {
-            array_walk_recursive($array, function (&$item, $key) {if (is_string($item)) {
-                $item = mb_encode_numericentity($item, array(0x80, 0xffff, 0, 0xffff), 'UTF-8');
-            }
-            });
-            $json = mb_decode_numericentity(json_encode($array), array(0x80, 0xffff, 0, 0xffff), 'UTF-8');
-        }
         return $json;
     }
 
@@ -264,7 +303,6 @@ class functions
     }
 
     public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
-
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);

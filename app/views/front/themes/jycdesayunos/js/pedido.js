@@ -1,5 +1,7 @@
+var modulo_pedido="pedido/";
+
 function inicio_pedido() {
-    mover('.order', 400, 500);
+    mover('.order', 300, 500);
     if ($('.producto_atributo').length > 0) {
         inicio_pedido_atributos();
     }
@@ -35,7 +37,9 @@ $('body').on('click','.order.step-1 #next_step', function(e) {
     if (error) {
         return false;
     }else{
-        go_url($(this).data('href'));
+        inicio_cart();
+        go_url($(this).data('href'),{});
+        mover('.order',0,500);
     }
 });
 
@@ -64,13 +68,43 @@ $('body').on('click','.order.step-2 #next_step', function(e) {
             mover(this);
             return false;
         }
-
     });
     if (error) {
         return false;
     }else{
-        go_url($(this).data('href'));
+        inicio_cart();
+        go_url($(this).data('href'),{});
+        mover('.order',0,500);
     }
+});
+
+
+$('body').on('click','.order.step-3 #next_step', function(e) {
+    var modulo = modulo_pedido;
+    var url = create_url(modulo + "crear_pedido", {}, path);
+    notificacion("Creando tu pedido, por favor espera", 'warning');
+    $('#next_step').addClass('disabled');
+
+    post_basic(url, {}, function(data) {
+        $('#next_step').removeClass('disabled');
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            console.log(e, data);
+            data = {};
+        }
+        if (data.exito) {
+            inicio_cart();
+            notificacion("Tu pedido esta listo para pagar", 'success');
+            go_url(data.url);
+        }
+
+        if (!data.exito) {
+            notificacion(data.mensaje, 'error');
+        }
+    });
+
+    return false;
 });
 
 
@@ -89,7 +123,7 @@ function inicio_pedido_atributos() {
         var idproductoatributo = $(this).val();
         var idpedidoproducto = $($(this).select2('data')[0].element).parent().data('id');
 
-        var modulo = "carro/";
+        var modulo = modulo_carro;
         var url = create_url(modulo + "change_atributo", {}, path);
         $('#next_step').addClass('disabled');
         post_basic(url, {
@@ -114,7 +148,7 @@ function inicio_pedido_mensaje() {
     $('.mensaje_pedido').on('change', function() {
         var mensaje = $(this).val();
         var idpedidoproducto = $(this).data('id');
-        var modulo = "carro/";
+        var modulo = modulo_carro;
         var url = create_url(modulo + "change_mensaje", {}, path);
         pedido_proceso = true;
         pedido_exito = false;
@@ -148,7 +182,7 @@ function inicio_direccion_entrega() {
         var direccion = $(this).parents('.direccion');
         var idpedidodireccion = direccion.data('id');
 
-        var modulo = "pedido/";
+        var modulo = modulo_pedido;
         var url = create_url(modulo + "change_direccion", {}, path);
         $('#next_step').addClass('disabled');
         post_basic(url, {
@@ -180,7 +214,7 @@ function inicio_direccion_entrega() {
 function new_direccion() {
     $('#new_grupo').on('click', function() {
         var direccion = $('.direccion:first').clone();
-        var modulo = "pedido/";
+        var modulo = modulo_pedido;
         var url = create_url(modulo + "new_direccion", {}, path);
         post_basic(url, {}, function(data) {
             pedido_proceso = false;
@@ -248,6 +282,8 @@ function total_sidebar() {
     $('.order .direccion .precio').each(function() {
         envio += parseInt($(this).text().substring(1).replace(".", ""));
     });
+
+    console.log(total,envio);
 
     $('.precio_envio').text(formato_precio(envio, 0));
     $('.precio_total').text(formato_precio(total + envio, 0));
@@ -337,7 +373,7 @@ function inicio_direccion_sortable() {
 
 
 function cambiar_fecha(fecha, hora, idpedidodireccion) {
-    var modulo = "pedido/";
+    var modulo = modulo_pedido;
     var url = create_url(modulo + "change_fecha", {}, path);
     $('#next_step').addClass('disabled');
     post_basic(url, {
@@ -364,7 +400,7 @@ function cambiar_fecha(fecha, hora, idpedidodireccion) {
 
 function cambiar_id_productopedido(e, idfinal) {
     var idpedidoproducto = $(e).data('id');
-    var modulo = "pedido/";
+    var modulo = modulo_pedido;
     var url = create_url(modulo + "change_productodireccion", {}, path);
     $('#next_step').addClass('disabled');
     post_basic(url, {
@@ -388,7 +424,7 @@ function cambiar_id_productopedido(e, idfinal) {
 
 function remove_direccion(e) {
     var id=$(e).parents('.direccion').data('id');
-    var modulo = "pedido/";
+    var modulo = modulo_pedido;
     var url = create_url(modulo + "remove_direccion", {}, path);
     post_basic(url, {
         id: id

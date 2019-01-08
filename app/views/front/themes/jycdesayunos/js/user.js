@@ -1,3 +1,9 @@
+function inicio_user(){
+    if($('.user-pedidos-detalle .content').length>0){
+        mover('.user-pedidos-detalle .content', 400, 500);
+    }
+}
+
 function inicio_login() {
     var modulo = "cuenta/";
     var url = create_url(modulo + "verificar", null, path);
