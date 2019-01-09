@@ -160,7 +160,6 @@ class functions
     //agrega la fecha del archivo como variable al nombre del archivo: style.css=> style.css?time=23426421
     public static function fecha_archivo($archivo, $only_fecha = false)
     {
-
         $c  = (strpos($archivo, '?') === false) ? '?time=' : '&time=';
         $ac = explode("?", $archivo);
         $ac = $ac[0];

@@ -18,6 +18,10 @@ class cache
     {
         self::$cacheable = $cache;
     }
+    public static function is_cacheable()
+    {
+        return self::$cacheable;
+    }
 
     public static function add_cache($str)
     {

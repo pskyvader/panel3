@@ -79,9 +79,11 @@ class moduloconfiguracion extends base_model
         $insert         = database::create_data($fields, $row);
         $connection     = database::instance();
         $row            = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
+            if ($log) {
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            }
             return $last_id;
         } else {
             return $row;

@@ -5,6 +5,7 @@ defined("APPPATH") or die("Acceso denegado");
 
 use \core\app;
 use \core\database;
+use \core\image;
 use \core\functions;
 
 class seo extends base_model
@@ -88,9 +89,11 @@ class seo extends base_model
     {
         $row = static::getById($id);
         if (isset($row['banner'])) {
+            $banner_copy=$row['banner'];
             unset($row['banner']);
         }
         if (isset($row['foto'])) {
+            $foto_copy=$row['foto'];
             unset($row['foto']);
         }
         if (isset($row['archivo'])) {
@@ -100,8 +103,28 @@ class seo extends base_model
         $insert     = database::create_data($fields, $row);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
+            if(isset($foto_copy)){
+                $new_fotos=array();
+                foreach ($foto_copy as $key => $foto) {
+                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
+                    $new_fotos[]=$copiar['file'][0];
+                    image::regenerar($copiar['file'][0]);
+                }
+                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
+                static::update($update);
+            }
+            if(isset($banner_copy)){
+                $new_banners=array();
+                foreach ($banner_copy as $key => $banner) {
+                    $copiar = image::copy($banner, $last_id, $banner['folder'], $banner['subfolder'], $last_id, '');
+                    $new_banners[]=$copiar['file'][0];
+                    image::regenerar($copiar['file'][0]);
+                }
+                $update=array('id'=>$last_id,'banner'=>functions::encode_json($new_banners));
+                static::update($update);
+            }
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
             return $last_id;
         } else {

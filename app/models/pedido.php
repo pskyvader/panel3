@@ -20,10 +20,10 @@ class pedido extends base_model
         $insert     = database::create_data($fields, $data);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
             if ($log) {
-                log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
             }
             return $last_id;
         } else {

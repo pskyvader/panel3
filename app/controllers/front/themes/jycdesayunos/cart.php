@@ -100,10 +100,17 @@ class cart extends base
             $prod         = pedidoproducto_model::getAll(array('idpedido' => $pedido[0]));
             $productos    = array();
             $seo_producto = seo_model::getById(8);
+            $lista=producto_model::getAll(array('tipo'=>1));
+            $lista_productos=array();
+            foreach ($lista as $key => $lp) {
+                $lista_productos[$lp[0]]=$lp;
+            }
+
             foreach ($prod as $v => $p) {
                 $portada      = image::portada($p['foto']);
                 $thumb_url    = image::generar_url($portada, '');
-                $producto     = producto_model::getById($p['idproducto']);
+                //$producto     = producto_model::getById($p['idproducto']);
+                $producto     = $lista_productos[$p['idproducto']];
                 $url_producto = functions::url_seccion(array($seo_producto['url'], 'detail'), $producto);
                 $new_p        = array(
                     'idpedidoproducto'   => $p['idpedidoproducto'],
@@ -286,7 +293,7 @@ class cart extends base
         $actualizar_producto = array('id' => $producto[0], 'stock' => $cantidad_final);
         producto_model::update($actualizar_producto);
         $respuesta['carro']   = self::current_cart(true);
-        $respuesta['mensaje'] = $producto['titulo'] . ' agregado al carro.<br/> Puedes Comprar haciendo click aqui';
+        $respuesta['mensaje'] = $producto['titulo'] . ' agregado al carro.<br/> <i class="fa fa-shopping-bag"></i> Puedes Comprar haciendo click aqui';
         $respuesta['exito']   = true;
         echo json_encode($respuesta);
         exit;

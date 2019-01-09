@@ -4,6 +4,7 @@ namespace app\models;
 defined("APPPATH") or die("Acceso denegado");
 use \core\app;
 use \core\database;
+use \core\image;
 use \core\functions;
 
 class productocategoria extends base_model
@@ -36,6 +37,7 @@ class productocategoria extends base_model
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {
+            $foto_copy=$row['foto'];
             unset($row['foto']);
         }
         $row['idpadre'] = functions::encode_json($row['idpadre']);
@@ -43,8 +45,18 @@ class productocategoria extends base_model
         $insert         = database::create_data($fields, $row);
         $connection     = database::instance();
         $row            = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
+            if(isset($foto_copy)){
+                $new_fotos=array();
+                foreach ($foto_copy as $key => $foto) {
+                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
+                    $new_fotos[]=$copiar['file'][0];
+                    image::regenerar($copiar['file'][0]);
+                }
+                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
+                static::update($update);
+            }
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
             return $last_id;
         } else {

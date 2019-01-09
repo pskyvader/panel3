@@ -48,16 +48,6 @@ class cms extends base
         
         view::set('descripcion', $row[0]['descripcion']);
         view::render('cms');
-       /* $sidebar = array();
-        foreach ($row as $key => $s) {
-            $sidebar[] = array('title' => $s['titulo'], 'active' => '', 'url' => functions::url_seccion(array($this->url[0], 'detail'), $s));
-        }
-
-        view::set('title_category', $this->seo['titulo']);
-        view::set('sidebar', $sidebar);
-
-        view::set('description', '');
-        view::render('cms-sidebar');*/
 
         $footer = new footer();
         $footer->normal();

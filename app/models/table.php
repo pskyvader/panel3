@@ -87,9 +87,11 @@ class table extends base_model
         $insert        = database::create_data($fields, $row);
         $connection    = database::instance();
         $row           = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
+            if ($log) {
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            }
             return $last_id;
         } else {
             return $row;
@@ -99,10 +101,10 @@ class table extends base_model
     public static function validate(int $id, bool $log = true)
     {
         $respuesta = array('exito' => true, 'mensaje' => array());
-        $row       = static::getById($id);
-        $idname    = $row['idname'];
-        $tablename = $row['tablename'];
-        $fields    = $row['fields'];
+        $table_validate       = static::getById($id);
+        $idname    = $table_validate['idname'];
+        $tablename = $table_validate['tablename'];
+        $fields    = $table_validate['fields'];
         array_unshift($fields, array('titulo' => $idname, 'tipo' => 'int(11)', 'primary' => true));
 
         $check = array();
@@ -173,7 +175,7 @@ class table extends base_model
             }
         }
         if ($log) {
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, $table_validate);
         }
 
         return $respuesta;

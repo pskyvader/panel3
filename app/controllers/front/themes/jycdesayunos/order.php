@@ -142,7 +142,16 @@ class order extends base
         }
     }
 
-    private static function step2($carro, $url)
+    /**
+     * step2
+     * NO AGREGAR ELEMENTOS AL CARRO antes de update_cart
+     *
+     * @param  array $carro
+     * @param  array $url
+     *
+     * @return void
+     */
+    private static function step2(array $carro, array $url)
     {
         $horarios_entrega = array();
         $hora_minima      = strtotime("08:00");
@@ -170,16 +179,6 @@ class order extends base
         $fechas_especiales[] = array('fecha' => '2019-02-14', 'texto' => 'Dia de los enamorados');
         $fechas_especiales[] = array('fecha' => '2019-02-13', 'texto' => 'Dia de los enamorados');
 
-        $atributos = producto_model::getAll(array('tipo' => 2), array('order' => 'titulo ASC'));
-        foreach ($carro['productos'] as $key => $p) {
-            foreach ($atributos as $k => $a) {
-                if ($a['idproducto'] == $p['idproductoatributo']) {
-                    $carro['productos'][$key]['atributo'] = $a['titulo'];
-                    break;
-                }
-            }
-        }
-
         $comunas             = self::get_comunas();
         $direcciones_entrega = usuariodireccion_model::getAll(array('idusuario' => $_SESSION[usuario_model::$idname . app::$prefix_site]));
         foreach ($direcciones_entrega as $key => $de) {
@@ -200,11 +199,18 @@ class order extends base
             $carro              = cart::current_cart(true);
             $direcciones_pedido = pedidodireccion_model::getAll(array('idpedido' => $carro['idpedido']));
         }
+        
+        $attr = producto_model::getAll(array('tipo' => 2), array('order' => 'titulo ASC'));
+        $atributos=array();
+        foreach ($attr as $key => $at) {
+            $atributos[$at[0]]=$at;
+        }
 
         $iddireccion = reset($direcciones_pedido);
         $iddireccion = $iddireccion[0];
 
         foreach ($carro['productos'] as $key => $p) {
+            $carro['productos'][$key]['atributo'] = $atributos[$p['idproductoatributo']]['titulo'];
             if (0 == $p['idpedidodireccion']) {
                 $update = array('id' => $p['idpedidoproducto'], 'idpedidodireccion' => $iddireccion);
                 pedidoproducto_model::update($update);

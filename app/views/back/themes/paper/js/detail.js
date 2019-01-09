@@ -166,6 +166,7 @@ $(document).on('click', '#cancelar', function() {
     go_url(url_list);
 });
 var after_guardar = function(data) {
+    console.log(data);
     if (permanecer && typeof(data.id) != 'undefined') {
         id = data.id;
         if ($('form#formulario input[name=id]').val() == "") {

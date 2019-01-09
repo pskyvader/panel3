@@ -58,7 +58,7 @@ class view
             self::$content_url[$template_url] = $content;
         }
         $str = self::render_template(self::$data, $content);
-        if ($minify) {
+        if ($minify && !$return && cache::is_cacheable()) {
             $str = mini::html($str,array('collapse_whitespace'=>true));
         }
 
@@ -119,7 +119,7 @@ class view
         foreach ($data2 as $key => $d) {
             $res     = self::template_if($content, $key, $d);
             $content = $res[0];
-            if (!$res[1]) {
+            if (!$res[1]) { //no es bloque if
                 $content = str_replace('{' . $key . '}', $d, $content);
             }
         }

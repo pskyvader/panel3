@@ -46,6 +46,8 @@ class log extends base_model
                 $accion .= ', titulo: ' . $row['titulo'];
             } elseif (isset($row['nombre'])) {
                 $accion .= ', nombre: ' . $row['nombre'];
+            } elseif (isset($row['tablename'])) {
+                $accion .= ', Tabla: ' . $row['tablename'];
             }
             if (isset($row[$idname])) {
                 $accion .= ', ID: ' . $row[$idname];

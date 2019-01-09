@@ -344,16 +344,29 @@ function notificacion(mensaje, tipo, url) {
         notify.close();
     }
     var options = {
-        message: mensaje
+        message: mensaje,
+        icon: 'fa fa-exclamation-circle',
+    };
+    var settings={
+        type: tipo
     };
     if (url) {
         options.url = url;
         options.target= '_self';
+        
+        settings.delay= 10000;
+        settings.timer= 30;
+        settings.mouse_over='pause';
+        settings.showProgressbar= true;
+        $('body').on('click','div[data-notify="container"]',function(){
+            notify.close();
+        });
     }
-    notify = $.notify(options, {
-        type: tipo
-    });
+    
+    notify = $.notify(options, settings);
 }
+
+
 
 function barra(porcentaje) {
     /*if (porcentaje >= 0 && porcentaje < 100) {

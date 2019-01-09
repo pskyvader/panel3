@@ -235,8 +235,8 @@ a:hover {
             }
         }
     }
-    .medios-pago a{
-    white-space: initial;
+    .medios-pago a {
+        white-space: initial;
     }
 }
 
@@ -410,9 +410,9 @@ a:hover {
 each(@botones, {
     [data-notify=container].alert-@{key} {
         border-left-color: @value;
-    }
-    [data-notify=container].alert-@{key}>[data-notify=icon] {
-        color: @value;
+        >[data-notify=icon] {
+            color: @value;
+        }
     }
 }
 

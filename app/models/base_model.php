@@ -5,6 +5,7 @@ defined("APPPATH") or die("Acceso denegado");
 use \app\interfaces\crud;
 use \core\app;
 use \core\database;
+use \core\image;
 use \core\functions;
 
 class base_model implements crud
@@ -136,10 +137,10 @@ class base_model implements crud
         $insert     = database::create_data($fields, $data);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
             if ($log) {
-                log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
             }
             return $last_id;
         } else {
@@ -154,7 +155,7 @@ class base_model implements crud
         $connection = database::instance();
         $row        = $connection->update(static::$table, static::$idname, $set, $where);
         if ($log) {
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set,$where));
         }
         if (is_bool($row) && $row) {
             $row = $where[static::$idname];
@@ -175,6 +176,7 @@ class base_model implements crud
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {
+            $foto_copy=$row['foto'];
             unset($row['foto']);
         }
         if (isset($row['archivo'])) {
@@ -184,8 +186,18 @@ class base_model implements crud
         $insert     = database::create_data($fields, $row);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
+            if(isset($foto_copy)){
+                $new_fotos=array();
+                foreach ($foto_copy as $key => $foto) {
+                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
+                    $new_fotos[]=$copiar['file'][0];
+                    image::regenerar($copiar['file'][0]);
+                }
+                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
+                static::update($update);
+            }
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
             return $last_id;
         } else {

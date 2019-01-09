@@ -214,11 +214,15 @@ class database
         }
         $sql .= ")";
         $row = $this->consulta($sql, false);
-        if (count($image) > 0) {
-            $this->process_image($image, $table, $idname, $this->get_last_insert_id());
-        }
-        if (count($file) > 0) {
-            $this->process_file($file, $table, $idname, $this->get_last_insert_id());
+        if($row){
+            $last_id=$this->get_last_insert_id();
+            if (count($image) > 0) {
+                $this->process_image($image, $table, $idname, $last_id);
+            }
+            if (count($file) > 0) {
+                $this->process_file($file, $table, $idname, $last_id);
+            }
+            return $last_id;
         }
         return $row;
     }
@@ -256,11 +260,13 @@ class database
         $sql .= ") ";
         if (count($where) > 0) {
             $row = $this->consulta($sql, false);
-            if (count($image) > 0) {
-                $this->process_image($image, $table, $idname, $where[$idname]);
-            }
-            if (count($file) > 0) {
-                $this->process_file($file, $table, $idname, $where[$idname]);
+            if($row){
+                if (count($image) > 0) {
+                    $this->process_image($image, $table, $idname, $where[$idname]);
+                }
+                if (count($file) > 0) {
+                    $this->process_file($file, $table, $idname, $where[$idname]);
+                }
             }
             return $row;
         } else {

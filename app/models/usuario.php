@@ -31,10 +31,10 @@ class usuario extends base_model
         $insert['email'] = strtolower($insert['email']);
         $connection      = database::instance();
         $row             = $connection->insert(static::$table, static::$idname, $insert);
-        if ($row) {
-            $last_id = $connection->get_last_insert_id();
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
             if ($log) {
-                log::insert_log(static::$table, static::$idname, __FUNCTION__, $row);
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
             }
             return $last_id;
         } else {
@@ -74,7 +74,7 @@ class usuario extends base_model
         unset($set['id']);
         $connection = database::instance();
         $row        = $connection->update(static::$table, static::$idname, $set, $where);
-        log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
+        log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set,$where));
 
         if (is_bool($row) && $row) {
             $row = $where[static::$idname];

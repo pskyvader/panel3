@@ -45,10 +45,10 @@ class home extends base
             view::render('home-text');
         }
 
-        $productos_destacados = producto_model::getAll(array('tipo' => 1, 'destacado' => true));
+        $productos_destacados = producto_model::getAll(array('tipo' => 1, 'destacado' => true),array('limit'=>6));
         if (count($productos_destacados > 0)) {
-            $seo          = seo::getById(8);
-            //$this->url[0] = $seo['url'];
+            //$seo_productos          = seo::getById(8);
+            //$this->url[0] = $seo_productos['url'];
             $_REQUEST['idseo']=8;
             $pl              = new product_list(); //product_list.php
             $lista_productos = $pl->lista_productos($productos_destacados, 'detail', 'foto2'); //Lista de productos, renderiza vista
@@ -57,7 +57,7 @@ class home extends base
             view::set('col-lg', 'col-lg-4');
             $product_list = view::render('product/grid', false, true);
             view::set('product_list', $product_list);
-            //view::set('title',$seo['titulo']);
+            //view::set('title',$seo_productos['titulo']);
             view::set('title', "Nuestros productos destacados");
             view::render('home-products');
         }
