@@ -27,8 +27,8 @@ class contacto extends base
         $banner = new banner();
         $banner->individual($this->seo['banner'], $this->metadata['title']);
 
-        $breadcrumb = new breadcrumb();
-        $breadcrumb->normal($this->breadcrumb);
+        //$breadcrumb = new breadcrumb();
+        //$breadcrumb->normal($this->breadcrumb);
 
         $campos   = array();
         $campos[] = array('campo' => 'input', 'type' => 'text', 'field' => 'nombre', 'title' => 'Nombre', 'required' => true);
@@ -39,26 +39,41 @@ class contacto extends base
 
         foreach ($campos as $key => $c) {
             $campos[$key]['is_required'] = $c['required'];
-            $campos[$key]['is_input']    = ($c['campo'] == 'input');
-            $campos[$key]['is_file']     = ($c['type'] == 'file');
-            $campos[$key]['is_textarea'] = ($c['campo'] == 'textarea');
+            $campos[$key]['is_input']    = ('input' == $c['campo']);
+            $campos[$key]['is_file']     = ('file' == $c['type']);
+            $campos[$key]['is_textarea'] = ('textarea' == $c['campo']);
         }
         view::set('campos', $campos);
 
         $informacion = array();
 
-        $t             = texto::getById(6);
-        $informacion[] = array('icono' => 'fas fa-map-marker-alt2', 'title' => $t['titulo'], 'text' => $t['texto'], 'is_link' => false, 'url' => '');
-        $t             = texto::getById(1);
-        $informacion[] = array('icono' => 'fas fa-phone2', 'title' => $t['titulo'], 'text' => $t['texto'], 'is_link' => true, 'url' => 'tel:' . $t['texto']);
-        $t             = texto::getById(2);
-        $informacion[] = array('icono' => 'fas fa-envelope-open2', 'title' => $t['titulo'], 'text' => $t['texto'], 'is_link' => true, 'url' => 'mailto:' . $t['texto']);
+        $textos = texto::getAll(array('tipo' => 1));
+        foreach ($textos as $key => $t) {
+            $icono = '';
+            $link  = '';
+            switch ($t[0]) {
+                case 1:
+                    $icono = 'fa-phone';
+                    $link  = 'tel:' . $t['texto'];
+                    break;
+                case 2:
+                    $icono = 'fa-envelope-o';
+                    $link  = 'mailto:' . $t['texto'];
+                    break;
+                case 6:
+                    $icono = 'fa-map-marker';
+                    break;
+            }
+            $informacion[] = array('icono' => $icono, 'title' => $t['titulo'], 'text' => $t['texto'], 'is_link' => ('' != $link), 'url' => $link);
+        }
 
         view::set('informacion', $informacion);
         view::set('texto_contacto', strip_tags((texto::getById(7)['descripcion'])));
         view::set('title', $this->seo['titulo']);
         view::set('action', functions::generar_url(array('enviar')));
         $mapa = texto::getById(8);
+
+        view::set('is_mapa', $mapa['estado']);
         view::set('lat', $mapa['mapa']['lat']);
         view::set('lng', $mapa['mapa']['lng']);
         view::set('title_map', $mapa['titulo']);

@@ -9,23 +9,29 @@
                 <p class="card-text">Por ejemplo, si tu envio es AA759EAA-AB, tu pedido es AA759EAA</p>
                 <div class="row card-border mt-5">
                     {foreach pedidos}
-                    <div class="col-lg-6">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-5">
-                                    Codigo {cookie_pedido} 
-                                    <span class="float-right btn btn-sm mt-0" style="background:{background_estado};color:{color_estado};">{estado}</span>
-                                </h5>
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <h5 class="mt-0">
+                                            Codigo {cookie_pedido}
+                                        </h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span class="float-left float-md-right btn btn-sm mt-0" style="background:{background_estado};color:{color_estado};">{estado}</span>
+                                    </div>
+                                </div>
                                 <div class="card-text">
                                     <ul>
-                                            <li class="mb-2">{fecha}</li>
-                                            <li>{nombre}</li>
+                                        <li class="mb-2">{fecha}</li>
+                                        <li>{nombre}</li>
                                         <li>{email}</li>
                                         <li>{telefono}</li>
                                         <li>{total}</li>
                                     </ul>
                                 </div>
-                                <a href="{url}" class="btn btn-primary">Ver pedido</a>
+                                <a href="{url}" class="btn btn-primary">Ver Detalle del pedido</a>
                             </div>
                         </div>
                     </div>

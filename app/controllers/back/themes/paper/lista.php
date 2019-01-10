@@ -24,7 +24,7 @@ class lista
         foreach ($files as $file) {
             $nombre    = explode(".", $file);
             $extension = strtolower(array_pop($nombre));
-            if ($extension == 'html') {
+            if ('html' == $extension) {
                 $html                                   = file_get_contents($list_dir . $file);
                 $this->templates[implode('.', $nombre)] = $html;
             }
@@ -81,7 +81,7 @@ class lista
         $page   = (isset($_GET['page'])) ? (int) $_GET['page'] : 1;
         $search = (isset($_GET['search'])) ? $_GET['search'] : '';
 
-        if ($search != '') {
+        if ('' != $search) {
             $condiciones['palabra'] = $search;
         }
 
@@ -188,11 +188,11 @@ class lista
                 );
                 break;
             case 'color':
-            if(is_array($fila[$th['field']])){
-                $data = $fila[$th['field']];
-            }else{
-                $data = array('color' => $fila[$th['field']],'text'=>'');
-            }
+                if (is_array($fila[$th['field']])) {
+                    $data = $fila[$th['field']];
+                } else {
+                    $data = array('background' => $fila[$th['field']], 'text' => '', 'color' => functions::getContrastColor($fila[$th['field']]));
+                }
                 break;
             case 'delete':
                 $data = array('id' => $fila[0]);
@@ -224,8 +224,8 @@ class lista
                 return $fila[$th['field']];
                 break;
         }
-        
-        $html = $this->templates[$type];
+
+        $html    = $this->templates[$type];
         $content = view::render_template($data, $html);
         return $content;
     }
@@ -240,19 +240,19 @@ class lista
         $modulo  = modulo_model::getAll($var, array('limit' => 1));
         $modulo  = $modulo[0];
         $estados = $modulo['estado'][0]['estado'];
-        if ($estados[$tipo_admin] != 'true') {
+        if ('true' != $estados[$tipo_admin]) {
             functions::url_redirect(array('home'));
         }
         $th = array();
         foreach ($modulo['mostrar'] as $key => $m) {
-            if ($m['estado'][$tipo_admin] == 'true') {
+            if ('true' == $m['estado'][$tipo_admin]) {
                 $th[$m['field']] = array('title_th' => $m['titulo'], 'field' => $m['field'], 'type' => $m['tipo']);
             }
         }
 
         $menu = array();
         foreach ($modulo['menu'] as $key => $m) {
-            if ($m['estado'][$tipo_admin] == 'true') {
+            if ('true' == $m['estado'][$tipo_admin]) {
                 $menu[$m['field']] = true;
             } else {
                 $menu[$m['field']] = false;
@@ -316,7 +316,7 @@ class lista
             $head   = array();
             $delete = array();
             foreach ($row[0] as $k => $v) {
-                if (is_array($v) || is_int($k) || $k == 'tipo' || $k == 'orden' || $k == 'estado' || $k == $class::$idname) {
+                if (is_array($v) || is_int($k) || 'tipo' == $k || 'orden' == $k || 'estado' == $k || $k == $class::$idname) {
                     $delete[] = $k;
                 } else {
                     $head[] = $k;

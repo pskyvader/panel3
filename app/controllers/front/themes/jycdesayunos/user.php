@@ -481,16 +481,22 @@ class user extends base
         view::set('sidebar',$sidebar);
 
         $medios_pago=array();
-        if($pedido['idpedidoestado']==3){ // Solo si hay pago pendiente
+        $descripcion_pago='';
+        if($pedido['idpedidoestado']==3 || $pedido['idpedidoestado']==7){ // Solo si hay pago pendiente
             $medios_pago=mediopago_model::getAll();
             $seo_pago=seo_model::getById(12); //seo medios de pago
             foreach ($medios_pago as $key => $mp) {
-                $url=functions::generar_url(array($seo_pago['url'],'medio'.$mp[0],$pedido['cookie_pedido']));
+                $url=functions::generar_url(array($seo_pago['url'],'medio',$mp[0],$pedido['cookie_pedido']));
                 $medios_pago[$key]['url']=$url;
             }
+        }else{
+            $medio_pago=mediopago_model::getById($pedido['idmediopago']);
+            $descripcion_pago=$medio_pago['descripcion'];
         }
         view::set('medios_pago',$medios_pago);
-        view::set('pago',count($medios_pago)>0 );
+        view::set('descripcion_pago',$descripcion_pago);
+        view::set('is_descripcion_pago',(trim(strip_tags($descripcion_pago))!=''));
+        view::set('pago',(count($medios_pago)>0) );
 
         view::render('user/pedidos-detalle');
 

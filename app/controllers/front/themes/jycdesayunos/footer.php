@@ -26,12 +26,31 @@ class footer
             $data['title'] = $config['title'];
             view::set_array($data);
 
-            $telefono = texto::getById(1);
-            view::set('telefono', $telefono['texto']);
-            $email = texto::getById(2);
-            view::set('email', $email['texto']);
-            $direccion = texto::getById(6);
-            view::set('direccion', $direccion['texto']);
+            $informacion = array();
+
+            $textos = texto::getAll(array('tipo' => 1));
+            foreach ($textos as $key => $t) {
+                $icono = '';
+                $link  = '';
+                switch ($t[0]) {
+                    case 1:
+                        $icono = 'fa-phone';
+                        $link  = 'tel:' . $t['texto'];
+                        break;
+                    case 2:
+                        $icono = 'fa-envelope-o';
+                        $link  = 'mailto:' . $t['texto'];
+                        break;
+                    case 6:
+                        $icono = 'fa-map-marker';
+                        break;
+                }
+                $informacion[] = array('icono' => $icono, 'title' => $t['titulo'], 'text' => $t['texto'], 'is_link' => ('' != $link), 'url' => $link);
+            }
+    
+            view::set('informacion', $informacion);
+
+
             $redes_sociales = array();
             $rss            = texto::getAll(array('tipo' => 2));
             foreach ($rss as $key => $r) {

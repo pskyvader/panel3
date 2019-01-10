@@ -83,7 +83,7 @@ class pedido extends base
             $pe           = pedidoestado_model::getAll();
             $pedidoestado = array();
             foreach ($pe as $key => $p) {
-                $pedidoestado[$p[0]] = array('color' => $p['color'], 'text' => $p['titulo']);
+                $pedidoestado[$p[0]] = array('background' => $p['color'], 'text' => $p['titulo'],'color' => functions::getContrastColor($p['color']));
             }
 
             foreach ($respuesta['row'] as $k => $v) {
@@ -243,6 +243,8 @@ class pedido extends base
             }
         }
 
+
+
         if (isset($configuracion['campos']['idpedidoestado'])) {
             $estados                                             = pedidoestado_model::getAll(array('tipo' => $_GET['tipo']));
             $configuracion['campos']['idpedidoestado']['parent'] = $estados;
@@ -255,7 +257,7 @@ class pedido extends base
         if (isset($configuracion['campos']['cookie_pedido']) && $id != 0) {
             $configuracion['campos']['cookie_pedido']['type'] = 'text';
         }
-
+        
         if (isset($configuracion['campos']['direcciones'])) {
             $com     = comuna_model::getAll();
             $comunas = array();
@@ -316,6 +318,9 @@ class pedido extends base
                 }
                 $row['direcciones'] = $direcciones;
             }
+        }
+        if(isset($row['fecha_pago']) && $row['fecha_pago']==0){
+            $row['fecha_pago']='';
         }
 
         $data = array( //informacion para generar la vista del detalle, arrays SIEMPRE antes de otras variables!!!!

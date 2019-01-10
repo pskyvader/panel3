@@ -116,7 +116,6 @@ class base_model implements crud
             if (isset($fields['estado'])) {
                 $where['estado'] = true;
             }
-
         }
         $connection = database::instance();
         $row        = $connection->get(static::$table, static::$idname, $where);

@@ -30,25 +30,25 @@ class pedido extends base_model
             return $row;
         }
     }
-    public static function getByCookie(string $cookie, bool $carro = true)
+    public static function getByCookie(string $cookie, bool $estado_carro = true)
     {
         $where = array("cookie_pedido" => $cookie);
-        if ($carro) {
+        if ($estado_carro) {
             $where['idpedidoestado'] = 1;
         }
         $connection = database::instance();
         $row        = $connection->get(static::$table, static::$idname, $where);
         return (count($row) == 1) ? $row[0] : $row;
     }
-    public static function getByIdusuario(int $idusuario, bool $carro = true)
+    public static function getByIdusuario(int $idusuario, bool $estado_carro = true)
     {
         $where = array("idusuario" => $idusuario);
-        if ($carro) {
+        if ($estado_carro) {
             $where['idpedidoestado'] = 1;
         }
         $condition  = array('order' => static::$idname . ' DESC');
         $connection = database::instance();
         $row        = $connection->get(static::$table, static::$idname, $where, $condition);
-        return ($carro && count($row) > 0) ? $row[0] : $row;
+        return ($estado_carro && count($row) > 0) ? $row[0] : $row;
     }
 }

@@ -13,9 +13,16 @@
                 <div class="col-sm-6 col-lg-4 m-b-30">
                     <h4 class="title">Contáctanos</h4>
                     <ul>
-                        <li> <i class="fa fa-home fa-lg mr-1"></i> {direccion} </li>
-                        <li> <a href="tel:{telefono}"> <i class="fa fa-mobile-alt fa-lg mr-1"></i> {telefono} </a> </li>
-                        <li> <a href="mailto:{email}"> <i class="fa fa-envelope fa-lg mr-1"></i> {email} </a> </li>
+                        {foreach informacion}
+                        <li>
+                            <i class="fa {icono} fa-lg mr-1"></i>
+                            {if is_link}
+                            <a href="{url}">{text}</a>
+                            {else is_link}
+                            {text}
+                            {/if is_link}
+                        </li>
+                        {/foreach informacion}
                     </ul>
                     {if is_social}
                     <ul class="list list-inline m-l-ab-10">
@@ -50,4 +57,5 @@
     </div>
 </footer>
 </body>
+
 </html>

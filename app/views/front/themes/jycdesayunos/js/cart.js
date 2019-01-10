@@ -27,7 +27,7 @@ function generar_cart(data) {
     var total_productos = "$0";
     var total_envio = "Por definir";
     var total = "$0";
-    if (Object.keys(data).length > 0) {
+    if (typeof(data)=='object' &&  Object.keys(data).length > 0) {
         total_productos = data.subtotal;
         total_envio = data.total_direcciones;
         total = data.total;

@@ -218,6 +218,12 @@ function activar_imagen() {
             bg_image($(this));
         }
     });
+    
+    $('iframe[data-src]').each(function() {
+        if (is_visible($(this))) {
+            load_iframe($(this));
+        }
+    });
 }
 
 function load_image(image) {
@@ -252,6 +258,14 @@ function bg_image(bg) {
         var $img_source = $(bg).data('image-src');
         $(bg).css('background-image', 'url(' + $img_source + ')');
         $(bg)[0].removeAttribute('data-image-src');
+    }
+}
+
+function load_iframe(iframe) {
+    if ($(iframe).data('src')) {
+        var src = $(iframe).data('src');
+        $(iframe)[0].removeAttribute('data-src');
+        $(iframe).prop('src', src);
     }
 }
 
