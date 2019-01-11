@@ -93,7 +93,7 @@ class payment extends base
                 var_dump($buyOrder);
                 var_dump($formAction);
                 var_dump($tokenWs);
-
+                exit;
             }
             $seo_cuenta = seo_model::getById(9);
             view::set('title', $medio_pago['titulo']);
