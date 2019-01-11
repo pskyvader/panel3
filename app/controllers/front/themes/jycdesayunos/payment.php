@@ -212,7 +212,8 @@ class payment extends base
 
             if (0 == $output->responseCode) {
                 $error = false;
-                echo 'Exito, guardar datos y cambiar estado y enviar correo';
+                $url= $result->urlRedirection;
+                functions::url_redirect($url);
             } else {
                 $result->sessionId;
                 $result->transactionDate;
@@ -241,8 +242,40 @@ class payment extends base
             $footer = new footer();
             $footer->normal();
         }
-
     }
+
+
+    public function pago2($var = array())
+    {
+        $this->meta($this->seo);
+        $this->url[] = 'pago1';
+        $idmedio     = 1;
+        var_dump($_POST);
+
+        $medio_pago  = $this->verificar_medio_pago($var[0], $idmedio);
+        functions::url_redirect($this->url);
+
+        $pedido = $this->verificar_pedido($medio_pago);
+        if (null != $pedido) {
+            $seo_cuenta                  = seo_model::getById(9);
+            $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
+            $titulo                      = "Pedido " . $pedido['cookie_pedido'] . " Esperando transferencia";
+            $cabecera                    = "Estimado " . $pedido['nombre'] . ", " . $medio_pago['descripcion'];
+            $campos                      = array();
+            $campos['Código de pedido'] = $pedido['cookie_pedido'];
+            $campos['Total del pedido']  = functions::formato_precio($pedido['total']);
+
+            $respuesta = self::email($pedido, $titulo, $cabecera, $campos, $url_back);
+
+            view::set('title', $medio_pago['titulo']);
+            view::set('description', $medio_pago['descripcion']);
+            view::set('url_back', $url_back);
+            view::render('payment/confirmation');
+        }
+        $footer = new footer();
+        $footer->normal();
+    }
+
 
     private static function email($pedido, $titulo = '', $cabecera = '', $campos = array(), $url_pedido)
     {
