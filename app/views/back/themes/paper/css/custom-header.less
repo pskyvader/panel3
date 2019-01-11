@@ -2,24 +2,29 @@
 @white: #fff;
 @black: #000;
 
-@background_logo:#0266a3;
+//@background_logo:#0266a3;
 @background_logo:#d11201;
 @color_logo_hover: contrast(@background_logo);
 //@color_logo_hover: #fff;
 @filter_logo:if((@color_logo_hover=@white), brightness(0) invert(100%));
 
-@background_navbar: #0266a3;
+//@background_navbar: #0266a3;
 @background_navbar: #d11201;
 @color_navbar_hover: contrast(@background_navbar);
 //@color_navbar_hover: #fff;
 @color_navbar: fadeout(@color_navbar_hover, 20%);
 
-@background_userinfo:#233442;
+
+//@background_progress: #d11201;
+@background_progress: #4CAF50;
+
+
+//@background_userinfo:#233442;
 @background_userinfo:#ff6600;
 @color_userinfo: contrast(@background_userinfo);
 //@color_userinfo: #fff;
 
-@background_sidebar: #455a64;
+//@background_sidebar: #455a64;
 @background_sidebar: #ff6f6d;
 @color_sidebar_hover: contrast(@background_sidebar);
 //@color_sidebar_hover: #fff;
@@ -214,6 +219,19 @@ body {
     margin: 0;
     height: 100%;
 }
+
+.skylo.progress{
+    .progress-bar{
+        background-color:@background_progress !important;
+        span{
+            -moz-box-shadow: @background_progress 1px 0 6px 1px;
+              -ms-box-shadow: @background_progress 1px 0 6px 1px;
+              -webkit-box-shadow: @background_progress 1px 0 10px 1px;
+              box-shadow: @background_progress 1px 0 10px 1px;
+          }
+    }
+} 
+
 
 .center-block {
     display: block;
@@ -693,15 +711,6 @@ div#page-progress-loader {
 
 .modal {
     display: none;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1250;
-    -webkit-overflow-scrolling: touch;
-    outline: 0;
 }
 
 .panel.panel-default {

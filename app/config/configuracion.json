@@ -17,10 +17,10 @@
     },
     {
         "variable": "cantidad_backup_lento",
-        "valor": "1"
+        "valor": "2"
     },
     {
         "variable": "tiempo_backup_lento",
-        "valor": "19"
+        "valor": "21,5"
     }
 ]

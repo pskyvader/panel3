@@ -216,7 +216,7 @@ class usuario extends base_model
 
     private static function update_cookie(int $id)
     {
-        $cookie      = uniqid($prefix_site);
+        $cookie      = uniqid(app::$prefix_site);
         $data        = array('id' => $id, 'cookie' => $cookie);
         $exito       = static::update($data);
         if ($exito) {

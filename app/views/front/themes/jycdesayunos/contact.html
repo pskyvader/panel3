@@ -6,6 +6,7 @@
                     <h3 class="title">{title}</h3>
                     <p class="card-text">{texto_contacto}</p>
                     <form class="m-t-20" action="{action}" method="POST">
+                        <input type="hidden" name="titulo" value="{title}">
                         {foreach campos}
                             {if is_input}
                                 {if is_file}

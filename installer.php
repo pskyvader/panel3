@@ -29,7 +29,7 @@ switch ($paso) {
         $required_modules = array('mod_expires', 'mod_headers', 'mod_mime', 'mod_rewrite');
         $extensions       = get_loaded_extensions();
         //$required_extensions = array('date', 'ftp', 'json', 'mcrypt', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'openssl', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'mysqli', 'pdo_mysql', 'sockets', 'xmlrpc', 'mhash');
-        $required_extensions = array('date', 'json', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'pdo_mysql');
+        $required_extensions = array('date', 'json', 'session', 'zip', 'zlib', 'libxml', 'dom', 'PDO', 'SimpleXML', 'xml', 'xmlreader', 'xmlwriter', 'curl', 'gd', 'intl', 'pdo_mysql','soap');
 
         if (basename(__FILE__) != $name) {
             $respuesta['mensaje'][] = 'El nombre de este archivo debe ser ' . $name;
@@ -86,7 +86,7 @@ switch ($paso) {
             "https"                 => array('name' => "https", 'value' => '0', 'required' => true, 'visible' => true, 'title' => 'Sitio seguro (debe instalar certificado SSL)', 'type' => 'active'),
             "cache"                 => array('name' => "cache", 'value' => '1', 'required' => true, 'visible' => true, 'title' => 'Activar cache de paginas (mejora velocidad del sitio, desactivar al hacer pruebas)', 'type' => 'active'),
             "theme"                 => array('name' => "theme", 'value' => '', 'required' => true, 'visible' => false),
-            "dir"                   => array('name' => "dir", 'value' => strtolower(trim(substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],$name)),'/')), 'required' => false, 'visible' => true, 'title' => 'Sub directorio (si existe)', 'fill' => false),
+            "dir"                   => array('name' => "dir", 'value' => strtolower(trim(substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], $name)), '/')), 'required' => false, 'visible' => true, 'title' => 'Sub directorio (si existe)', 'fill' => false),
             "title"                 => array('name' => "title", 'value' => '', 'required' => true, 'visible' => true, 'title' => 'Titulo del sitio'),
             "short_title"           => array('name' => "short_title", 'value' => '', 'required' => true, 'visible' => true, 'title' => 'Titulo corto del sitio (maximo 12 caracteres)'),
             "debug"                 => array('name' => "debug", 'value' => '0', 'required' => true, 'visible' => false, 'fill' => false),
@@ -113,7 +113,7 @@ switch ($paso) {
 
         $zip                    = new \ZipArchive();
         $respuesta['exito']     = false;
-        $respuesta['mensaje'][] = 'No se encontro un archivo zip valido.';
+        $respuesta['mensaje'][] = 'No se encontro un archivo zip valido, o Debe dar permisos 777 a todos los archivos.';
         foreach (scandir($folder) as $key => $files) {
             if (strpos($files, '.zip') !== false) {
                 $file = $files;
@@ -122,13 +122,17 @@ switch ($paso) {
         }
         if (isset($file)) {
             if ($zip->open($file) === true) {
-                $config = $zip->getFromName('app\config\config.json');
+                $config = $zip->getFromName('app\\config\\config.json');
+                if (is_bool($config)) {
+                    $config = $zip->getFromName('app/config/config.json');
+                }
+
                 if (!is_bool($config)) {
                     $config = json_decode($config, true);
                     if (is_array($config)) {
                         foreach ($config as $key => $c) {
                             if (isset($configuracion[$key]) && (!isset($configuracion[$key]['fill']) || $configuracion[$key]['fill'])) {
-                                if ($c != '') {
+                                if ('' != $c) {
                                     $configuracion[$key]['value'] = $c;
                                 }
                             }
@@ -234,7 +238,7 @@ switch ($paso) {
             foreach ($config as $key => $c) {
                 $config[$key] = trim($c);
             }
-            $url           = 'http://' . $_SERVER['HTTP_HOST'] . '/' . strtolower(trim(substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],$name)),'/'));
+            $url           = 'http://' . $_SERVER['HTTP_HOST'] . '/' . strtolower(trim(substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], $name)), '/'));
             $url_admin     = $url . "/" . $_POST['admin'] . '/';
             $url_restaurar = $url_admin . "configuracion_administrador/json_update";
 
@@ -267,7 +271,7 @@ switch ($paso) {
                 $query = $connection->prepare($sql);
                 $query->execute();
 
-                $url       = 'http://' . $_SERVER['HTTP_HOST'] . '/' . strtolower(trim(substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],$name)),'/'));
+                $url       = 'http://' . $_SERVER['HTTP_HOST'] . '/' . strtolower(trim(substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], $name)), '/'));
                 $url_admin = $url . "/" . $_POST['admin'] . '/';
 
             } catch (\PDOException $e) {
@@ -312,7 +316,7 @@ switch ($paso) {
         <a href="?paso=2" class="btn btn-primary">Continuar de cualquier forma (Puede provocar errores inesperados)</a>
     </div>
     <?php exit;}?>
-    <?php if ($paso == 2) {?>
+    <?php if (2 == $paso) {?>
     <div class="fixed-top">
         <div class="progress" id="progreso" style="opacity:0;">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 1%">1%</div>
@@ -334,15 +338,15 @@ switch ($paso) {
     if (isset($c['visible']) && $c['visible']) {?>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <?php if ($c['type'] != 'active') {?>
+                                <?php if ('active' != $c['type']) {?>
                                 <label for="<?php echo $c['name']; ?>">
                                     <?php echo $c['title']; ?>
                                     <b style="color:red;">
                                         <?php if ($c['required']) {echo "*";}?>
                                     </b>
                                 </label>
-                                <input type="<?php echo $c['type']; ?>" class="form-control" name="<?php echo $c['name']; ?>" id="<?php echo $c['name']; ?>" placeholder="<?php echo $c['title']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required" ;}?>
-                                <?php if ($c['name'] == 'short_title') {
+                                <input type="<?php echo $c['type']; ?>" class="form-control" name="<?php echo $c['name']; ?>" id="<?php echo $c['name']; ?>" placeholder="<?php echo $c['title']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required";}?>
+                                <?php if ('short_title' == $c['name']) {
         echo "maxlength='12'";
     }
         ?> >
@@ -351,11 +355,11 @@ switch ($paso) {
                                     <?php echo $c['title']; ?>
                                 </label><br>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="<?php echo $c['name']; ?>SI" name="<?php echo $c['name']; ?>" class="custom-control-input" value="1" <?php if ($c['value']=='1' ) {echo 'checked' ;}?>>
+                                    <input type="radio" id="<?php echo $c['name']; ?>SI" name="<?php echo $c['name']; ?>" class="custom-control-input" value="1" <?php if ('1' == $c['value']) {echo 'checked';}?>>
                                     <label class="custom-control-label" for="<?php echo $c['name']; ?>SI">SI</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="<?php echo $c['name']; ?>NO" name="<?php echo $c['name']; ?>" class="custom-control-input" value="0" <?php if ($c['value']=='0' ) {echo 'checked' ;}?>>
+                                    <input type="radio" id="<?php echo $c['name']; ?>NO" name="<?php echo $c['name']; ?>" class="custom-control-input" value="0" <?php if ('0' == $c['value']) {echo 'checked';}?>>
                                     <label class="custom-control-label" for="<?php echo $c['name']; ?>NO">NO</label>
                                 </div>
                                 <?php }?>
@@ -385,7 +389,7 @@ switch ($paso) {
                             </div>
                         </div>
                         <?php } elseif (isset($c['visible'])) {?>
-                        <input type="hidden" name="<?php echo $c['name']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required" ;}?>>
+                        <input type="hidden" name="<?php echo $c['name']; ?>" value="<?php echo $c['value']; ?>" <?php if ($c['required']) {echo "required";}?>>
                         <?php }?>
                         <?php }?>
                         <div class="col-12 continuar">
@@ -399,7 +403,7 @@ switch ($paso) {
             </div>
         </div>
     </div>
-    <?php } elseif ($paso == 5) {?>
+    <?php } elseif (5 == $paso) {?>
     <div class="container p-sm-5">
         <div class="row justify-content-md-center">
             <div class="col ">
@@ -458,7 +462,7 @@ switch ($paso) {
             </div>
         </div>
     </div>
-    <?php } elseif ($paso == 6) {?>
+    <?php } elseif (6 == $paso) {?>
     <div class="container p-sm-5">
         <div class="row justify-content-md-center">
             <div class="col">
@@ -510,7 +514,7 @@ switch ($paso) {
     </div>
     <?php }?>
 </body>
-<?php if ($paso == 2) {?>
+<?php if (2 == $paso) {?>
 <script>
     var porcentaje = 1;
     var progreso = $('#progreso');
@@ -660,7 +664,7 @@ switch ($paso) {
     }
 </script>
 <?php }?>
-<?php if ($paso == 5) {?>
+<?php if (5 == $paso) {?>
 <script>
     $.post("<?php echo $url_restaurar ?>", function(respuesta) {
         console.log(respuesta);

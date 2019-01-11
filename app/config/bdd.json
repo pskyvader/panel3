@@ -910,7 +910,7 @@
                 "tipo": "int(11)"
             },
             {
-                "titulo": "cookie",
+                "titulo": "cookie_pedido",
                 "tipo": "char(255)"
             },
             {
@@ -944,6 +944,10 @@
             {
                 "titulo": "telefono",
                 "tipo": "char(255)"
+            },
+            {
+                "titulo": "total_original",
+                "tipo": "int(11)"
             },
             {
                 "titulo": "total",
@@ -1028,11 +1032,27 @@
                 "tipo": "int(11)"
             },
             {
-                "titulo": "titulo",
+                "titulo": "precio",
+                "tipo": "int(11)"
+            },
+            {
+                "titulo": "cookie_direccion",
                 "tipo": "char(255)"
             },
             {
-                "titulo": "datos",
+                "titulo": "nombre",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "telefono",
+                "tipo": "char(255)"
+            },
+            {
+                "titulo": "direccion_completa",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "referencias",
                 "tipo": "longtext"
             },
             {
@@ -1052,6 +1072,10 @@
             },
             {
                 "titulo": "resumen",
+                "tipo": "longtext"
+            },
+            {
+                "titulo": "descripcion",
                 "tipo": "longtext"
             },
             {

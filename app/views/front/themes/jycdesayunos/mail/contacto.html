@@ -1,374 +1,286 @@
 <div class="screen-container-wrap" style="width: 100%;">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, maximum-scale=1">
-<title>{nombre_sitio}</title>
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
-<style type="text/css">
-	* {
-		-webkit-text-size-adjust: none;
-		-ms-text-size-adjust: none;
-	}
-	#outlook a {
-		padding: 0;
-	}
-	.ReadMsgBody, .ExternalClass {
-		width: 100%;
-		background-color: #ffffff;
-	}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+    <title>{nombre_sitio}</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        * {
+            -webkit-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+        }
 
-.ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div, .ExternalClass a {
-	line-height: 100%;
-}
+        html {
+            width: 100%;
+        }
 
-html {
-	width: 100%;
-}
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        li {
+            text-align: left;
+        }
 
-body {
-	width: 100%;
-	height: 100%;
-	background-color: #f5f5f5;
-	margin: 0;
-	padding: 0;
-	-webkit-font-smoothing: antialiased;
-}
+        .yshortcuts a {
+            border-bottom: none !important;
+        }
 
-.yshortcuts a {
-	border-bottom: none !important;
-}
+        p {
+            margin: 0;
+        }
 
-p {
-	margin: 0;
-}
+        @media only screen and (max-width: 560px) {
 
-@-webkit-keyframes slider-autoplay {
-	0% {
-		opacity: 0;
-	}
-	10% {
-		opacity: 1;
-	}
-	48% {
-		opacity: 1;
-	}
-	58% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 0;
-	}
-}
+            table[class*="m-w100"],
+            td[class*="m-w100"],
+            table[class="b-border"] {
+                width: 100% !important;
+                padding: 0 !important;
+                clear: both;
+            }
 
-@keyframes slider-autoplay {
-	0% {
-		opacity: 0;
-	}
-	10% {
-		opacity: 1;
-	}
-	48% {
-		opacity: 1;
-	}
-	58% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 0;
-	}
-}
+            table[class*="container420"],
+            table[class="bg-table"] {
+                width: 210px !important;
+            }
 
-div[class*="slider"] {
-	position: relative;
-}
+            table[class="calendar"] {
+                width: 100% !important;
+                padding: 0 0 20px !important;
+            }
 
-div[class*="slider"] span img:nth-of-type(1) {
-	position: absolute;
-	opacity: 0;
-	width: 100% !important;
-	max-width: none !important;
-	max-height: none !important;
-	top: 0;
-	left: 0;
-	-moz-animation: slider-autoplay ease 10s 5s infinite;
-	-webkit-animation: slider-autoplay ease 10s 5s infinite;
-	-o-animation: slider-autoplay ease 10s 5s infinite;
-	animation: slider-autoplay ease 10s 5s infinite;
-}
+            td[class*="copyright"] {
+                text-align: center !important;
+            }
 
-div[class*="slider"] img {
-	-moz-animation: slider-autoplay ease 10s 0s infinite;
-	-webkit-animation: slider-autoplay ease 10s 0s infinite;
-	-o-animation: slider-autoplay ease 10s 0s infinite;
-	animation: slider-autoplay ease 10s 0s infinite;
-}
-</style>
+            td[class="image"] img,
+            td[class="product-img"] img {
+                width: 100% !important;
+                height: auto !important;
+            }
 
+            td[class="b-buy"] {
+                padding-left: 0 !important;
+                border-left: 0 none !important;
+                border-top: 1px solid #e9e9e9;
+            }
 
-<style type="text/css" class="responsive-styles">
-	@media only screen and (max-width: 560px) {
-	table[class*="m-w100"], td[class*="m-w100"], table[class="b-border"] {
-		width: 100% !important;
-		padding: 0 !important;
-		clear: both;
-	}
-	table[class*="container420"], table[class="bg-table"] {
-		width: 210px !important;
-	}
-	table[class="calendar"] {
-		width: 100% !important;
-		padding: 0 0 20px !important;
-	}
-	td[class*="copyright"] {
-		text-align: center !important;
-	}
-	td[class="image"] img, td[class="product-img"] img {
-		width: 100% !important;
-		height: auto !important;
-	}
-	td[class="b-buy"] {
-		padding-left: 0 !important;
-		border-left: 0 none !important;
-		border-top: 1px solid #e9e9e9;
-	}
-	td[class="timer"] {
-		text-align: center;
-		padding: 0 5px;
-	}
-	td[class="timer"] img {
-		width: 100% !important;
-	}
-	td[class="m-hidden"] {
-		display: none;
-	}
-}
-</style>
-<!--[if gte mso 9]>
+            td[class="timer"] {
+                text-align: center;
+                padding: 0 5px;
+            }
+
+            td[class="timer"] img {
+                width: 100% !important;
+            }
+
+            td[class="m-hidden"] {
+                display: none;
+            }
+        }
+    </style>
+    <!--[if gte mso 9]>
 <style type="text/css">     body, table, tr, td, p, span, a, h1, h2, h3, h4, h5, h6, ul, li, ol, dl, dd, dt {         font-family: Helvetica, Arial, sans-serif !important;     } </style>
 <![endif]-->
-<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; background-color: #f5f5f5;">
-<tbody>
-<tr>
-	<td class="table-wrap" style="padding: 0 30px;">
-		<table class="main-table m-w100" width="502" align="center" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin: 0 auto;">
-			<!-- Spacer -->
-			<tbody>
-				<tr><td class="spacer" height="30" style="font-size: 0; line-height: 0;"></td></tr>
-				<!-- End Spacer -->
-				<tr>
-					<td>
-						<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
-							<tbody>
-								<tr>
-									<td class="main-content layouts-here" style="background-color: #fff; border: 1px solid #e9e9e9; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);">
-<repeater>
-<div class="layouts-wrap">
-<div class="layout-list ui-sortable">
-
-
-
-
-
-
-
-
-
-
-
-<div class="layout-item">
-<!-- Header -->
-<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
-<tbody>
-<tr>
-<td class="header" data-bgtype="1" style="background-color: #000;background-color: {color_secundario};">
-	<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
-		<tbody>
-			<tr><td class="spacer" height="20" style="font-size: 0; line-height: 0;"></td></tr>
-			<tr>
-				<td class="logo" style="border-collapse: collapse; font-size: 0; line-height: 0; text-align: center;">
-					<a href="" class="img-wrap" style="text-decoration: none;">
-						<img width="162" mc:edit="m1" editable="" data-bgedit="image" src="{logo}" alt="" style="border: none;">
-					</a>
-				</td>
-			</tr>
-			<tr><td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td></tr>
-		</tbody>
-	</table>
-</td>
-</tr>
-</tbody>
-</table>
-<!-- End Header -->
-</div>
-
-<div class="layout-item">
-<!-- Navigation -->
-<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
-<tbody>
-<tr>
-	<td class="main-nav" data-bgtype="2" style="box-shadow: inset 0 1px 1px -1px rgba(0, 0, 0, 0.2); padding: 5px 0; background-color: #b50d78; background-color: {color_primario};">
-		<table align="center" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
-			<tbody>
-				<tr style="height:20px;">
-				</tr>
-			</tbody>
-		</table>
-	</td>
-</tr>
-</tbody>
-</table>
-<!-- End Navigation -->
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="layout-item">
-<!-- Layout 15 (Text block with bottom border) -->
-<repeater>
-<table mc:repeatable="" class="b-layout" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
-<tbody>
-<tr>
-<td>
-	<table class="container420 b-bottom" width="420" align="center" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto; border-bottom: 1px solid #e9e9e9;">
-		<tbody>
-			<tr><td class="spacer" height="55" style="font-size: 0; line-height: 0;"></td></tr>
-			<!-- title -->
-			<tr>
-				<td class="h1 mce-content-body" mc:edit="m53" data-editcontent="true" data-color="2" style="font-family: 'Open Sans', Arial, sans-serif; line-height: 1; font-size: 32px; font-weight: 300; text-align: center; color: #212121;" id="mce_11" data-ctag="singleline" data-clabel="heading" contenteditable="true" spellcheck="false">
-					<singleline label="heading"><span data-color="1" style="color: #b50d78; color: {color_primario};" data-mce-style="color: #b50d78; color: {color_primario};">{titulo}</span></singleline>
-				</td>
-			</tr>
-			<!-- end title -->
-			<tr><td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td></tr>
-			<!-- caption -->
-			<tr>
-				<td class="c-text mce-content-body" mc:edit="m54" data-editcontent="true" style="color: #666666; font-family: 'Open Sans', Arial, sans-serif; font-size: 13px; line-height: 18px; text-align: center;" id="mce_12" data-ctag="multiline" data-clabel="content" contenteditable="true" spellcheck="false">
-					<multiline label="content">{cabecera}</multiline>
-				</td>
-			</tr>
-			<!-- end caption -->
-			<tr><td class="spacer" height="55" style="font-size: 0; line-height: 0;"></td></tr>
-		</tbody>
-	</table>
-</td>
-</tr>
-</tbody>
-</table>
-</repeater>
-<!-- End Layout 15 (Text block with bottom border) -->
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="layout-item">
-<!-- Layout 16 (Dispatched items) -->
-<repeater>
-<table mc:repeatable="" class="b-layout" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
-<tbody>
-	<tr>
-	<td class="h1 mce-content-body" mc:edit="m53" data-editcontent="true" data-color="2" style="font-family: 'Open Sans', Arial, sans-serif; line-height: 2; font-size: 32px; font-weight: 500; text-align: center; color: #212121;" id="mce_11" data-ctag="singleline" data-clabel="heading" contenteditable="true" spellcheck="false">
-		<singleline label="heading"><span data-color="1" style="color: #b50d78; color: {color_primario};" data-mce-style="color: #b50d78; color: {color_primario};">Detalle</span></singleline>
-	</td>
-	</tr>
-	{campos}
-</tbody>
-</table>
-</repeater>
-<!-- End Layout 16 (Dispatched items) -->
-</div>
-
-{campos_largos}
-
-
-
-<div class="layout-item">
-<!-- Spacer -->
-<table class="b-layout" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
-	<tbody>
-		<tr><td class="spacer" height="20" style="font-size: 0; line-height: 0;"></td></tr>
-	</tbody>
-</table>
-<!-- End Spacer -->
-</div>
-
-<div class="layout-item">
-<!-- Footer -->
-<table class="footer" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
-<tbody>
-<tr>
-	<td style="border-top: 1px solid #e9e9e9;">
-		<table class="container420" width="420" align="center" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
-			<tbody>
-				<tr><td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td></tr>
-				<tr>
-					<td>
-
-
-<table class="m-w100" width="5" align="left" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-	<tbody>
-		<tr><td class="spacer" height="20" style="font-size: 0; line-height: 0;"></td></tr>
-	</tbody>
-</table>
-<table class="m-w100" width="200" align="right" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-	<tbody>
-		<tr>
-			<td class="copyright mce-content-body" mc:edit="m19" data-editcontent="true" style="color: #666666; font-family: 'Open Sans', Arial, sans-serif; font-size: 13px; line-height: 18px; text-align: right;" id="mce_20" data-ctag="multiline" data-clabel="content" contenteditable="true" spellcheck="false">
-				<multiline label="content">
-					<a href="mailto:{email_empresa}" style="text-decoration: none; color: #666666;" data-mce-href="#" data-mce-style="text-decoration: none; color: #666666;">{email_empresa}</a><br/>
-					Copyright © {nombre_sitio}<br/>
-					<a href="{dominio}" data-color="1" style="text-decoration: none; color: #b50d78; color: {color_primario};" data-mce-href="#" data-mce-style="text-decoration: none; color: #b50d78; color: {color_primario};">{dominio}</a>
-				</multiline>
-			</td>
-		</tr>
-	</tbody>
-</table>
-					</td>
-				</tr>
-				<tr><td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td></tr>
-			</tbody>
-		</table>
-	</td>
-</tr>
-</tbody>
-</table>
-<!-- End Footer -->
-</div>
-
-
-
-														</div>
-													</div>
-												</repeater>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</td>
-		</tr>
-	</tbody>
-</table>
+    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; background-color: #f5f5f5;">
+        <tbody>
+            <tr>
+                <td class="table-wrap" style="padding: 0 30px;">
+                    <table class="main-table m-w100" width="502" align="center" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin: 0 auto;">
+                        <!-- Spacer -->
+                        <tbody>
+                            <tr>
+                                <td class="spacer" height="30" style="font-size: 0; line-height: 0;"></td>
+                            </tr>
+                            <!-- End Spacer -->
+                            <tr>
+                                <td>
+                                    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="main-content layouts-here" style="background-color: #fff; border: 1px solid #e9e9e9; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);">
+                                                    <repeater>
+                                                        <div class="layouts-wrap">
+                                                            <div class="layout-list ui-sortable">
+                                                                <div class="layout-item">
+                                                                    <!-- Header -->
+                                                                    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="header" data-bgtype="1" style="background-color: #000;background-color: {color_secundario};">
+                                                                                    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td class="spacer" height="20" style="font-size: 0; line-height: 0;"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="logo" style="border-collapse: collapse; font-size: 0; line-height: 0; text-align: center;">
+                                                                                                    <a href="" class="img-wrap" style="text-decoration: none;">
+                                                                                                        <img width="162" mc:edit="m1" editable="" data-bgedit="image" src="{logo}" alt="" style="border: none;">
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!-- End Header -->
+                                                                </div>
+                                                                <div class="layout-item">
+                                                                    <!-- Navigation -->
+                                                                    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="main-nav" data-bgtype="2" style="box-shadow: inset 0 1px 1px -1px rgba(0, 0, 0, 0.2); padding: 5px 0; background-color: #b50d78; background-color: {color_primario};">
+                                                                                    <table align="center" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
+                                                                                        <tbody>
+                                                                                            <tr style="height:20px;">
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!-- End Navigation -->
+                                                                </div>
+                                                                <div class="layout-item">
+                                                                    <!-- Layout 15 (Text block with bottom border) -->
+                                                                    <repeater>
+                                                                        <table mc:repeatable="" class="b-layout" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <table class="container420 b-bottom" width="420" align="center" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto; border-bottom: 1px solid #e9e9e9;">
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td class="spacer" height="55" style="font-size: 0; line-height: 0;"></td>
+                                                                                                </tr>
+                                                                                                <!-- title -->
+                                                                                                <tr>
+                                                                                                    <td class="h1 mce-content-body" mc:edit="m53" data-editcontent="true" data-color="2" style="font-family: 'Open Sans', Arial, sans-serif; line-height: 1; font-size: 32px; font-weight: 300; text-align: center; color: #212121;" id="mce_11" data-ctag="singleline" data-clabel="heading" contenteditable="true" spellcheck="false">
+                                                                                                        <singleline label="heading"><span data-color="1" style="color: #b50d78; color: {color_primario};" data-mce-style="color: #b50d78; color: {color_primario};">{titulo}</span></singleline>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <!-- end title -->
+                                                                                                <tr>
+                                                                                                    <td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td>
+                                                                                                </tr>
+                                                                                                <!-- caption -->
+                                                                                                <tr>
+                                                                                                    <td class="c-text mce-content-body" mc:edit="m54" data-editcontent="true" style="color: #666666; font-family: 'Open Sans', Arial, sans-serif; font-size: 13px; line-height: 18px; text-align: center;" id="mce_12" data-ctag="multiline" data-clabel="content" contenteditable="true" spellcheck="false">
+                                                                                                        <multiline label="content">{cabecera}</multiline>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <!-- end caption -->
+                                                                                                <tr>
+                                                                                                    <td class="spacer" height="55" style="font-size: 0; line-height: 0;"></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </repeater>
+                                                                    <!-- End Layout 15 (Text block with bottom border) -->
+                                                                </div>
+                                                                <div class="layout-item">
+                                                                    <!-- Layout 16 (Dispatched items) -->
+                                                                    <repeater>
+                                                                        <table mc:repeatable="" class="b-layout" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="h1 mce-content-body" mc:edit="m53" data-editcontent="true" data-color="2" style="font-family: 'Open Sans', Arial, sans-serif; line-height: 2; font-size: 32px; font-weight: 500; text-align: center; color: #212121;" id="mce_11" data-ctag="singleline" data-clabel="heading" contenteditable="true" spellcheck="false">
+                                                                                        <singleline label="heading"><span data-color="1" style="color: #b50d78; color: {color_primario};" data-mce-style="color: #b50d78; color: {color_primario};">Detalle</span></singleline>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                {campos}
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </repeater>
+                                                                    <!-- End Layout 16 (Dispatched items) -->
+                                                                </div>
+                                                                {campos_largos}
+                                                                <div class="layout-item">
+                                                                    <!-- Spacer -->
+                                                                    <table class="b-layout" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="spacer" height="20" style="font-size: 0; line-height: 0;"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!-- End Spacer -->
+                                                                </div>
+                                                                <div class="layout-item">
+                                                                    <!-- Footer -->
+                                                                    <table class="footer" width="100%" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #fff;">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="border-top: 1px solid #e9e9e9;">
+                                                                                    <table class="container420" width="420" align="center" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <table class="m-w100" width="5" align="left" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <td class="spacer" height="20" style="font-size: 0; line-height: 0;"></td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                    <table class="m-w100" width="200" align="right" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <td class="copyright mce-content-body" mc:edit="m19" data-editcontent="true" style="color: #666666; font-family: 'Open Sans', Arial, sans-serif; font-size: 13px; line-height: 18px; text-align: right;" id="mce_20" data-ctag="multiline" data-clabel="content" contenteditable="true" spellcheck="false">
+                                                                                                                    <multiline label="content">
+                                                                                                                        <a href="mailto:{email_empresa}" style="text-decoration: none; color: #666666;" data-mce-href="#" data-mce-style="text-decoration: none; color: #666666;">{email_empresa}</a><br />
+                                                                                                                        Copyright © {nombre_sitio}<br />
+                                                                                                                        <a href="{dominio}" data-color="1" style="text-decoration: none; color: #b50d78; color: {color_primario};" data-mce-href="#" data-mce-style="text-decoration: none; color: #b50d78; color: {color_primario};">{dominio}</a>
+                                                                                                                    </multiline>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="spacer" height="15" style="font-size: 0; line-height: 0;"></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!-- End Footer -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </repeater>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

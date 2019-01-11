@@ -2207,9 +2207,9 @@
                         "tipo": "image",
                         "titulo": "Foto",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -2237,9 +2237,9 @@
                         "tipo": "action",
                         "titulo": "Copiar",
                         "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
                         }
                     },
                     {
@@ -4842,6 +4842,360 @@
                 ],
                 "aside": "1",
                 "hijos": "0"
+            },
+            {
+                "idmoduloconfiguracion": "18",
+                "tipo": "2",
+                "titulo": "Atributos",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "text",
+                        "titulo": "Orden",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "image",
+                        "titulo": "Foto",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "destacado",
+                        "tipo": "active",
+                        "titulo": "Destacado",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "copy",
+                        "tipo": "action",
+                        "titulo": "Copiar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "delete",
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "titulo",
+                        "tipo": "text",
+                        "titulo": "Titulo",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url",
+                        "tipo": "url",
+                        "titulo": "URL",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "foto",
+                        "tipo": "multiple_image",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen 50x50 px, formato jpg o png",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "archivo",
+                        "tipo": "multiple_file",
+                        "titulo": "Archivo",
+                        "texto_ayuda": "(Opcional) Archivo formato doc, pdf, ppt, xls",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "resumen",
+                        "tipo": "textarea",
+                        "titulo": "Resumen",
+                        "texto_ayuda": "",
+                        "required": "",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "codigo",
+                        "tipo": "text",
+                        "titulo": "Codigo de producto",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "precio",
+                        "tipo": "number",
+                        "titulo": "Precio",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "descuento",
+                        "tipo": "number",
+                        "titulo": "Porcentaje de Descuento",
+                        "texto_ayuda": "(0-99%) Dejar en 0% para desactivar",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "descuento_fecha",
+                        "tipo": "daterange",
+                        "titulo": "Fechas de descuento",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "stock",
+                        "tipo": "number",
+                        "titulo": "Stock disponible",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripcion",
+                        "texto_ayuda": "",
+                        "required": "",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "idproductocategoria",
+                        "tipo": "recursive_checkbox",
+                        "titulo": "Categoria",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "keywords",
+                        "tipo": "token",
+                        "titulo": "Palabras clave",
+                        "texto_ayuda": "",
+                        "required": "",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "metadescripcion",
+                        "tipo": "textarea",
+                        "titulo": "Meta Descripción",
+                        "texto_ayuda": "",
+                        "required": "",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "orden",
+                        "tipo": "number",
+                        "titulo": "Orden",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "estado",
+                        "tipo": "active",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "destacado",
+                        "tipo": "active",
+                        "titulo": "Destacado",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "recortes": [
+                    {
+                        "tag": "cart",
+                        "titulo": "Carro",
+                        "ancho": "50",
+                        "alto": "50",
+                        "calidad": "90",
+                        "tipo": "centrar"
+                    }
+                ],
+                "orden": "2",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1",
+                "hijos": "0"
             }
         ]
     },
@@ -6057,6 +6411,396 @@
         ]
     },
     {
+        "icono": "store",
+        "module": "pedido",
+        "titulo": "Pedidos",
+        "sub": "",
+        "padre": "",
+        "mostrar": [
+            {
+                "field": "0",
+                "titulo": "ID",
+                "tipo": "text"
+            },
+            {
+                "field": "cookie_pedido",
+                "titulo": "Codigo de pedido",
+                "tipo": "text"
+            },
+            {
+                "field": "fecha_pago",
+                "titulo": "Fecha de pago",
+                "tipo": "text"
+            },
+            {
+                "field": "nombre",
+                "titulo": "Usuario",
+                "tipo": "text"
+            },
+            {
+                "field": "email",
+                "titulo": "Email",
+                "tipo": "text"
+            },
+            {
+                "field": "idpedidoestado",
+                "titulo": "Estado",
+                "tipo": "color"
+            },
+            {
+                "field": "idmediopago",
+                "titulo": "Medio de pago",
+                "tipo": "text"
+            },
+            {
+                "field": "total",
+                "titulo": "Total",
+                "tipo": "text"
+            },
+            {
+                "field": "url_detalle",
+                "titulo": "Editar",
+                "tipo": "link"
+            }
+        ],
+        "detalle": [
+            {
+                "field": "idusuario",
+                "titulo": "Usuario",
+                "tipo": "select"
+            },
+            {
+                "field": "nombre",
+                "titulo": "Nombre",
+                "tipo": "text"
+            },
+            {
+                "field": "email",
+                "titulo": "Email",
+                "tipo": "email"
+            },
+            {
+                "field": "telefono",
+                "titulo": "Teléfono",
+                "tipo": "text"
+            },
+            {
+                "field": "cookie_pedido",
+                "titulo": "Codigo de pedido",
+                "tipo": "password"
+            },
+            {
+                "field": "fecha_pago",
+                "titulo": "Fecha de pago",
+                "tipo": "date"
+            },
+            {
+                "field": "idpedidoestado",
+                "titulo": "Estado",
+                "tipo": "select"
+            },
+            {
+                "field": "idmediopago",
+                "titulo": "Medio de pago",
+                "tipo": "select"
+            },
+            {
+                "field": "comentarios",
+                "titulo": "Comentarios",
+                "tipo": "textarea"
+            },
+            {
+                "field": "direcciones",
+                "titulo": "Direcciones",
+                "tipo": "grupo_pedido"
+            },
+            {
+                "field": "total",
+                "titulo": "Total",
+                "tipo": "number"
+            }
+        ],
+        "orden": "14",
+        "estado": "1",
+        "aside": "1",
+        "tipos": "1",
+        "hijo": [
+            {
+                "idmoduloconfiguracion": "26",
+                "tipo": "1",
+                "titulo": "Pedidos",
+                "menu": [
+                    {
+                        "field": "new",
+                        "titulo": "Nuevo",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "excel",
+                        "titulo": "Exportar a excel",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    }
+                ],
+                "mostrar": [
+                    {
+                        "field": "0",
+                        "tipo": "text",
+                        "titulo": "ID",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        }
+                    },
+                    {
+                        "field": "cookie_pedido",
+                        "tipo": "text",
+                        "titulo": "Codigo de pedido",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "fecha_pago",
+                        "tipo": "text",
+                        "titulo": "Fecha de pago",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Usuario",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "text",
+                        "titulo": "Email",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "idpedidoestado",
+                        "tipo": "color",
+                        "titulo": "Estado",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "idmediopago",
+                        "tipo": "text",
+                        "titulo": "Medio de pago",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "total",
+                        "tipo": "text",
+                        "titulo": "Total",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "url_detalle",
+                        "tipo": "link",
+                        "titulo": "Editar",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "detalle": [
+                    {
+                        "field": "idusuario",
+                        "tipo": "select",
+                        "titulo": "Usuario",
+                        "texto_ayuda": "Debes elegir un usuario, o crearlo en la seccion de usuarios",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "nombre",
+                        "tipo": "text",
+                        "titulo": "Nombre",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "email",
+                        "tipo": "email",
+                        "titulo": "Email",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "telefono",
+                        "tipo": "text",
+                        "titulo": "Teléfono",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "cookie_pedido",
+                        "tipo": "password",
+                        "titulo": "Codigo de pedido",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "fecha_pago",
+                        "tipo": "date",
+                        "titulo": "Fecha de pago",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "idpedidoestado",
+                        "tipo": "select",
+                        "titulo": "Estado",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "idmediopago",
+                        "tipo": "select",
+                        "titulo": "Medio de pago",
+                        "texto_ayuda": "",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "comentarios",
+                        "tipo": "textarea",
+                        "titulo": "Comentarios",
+                        "texto_ayuda": "",
+                        "required": "false",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "direcciones",
+                        "tipo": "grupo_pedido",
+                        "titulo": "Direcciones",
+                        "texto_ayuda": "Aquí puedes agregar tus direcciones de entrega y añadir productos",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "total",
+                        "tipo": "number",
+                        "titulo": "Total",
+                        "texto_ayuda": "Este campo se puede modificar, se sugiere permitir que se calcule automaticamente",
+                        "required": "true",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "recortes": [],
+                "orden": "1",
+                "estado": [
+                    {
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    }
+                ],
+                "aside": "1",
+                "hijos": "0"
+            }
+        ]
+    },
+    {
         "icono": "business_center",
         "module": "pedidoestado",
         "titulo": "Estados del pedido",
@@ -6131,7 +6875,7 @@
                 "tipo": "active"
             }
         ],
-        "orden": "14",
+        "orden": "15",
         "estado": "1",
         "aside": "1",
         "tipos": "1",
@@ -6245,9 +6989,9 @@
                         "tipo": "delete",
                         "titulo": "Eliminar",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -6436,9 +7180,9 @@
                         "tipo": "delete",
                         "titulo": "Eliminar",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -6575,6 +7319,11 @@
                 "tipo": "textarea"
             },
             {
+                "field": "descripcion",
+                "titulo": "Descripción",
+                "tipo": "editor"
+            },
+            {
                 "field": "orden",
                 "titulo": "Orden",
                 "tipo": "number"
@@ -6585,7 +7334,7 @@
                 "tipo": "active"
             }
         ],
-        "orden": "15",
+        "orden": "16",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -6689,9 +7438,9 @@
                         "tipo": "delete",
                         "titulo": "Eliminar",
                         "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
                         }
                     }
                 ],
@@ -6714,6 +7463,18 @@
                         "titulo": "Resumen",
                         "texto_ayuda": "",
                         "required": "",
+                        "estado": {
+                            "1": "true",
+                            "2": "true",
+                            "3": "true"
+                        }
+                    },
+                    {
+                        "field": "descripcion",
+                        "tipo": "editor",
+                        "titulo": "Descripción",
+                        "texto_ayuda": "",
+                        "required": "false",
                         "estado": {
                             "1": "true",
                             "2": "true",
@@ -6751,7 +7512,7 @@
                     {
                         "estado": {
                             "1": "true",
-                            "2": "false",
+                            "2": "true",
                             "3": "false"
                         }
                     }
@@ -6769,7 +7530,7 @@
         "padre": "",
         "mostrar": [],
         "detalle": [],
-        "orden": "16",
+        "orden": "17",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -6825,7 +7586,7 @@
                 "tipo": "text"
             }
         ],
-        "orden": "17",
+        "orden": "18",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -7014,7 +7775,7 @@
                 "tipo": "number"
             }
         ],
-        "orden": "18",
+        "orden": "19",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -7302,7 +8063,7 @@
                 "tipo": "active"
             }
         ],
-        "orden": "19",
+        "orden": "20",
         "estado": "1",
         "aside": "1",
         "tipos": "0",

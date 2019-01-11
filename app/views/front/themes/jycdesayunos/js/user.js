@@ -24,7 +24,7 @@ function inicio_login() {
             $('#carro-header .accion-2').hide();
         } else {
             var a = $('<a href="' + create_url(modulo + 'login', null, path) + '">Login</a>');
-            var b = $('<a href="' + create_url(modulo + 'registro', null, path) + '">Registro</a>');
+            var c = $('<a href="' + create_url(modulo + 'registro', null, path) + '">Registro</a>');
 
             $('#carro-header .accion').text('Ingresa').prop('href', create_url(modulo + 'login', {
                 next_url: 'pedido/step/1'

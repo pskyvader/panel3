@@ -18,7 +18,7 @@ class update extends base
     protected $dir         = '';
     protected $dir_update  = '';
     protected $archivo_log = '';
-    protected $no_update   = array('app\\config\\config.json');
+    protected $no_update   = array('app\\config\\config.json','app/config/config.json');
     public function __construct()
     {
         $this->dir         = app::get_dir(true);

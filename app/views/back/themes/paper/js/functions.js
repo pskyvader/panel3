@@ -35,7 +35,6 @@ function habilitar(valor) {
 }
 $.skylo({
     'flat': false,
-    state: 'danger'
 });
 
 function barra(porcentaje) {

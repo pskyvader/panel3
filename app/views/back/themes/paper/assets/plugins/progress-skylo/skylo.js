@@ -13,7 +13,7 @@
 
     var pluginName = 'skylo',
         defaults = {
-            state: 'danger', // Info, Success, Warning, Danger
+            state: 'info', // Info, Success, Warning, Danger
           inchSpeed: 200,  // Milliseconds
           initialBurst: 50,  // Range 1 - 100.
           flat: false

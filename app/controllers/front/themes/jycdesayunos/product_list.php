@@ -147,7 +147,7 @@ class product_list extends base
         }
 
         $productos = producto_model::getAll($where, $condiciones);
-        if (count($productos > 0)) {
+        if (count($productos) > 0) {
             $lista_productos = $this->lista_productos($productos, 'detail', 'foto2');
             view::set('lista_productos', $lista_productos);
             if ($this->view == 'grid') {
