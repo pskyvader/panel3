@@ -15,9 +15,10 @@ use \Transbank\Webpay\Webpay;
 
 class payment extends base
 {
+    private $cookie = '';
     public function __construct()
     {
-        parent::__construct($_REQUEST['idseo'],false);
+        parent::__construct($_REQUEST['idseo'], false);
     }
 
     public function index()
@@ -25,18 +26,26 @@ class payment extends base
         $seo_home = seo_model::getById(1);
         functions::url_redirect(array($seo_home['url']));
     }
-    public function medio($var = array())
+    /**
+     * verificar_medio_pago
+     * comprueba si existe el medio de pago, sino vuelve al home
+     * 
+     *
+     * @param  string $cookie
+     * @param  int $idmedio
+     *
+     * @return mixed
+     */
+    private function verificar_medio_pago(string $cookie = '',int $idmedio)
     {
-        $this->meta($this->seo);
-        $this->url[] = 'medio';
-
-        if (isset($var[0]) && isset($var[1])) {
-            $idmedio    = functions::test_input($var[0]);
-            $medio_pago = mediopago_model::getById($idmedio);
-            if (isset($medio_pago['estado'])) {
-                $this->url[] = $idmedio;
-                $cookie      = functions::test_input($var[1]);
-                $this->url[] = $cookie;
+        $medio_pago = null;
+        if ($cookie!='') {
+            $mp = mediopago_model::getById($idmedio);
+            if (isset($mp['estado'])) {
+                $cookie       = functions::test_input($cookie);
+                $this->cookie = $cookie;
+                $this->url[]  = $cookie;
+                $medio_pago   = $mp;
             } else {
                 $seo_home  = seo_model::getById(1);
                 $this->url = array($seo_home['url']);
@@ -45,8 +54,19 @@ class payment extends base
             $seo_home  = seo_model::getById(1);
             $this->url = array($seo_home['url']);
         }
-        functions::url_redirect($this->url);
-
+        return $medio_pago;
+    }
+    
+    /**
+     * verificar_pedido
+     * comprueba si el pedido existe y es valido para pagos, sino devuelve null
+     *
+     * @param  mixed $medio_pago
+     *
+     * @return mixed
+     */
+    private function verificar_pedido(array $medio_pago)
+    {
         $head = new head($this->metadata);
         $head->normal();
 
@@ -56,50 +76,64 @@ class payment extends base
         $banner = new banner();
         $banner->individual($this->seo['banner'], 'Pago via ' . $medio_pago['titulo'], $this->metadata['title']);
 
-        $error   = false;
         $mensaje = '';
         if (!$medio_pago['estado']) {
-            $error   = true;
             $mensaje = 'Medio de pago no disponible, Por favor intenta con otro medio de pago';
         } else {
-            $pedido = pedido_model::getByCookie($cookie, false);
+            $pedido = pedido_model::getByCookie($this->cookie, false);
             if (!isset($pedido['cookie_pedido'])) {
-                $error   = true;
                 $mensaje = 'Pedido no valido, Por favor ingresa a tu cuenta y selecciona un pedido valido';
             } elseif (3 != $pedido['idpedidoestado'] && 7 != $pedido['idpedidoestado']) {
-                $error   = true;
                 $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado.';
             }
         }
 
-        if ($error) {
+        if ('' != $mensaje) {
             view::set('mensaje', $mensaje);
             view::render('order/error');
+            return null;
         } else {
+            return $pedido;
+        }
+
+    }
+    public function medio($var = array())
+    {
+        $this->meta($this->seo);
+        $this->url[] = 'medio';
+        $idmedio     = -1;
+        if (isset($var[0])) {
+            $idmedio     = functions::test_input($var[0]);
+            $this->url[] = $idmedio;
+        }
+        $medio_pago = $this->verificar_medio_pago($var[1], $idmedio);
+        functions::url_redirect($this->url);
+
+        $pedido = $this->verificar_pedido($medio_pago);
+
+        if (null != $pedido) {
             if (2 == $medio_pago[0]) { //  WEBPAY
                 $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
-                $amount      = 1000;
+                $amount      = $pedido['total'];
                 // Identificador que será retornado en el callback de resultado:
-                $sessionId = $cookie;
+                $sessionId = $pedido['cookie_pedido'];
                 // Identificador único de orden de compra:
                 $buyOrder   = strval(rand(100000, 999999999));
-                $returnUrl  = "https://callback/resultado/de/transaccion";
-                $finalUrl   = "https://callback/final/post/comprobante/webpay";
+                $returnUrl  = functions::generar_url(array($this->url[0], 'process' . $medio_pago[0], $pedido['cookie_pedido']));
+                $finalUrl   = functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $pedido['cookie_pedido']));
                 $initResult = $transaction->initTransaction(
                     $amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
 
                 $formAction = $initResult->url;
                 $tokenWs    = $initResult->token;
-                var_dump($buyOrder);
                 var_dump($formAction);
                 var_dump($tokenWs);
-                exit;
             }
             $seo_cuenta = seo_model::getById(9);
             view::set('title', $medio_pago['titulo']);
             view::set('description', $medio_pago['resumen']);
-            view::set('url_back', functions::generar_url(array($seo_cuenta['url'], 'pedido', $cookie)));
-            view::set('url_next', functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $cookie)));
+            view::set('url_back', functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido'])));
+            view::set('url_next', functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $pedido['cookie_pedido'])));
             view::render('payment/resumen');
         }
         $footer = new footer();
@@ -110,52 +144,12 @@ class payment extends base
     {
         $this->meta($this->seo);
         $this->url[] = 'pago1';
-
-        if (isset($var[0])) {
-            $idmedio    = functions::test_input(1);
-            $medio_pago = mediopago_model::getById($idmedio);
-            if (isset($medio_pago['estado'])) {
-                $cookie      = functions::test_input($var[0]);
-                $this->url[] = $cookie;
-            } else {
-                $seo_home  = seo_model::getById(1);
-                $this->url = array($seo_home['url']);
-            }
-        } else {
-            $seo_home  = seo_model::getById(1);
-            $this->url = array($seo_home['url']);
-        }
+        $idmedio     = 1;
+        $medio_pago  = $this->verificar_medio_pago($var[0], $idmedio);
         functions::url_redirect($this->url);
 
-        $head = new head($this->metadata);
-        $head->normal();
-
-        $header = new header();
-        $header->normal();
-
-        $banner = new banner();
-        $banner->individual($this->seo['banner'], 'Pago via ' . $medio_pago['titulo'], $this->metadata['title']);
-
-        $error   = false;
-        $mensaje = '';
-        if (!$medio_pago['estado']) {
-            $error   = true;
-            $mensaje = 'Medio de pago no disponible, Por favor intenta con otro medio de pago';
-        } else {
-            $pedido = pedido_model::getByCookie($cookie, false);
-            if (!isset($pedido['cookie_pedido'])) {
-                $error   = true;
-                $mensaje = 'Pedido no valido, Por favor ingresa a tu cuenta y selecciona un pedido valido';
-            } elseif (3 != $pedido['idpedidoestado'] && 7 != $pedido['idpedidoestado']) {
-                $error   = true;
-                $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado.';
-            }
-        }
-
-        if ($error) {
-            view::set('mensaje', $mensaje);
-            view::render('order/error');
-        } else {
+        $pedido = $this->verificar_pedido($medio_pago);
+        if (null != $pedido) {
             $lista_direcciones = pedidodireccion_model::getAll(array('idpedido' => $pedido[0]));
             $update_pedido     = array('id' => $pedido[0], 'idpedidoestado' => 10, 'idmediopago' => $medio_pago[0]); // estado de pedido: esperando transferencia
             pedido_model::update($update_pedido);
@@ -164,11 +158,11 @@ class payment extends base
                 pedidodireccion_model::update($update_pedido);
             }
             $seo_cuenta                  = seo_model::getById(9);
-            $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $cookie));
+            $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
             $titulo                      = "Pedido " . $pedido['cookie_pedido'] . " Esperando transferencia";
             $cabecera                    = "Estimado " . $pedido['nombre'] . ", " . $medio_pago['descripcion'];
             $campos                      = array();
-            $campos['Código de pedido'] = $cookie;
+            $campos['Código de pedido'] = $pedido['cookie_pedido'];
             $campos['Total del pedido']  = functions::formato_precio($pedido['total']);
 
             $respuesta = self::email($pedido, $titulo, $cabecera, $campos, $url_back);
@@ -182,33 +176,24 @@ class payment extends base
         $footer->normal();
     }
 
+    public function process2($var = array())
+    {
+        var_dump($var);
+        var_dump($_POST);
+    }
+
     private static function email($pedido, $titulo = '', $cabecera = '', $campos = array(), $url_pedido)
     {
         $nombre_sitio  = app::$_title;
         $config        = app::getConfig();
         $email_empresa = $config['main_email'];
-        $body_email    = array(
-            'body'     => view::get_theme() . 'mail/pedido.html',
-            'titulo'   => "Pedido " . $pedido['cookie_pedido'] . " Pago realizado",
-            'cabecera' => "Estimado " . $pedido['nombre'] . ", aquí enviamos su información de pago. Si tiene alguna duda, no dude en contactarse con el centro de atención al cliente de " . $nombre_sitio,
-        );
-        if ('' != $cabecera) {
+        $body_email    = array( 'body'     => view::get_theme() . 'mail/pedido.html');
             $body_email['cabecera'] = $cabecera;
-        }
-        if ('' != $titulo) {
             $body_email['titulo'] = $titulo;
-        }
-
         $body_email['campos_largos'] = array('' => 'Puedes ver el detalle de tu pedido <a href="' . $url_pedido . '"><b>haciendo click aquí</b></a>');
         $body_email['campos']        = $campos;
         $imagenes                    = array();
-
         $adjuntos = array();
-        /*if (isset($_FILES)) {
-        foreach ($_FILES as $key => $file) {
-        $adjuntos[] = array('archivo' => $file['tmp_name'], 'nombre' => $file['name']);
-        }
-        }*/
         $body      = email::body_email($body_email);
         $respuesta = email::enviar_email(array($pedido['email'], $email_empresa), $body_email['titulo'], $body, $adjuntos, $imagenes);
         return $respuesta;
