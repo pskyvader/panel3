@@ -212,9 +212,20 @@ class payment extends base
 
             if (0 == $output->responseCode) {
                 $error = false;
-                $url= $result->urlRedirection.'?'.http_build_query(array('token_ws'=>$token));
+                $postData = array('token_ws' => $token);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $result->urlRedirection);
+                //Tell cURL that we want to send a POST request.
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                /*echo $response;
+
+                $url = $result->urlRedirection . '?' . http_build_query(array('token_ws' => $token));
                 header("HTTP/1.1 301 Moved Permanently");
-                header("Location: " . $url);
+                header("Location: " . $url);*/
                 exit;
             } else {
                 $result->sessionId;
@@ -246,7 +257,6 @@ class payment extends base
         }
     }
 
-
     public function pago2($var = array())
     {
         $this->meta($this->seo);
@@ -254,7 +264,7 @@ class payment extends base
         $idmedio     = 1;
         var_dump($_POST);
 
-        $medio_pago  = $this->verificar_medio_pago($var[0], $idmedio);
+        $medio_pago = $this->verificar_medio_pago($var[0], $idmedio);
         functions::url_redirect($this->url);
 
         $pedido = $this->verificar_pedido($medio_pago);
@@ -277,7 +287,6 @@ class payment extends base
         $footer = new footer();
         $footer->normal();
     }
-
 
     private static function email($pedido, $titulo = '', $cabecera = '', $campos = array(), $url_pedido)
     {
