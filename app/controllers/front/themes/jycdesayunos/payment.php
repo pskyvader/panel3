@@ -2,9 +2,6 @@
 namespace app\controllers\front\themes\jycdesayunos;
 
 defined("APPPATH") or die("Acceso denegado");
-use \Transbank\Webpay\Configuration;
-use \Transbank\Webpay\Webpay;
-
 use \app\models\mediopago as mediopago_model;
 use \app\models\pedido as pedido_model;
 use \app\models\pedidodireccion as pedidodireccion_model;
@@ -13,6 +10,8 @@ use \core\app;
 use \core\email;
 use \core\functions;
 use \core\view;
+use \Transbank\Webpay\Configuration;
+use \Transbank\Webpay\Webpay;
 
 class payment extends base
 {
@@ -77,9 +76,22 @@ class payment extends base
             view::set('mensaje', $mensaje);
             view::render('order/error');
         } else {
-            if($medio_pago[0]==2){ //  WEBPAY
-                $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))
-                ->getNormalTransaction();
+            if (2 == $medio_pago[0]) { //  WEBPAY
+                $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
+                $amount      = 1000;
+                // Identificador que será retornado en el callback de resultado:
+                $sessionId = $cookie;
+                // Identificador único de orden de compra:
+                $buyOrder   = strval(rand(100000, 999999999));
+                $returnUrl  = "https://callback/resultado/de/transaccion";
+                $finalUrl   = "https://callback/final/post/comprobante/webpay";
+                $initResult = $transaction->initTransaction(
+                    $amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
+
+                $formAction = $initResult->url;
+                $tokenWs    = $initResult->token;
+                var_dump($formAction);
+                var_dump($tokenWs);
 
             }
             $seo_cuenta = seo_model::getById(9);
