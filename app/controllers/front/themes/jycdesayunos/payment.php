@@ -288,6 +288,7 @@ class payment extends base
             $token = $campos['token_ws'];
             $transaction = (new Webpay($this->configuration_webpay))->getNormalTransaction();
             $result      = $transaction->getTransactionResult($token);
+            var_dump($result);
         }else{
             var_dump($_POST);
         }
