@@ -16,9 +16,11 @@ use \Transbank\Webpay\Webpay;
 class payment extends base
 {
     private $cookie = '';
+    private $configuration_webpay = null;
     public function __construct()
     {
         parent::__construct($_REQUEST['idseo'], false);
+        $this->configuration_webpay=Configuration::forTestingWebpayPlusNormal();
     }
 
     public function index()
@@ -109,16 +111,15 @@ class payment extends base
         $medio_pago = $this->verificar_medio_pago($var[1], $idmedio);
         functions::url_redirect($this->url);
 
-        $pedido = $this->verificar_pedido($medio_pago);
+        $pedido  = $this->verificar_pedido($medio_pago);
         $is_post = false;
         $action  = '';
         $form    = array();
 
-
         if (null != $pedido) {
             if (2 == $medio_pago[0]) { //  WEBPAY
                 try {
-                    $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
+                    $transaction = (new Webpay($this->configuration_webpay))->getNormalTransaction();
                     $amount      = $pedido['total'];
                     // Identificador que será retornado en el callback de resultado:
                     $sessionId = $pedido['cookie_pedido'];
@@ -126,21 +127,21 @@ class payment extends base
                     $buyOrder   = strval(rand(100000, 999999999));
                     $returnUrl  = functions::generar_url(array($this->url[0], 'process' . $medio_pago[0], $pedido['cookie_pedido']));
                     $finalUrl   = functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $pedido['cookie_pedido']));
-                    $initResult = $transaction->initTransaction( $amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
-    
+                    $initResult = $transaction->initTransaction($amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
+
                     $formAction = $initResult->url;
                     $tokenWs    = $initResult->token;
                     $is_post    = true;
                     $action     = $formAction;
                     $form[]     = array('field' => 'token_ws', 'value' => $tokenWs);
                 } catch (\Exception $e) {
-                    $mensaje="Hubo un error al inicial el proceso webpay. Por favor intenta más tarde.";
-                    if(error_reporting()){
-                        $mensaje.='<br/><br/><br/><br/>'.$e;
+                    $mensaje = "Hubo un error al inicial el proceso webpay. Por favor intenta más tarde.";
+                    if (error_reporting()) {
+                        $mensaje .= '<br/><br/><br/><br/>' . $e;
                     }
                     view::set('mensaje', $mensaje);
                     view::render('order/error');
-                    $pedido=null;
+                    $pedido = null;
                 }
             }
         }
@@ -198,17 +199,40 @@ class payment extends base
 
     public function process2($var = array())
     {
-        var_dump($var);
-        var_dump($_POST);
-        $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
-        $result = $transaction->getTransactionResult($request->input("token_ws"));
-        $output = $result->detailOutput;
-        
-        var_dump($result);
-        
-        var_dump($output);
-        if (0 == $output->responseCode) {
-            echo 'Exito, guardar datos y cambiar estado y enviar correo';
+        $error   = true;
+        $mensaje = '';
+        $campos  = functions::test_input($_POST);
+        if (isset($campos['token_ws'])) {
+            $token = $campos['token_ws'];
+
+            $transaction = (new Webpay($this->configuration_webpay))->getNormalTransaction();
+            $result      = $transaction->getTransactionResult($token);
+            $output      = $result->detailOutput;
+
+            var_dump($result);
+            var_dump($output);
+            if (0 == $output->responseCode) {
+                $error = false;
+                echo 'Exito, guardar datos y cambiar estado y enviar correo';
+            } else {
+                $error   = true;
+                $mensaje = 'Hubo un error al procesar tu pago, por favor intenta más tarde o selecciona otro medio de pago.';
+            }
+        }
+
+        if ($error) {
+            $head = new head($this->metadata);
+            $head->normal();
+
+            $header = new header();
+            $header->normal();
+
+            $banner = new banner();
+            $banner->individual($this->seo['banner'], 'Pago via ' . $medio_pago['titulo'], $this->metadata['title']);
+            view::set('mensaje', $mensaje);
+            view::render('order/error');
+            $footer = new footer();
+            $footer->normal();
         }
 
     }
