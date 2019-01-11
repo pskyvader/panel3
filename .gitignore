@@ -7,3 +7,4 @@ backup/*
 !/backup/index.php
 cache/*
 !/cache/index.php
+app/config/config.json

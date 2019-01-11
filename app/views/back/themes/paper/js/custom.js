@@ -8,6 +8,7 @@ var modulo = $("meta[property='modulo']").prop("content");
 var url = $("meta[property='og:url']").prop("content");
 var googlemaps_key = $("meta[property='googlemaps_key']").prop("content");
 var is_mobile=$.browser.mobile;
+var update_content = $('#update_content');
 $.skylo('start');
 $.skylo('set', 50);
 
@@ -43,7 +44,7 @@ function inicio() {
     $('textarea.autosize').autosize({
         append: "\n"
     });
-    var update_content = $('#update_content');
+    update_content = $('#update_content');
     if (update_content.length > 0) {
         setTimeout(get_update, 1000);
     }
