@@ -226,13 +226,14 @@ class payment extends base
             $output      = $result->detailOutput;
 
             if (0 == $output->responseCode) {
-                $error      = false;
                 $idmedio    = 2;
                 $cookie     = $output->buyOrder;
                 $medio_pago = $this->verificar_medio_pago($cookie, $idmedio);
                 $pedido     = $this->verificar_pedido($medio_pago, false);
                 if (null != $pedido) {
                     $this->update_pedido($pedido, $medio_pago, 4, $result->transactionDate); // estado de pedido: pagado
+                    $seo_cuenta                  = seo_model::getById(9);
+                    $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
                     $campos                      = array();
                     $campos['Estado del pedido'] = 'Pagado';
                     $campos['Medio de pago']     = $medio_pago['titulo'];
@@ -246,6 +247,7 @@ class payment extends base
                     $form[] = array('field' => 'token_ws', 'value' => $token);
                     view::set('form', $form);
                     view::render('payment/post');
+                    $error      = false;
                 } else {
                     $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado. Por favor intenta más tarde o selecciona otro medio de pago.';
                 }
@@ -283,16 +285,6 @@ class payment extends base
         $this->meta($this->seo);
         $this->url[] = 'pago2';
         $idmedio     = 2;
-        $campos  = functions::test_input($_POST);
-        if (isset($campos['token_ws'])) {
-            $token = $campos['token_ws'];
-            $transaction = (new Webpay($this->configuration_webpay))->getNormalTransaction();
-            $result      = $transaction->getTransactionResult($token);
-            var_dump($result);
-        }else{
-            var_dump($_POST);
-        }
-
         $medio_pago = $this->verificar_medio_pago($var[0], $idmedio);
         functions::url_redirect($this->url);
 
@@ -325,9 +317,6 @@ class payment extends base
         if ('' != $titulo) {
             $body_email['titulo'] = $titulo;
         }
-
-        $body_email['cabecera']      = $cabecera;
-        $body_email['titulo']        = $titulo;
         $body_email['campos_largos'] = array('' => 'Puedes ver el detalle de tu pedido <a href="' . $url_pedido . '"><b>haciendo click aquí</b></a>');
         $body_email['campos']        = $campos;
         $imagenes                    = array();
