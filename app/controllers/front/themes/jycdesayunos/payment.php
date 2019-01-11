@@ -29,17 +29,17 @@ class payment extends base
     /**
      * verificar_medio_pago
      * comprueba si existe el medio de pago, sino vuelve al home
-     * 
+     *
      *
      * @param  string $cookie
      * @param  int $idmedio
      *
      * @return mixed
      */
-    private function verificar_medio_pago(string $cookie = '',int $idmedio)
+    private function verificar_medio_pago(string $cookie = '', int $idmedio)
     {
         $medio_pago = null;
-        if ($cookie!='') {
+        if ('' != $cookie) {
             $mp = mediopago_model::getById($idmedio);
             if (isset($mp['estado'])) {
                 $cookie       = functions::test_input($cookie);
@@ -56,7 +56,7 @@ class payment extends base
         }
         return $medio_pago;
     }
-    
+
     /**
      * verificar_pedido
      * comprueba si el pedido existe y es valido para pagos, sino devuelve null
@@ -110,28 +110,48 @@ class payment extends base
         functions::url_redirect($this->url);
 
         $pedido = $this->verificar_pedido($medio_pago);
-
         if (null != $pedido) {
             if (2 == $medio_pago[0]) { //  WEBPAY
-                $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
-                $amount      = $pedido['total'];
-                // Identificador que será retornado en el callback de resultado:
-                $sessionId = $pedido['cookie_pedido'];
-                // Identificador único de orden de compra:
-                $buyOrder   = strval(rand(100000, 999999999));
-                $returnUrl  = functions::generar_url(array($this->url[0], 'process' . $medio_pago[0], $pedido['cookie_pedido']));
-                $finalUrl   = functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $pedido['cookie_pedido']));
-                $initResult = $transaction->initTransaction(
-                    $amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
-
-                $formAction = $initResult->url;
-                $tokenWs    = $initResult->token;
-                var_dump($formAction);
-                var_dump($tokenWs);
+                try {
+                    $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
+                    $amount      = $pedido['total'];
+                    // Identificador que será retornado en el callback de resultado:
+                    $sessionId = $pedido['cookie_pedido'];
+                    // Identificador único de orden de compra:
+                    $buyOrder   = strval(rand(100000, 999999999));
+                    $returnUrl  = functions::generar_url(array($this->url[0], 'process' . $medio_pago[0], $pedido['cookie_pedido']));
+                    $finalUrl   = functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $pedido['cookie_pedido']));
+                    $initResult = $transaction->initTransaction( $amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
+    
+                    $formAction = $initResult->url;
+                    $tokenWs    = $initResult->token;
+                    $is_post    = true;
+                    $action     = $formAction;
+                    $form[]     = array('field' => 'token_ws', 'value' => $tokenWs);
+                } catch (\Exception $e) {
+                    $mensaje="Hubo un error al inicial el proceso webpay. Por favor intenta más tarde.";
+                    if(error_reporting()){
+                        $mensaje.='<br/><br/><br/><br/>'.$e;
+                    }
+                    view::set('mensaje', $mensaje);
+                    view::render('order/error');
+                    $pedido=null;
+                }
             }
+        }
+        
+
+
+        if (null != $pedido) {
+            $is_post = false;
+            $action  = '';
+            $form    = array();
             $seo_cuenta = seo_model::getById(9);
             view::set('title', $medio_pago['titulo']);
             view::set('description', $medio_pago['resumen']);
+            view::set('is_post', $is_post);
+            view::set('action', $action);
+            view::set('form', $form);
             view::set('url_back', functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido'])));
             view::set('url_next', functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $pedido['cookie_pedido'])));
             view::render('payment/resumen');
@@ -180,22 +200,33 @@ class payment extends base
     {
         var_dump($var);
         var_dump($_POST);
+        $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
+        $result = $transaction->getTransactionResult($request->input("token_ws"));
+        $output = $result->detailOutput;
+        
+        var_dump($result);
+        
+        var_dump($output);
+        if (0 == $output->responseCode) {
+            echo 'Exito, guardar datos y cambiar estado y enviar correo';
+        }
+
     }
 
     private static function email($pedido, $titulo = '', $cabecera = '', $campos = array(), $url_pedido)
     {
-        $nombre_sitio  = app::$_title;
-        $config        = app::getConfig();
-        $email_empresa = $config['main_email'];
-        $body_email    = array( 'body'     => view::get_theme() . 'mail/pedido.html');
-            $body_email['cabecera'] = $cabecera;
-            $body_email['titulo'] = $titulo;
+        $nombre_sitio                = app::$_title;
+        $config                      = app::getConfig();
+        $email_empresa               = $config['main_email'];
+        $body_email                  = array('body' => view::get_theme() . 'mail/pedido.html');
+        $body_email['cabecera']      = $cabecera;
+        $body_email['titulo']        = $titulo;
         $body_email['campos_largos'] = array('' => 'Puedes ver el detalle de tu pedido <a href="' . $url_pedido . '"><b>haciendo click aquí</b></a>');
         $body_email['campos']        = $campos;
         $imagenes                    = array();
-        $adjuntos = array();
-        $body      = email::body_email($body_email);
-        $respuesta = email::enviar_email(array($pedido['email'], $email_empresa), $body_email['titulo'], $body, $adjuntos, $imagenes);
+        $adjuntos                    = array();
+        $body                        = email::body_email($body_email);
+        $respuesta                   = email::enviar_email(array($pedido['email'], $email_empresa), $body_email['titulo'], $body, $adjuntos, $imagenes);
         return $respuesta;
     }
 }
