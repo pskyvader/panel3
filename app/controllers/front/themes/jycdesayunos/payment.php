@@ -86,7 +86,11 @@ class payment extends base
             $pedido = pedido_model::getByCookie($this->cookie, false);
             if (!isset($pedido['cookie_pedido'])) {
                 $mensaje = 'Pedido no valido, Por favor ingresa a tu cuenta y selecciona un pedido valido';
-            } elseif ((3 != $pedido['idpedidoestado'] && 7 != $pedido['idpedidoestado']) || ($pagado && 4 != $pedido['idpedidoestado'])) {
+            } elseif ($pagado) {
+                if (4 != $pedido['idpedidoestado']) {
+                    $mensaje = 'Este pedido no está pagado. Por favor intenta más tarde';
+                }
+            } elseif (3 != $pedido['idpedidoestado'] && 7 != $pedido['idpedidoestado']) {
                 $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado.';
             }
         }
