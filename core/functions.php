@@ -103,12 +103,7 @@ class functions
 
     public static function current_url()
     {
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-            $http = "https://";
-        } else {
-            $http = "http://";
-        }
-
+        $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
         return $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
