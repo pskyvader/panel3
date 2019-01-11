@@ -15,12 +15,12 @@ use \Transbank\Webpay\Webpay;
 
 class payment extends base
 {
-    private $cookie = '';
+    private $cookie               = '';
     private $configuration_webpay = null;
     public function __construct()
     {
         parent::__construct($_REQUEST['idseo'], false);
-        $this->configuration_webpay=Configuration::forTestingWebpayPlusNormal();
+        $this->configuration_webpay = Configuration::forTestingWebpayPlusNormal();
     }
 
     public function index()
@@ -124,7 +124,8 @@ class payment extends base
                     // Identificador que será retornado en el callback de resultado:
                     $sessionId = $pedido['cookie_pedido'];
                     // Identificador único de orden de compra:
-                    $buyOrder   = strval(rand(100000, 999999999));
+                    // $buyOrder   = strval(rand(100000, 999999999));
+                    $buyOrder   = $pedido['cookie_pedido'];
                     $returnUrl  = functions::generar_url(array($this->url[0], 'process' . $medio_pago[0], $pedido['cookie_pedido']));
                     $finalUrl   = functions::generar_url(array($this->url[0], 'pago' . $medio_pago[0], $pedido['cookie_pedido']));
                     $initResult = $transaction->initTransaction($amount, $buyOrder, $sessionId, $returnUrl, $finalUrl);
@@ -209,12 +210,18 @@ class payment extends base
             $result      = $transaction->getTransactionResult($token);
             $output      = $result->detailOutput;
 
-            var_dump($result);
-            var_dump($output);
             if (0 == $output->responseCode) {
                 $error = false;
                 echo 'Exito, guardar datos y cambiar estado y enviar correo';
             } else {
+                $result->sessionId;
+                $result->transactionDate;
+                $result->urlRedirection;
+
+                $output->authorizationCode;
+                $output->responseCode;
+                $output->amount;
+                $output->buyOrder;
                 $error   = true;
                 $mensaje = 'Hubo un error al procesar tu pago, por favor intenta más tarde o selecciona otro medio de pago.';
             }
