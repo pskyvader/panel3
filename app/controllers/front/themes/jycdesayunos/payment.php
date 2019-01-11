@@ -100,10 +100,13 @@ class payment extends base
         }
     }
 
-    private function update_pedido($pedido, $medio_pago, $idpedidoestado)
+    private function update_pedido($pedido, $medio_pago, $idpedidoestado, $fecha_pago = '')
     {
         $lista_direcciones = pedidodireccion_model::getAll(array('idpedido' => $pedido[0]));
         $update_pedido     = array('id' => $pedido[0], 'idpedidoestado' => $idpedidoestado, 'idmediopago' => $medio_pago[0]);
+        if ('' != $fecha_pago) {
+            $update_pedido['fecha_pago'] = $fecha_pago;
+        }
         pedido_model::update($update_pedido);
         foreach ($lista_direcciones as $key => $direccion) {
             $update_pedido = array('id' => $direccion[0], 'idpedidoestado' => 9); // estado de direccion: pago pendiente
@@ -220,15 +223,23 @@ class payment extends base
 
             if (0 == $output->responseCode) {
                 $error      = false;
-                $idmedio    = 1;
+                $idmedio    = 2;
                 $cookie     = $output->buyOrder;
                 $medio_pago = $this->verificar_medio_pago($cookie, $idmedio);
                 $pedido     = $this->verificar_pedido($medio_pago, false);
                 if (null != $pedido) {
-                    $this->update_pedido($pedido, $medio_pago, 4); // estado de pedido: pagado
+                    $this->update_pedido($pedido, $medio_pago, 4, $result->transactionDate); // estado de pedido: pagado
+                    $campos                      = array();
+                    $campos['Estado del pedido'] = 'Pagado';
+                    $campos['Medio de pago']     = $medio_pago['titulo'];
+                    $campos['Código de pedido'] = $pedido['cookie_pedido'];
+                    $campos['Total del pedido']  = functions::formato_precio($pedido['total']);
+
+                    $respuesta = self::email($pedido, '', '', $campos, $url_back);
+
                     view::set('action', $result->urlRedirection);
-                    $form=array();
-                    $form[]     = array('field' => 'token_ws', 'value' => $token);
+                    $form   = array();
+                    $form[] = array('field' => 'token_ws', 'value' => $token);
                     view::set('form', $form);
                     view::render('payment/post');
                 } else {
@@ -266,8 +277,8 @@ class payment extends base
     public function pago2($var = array())
     {
         $this->meta($this->seo);
-        $this->url[] = 'pago1';
-        $idmedio     = 1;
+        $this->url[] = 'pago2';
+        $idmedio     = 2;
         var_dump($_POST);
 
         $medio_pago = $this->verificar_medio_pago($var[0], $idmedio);
@@ -275,16 +286,8 @@ class payment extends base
 
         $pedido = $this->verificar_pedido($medio_pago, true, true);
         if (null != $pedido) {
-            $seo_cuenta                  = seo_model::getById(9);
-            $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
-            $campos                      = array();
-            $campos['Estado del pedido'] = 'Pagado';
-            $campos['Medio de pago']     = $medio_pago['titulo'];
-            $campos['Código de pedido'] = $pedido['cookie_pedido'];
-            $campos['Total del pedido']  = functions::formato_precio($pedido['total']);
-
-            $respuesta = self::email($pedido, '', '', $campos, $url_back);
-
+            $seo_cuenta = seo_model::getById(9);
+            $url_back   = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
             view::set('title', $medio_pago['titulo']);
             view::set('description', $medio_pago['descripcion']);
             view::set('url_back', $url_back);
