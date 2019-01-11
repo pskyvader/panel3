@@ -90,6 +90,7 @@ class payment extends base
 
                 $formAction = $initResult->url;
                 $tokenWs    = $initResult->token;
+                var_dump($buyOrder);
                 var_dump($formAction);
                 var_dump($tokenWs);
 
