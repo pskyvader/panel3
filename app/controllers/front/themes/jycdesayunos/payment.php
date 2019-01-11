@@ -114,6 +114,9 @@ class payment extends base
         pedido_model::update($update_pedido);
         foreach ($lista_direcciones as $key => $direccion) {
             $update_pedido = array('id' => $direccion[0], 'idpedidoestado' => 9); // estado de direccion: pago pendiente
+            if($idpedidoestado==4){
+                $update_pedido['idpedidoestado']=5; // estado de direccion: preparando producto
+            }
             pedidodireccion_model::update($update_pedido);
         }
     }
