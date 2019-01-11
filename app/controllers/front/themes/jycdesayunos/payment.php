@@ -67,17 +67,18 @@ class payment extends base
      *
      * @return mixed
      */
-    private function verificar_pedido(array $medio_pago)
+    private function verificar_pedido(array $medio_pago, $render = true)
     {
-        $head = new head($this->metadata);
-        $head->normal();
+        if ($render) {
+            $head = new head($this->metadata);
+            $head->normal();
 
-        $header = new header();
-        $header->normal();
+            $header = new header();
+            $header->normal();
 
-        $banner = new banner();
-        $banner->individual($this->seo['banner'], 'Pago via ' . $medio_pago['titulo'], $this->metadata['title']);
-
+            $banner = new banner();
+            $banner->individual($this->seo['banner'], 'Pago via ' . $medio_pago['titulo'], $this->metadata['title']);
+        }
         $mensaje = '';
         if (!$medio_pago['estado']) {
             $mensaje = 'Medio de pago no disponible, Por favor intenta con otro medio de pago';
@@ -90,15 +91,26 @@ class payment extends base
             }
         }
 
-        if ('' != $mensaje) {
+        if ($render && '' != $mensaje) {
             view::set('mensaje', $mensaje);
             view::render('order/error');
             return null;
         } else {
             return $pedido;
         }
-
     }
+
+    private function update_pedido($pedido,$medio_pago, $idpedidoestado)
+    {
+        $lista_direcciones = pedidodireccion_model::getAll(array('idpedido' => $pedido[0]));
+        $update_pedido     = array('id' => $pedido[0], 'idpedidoestado' => $idpedidoestado, 'idmediopago' => $medio_pago[0]);
+        pedido_model::update($update_pedido);
+        foreach ($lista_direcciones as $key => $direccion) {
+            $update_pedido = array('id' => $direccion[0], 'idpedidoestado' => 9); // estado de direccion: pago pendiente
+            pedidodireccion_model::update($update_pedido);
+        }
+    }
+
     public function medio($var = array())
     {
         $this->meta($this->seo);
@@ -172,13 +184,7 @@ class payment extends base
 
         $pedido = $this->verificar_pedido($medio_pago);
         if (null != $pedido) {
-            $lista_direcciones = pedidodireccion_model::getAll(array('idpedido' => $pedido[0]));
-            $update_pedido     = array('id' => $pedido[0], 'idpedidoestado' => 10, 'idmediopago' => $medio_pago[0]); // estado de pedido: esperando transferencia
-            pedido_model::update($update_pedido);
-            foreach ($lista_direcciones as $key => $direccion) {
-                $update_pedido = array('id' => $direccion[0], 'idpedidoestado' => 9); // estado de direccion: pago pendiente
-                pedidodireccion_model::update($update_pedido);
-            }
+            $this->update_pedido($pedido,$medio_pago, 10); // estado de pedido: esperando transferencia
             $seo_cuenta                  = seo_model::getById(9);
             $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
             $titulo                      = "Pedido " . $pedido['cookie_pedido'] . " Esperando transferencia";
@@ -211,22 +217,19 @@ class payment extends base
             $output      = $result->detailOutput;
 
             if (0 == $output->responseCode) {
-                $error = false;
-                $postData = array('token_ws' => $token);
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $result->urlRedirection);
-                //Tell cURL that we want to send a POST request.
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-                $response = curl_exec($ch);
-                curl_close($ch);
-                /*echo $response;
-
-                $url = $result->urlRedirection . '?' . http_build_query(array('token_ws' => $token));
-                header("HTTP/1.1 301 Moved Permanently");
-                header("Location: " . $url);*/
-                exit;
+                $error      = false;
+                $idmedio    = 1;
+                $cookie     = $output->buyOrder;
+                $medio_pago = $this->verificar_medio_pago($cookie, $idmedio);
+                $pedido     = $this->verificar_pedido($medio_pago,false);
+                if (null != $pedido) {
+                    $this->update_pedido($pedido,$medio_pago, 4); // estado de pedido: pagado
+                    view::set('action', $result->urlRedirection);
+                    view::set('form', array('token_ws' => $token));
+                    view::render('payment/post');
+                }else{
+                    $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado. Por favor intenta más tarde o selecciona otro medio de pago.';
+                }
             } else {
                 $result->sessionId;
                 $result->transactionDate;
@@ -236,7 +239,6 @@ class payment extends base
                 $output->responseCode;
                 $output->amount;
                 $output->buyOrder;
-                $error   = true;
                 $mensaje = 'Hubo un error al procesar tu pago, por favor intenta más tarde o selecciona otro medio de pago.';
             }
         }

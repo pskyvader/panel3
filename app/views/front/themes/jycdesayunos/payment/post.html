@@ -1,0 +1,10 @@
+<form action="{action}" id="form" method="POST">
+    {foreach form}
+    <input type="hidden" name="{field}" value="{value}">
+    {/foreach form}
+</form>
+<script>
+    window.onload = function() {
+        document.getElementById('form').submit();
+    };
+</script>
