@@ -110,6 +110,11 @@ class payment extends base
         functions::url_redirect($this->url);
 
         $pedido = $this->verificar_pedido($medio_pago);
+        $is_post = false;
+        $action  = '';
+        $form    = array();
+
+
         if (null != $pedido) {
             if (2 == $medio_pago[0]) { //  WEBPAY
                 try {
@@ -139,13 +144,8 @@ class payment extends base
                 }
             }
         }
-        
-
 
         if (null != $pedido) {
-            $is_post = false;
-            $action  = '';
-            $form    = array();
             $seo_cuenta = seo_model::getById(9);
             view::set('title', $medio_pago['titulo']);
             view::set('description', $medio_pago['resumen']);
