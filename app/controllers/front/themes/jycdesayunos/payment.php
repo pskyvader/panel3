@@ -67,7 +67,7 @@ class payment extends base
      *
      * @return mixed
      */
-    private function verificar_pedido(array $medio_pago, $render = true)
+    private function verificar_pedido(array $medio_pago, $render = true, $pagado = false)
     {
         if ($render) {
             $head = new head($this->metadata);
@@ -86,7 +86,7 @@ class payment extends base
             $pedido = pedido_model::getByCookie($this->cookie, false);
             if (!isset($pedido['cookie_pedido'])) {
                 $mensaje = 'Pedido no valido, Por favor ingresa a tu cuenta y selecciona un pedido valido';
-            } elseif (3 != $pedido['idpedidoestado'] && 7 != $pedido['idpedidoestado']) {
+            } elseif ((3 != $pedido['idpedidoestado'] && 7 != $pedido['idpedidoestado']) || ($pagado && 4 != $pedido['idpedidoestado'])) {
                 $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado.';
             }
         }
@@ -100,7 +100,7 @@ class payment extends base
         }
     }
 
-    private function update_pedido($pedido,$medio_pago, $idpedidoestado)
+    private function update_pedido($pedido, $medio_pago, $idpedidoestado)
     {
         $lista_direcciones = pedidodireccion_model::getAll(array('idpedido' => $pedido[0]));
         $update_pedido     = array('id' => $pedido[0], 'idpedidoestado' => $idpedidoestado, 'idmediopago' => $medio_pago[0]);
@@ -184,13 +184,15 @@ class payment extends base
 
         $pedido = $this->verificar_pedido($medio_pago);
         if (null != $pedido) {
-            $this->update_pedido($pedido,$medio_pago, 10); // estado de pedido: esperando transferencia
+            $this->update_pedido($pedido, $medio_pago, 10); // estado de pedido: esperando transferencia
             $seo_cuenta                  = seo_model::getById(9);
             $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
             $titulo                      = "Pedido " . $pedido['cookie_pedido'] . " Esperando transferencia";
             $cabecera                    = "Estimado " . $pedido['nombre'] . ", " . $medio_pago['descripcion'];
             $campos                      = array();
             $campos['Código de pedido'] = $pedido['cookie_pedido'];
+            $campos['Estado del pedido'] = 'Esperando transferencia';
+            $campos['Medio de pago']     = $medio_pago['titulo'];
             $campos['Total del pedido']  = functions::formato_precio($pedido['total']);
 
             $respuesta = self::email($pedido, $titulo, $cabecera, $campos, $url_back);
@@ -221,13 +223,13 @@ class payment extends base
                 $idmedio    = 1;
                 $cookie     = $output->buyOrder;
                 $medio_pago = $this->verificar_medio_pago($cookie, $idmedio);
-                $pedido     = $this->verificar_pedido($medio_pago,false);
+                $pedido     = $this->verificar_pedido($medio_pago, false);
                 if (null != $pedido) {
-                    $this->update_pedido($pedido,$medio_pago, 4); // estado de pedido: pagado
+                    $this->update_pedido($pedido, $medio_pago, 4); // estado de pedido: pagado
                     view::set('action', $result->urlRedirection);
                     view::set('form', array('token_ws' => $token));
                     view::render('payment/post');
-                }else{
+                } else {
                     $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado. Por favor intenta más tarde o selecciona otro medio de pago.';
                 }
             } else {
@@ -269,17 +271,17 @@ class payment extends base
         $medio_pago = $this->verificar_medio_pago($var[0], $idmedio);
         functions::url_redirect($this->url);
 
-        $pedido = $this->verificar_pedido($medio_pago);
+        $pedido = $this->verificar_pedido($medio_pago, true, true);
         if (null != $pedido) {
             $seo_cuenta                  = seo_model::getById(9);
             $url_back                    = functions::generar_url(array($seo_cuenta['url'], 'pedido', $pedido['cookie_pedido']));
-            $titulo                      = "Pedido " . $pedido['cookie_pedido'] . " Esperando transferencia";
-            $cabecera                    = "Estimado " . $pedido['nombre'] . ", " . $medio_pago['descripcion'];
             $campos                      = array();
+            $campos['Estado del pedido'] = 'Pagado';
+            $campos['Medio de pago']     = $medio_pago['titulo'];
             $campos['Código de pedido'] = $pedido['cookie_pedido'];
             $campos['Total del pedido']  = functions::formato_precio($pedido['total']);
 
-            $respuesta = self::email($pedido, $titulo, $cabecera, $campos, $url_back);
+            $respuesta = self::email($pedido, '', '', $campos, $url_back);
 
             view::set('title', $medio_pago['titulo']);
             view::set('description', $medio_pago['descripcion']);
@@ -292,10 +294,21 @@ class payment extends base
 
     private static function email($pedido, $titulo = '', $cabecera = '', $campos = array(), $url_pedido)
     {
-        $nombre_sitio                = app::$_title;
-        $config                      = app::getConfig();
-        $email_empresa               = $config['main_email'];
-        $body_email                  = array('body' => view::get_theme() . 'mail/pedido.html');
+        $nombre_sitio  = app::$_title;
+        $config        = app::getConfig();
+        $email_empresa = $config['main_email'];
+        $body_email    = array(
+            'body'     => view::get_theme() . 'mail/pedido.html',
+            'titulo'   => "Pedido " . $pedido['cookie_pedido'] . " Pago realizado",
+            'cabecera' => "Estimado " . $pedido['nombre'] . ", aquí enviamos su información de pago. Si tiene alguna duda, no dude en contactarse con el centro de atención al cliente de " . $nombre_sitio,
+        );
+        if ('' != $cabecera) {
+            $body_email['cabecera'] = $cabecera;
+        }
+        if ('' != $titulo) {
+            $body_email['titulo'] = $titulo;
+        }
+
         $body_email['cabecera']      = $cabecera;
         $body_email['titulo']        = $titulo;
         $body_email['campos_largos'] = array('' => 'Puedes ver el detalle de tu pedido <a href="' . $url_pedido . '"><b>haciendo click aquí</b></a>');
