@@ -212,7 +212,7 @@ class payment extends base
 
             if (0 == $output->responseCode) {
                 $error = false;
-                $url= $result->urlRedirection.http_build_query(array('token_ws'=>$token));
+                $url= $result->urlRedirection.'?'.http_build_query(array('token_ws'=>$token));
                 header("HTTP/1.1 301 Moved Permanently");
                 header("Location: " . $url);
                 exit;
