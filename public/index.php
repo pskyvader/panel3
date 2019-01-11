@@ -9,6 +9,7 @@ define("APPPATH", PROJECTPATH . '/app');
 function autoload_classes($class_name)
 {
     $filename = PROJECTPATH . '/' . str_replace('\\', '/', $class_name) . '.php';
+    var_dump($filename);
     if (is_file($filename)) {
         include_once $filename;
     }
