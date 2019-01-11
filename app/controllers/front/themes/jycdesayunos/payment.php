@@ -283,7 +283,14 @@ class payment extends base
         $this->meta($this->seo);
         $this->url[] = 'pago2';
         $idmedio     = 2;
-        var_dump($_POST);
+        $campos  = functions::test_input($_POST);
+        if (isset($campos['token_ws'])) {
+            $token = $campos['token_ws'];
+            $transaction = (new Webpay($this->configuration_webpay))->getNormalTransaction();
+            $result      = $transaction->getTransactionResult($token);
+        }else{
+            var_dump($_POST);
+        }
 
         $medio_pago = $this->verificar_medio_pago($var[0], $idmedio);
         functions::url_redirect($this->url);
