@@ -227,7 +227,9 @@ class payment extends base
                 if (null != $pedido) {
                     $this->update_pedido($pedido, $medio_pago, 4); // estado de pedido: pagado
                     view::set('action', $result->urlRedirection);
-                    view::set('form', array('token_ws' => $token));
+                    $form=array();
+                    $form[]     = array('field' => 'token_ws', 'value' => $token);
+                    view::set('form', $form);
                     view::render('payment/post');
                 } else {
                     $mensaje = 'Este pedido no se puede procesar, ya está pagado o aún no se ha completado. Por favor intenta más tarde o selecciona otro medio de pago.';
