@@ -10,7 +10,7 @@
                 <div class="">
                     <a href="{url_back}" class="btn btn-light mb-4">Otros medios de pago</a>
                     {if is_post}
-                    <form action="{action}">
+                    <form action="{action}" class="d-block d-sm-inline-block float-sm-right">
                         {foreach form}
                         <input type="hidden" name="{field}" value="{value}">
                         {/foreach form}
