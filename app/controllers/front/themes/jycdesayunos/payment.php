@@ -76,6 +76,7 @@ class payment extends base
             view::set('mensaje', $mensaje);
             view::render('order/error');
         } else {
+            var_dump($idmedio);
             if (2 == $idmedio) { //  WEBPAY
                 echo 'asfd';
                 $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
