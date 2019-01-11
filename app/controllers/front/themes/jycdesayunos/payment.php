@@ -213,7 +213,7 @@ class payment extends base
             if (0 == $output->responseCode) {
                 $error = false;
                 $url= $result->urlRedirection;
-                functions::url_redirect($url);
+                functions::url_redirect(array($url));
             } else {
                 $result->sessionId;
                 $result->transactionDate;
