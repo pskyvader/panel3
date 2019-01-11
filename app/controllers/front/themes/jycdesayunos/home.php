@@ -46,7 +46,7 @@ class home extends base
         }
 
         $productos_destacados = producto_model::getAll(array('tipo' => 1, 'destacado' => true),array('limit'=>6));
-        if (count($productos_destacados)) {
+        if (count($productos_destacados)>0) {
             //$seo_productos          = seo::getById(8);
             //$this->url[0] = $seo_productos['url'];
             $_REQUEST['idseo']=8;
