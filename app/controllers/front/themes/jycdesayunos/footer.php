@@ -73,7 +73,7 @@ class footer
             $row = productocategoria_model::getAll(array('tipo' => 1, 'idpadre' => 0));
             $seo = seo::getById(8);
             foreach ($row as $key => $productos) {
-                $l['links'][] = array('url' => functions::url_seccion(array($seo['url'], 'detail'), $productos), 'title' => $productos['titulo']);
+                $l['links'][] = array('url' => functions::url_seccion(array($seo['url'], 'category'), $productos), 'title' => $productos['titulo']);
             }
             $links_footer[] = $l;
 
