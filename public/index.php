@@ -10,9 +10,10 @@ function autoload_classes($class_name)
 {
     $filename = PROJECTPATH . '/' . str_replace('\\', '/', $class_name) . '.php';
     $filename=strtolower($filename);
-    var_dump($filename);
     if (is_file($filename)) {
         include_once $filename;
+    }else{
+        var_dump($filename);
     }
 }
 //registramos el autoload autoload_classes
