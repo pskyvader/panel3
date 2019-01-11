@@ -17,7 +17,7 @@ class payment extends base
 {
     public function __construct()
     {
-        parent::__construct($_REQUEST['idseo']);
+        parent::__construct($_REQUEST['idseo'],false);
     }
 
     public function index()
