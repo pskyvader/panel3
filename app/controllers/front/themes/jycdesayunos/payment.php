@@ -76,7 +76,8 @@ class payment extends base
             view::set('mensaje', $mensaje);
             view::render('order/error');
         } else {
-            if (2 == $medio_pago[0]) { //  WEBPAY
+            if (2 == $idmedio) { //  WEBPAY
+                echo 'asfd';
                 $transaction = (new Webpay(Configuration::forTestingWebpayPlusNormal()))->getNormalTransaction();
                 $amount      = 1000;
                 // Identificador que será retornado en el callback de resultado:
