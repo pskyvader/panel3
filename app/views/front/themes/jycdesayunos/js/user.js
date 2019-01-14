@@ -36,6 +36,7 @@ function inicio_login() {
             }, path)).show();
         }
         $('.cuenta-header').empty().append(a).append(b).append(c);
+        inicio_cart();
     });
 }
 
@@ -95,9 +96,7 @@ $(document).on('submit', 'form.login', function() {
     post(url, data, "Enviando datos de login", null, function(datos) {
         if (datos.exito) {
             if (datos.next_url) {
-                console.log(datos.next_url);
                 var url = create_url(datos.next_url, {}, path);
-                console.log(url);
             } else {
                 var url = create_url(modulo + "datos", {}, path);
             }
@@ -144,6 +143,5 @@ $(document).on('click', '.cuenta-header .logout', function() {
     var url = create_url(modulo + "logout", {}, path);
     post(url, {}, "", null, function() {
         inicio_login();
-        inicio_cart();
     });
 });
