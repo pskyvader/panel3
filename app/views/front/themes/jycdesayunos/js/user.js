@@ -144,5 +144,6 @@ $(document).on('click', '.cuenta-header .logout', function() {
     var url = create_url(modulo + "logout", {}, path);
     post(url, {}, "", null, function() {
         inicio_login();
+        inicio_cart();
     });
 });
