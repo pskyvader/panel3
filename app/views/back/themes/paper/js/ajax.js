@@ -99,10 +99,12 @@ function post(url_post, info, mensaje_inicial, importante, archivo, callback, ex
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus);
-            console.log(jqXHR);
-            console.log(errorThrown);
-            notificacion('Oh no!', 'Ha ocurrido un error, por favor intenta más tarde', 'error');
+            if (errorThrown != "") {
+                console.log(textStatus);
+                console.log(jqXHR);
+                console.log(errorThrown);
+                notificacion('Oh no!', 'Ha ocurrido un error, por favor intenta más tarde', 'error');
+            }
         },
         complete: function() {
             xhr = null;

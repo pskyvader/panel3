@@ -27,6 +27,18 @@ class functions
         }
     }
 
+    private static function parse_size($size)
+    {
+        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+        $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+        if ($unit) {
+            // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+            return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+        } else {
+            return round($size);
+        }
+    }
+
     //Cortar string a "length" caracteres
     public static function substring($string, $length = null, $caracteres = " ...")
     {
@@ -317,9 +329,26 @@ class functions
         return $file_ary;
     }
 
-    public static function file_size($file_url)
+    
+    public static function get_max_size()
     {
-        $size       = filesize($file_url);
+        $max_size      = -1;
+        $post_max_size = self::parse_size(ini_get('post_max_size'));
+        $upload_max    = self::parse_size(ini_get('upload_max_filesize'));
+
+        if ($post_max_size > 0 && $upload_max > 0) {
+            $max_size = min($post_max_size, $upload_max);
+        }
+        return $max_size;
+    }
+
+    public static function file_size($file_url, $only_size = false)
+    {
+        if (!$only_size) {
+            $size = filesize($file_url);
+        } else {
+            $size = $file_url;
+        }
         $unit       = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
         $final_size = @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
         return $final_size;

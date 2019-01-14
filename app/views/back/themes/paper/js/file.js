@@ -7,7 +7,12 @@ function inicio_file() {
         $(t).on('change', 'input[name="..."]', function(e) {
             habilitar(false);
             if (e.target.files.length > 0) {
+                if (max_size > 0 && e.target.files[0].size > max_size) {
+                    notificacion('Oh no!', "Tamaño de archivo demasiado grande.<br/>Tamaño de archivo maximo " + max_size_format, 'error');
+                    habilitar(true);
+                } else {
                 post(create_url(modulo, 'upload_file'), {}, "Subiendo Archivo", !1, e.target.files, after_guardar_file, t);
+                }
             }
         });
         $('body').on('click', '.eliminar_file', function() {

@@ -19,7 +19,7 @@ class detalle
 
     public function __construct($metadata)
     {
-        $size = (ini_get('upload_max_filesize'));
+        $size = functions::get_max_size();
         /*$unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
         $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
         if ($unit) {
@@ -29,7 +29,7 @@ class detalle
             $size= round($size);
         }*/
 
-        $this->max_upload = $size."B";
+        $this->max_upload = ($size<0)?"Ilimitado":functions::file_size($size,true);
         foreach ($metadata as $key => $value) {
             $this->metadata[$key] = $value;
         }

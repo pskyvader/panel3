@@ -58,7 +58,7 @@
         {"url": "assets/plugins/pines-notify/pnotify.custom.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/snackbar/snackbar.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/jquery-editable/jquery.editable.js","local":true,"defer":false,"combine":true},
-        {"url": "assets/plugins/form-jasnyupload/fileinput.min.js","local":true,"defer":false,"combine":true},
+        {"url": "assets/plugins/form-jasnyupload/fileinput.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/bootstrap-tokenfield/bootstrap-tokenfield.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/form-typeahead/typeahead.bundle.min.js","local":true,"defer":false,"combine":true},
         {"url": "assets/plugins/dropzone/dropzone.min.js","local":true,"defer":false,"combine":true},

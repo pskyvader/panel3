@@ -9,6 +9,8 @@ var path = application_name.data("path");
 var modulo = application_name.data("modulo");
 var url = application_name.data("url");
 var googlemaps_key = application_name.data("googlemaps_key");
+var max_size = application_name.data("max_size");
+var max_size_format = application_name.data("max_size_format");
 var is_mobile = $.browser.mobile;
 var update_content = $('#update_content');
 $.skylo('start');
@@ -53,10 +55,12 @@ function inicio() {
     }
 }
 
-var day = moment($('#time').text());
+var day = moment($('#time').data('time'), 'YYYY-MM-DD HH:mm:ss');
+$('#time span').text(day.format('DD/MM HH:mm:ss'));
+
 setInterval(function() {
     day = day.add(1, 'second');
-    $('#time').text(day.format('D/MM/YYYY HH:mm:ss'));
+    $('#time span').text(day.format('D/MM HH:mm:ss'));
 }, 1000);
 
 function register_sw() {
