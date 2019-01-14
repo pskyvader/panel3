@@ -10,11 +10,10 @@ self.addEventListener("install", function(event) {
 }); 
 {if cache}
 self.addEventListener('fetch', function(event) {
-    console.log(event.request.method);
     if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') return;
     if (event.request.url.split('.').pop()=='json') return;
+    if (event.request.method=='POST') return;
     var url=event.request.url.split('/').pop();
-    if (url=='backup' || url=='generar_backup' || url=='vaciar_log' || url=='ping' || url=='verificar' || url=='current_cart') return;
     event.respondWith(caches.match(event.request).then(function(response) {
         if (response) {
             if (response['url'].split('.').pop() != '') {
