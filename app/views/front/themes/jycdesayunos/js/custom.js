@@ -1,7 +1,6 @@
 $(window).on('load', inicio);
 $(window).on('load', register_sw);
 $(window).on('load', inicio_login);
-$(window).on('load', inicio_cart);
 $(window).on('load scroll resize', activar_imagen);
 var application_name = $("meta[name='application-name']");
 var path = application_name.data("path");
