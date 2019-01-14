@@ -6,6 +6,7 @@ function inicio_image() {
         var t = $(this);
         $(t).on('change', 'input[name="..."]', function(e) {
             habilitar(false);
+            console.log(e.target.files[0].size);
             if (e.target.files.length > 0) {
                 post(create_url(modulo, 'upload'), {}, "Subiendo Imagen", !1, e.target.files, after_guardar_image, t);
             }

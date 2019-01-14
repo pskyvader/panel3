@@ -137,12 +137,14 @@ function cargar_ajax(href, push, data_form) {
             $("#hello").removeClass(function(index, className) {
                 return (className.match(/(^|\s)module-\S+/g) || []).join(' ');
             }).addClass("module-" + data.class);
+
+            var an = $("meta[name='application-name']");
             document.title = data.title;
             $("meta[property='og\\:site_name']").prop("content", data.title);
             $("meta[property='og\\:title']").prop("content", data.title);
             $("meta[property='og\\:url']").prop("content", data.current_url);
-            $("meta[property='og\\:url']").prop("content", data.current_url);
-            $("meta[property='modulo']").prop("content", data.modulo);
+            an.data("modulo", data.modulo);
+            an.data("url", data.current_url);
             if (data.image) {
                 $("meta[property='og\\:image']").prop("content", data.image_url);
             } else {
@@ -218,7 +220,7 @@ function activar_imagen() {
             bg_image($(this));
         }
     });
-    
+
     $('iframe[data-src]').each(function() {
         if (is_visible($(this))) {
             load_iframe($(this));
@@ -361,22 +363,22 @@ function notificacion(mensaje, tipo, url) {
         message: mensaje,
         icon: 'fa fa-exclamation-circle',
     };
-    var settings={
+    var settings = {
         type: tipo
     };
     if (url) {
         options.url = url;
-        options.target= '_self';
-        
-        settings.delay= 10000;
-        settings.timer= 30;
-        settings.mouse_over='pause';
-        settings.showProgressbar= true;
-        $('body').on('click','div[data-notify="container"]',function(){
+        options.target = '_self';
+
+        settings.delay = 10000;
+        settings.timer = 30;
+        settings.mouse_over = 'pause';
+        settings.showProgressbar = true;
+        $('body').on('click', 'div[data-notify="container"]', function() {
             notify.close();
         });
     }
-    
+
     notify = $.notify(options, settings);
 }
 
@@ -393,3 +395,10 @@ function barra(porcentaje) {
         }, 500);
     }*/
 }
+$.fn.removeClassRegex = function(regex) {
+    return $(this).removeClass(function(index, classes) {
+        return classes.split(/\s+/).filter(function(c) {
+            return regex.test(c);
+        }).join(' ');
+    });
+};

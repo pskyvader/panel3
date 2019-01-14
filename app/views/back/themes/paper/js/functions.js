@@ -57,7 +57,7 @@ function notificacion(titulo, mensaje, tipo, callback) {
         });
         alerta.remove();
     }
-    if(titulo==false) return false;
+    if (titulo == false) return false;
     var options = {
         title: titulo,
         text: mensaje,
@@ -133,9 +133,9 @@ function urlamigable(uri) {
         .replace(/-*$/, '');
 }
 
-function go_url(url,data) {
+function go_url(url, data) {
     if (check_link(url)) {
-        cargar_ajax(url,true,data);
+        cargar_ajax(url, true, data);
     } else {
         $(location).prop('href', url);
     }
@@ -154,7 +154,7 @@ function create_url(modulo, extra, data, url) {
     }
     if (typeof(data) != 'undefined' && data != null) {
         url += '?' + $.param(data);
-    }else{
+    } else {
         url += location.search;
     }
     return url;
@@ -202,12 +202,13 @@ function cargar_ajax(href, push, data_form) {
             $(location).prop('href', href);
             valido = false;
         } else {
+            var an = $("meta[name='application-name']");
             document.title = data.title;
             $("meta[property='og\\:site_name']").prop("content", data.title);
             $("meta[property='og\\:title']").prop("content", data.title);
             $("meta[property='og\\:url']").prop("content", data.current_url);
-            $("meta[property='og\\:url']").prop("content", data.current_url);
-            $("meta[property='modulo']").prop("content", data.modulo);
+            an.data("modulo", data.modulo);
+            an.data("url", data.current_url);
             if (data.image) {
                 $("meta[property='og\\:image']").prop("content", data.image_url);
             } else {
@@ -222,7 +223,10 @@ function cargar_ajax(href, push, data_form) {
             }
             if (data.keywords) {
                 $("meta[name='keywords']").prop("content", data.keywords_text);
+            }else{
+                $("meta[name='keywords']").prop("content", "");
             }
+            
             if (push) history.pushState(data.current_url, data.title, data.current_url);
             actualizado_head = true;
             iniciar(actualizado, actualizado_head, data_form);

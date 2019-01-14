@@ -24,7 +24,7 @@ class head
         'color_primario' => '',
         'manifest_url' => '',
         'path' => '',
-        'class' => '',
+        'modulo' => '',
     );
 
     public function __construct($metadata)

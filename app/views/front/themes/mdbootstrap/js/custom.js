@@ -1,16 +1,19 @@
 $(window).on('load', inicio);
 $(window).on('load', register_sw);
 $(window).on('load scroll resize', activar_imagen);
-var path = $("meta[property='path']").prop("content");
-var modulo = $("meta[property='modulo']").prop("content");
-var url = $("meta[property='og:url']").prop("content");
-var googlemaps_key = $("meta[property='googlemaps_key']").prop("content");
-var google_captcha = $("meta[property='google_captcha']").prop("content");
+var application_name = $("meta[name='application-name']");
+var path = application_name.data("path");
+var modulo = application_name.data("modulo");
+var url = application_name.data("url");
+var googlemaps_key = application_name.data("googlemaps_key");
+var google_captcha = application_name.data("google_captcha");
 
 
 function inicio() {
-    modulo = $("meta[property='modulo']").prop("content");
-    url = $("meta[property='og:url']").prop("content");
+    var application_name = $("meta[name='application-name']");
+    modulo = application_name.data("modulo");
+    url = application_name.data("url");
+    $('body').removeClassRegex(/^module-/).addClass('module-'+modulo);
     $('[data-toggle="tooltip"]').tooltip();
     $('.mdb-select').material_select();
     Waves.attach('.btn', ['waves-light']);

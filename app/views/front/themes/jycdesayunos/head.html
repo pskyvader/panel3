@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es" class="">
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="{favicon}" />
@@ -16,9 +15,6 @@
     <meta property="og:title" content="{title}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{current_url}">
-    <meta property="path" content="{path}">
-    <meta property="googlemaps_key" content="{googlemaps_key}">
-    <meta property="google_captcha" content="{google_captcha}">
     {if image}
     <meta property="og:image" content="{image_url}">
     {else image}
@@ -29,7 +25,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="manifest" href="{manifest_url}">
+    <meta name="application-name" content="{title}" data-path="{path}" data-modulo="{modulo}" data-googlemaps_key="{googlemaps_key}" data-google_captcha="{google_captcha}" data-url="{current_url}" />
     {css}
 </head>
 
-<body class="module-{class}" id="cake">
+<body class="module-{modulo}" id="cake">

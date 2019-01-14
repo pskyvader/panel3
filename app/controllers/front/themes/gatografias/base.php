@@ -21,7 +21,7 @@ class base
         $this->url               = array($this->seo['url']);
         $this->breadcrumb[]      = array('url' => functions::generar_url(array($this->seo['url'])), 'title' => $this->seo['titulo']);
         $this->metadata['image'] = image::generar_url($this->seo['foto'][0], 'social');
-        $this->metadata['class'] = (new \ReflectionClass($this))->getShortName();
+        $this->metadata['modulo'] = (new \ReflectionClass($this))->getShortName();
         $moduloconfiguracion     = moduloconfiguracion_model::getByModulo($this->seo['modulo_back']);
         if (isset($moduloconfiguracion[0])) {
             $modulo = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $this->seo['tipo_modulo']), array('limit' => 1));
