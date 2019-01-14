@@ -3,7 +3,7 @@ function inicio_user(){
         mover('.user-pedidos-detalle .content', 400, 500);
     }
 }
-
+var logueado=false;
 function inicio_login() {
     var modulo = "cuenta/";
     var url = create_url(modulo + "verificar", null, path);
@@ -18,11 +18,13 @@ function inicio_login() {
         }
         var b=$('<span> / </span>');
         if (data.exito) {
+            logueado=true;
             var a = $('<a href="' + path + modulo + 'datos">Bienvenido ' + data.mensaje + '</a>');
             var c = $('<button class="logout">Salir</button>');
             $('#carro-header .accion').text('Comprar').prop('href', path + 'pedido/step/1');
             $('#carro-header .accion-2').hide();
         } else {
+            logueado=false;
             var a = $('<a href="' + create_url(modulo + 'login', null, path) + '">Login</a>');
             var c = $('<a href="' + create_url(modulo + 'registro', null, path) + '">Registro</a>');
 
