@@ -666,6 +666,7 @@ class user extends base
         $_SESSION['login_token'] = array('token' => $token, 'time' => time());
         view::set('token', $token);
         view::set('url_recuperar', functions::generar_url(array($this->url[0], 'recuperar')));
+        view::set('url_registro', functions::generar_url(array($this->url[0], 'registro')));
         view::render('user/login');
 
         $footer = new footer();

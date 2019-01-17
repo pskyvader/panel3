@@ -27,10 +27,22 @@ class functions
         }
     }
 
+    private static function parse_size($size)
+    {
+        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+        $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+        if ($unit) {
+            // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+            return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+        } else {
+            return round($size);
+        }
+    }
+
     //Cortar string a "length" caracteres
     public static function substring($string, $length = null, $caracteres = " ...")
     {
-        if ($length == null) {
+        if (null == $length) {
             $length = 50;
         }
 
@@ -47,8 +59,8 @@ class functions
      */
     public static function url_redirect($url)
     {
-        $ruta     = self::generar_url($url);
-        $current  = self::current_url();
+        $ruta    = self::generar_url($url);
+        $current = self::current_url();
 
         if ($ruta != $current) {
             if (error_reporting()) {
@@ -95,7 +107,7 @@ class functions
                 $url .= "?" . http_build_query($_GET);
             }
         }
-        $url=str_replace("%2F","/",$url);
+        $url = str_replace("%2F", "/", $url);
         $url = (($front_auto) ? (app::get_url()) : (app::get_url($front))) . $url;
 
         return $url;
@@ -103,16 +115,15 @@ class functions
 
     public static function current_url()
     {
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-            $http = "https://";
+        if (isset($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'] || 1 == $_SERVER['HTTPS']) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) {
+            $protocol = 'https://';
         } else {
-            $http = "http://";
+            $protocol = 'http://';
         }
-
-        return $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        return $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
-    public static function generar_pass($length=8)
+    public static function generar_pass($length = 8)
     {
         $pass = strtoupper(substr(md5(uniqid()), -10, $length));
         return $pass;
@@ -142,7 +153,7 @@ class functions
         $url = strtolower($url);
         return $url;
     }
-    
+
     public static function test_input($data)
     {
         if (is_array($data)) {
@@ -180,7 +191,7 @@ class functions
     public static function formato_fecha($fecha, $formato = '')
     {
         //$fecha=strtotime($fecha);
-        if ($formato == '') {
+        if ('' == $formato) {
             $fecha_final = strftime('%d de %B del %Y', $fecha);
         } else {
             $fecha_final = strftime($formato, $fecha);
@@ -192,12 +203,13 @@ class functions
     /**
      * getContrastColor
      * retorna blanco o negro, dependiendo de que color de un mejor contraste
-     * 
+     *
      * @param  string $hexColor
      *
      * @return string
      */
-    public static function getContrastColor(string $hexColor):string {
+    public static function getContrastColor(string $hexColor): string
+    {
 
         //////////// hexColor RGB
         $R1 = hexdec(substr($hexColor, 1, 2));
@@ -205,25 +217,25 @@ class functions
         $B1 = hexdec(substr($hexColor, 5, 2));
 
         //////////// Black RGB
-        $blackColor = "#000000";
+        $blackColor   = "#000000";
         $R2BlackColor = hexdec(substr($blackColor, 1, 2));
         $G2BlackColor = hexdec(substr($blackColor, 3, 2));
         $B2BlackColor = hexdec(substr($blackColor, 5, 2));
 
-         //////////// Calc contrast ratio
-         $L1 = 0.2126 * pow($R1 / 255, 2.2) +
-               0.7152 * pow($G1 / 255, 2.2) +
-               0.0722 * pow($B1 / 255, 2.2);
+        //////////// Calc contrast ratio
+        $L1 = 0.2126 * pow($R1 / 255, 2.2) +
+        0.7152 * pow($G1 / 255, 2.2) +
+        0.0722 * pow($B1 / 255, 2.2);
 
         $L2 = 0.2126 * pow($R2BlackColor / 255, 2.2) +
-              0.7152 * pow($G2BlackColor / 255, 2.2) +
-              0.0722 * pow($B2BlackColor / 255, 2.2);
+        0.7152 * pow($G2BlackColor / 255, 2.2) +
+        0.0722 * pow($B2BlackColor / 255, 2.2);
 
         $contrastRatio = 0;
         if ($L1 > $L2) {
-            $contrastRatio = (int)(($L1 + 0.05) / ($L2 + 0.05));
+            $contrastRatio = (int) (($L1 + 0.05) / ($L2 + 0.05));
         } else {
-            $contrastRatio = (int)(($L2 + 0.05) / ($L1 + 0.05));
+            $contrastRatio = (int) (($L2 + 0.05) / ($L1 + 0.05));
         }
 
         //////////// If contrast is more than 5, return black color
@@ -232,9 +244,7 @@ class functions
         } else { //////////// if not, return white color.
             return '#fff';
         }
-}
-
-
+    }
 
     //formato de url
     public static function ruta($texto)
@@ -242,9 +252,9 @@ class functions
         $texto = trim($texto);
         $texto = trim($texto, ' ');
         $pos   = strpos($texto, 'http');
-        if ($pos !== false || $texto == '#') {
+        if (false !== $pos || '#' == $texto) {
             $ruta = $texto;
-        } elseif ($texto == '.') {
+        } elseif ('.' == $texto) {
             $ruta = '';
         } else {
             $ruta = "http://" . $texto;
@@ -267,11 +277,11 @@ class functions
 
     public static function encode_json($array, $pretty = false)
     {
-            if ($pretty) {
-                $json = json_encode($array, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-            } else {
-                $json = json_encode($array, JSON_UNESCAPED_UNICODE);
-            }
+        if ($pretty) {
+            $json = json_encode($array, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        } else {
+            $json = json_encode($array, JSON_UNESCAPED_UNICODE);
+        }
         return $json;
     }
 
@@ -302,6 +312,7 @@ class functions
     }
 
     public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
+
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);
@@ -318,9 +329,26 @@ class functions
         return $file_ary;
     }
 
-    public static function file_size($file_url)
+    
+    public static function get_max_size()
     {
-        $size       = filesize($file_url);
+        $max_size      = -1;
+        $post_max_size = self::parse_size(ini_get('post_max_size'));
+        $upload_max    = self::parse_size(ini_get('upload_max_filesize'));
+
+        if ($post_max_size > 0 && $upload_max > 0) {
+            $max_size = min($post_max_size, $upload_max);
+        }
+        return $max_size;
+    }
+
+    public static function file_size($file_url, $only_size = false)
+    {
+        if (!$only_size) {
+            $size = filesize($file_url);
+        } else {
+            $size = $file_url;
+        }
         $unit       = array('b', 'kb', 'mb', 'gb', 'tb', 'pb');
         $final_size = @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
         return $final_size;
@@ -328,7 +356,7 @@ class functions
 
     public static function protection_template($folder)
     {
-        if ($folder != "" && !file_exists($folder . "/index.php") && is_dir($folder) && is_writable($folder)) {
+        if ("" != $folder && !file_exists($folder . "/index.php") && is_dir($folder) && is_writable($folder)) {
             $a = '<?php
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");

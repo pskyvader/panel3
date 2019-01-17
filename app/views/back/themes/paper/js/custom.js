@@ -3,20 +3,26 @@ $(window).on('load', register_sw);
 $(window).on('load', activar_imagen);
 $(window).on('scroll', activar_imagen);
 $(window).on('resize', activar_imagen);
-var path = $("meta[property='path']").prop("content");
-var modulo = $("meta[property='modulo']").prop("content");
-var url = $("meta[property='og:url']").prop("content");
-var googlemaps_key = $("meta[property='googlemaps_key']").prop("content");
-var is_mobile=$.browser.mobile;
+
+var application_name = $("meta[name='application-name']");
+var path = application_name.data("path");
+var modulo = application_name.data("modulo");
+var url = application_name.data("url");
+var googlemaps_key = application_name.data("googlemaps_key");
+var max_size = application_name.data("max_size");
+var max_size_format = application_name.data("max_size_format");
+var is_mobile = $.browser.mobile;
+var update_content = $('#update_content');
 $.skylo('start');
 $.skylo('set', 50);
 
 function inicio() {
-    is_mobile=$.browser.mobile;
+    var application_name = $("meta[name='application-name']");
+    is_mobile = $.browser.mobile;
     $.material.init();
     $.skylo('end');
-    modulo = $("meta[property='modulo']").prop("content");
-    url = $("meta[property='og:url']").prop("content");
+    modulo = application_name.data("modulo");
+    url = application_name.data("url");
     Utility.animateContent();
     $('body').scrollSidebar();
     $('.select').dropdown(); // DropdownJS
@@ -43,17 +49,19 @@ function inicio() {
     $('textarea.autosize').autosize({
         append: "\n"
     });
-    var update_content = $('#update_content');
+    update_content = $('#update_content');
     if (update_content.length > 0) {
         setTimeout(get_update, 1000);
     }
 }
 
-var day = moment($('#time').text());
-setInterval(function(){
-day =day.add(1, 'second');
-$('#time').text(day.format('D/MM/YYYY HH:mm:ss'));
-},1000);
+var day = moment($('#time').data('time'), 'YYYY-MM-DD HH:mm:ss');
+$('#time span').text(day.format('DD/MM HH:mm:ss'));
+
+setInterval(function() {
+    day = day.add(1, 'second');
+    $('#time span').text(day.format('D/MM HH:mm:ss'));
+}, 1000);
 
 function register_sw() {
     if ('serviceWorker' in navigator) {

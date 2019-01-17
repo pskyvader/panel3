@@ -3,7 +3,7 @@ function inicio_user(){
         mover('.user-pedidos-detalle .content', 400, 500);
     }
 }
-
+var logueado=false;
 function inicio_login() {
     var modulo = "cuenta/";
     var url = create_url(modulo + "verificar", null, path);
@@ -18,11 +18,13 @@ function inicio_login() {
         }
         var b=$('<span> / </span>');
         if (data.exito) {
+            logueado=true;
             var a = $('<a href="' + path + modulo + 'datos">Bienvenido ' + data.mensaje + '</a>');
             var c = $('<button class="logout">Salir</button>');
             $('#carro-header .accion').text('Comprar').prop('href', path + 'pedido/step/1');
             $('#carro-header .accion-2').hide();
         } else {
+            logueado=false;
             var a = $('<a href="' + create_url(modulo + 'login', null, path) + '">Login</a>');
             var c = $('<a href="' + create_url(modulo + 'registro', null, path) + '">Registro</a>');
 
@@ -34,6 +36,7 @@ function inicio_login() {
             }, path)).show();
         }
         $('.cuenta-header').empty().append(a).append(b).append(c);
+        inicio_cart();
     });
 }
 
@@ -93,9 +96,7 @@ $(document).on('submit', 'form.login', function() {
     post(url, data, "Enviando datos de login", null, function(datos) {
         if (datos.exito) {
             if (datos.next_url) {
-                console.log(datos.next_url);
                 var url = create_url(datos.next_url, {}, path);
-                console.log(url);
             } else {
                 var url = create_url(modulo + "datos", {}, path);
             }

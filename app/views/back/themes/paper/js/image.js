@@ -1,3 +1,5 @@
+var last_preview=null;
+
 function inicio_image() {
     $('.image_multiple').each(function() {
         inicio_image_multiple($(this));
@@ -7,7 +9,18 @@ function inicio_image() {
         $(t).on('change', 'input[name="..."]', function(e) {
             habilitar(false);
             if (e.target.files.length > 0) {
-                post(create_url(modulo, 'upload'), {}, "Subiendo Imagen", !1, e.target.files, after_guardar_image, t);
+                if (max_size > 0 && e.target.files[0].size > max_size) {
+                    notificacion('Oh no!', "Tamaño de archivo demasiado grande.<br/>Tamaño de archivo maximo " + max_size_format, 'error');
+                    habilitar(true);
+                    if(last_preview!=null){
+                        setTimeout(function() {
+                            var preview=$('.fileinput-preview',$('input[data-id=' + campo + ']').parents('.fileinput'));
+                            preview.html(last_preview);
+                        }, 100);
+                    }
+                } else {
+                    post(create_url(modulo, 'upload'), {}, "Subiendo Imagen", !1, e.target.files, after_guardar_image, t);
+                }
             }
         });
         $(t).on('click', '.eliminar_image', function() {
@@ -19,6 +32,7 @@ $('body').on('click', '#formulario .fileinput-exists,input[name="..."],#cancelar
     cancelar_archivo($(this).data('id'));
 });
 var after_guardar_image = function(data, t) {
+    last_preview=null;
     $('.tmp', t).val(data.archivos[0].name);
     $('.name', t).val(data.archivos[0].name);
 };
@@ -41,6 +55,13 @@ function eliminar_image(campo) {
     $('input[name="' + campo + '"]').val('');
     $('img.' + campo).remove();
     $('.eliminar_image[data-id=' + campo + ']').hide();
+    if(last_preview!=null){
+        setTimeout(function() {
+            var preview=$('.fileinput-preview',$('input[data-id=' + campo + ']').parents('.fileinput'));
+            preview.html(last_preview);
+        }, 100);
+    }
+
 }
 
 function inicio_image_multiple(e) {

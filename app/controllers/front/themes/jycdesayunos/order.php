@@ -49,7 +49,7 @@ class order extends base
         $carro       = cart::current_cart(true);
         if (!$logueado['exito']) {
             $_GET['next_url'] = implode('/', $this->url);
-            $this->url        = array('cuenta', 'login');
+            $this->url        = array('cuenta', 'registro');
         }
         if (2 == $current_step) {
             $direcciones = usuariodireccion_model::getAll(array('idusuario' => $_SESSION[usuario_model::$idname . app::$prefix_site]));

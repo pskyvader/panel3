@@ -1,3 +1,4 @@
+app/config/config.json
 sitemap.xml*
 upload/files/*
 upload/images/*
@@ -7,3 +8,4 @@ backup/*
 !/backup/index.php
 cache/*
 !/cache/index.php
+.autogit

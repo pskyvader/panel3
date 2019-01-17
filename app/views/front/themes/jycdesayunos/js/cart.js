@@ -1,8 +1,8 @@
 var template_cart = null;
-var modulo_carro="carro/";
+var modulo_carro = "carro/";
 
 function inicio_cart() {
-    if(template_cart==null){
+    if (template_cart == null) {
         var tc = $('#template_cart-item');
         template_cart = $('li', tc);
         tc.remove();
@@ -27,7 +27,7 @@ function generar_cart(data) {
     var total_productos = "$0";
     var total_envio = "Por definir";
     var total = "$0";
-    if (typeof(data)=='object' &&  Object.keys(data).length > 0) {
+    if (typeof(data) == 'object' && Object.keys(data).length > 0) {
         total_productos = data.subtotal;
         total_envio = data.total_direcciones;
         total = data.total;
@@ -82,7 +82,13 @@ function add_cart(id, cantidad) {
             data = {};
         }
         if (data.exito) {
-            notificacion(data.mensaje, 'success',path + 'pedido/step/1');
+            if (logueado) {
+                notificacion(data.mensaje, 'success', create_url('pedido/step/1', {}, path));
+            } else {
+                notificacion(data.mensaje, 'success', create_url('cuenta/registro', {
+                    next_url: 'pedido/step/1'
+                }, path));
+            }
         } else {
             notificacion(data.mensaje, 'error');
         }
@@ -118,8 +124,8 @@ function remove_cart(id, e) {
                 $('.order .producto .card-price').each(function() {
                     total += parseInt($(this).text().substring(1).replace(".", ""));
                 });
-                if(total==0){
-                    var mensaje=$('<div class="alert alert-danger" role="alert"> Tu carro está vacío. Por favor agrega productos para continuar tu compra </div>');
+                if (total == 0) {
+                    var mensaje = $('<div class="alert alert-danger" role="alert"> Tu carro está vacío. Por favor agrega productos para continuar tu compra </div>');
                     $('.order .content').html(mensaje);
                 }
                 $('.precio_subtotal').text(formato_precio(total, 0));
@@ -127,7 +133,7 @@ function remove_cart(id, e) {
                 if (isNaN(envio)) {
                     envio = 0;
                 }
-                $('.precio_total').text(formato_precio(total+envio, 0));
+                $('.precio_total').text(formato_precio(total + envio, 0));
             }
         } else {
             notificacion(data.mensaje, 'error');

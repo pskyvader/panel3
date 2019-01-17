@@ -25,6 +25,7 @@ class head
         'manifest_url' => '',
         'path' => '',
         'modulo' => '',
+        'max_size' => -1,
     );
 
     public function __construct($metadata)
@@ -39,6 +40,9 @@ class head
         $this->data['path'] = app::$_path;
         $this->data['color_primario'] = $config['color_primario'];
         $this->data['googlemaps_key'] = $config['googlemaps_key'];
+        $size=functions::get_max_size();
+        $this->data['max_size'] = $size;
+        $this->data['max_size_format'] = ($size<0)?"Ilimitado":functions::file_size($size,true);
 
         $title = $config['title'];
         $short_title = $config['short_title'];

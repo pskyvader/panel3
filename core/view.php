@@ -172,7 +172,7 @@ class view
     }
     public static function set_array($data)
     {
-        self::$data = $data;
+        self::$data = (array)$data;
     }
     public static function reset()
     {

@@ -13,11 +13,23 @@ use \core\view;
 class detalle
 {
 
-    private $metadata  = array('title' => '');
-    private $templates = array();
+    private $metadata   = array('title' => '');
+    private $templates  = array();
+    private $max_upload = -1;
 
     public function __construct($metadata)
     {
+        $size = functions::get_max_size();
+        /*$unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+        $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
+        if ($unit) {
+            // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+            $size= round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
+        } else {
+            $size= round($size);
+        }*/
+
+        $this->max_upload = ($size<0)?"Ilimitado":functions::file_size($size,true);
         foreach ($metadata as $key => $value) {
             $this->metadata[$key] = $value;
         }
@@ -26,7 +38,7 @@ class detalle
         foreach ($files as $file) {
             $nombre    = explode(".", $file);
             $extension = strtolower(array_pop($nombre));
-            if ($extension == 'html') {
+            if ('html' == $extension) {
                 $html                                   = file_get_contents($list_dir . $file);
                 $this->templates[implode('.', $nombre)] = $html;
             }
@@ -40,7 +52,7 @@ class detalle
         $row      = array();
         foreach ($campos as $k => $v) {
             $content = $this->field($v, $row_data);
-            $row[]   = array('content' => $content, 'content_field' => $v['field'], 'class' => ($v['type'] == 'hidden') ? 'hidden' : '');
+            $row[]   = array('content' => $content, 'content_field' => $v['field'], 'class' => ('hidden' == $v['type']) ? 'hidden' : '');
         }
 
         $data['row']   = $row;
@@ -76,13 +88,13 @@ class detalle
         $modulo  = modulo_model::getAll($var, array('limit' => 1));
         $modulo  = $modulo[0];
         $estados = $modulo['estado'][0]['estado'];
-        if ($estados[$tipo_admin] != 'true' && !$force) {
+        if ('true' != $estados[$tipo_admin] && !$force) {
             functions::url_redirect(array('home'));
         }
         $campos = array();
         foreach ($modulo['detalle'] as $key => $m) {
-            if ($m['estado'][$tipo_admin] == 'true') {
-                $campos[$m['field']] = array('title_field' => $m['titulo'], 'field' => $m['field'], 'type' => $m['tipo'], 'required' => ($m['required'] == 'true') ? true : false, 'help' => $m['texto_ayuda']);
+            if ('true' == $m['estado'][$tipo_admin]) {
+                $campos[$m['field']] = array('title_field' => $m['titulo'], 'field' => $m['field'], 'type' => $m['tipo'], 'required' => ('true' == $m['required']) ? true : false, 'help' => $m['texto_ayuda']);
             }
         }
 
@@ -105,22 +117,22 @@ class detalle
                 );
                 break;
             case 'color':
-            $data = array(
-                'title_field' => $campos['title_field'],
-                'field'       => $campos['field'],
-                'is_required' => $campos['required'],
-                'required'    => ($campos['required']) ? 'required="required"' : '',
-                'value'       => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
-                'help'        => (isset($campos['help'])) ? $campos['help'] : '',
-            );
-            break;
+                $data = array(
+                    'title_field' => $campos['title_field'],
+                    'field'       => $campos['field'],
+                    'is_required' => $campos['required'],
+                    'required'    => ($campos['required']) ? 'required="required"' : '',
+                    'value'       => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
+                    'help'        => (isset($campos['help'])) ? $campos['help'] : '',
+                );
+                break;
             case 'date':
                 $data = array(
                     'title_field' => $campos['title_field'],
                     'field'       => $campos['field'],
                     'is_required' => $campos['required'],
                     'required'    => ($campos['required']) ? 'required="required"' : '',
-                    'help'        => $campos['help'],
+                    'help'        => (isset($campos['help'])) ? $campos['help'] : '',
                     'value'       => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
                 );
                 break;
@@ -130,7 +142,7 @@ class detalle
                     'field'       => $campos['field'],
                     'is_required' => $campos['required'],
                     'required'    => ($campos['required']) ? 'required="required"' : '',
-                    'help'        => $campos['help'],
+                    'help'        => (isset($campos['help'])) ? $campos['help'] : '',
                     'value'       => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
                 );
                 break;
@@ -140,9 +152,11 @@ class detalle
                     'field'       => $campos['field'],
                     'is_required' => $campos['required'],
                     'required'    => ($campos['required']) ? 'required="required"' : '',
+                    'help'        => (isset($campos['help'])) ? $campos['help'] : '',
                     'value'       => (isset($fila[$campos['field']])) ? $fila[$campos['field']] : '',
                 );
-                if ($editor_count == 0) {
+                $data['help'] .= " (Tamaño máximo de archivo " . $this->max_upload . ")";
+                if (0 == $editor_count) {
                     $theme           = app::get_url() . view::get_theme() . 'assets/ckeditor/';
                     $t               = '?t=I8BG';
                     $data['preload'] = array(
@@ -170,7 +184,7 @@ class detalle
                 $editor_count++;
                 break;
             case 'grupo_pedido':
-                $folder = $this->metadata['modulo'];
+                $folder      = $this->metadata['modulo'];
                 $direcciones = array();
                 if (isset($fila[$campos['field']])) {
                     $count = count($fila[$campos['field']]);
@@ -178,49 +192,48 @@ class detalle
                         $field                = $campo;
                         $field['title_field'] = $campos['title_field'];
                         $field['field']       = $campos['field'];
-                        $direcciones[]             = $field;
+                        $direcciones[]        = $field;
                     }
                 } else {
                     $count = 0;
                 }
                 foreach ($direcciones as $key => $d) {
-                    $direcciones[$key]['lista_productos']=$campos['lista_productos'];
-                    $direcciones[$key]['direccion_entrega']=$campos['direccion_entrega'];
+                    $direcciones[$key]['lista_productos']   = $campos['lista_productos'];
+                    $direcciones[$key]['direccion_entrega'] = $campos['direccion_entrega'];
                     foreach ($direcciones[$key]['direccion_entrega'] as $k => $e) {
-                        if($e['idusuariodireccion']==$d['idusuariodireccion']){
-                            $direcciones[$key]['direccion_entrega'][$k]['selected']='selected=""';
-                        }else{
-                            $direcciones[$key]['direccion_entrega'][$k]['selected']='';
+                        if ($e['idusuariodireccion'] == $d['idusuariodireccion']) {
+                            $direcciones[$key]['direccion_entrega'][$k]['selected'] = 'selected=""';
+                        } else {
+                            $direcciones[$key]['direccion_entrega'][$k]['selected'] = '';
                         }
                     }
 
                     foreach ($direcciones[$key]['productos'] as $k => $p) {
-                        $direcciones[$key]['productos'][$k]['lista_atributos']=$campos['lista_atributos'];
+                        $direcciones[$key]['productos'][$k]['lista_atributos'] = $campos['lista_atributos'];
                         foreach ($direcciones[$key]['productos'][$k]['lista_atributos'] as $f => $e) {
-                            if($e['idproducto']==$p['idproductoatributo']){
-                                $direcciones[$key]['productos'][$k]['lista_atributos'][$f]['selected']='selected=""';
-                            }else{
-                                $direcciones[$key]['productos'][$k]['lista_atributos'][$f]['selected']='';
+                            if ($e['idproducto'] == $p['idproductoatributo']) {
+                                $direcciones[$key]['productos'][$k]['lista_atributos'][$f]['selected'] = 'selected=""';
+                            } else {
+                                $direcciones[$key]['productos'][$k]['lista_atributos'][$f]['selected'] = '';
                             }
                         }
                     }
-                    
+
                 }
                 $data = array(
-                    'title_field' => $campos['title_field'],
-                    'field'       => $campos['field'],
-                    'is_required' => $campos['required'],
-                    'help'        => $campos['help'],
-                    'required'    => ($campos['required']) ? 'required="required"' : '',
-                    'direcciones'      => $direcciones,
-                    'direccion_entrega'      => $campos['direccion_entrega'],
-                    'lista_productos'      => $campos['lista_productos'],
-                    'lista_atributos'      => $campos['lista_atributos'],
-                    'fecha'      => date('Y-m-d H:i:s'),
-                    'count'       => ($count > 0) ? $count : '',
+                    'title_field'       => $campos['title_field'],
+                    'field'             => $campos['field'],
+                    'is_required'       => $campos['required'],
+                    'help'              => $campos['help'],
+                    'required'          => ($campos['required']) ? 'required="required"' : '',
+                    'direcciones'       => $direcciones,
+                    'direccion_entrega' => $campos['direccion_entrega'],
+                    'lista_productos'   => $campos['lista_productos'],
+                    'lista_atributos'   => $campos['lista_atributos'],
+                    'fecha'             => date('Y-m-d H:i:s'),
+                    'count'             => ($count > 0) ? $count : '',
                 );
                 break;
-
 
             case 'multiple':
                 $fields = array();
@@ -331,16 +344,16 @@ class detalle
                     'is_required' => $campos['required'],
                     'required'    => ($campos['required']) ? 'required' : '',
                     'active'      => (isset($fila[$campos['field']])) ? (string) $fila[$campos['field']] : '',
-                    'class'       => (isset($fila[$campos['field']])) ? (($fila[$campos['field']] == 'true') ? 'btn-success' : 'btn-danger') : 'btn-default',
-                    'icon'        => (isset($fila[$campos['field']])) ? (($fila[$campos['field']] == 'true') ? 'fa-check' : 'fa-close') : 'fa-question-circle',
+                    'class'       => (isset($fila[$campos['field']])) ? (('true' == $fila[$campos['field']]) ? 'btn-success' : 'btn-danger') : 'btn-default',
+                    'icon'        => (isset($fila[$campos['field']])) ? (('true' == $fila[$campos['field']]) ? 'fa-check' : 'fa-close') : 'fa-question-circle',
                 );
                 break;
             case 'multiple_active_array':
                 $array = array();
                 foreach ($campos['array'] as $key => $value) {
                     $campos['array'][$key]['active'] = (isset($fila[$campos['field']][$key])) ? (string) $fila[$campos['field']][$key] : 'true';
-                    $campos['array'][$key]['class']  = (isset($fila[$campos['field']][$key])) ? (($fila[$campos['field']][$key] == 'true') ? 'btn-success' : 'btn-danger') : 'btn-success';
-                    $campos['array'][$key]['icon']   = (isset($fila[$campos['field']][$key])) ? (($fila[$campos['field']][$key] == 'true') ? 'fa-check' : 'fa-close') : 'fa-check';
+                    $campos['array'][$key]['class']  = (isset($fila[$campos['field']][$key])) ? (('true' == $fila[$campos['field']][$key]) ? 'btn-success' : 'btn-danger') : 'btn-success';
+                    $campos['array'][$key]['icon']   = (isset($fila[$campos['field']][$key])) ? (('true' == $fila[$campos['field']][$key]) ? 'fa-check' : 'fa-close') : 'fa-check';
                 }
                 $data = array(
                     'title_field' => $campos['title_field'],
@@ -360,17 +373,18 @@ class detalle
                     'title_field'       => $campos['title_field'],
                     'field'             => $campos['field'],
                     'is_required'       => $campos['required'],
-                    'is_required_modal' => ($image_url != '') ? $campos['required'] : true,
-                    'is_required_alert' => ($image_url != '') ? $campos['required'] : true,
+                    'is_required_modal' => ('' != $image_url) ? $campos['required'] : true,
+                    'is_required_alert' => ('' != $image_url) ? $campos['required'] : true,
                     'required'          => ($campos['required']) ? 'required="required"' : '',
                     'image'             => $image_url,
-                    'is_image'          => ($image_url != '') ? true : false,
-                    'url'               => ($image_url != '') ? $fila[$campos['field']][0]['url'] : '',
-                    'parent'            => ($image_url != '') ? $fila[$campos['field']][0]['parent'] : '',
-                    'folder'            => ($image_url != '') ? $fila[$campos['field']][0]['folder'] : '',
-                    'subfolder'         => ($image_url != '') ? $fila[$campos['field']][0]['subfolder'] : '',
-                    'help'              => $campos['help'],
+                    'is_image'          => ('' != $image_url) ? true : false,
+                    'url'               => ('' != $image_url) ? $fila[$campos['field']][0]['url'] : '',
+                    'parent'            => ('' != $image_url) ? $fila[$campos['field']][0]['parent'] : '',
+                    'folder'            => ('' != $image_url) ? $fila[$campos['field']][0]['folder'] : '',
+                    'subfolder'         => ('' != $image_url) ? $fila[$campos['field']][0]['subfolder'] : '',
+                    'help'              => (isset($campos['help'])) ? $campos['help'] : '',
                 );
+                $data['help'] .= " (Tamaño máximo de archivo " . $this->max_upload . ")";
                 break;
             case 'multiple_image':
                 $folder = $this->metadata['modulo'];
@@ -383,8 +397,8 @@ class detalle
                         $field['field']       = $campos['field'];
                         $field['image']       = image::generar_url($campo, 'thumb');
                         $field['active']      = $campo['portada'];
-                        $field['class']       = ($campo['portada'] == 'true') ? 'btn-success' : 'btn-danger';
-                        $field['icon']        = ($campo['portada'] == 'true') ? 'fa-check' : 'fa-close';
+                        $field['class']       = ('true' == $campo['portada']) ? 'btn-success' : 'btn-danger';
+                        $field['icon']        = ('true' == $campo['portada']) ? 'fa-check' : 'fa-close';
                         $fields[]             = $field;
                     }
                 } else {
@@ -408,17 +422,18 @@ class detalle
                     'title_field'       => $campos['title_field'],
                     'field'             => $campos['field'],
                     'is_required'       => $campos['required'],
-                    'is_required_modal' => ($file_url != '') ? $campos['required'] : true,
-                    'is_required_alert' => ($file_url != '') ? $campos['required'] : true,
+                    'is_required_modal' => ('' != $file_url) ? $campos['required'] : true,
+                    'is_required_alert' => ('' != $file_url) ? $campos['required'] : true,
                     'required'          => ($campos['required']) ? 'required="required"' : '',
                     'file'              => $file_url,
-                    'is_file'           => ($file_url != '') ? true : false,
-                    'url'               => ($file_url != '') ? $fila[$campos['field']][0]['url'] : '',
-                    'parent'            => ($file_url != '') ? $fila[$campos['field']][0]['parent'] : '',
-                    'folder'            => ($file_url != '') ? $fila[$campos['field']][0]['folder'] : '',
-                    'subfolder'         => ($file_url != '') ? $fila[$campos['field']][0]['subfolder'] : '',
-                    'help'              => $campos['help'],
+                    'is_file'           => ('' != $file_url) ? true : false,
+                    'url'               => ('' != $file_url) ? $fila[$campos['field']][0]['url'] : '',
+                    'parent'            => ('' != $file_url) ? $fila[$campos['field']][0]['parent'] : '',
+                    'folder'            => ('' != $file_url) ? $fila[$campos['field']][0]['folder'] : '',
+                    'subfolder'         => ('' != $file_url) ? $fila[$campos['field']][0]['subfolder'] : '',
+                    'help'              => (isset($campos['help'])) ? $campos['help'] : '',
                 );
+                $data['help'] .= " (Tamaño máximo de archivo " . $this->max_upload . ")";
                 break;
             case 'multiple_file':
                 $folder = $this->metadata['modulo'];
@@ -437,10 +452,11 @@ class detalle
                     'title_field' => $campos['title_field'],
                     'field'       => $campos['field'],
                     'is_required' => $campos['required'],
-                    'help'        => $campos['help'],
+                    'help'        => (isset($campos['help'])) ? $campos['help'] : '',
                     'required'    => ($campos['required']) ? 'required="required"' : '',
                     'fields'      => $fields,
                 );
+                $data['help'] .= " (Tamaño máximo de archivo " . $this->max_upload . ")";
                 break;
             case 'number':
                 $data = array(
@@ -491,11 +507,11 @@ class detalle
                 break;
             case 'recursive_checkbox':
             case 'recursive_radio':
-                if ($level == 0) {
+                if (0 == $level) {
                     if (isset($fila[$campos['field']])) {
                         $count = count($fila[$campos['field']]);
                     } else {
-                        if ($campos['type'] == 'recursive_radio' || isset($_GET[$campos['field']])) {
+                        if ('recursive_radio' == $campos['type'] || isset($_GET[$campos['field']])) {
                             $count = 1;
                         } else {
                             $count = 0;
@@ -515,7 +531,7 @@ class detalle
                     }
                 } else {
                     $parent  = $campos['parent'];
-                    $checked = ($idparent == 0) ? 'checked="checked"' : '';
+                    $checked = (0 == $idparent) ? 'checked="checked"' : '';
                     if (!isset($fila[$campos['field']])) {
                         if (isset($_GET[$campos['field']])) {
                             $checked = ($idparent == $_GET[$campos['field']]) ? 'checked="checked"' : '';
@@ -551,7 +567,7 @@ class detalle
                     'option'      => array(),
                 );
                 foreach ($campos['parent'] as $key => $children) {
-                    $selected = ($children[0] == 0) ? 'selected="selected"' : '';
+                    $selected = (0 == $children[0]) ? 'selected="selected"' : '';
                     if (!isset($fila[$campos['field']])) {
                         if (isset($_GET[$campos['field']])) {
                             $selected = ($children[0] == $_GET[$campos['field']]) ? 'selected="selected"' : '';
@@ -593,7 +609,7 @@ class detalle
         $campos    = $_POST['campos'];
         $respuesta = array('exito' => false, 'mensaje' => '');
 
-        if ($campos['id'] == '') {
+        if ('' == $campos['id']) {
             $respuesta['id']      = $class::insert($campos);
             $respuesta['mensaje'] = "Creado correctamente";
         } else {
