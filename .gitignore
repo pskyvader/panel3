@@ -11,3 +11,5 @@ cache/*
 .autogit
 *.js
 *.css
+admin/*.js
+admin/*.css
