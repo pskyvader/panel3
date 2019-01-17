@@ -8,3 +8,4 @@ backup/*
 cache/*
 !/cache/index.php
 app/config/config.json
+.autogit/*
