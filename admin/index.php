@@ -13,6 +13,7 @@ function autoload_classes($class_name)
         include_once $filename;
     }
 }
+
 //registramos el autoload autoload_classes
 spl_autoload_register('autoload_classes');
 
