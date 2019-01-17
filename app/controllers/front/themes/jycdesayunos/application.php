@@ -10,7 +10,6 @@ use \core\functions;
 use \core\image;
 use \core\view;
 
-
 class application
 {
     private $url = array('home');
