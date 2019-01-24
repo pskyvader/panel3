@@ -18,6 +18,7 @@ function sitemap(data) {
     } else {
         if (data.generado) {
             notificacion('SITEMAP', 'Sitemap generado correctamente', 'success');
+            $("#ver_sitemap").prop("href",);
         } else {
             var total = data.progreso;
             $('#progreso_sitemap').val(total).trigger('change');
