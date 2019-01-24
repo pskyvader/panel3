@@ -134,10 +134,6 @@ function cargar_ajax(href, push, data_form) {
             $(location).prop('href', href);
             valido = false;
         } else {
-            $("#hello").removeClass(function(index, className) {
-                return (className.match(/(^|\s)module-\S+/g) || []).join(' ');
-            }).addClass("module-" + data.class);
-
             var an = $("meta[name='application-name']");
             document.title = data.title;
             $("meta[property='og\\:site_name']").prop("content", data.title);
