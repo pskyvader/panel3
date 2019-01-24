@@ -77,6 +77,7 @@ class cache
     public static function save_cache(array $url)
     {
         $ruta    = functions::generar_url($url);
+        echo "ruta: ".$ruta;
         $current = functions::current_url();
         if ($ruta == $current && app::$_front && self::$cacheable) {
             $dir = app::get_dir(true) . 'cache/';
