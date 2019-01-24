@@ -7,6 +7,7 @@ use \core\database;
 
 //use \core\functions;
 /**
+ * @class pedido
  * Esta tabla NO BORRA CACHE
  */
 class pedido extends base_model
