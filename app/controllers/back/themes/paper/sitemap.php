@@ -94,14 +94,13 @@ class sitemap extends base
             if (!$r['exito'] && isset($r['new_url']) && $r['new_url'] != '') {
                 $existe = sitemap_model::getAll(array('url' => $r['new_url']), array('limit' => 1));
                 if (count($existe) == 0) {
-                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => 1, 'valid' => $valido, 'ready' => $ready);
+                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => 1, 'valid' => "", 'ready' => false);
                     $id     = sitemap_model::insert($insert);
                 }
             }
             $respuesta['exito'] = true;
         } else {
             $row = sitemap_model::getAll(array('ready' => false));
-            var_dump($row);
             if (count($row) == 0) {
                 $respuesta = $this->generar_sitemap();
             } else {
@@ -134,7 +133,7 @@ class sitemap extends base
                             if (!$r['exito'] && isset($r['new_url']) && $r['new_url'] != '') {
                                 $existe = sitemap_model::getAll(array('url' => $r['new_url']), array('limit' => 1));
                                 if (count($existe) == 0) {
-                                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => $depth + 1, 'valid' => $valido, 'ready' => $ready);
+                                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => $depth + 1, 'valid' => "", 'ready' => false);
                                     $id     = sitemap_model::insert($insert);
                                 }
                             }
