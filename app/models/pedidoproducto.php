@@ -16,6 +16,23 @@ class pedidoproducto extends base_model
     $table                       = 'pedidoproducto';
     private static $delete_cache = false;
 
+    public static function insert(array $data, bool $log = true)
+    {
+        $fields     = table::getByname(static::$table);
+        $insert     = database::create_data($fields, $data);
+        $connection = database::instance();
+        $row        = $connection->insert(static::$table, static::$idname, $insert, self::$delete_cache);
+        if (is_int($row) && $row > 0) {
+            $last_id = $row;
+            if ($log) {
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            }
+            return $last_id;
+        } else {
+            return $row;
+        }
+    }
+
     public static function update(array $set, bool $log = true)
     {
         $where = array(static::$idname => $set['id']);
