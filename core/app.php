@@ -170,7 +170,7 @@ class app
             @ini_set('expose_php', 'off');
         }
         call_user_func_array([$this->_controller, $this->_method], $this->_params);
-        echo self::$current_url;
+        print_r(self::$current_url);
         cache::save_cache(self::$current_url);
     }
 
