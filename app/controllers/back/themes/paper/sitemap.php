@@ -160,7 +160,7 @@ class sitemap extends base
             $total = ($listos * 100) / ($listos + $pendientes);
         }
         $respuesta['progreso'] = $total;
-
+echo "Asdfadsf";
         echo json_encode($respuesta);
     }
     public function generar_sitemap()
