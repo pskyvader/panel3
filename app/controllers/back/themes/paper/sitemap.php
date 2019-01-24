@@ -230,7 +230,7 @@ class sitemap extends base
         }
         return $sublista;
     }
-    public function head($sitio, $sitio_base)
+    private function head($sitio, $sitio_base)
     {
         $respuesta = array('exito' => true, 'mensaje' => $this->validar_url($sitio, $sitio_base));
         if ($respuesta['mensaje'] == '') {
