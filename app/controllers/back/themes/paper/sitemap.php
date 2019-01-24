@@ -101,13 +101,13 @@ class sitemap extends base
             $respuesta['exito'] = true;
         } else {
             $row = sitemap_model::getAll(array('ready' => false));
+            var_dump($row);
             if (count($row) == 0) {
                 $respuesta = $this->generar_sitemap();
             } else {
                 $sitio = $row[0];
                 $depth = $sitio['depth'];
                 $url   = $sitio['url'];
-                var_dump($sitio);
                 if ($sitio['valid'] == '') {
                     $sub_sitios = $this->generar_url($url, $sitio_base);
                 } else {
