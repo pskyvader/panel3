@@ -101,7 +101,6 @@ function cargar_ajax(href, push, data_form) {
             $(location).prop('href', href);
             valido = false;
         } else {
-            $("body").prop("id", "module-" + data.class);
             document.title = data.title;
             $("meta[property='og\\:site_name']").prop("content", data.title);
             $("meta[property='og\\:title']").prop("content", data.title);
