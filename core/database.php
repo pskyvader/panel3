@@ -100,13 +100,13 @@ class database
     {
         return $this->_connection->prepare($sql);
     }
-     //Procesar consulta, sql=consulta,return=devolver resultados o solo true o false si se ejecuto la operacion
-    private function consulta($sql, $return,$delete_cache=true)
+    //Procesar consulta, sql=consulta,return=devolver resultados o solo true o false si se ejecuto la operacion
+    private function consulta($sql, $return, $delete_cache = true)
     {
         /*foreach ($this->llamadas as $key => $ll) {
-            if($ll['consulta']==$sql){
-                return $ll['resultado'];
-            }
+        if($ll['consulta']==$sql){
+        return $ll['resultado'];
+        }
         }*/
         //$ll=array('consulta'=>$sql);
         //$t=microtime(true)*1000;
@@ -115,8 +115,8 @@ class database
             $query->execute();
             if ($return) {
                 $rows = $query->fetchAll();
-            }else{
-                if($delete_cache){
+            } else {
+                if ($delete_cache) {
                     cache::delete_cache();
                 }
             }
@@ -136,7 +136,7 @@ class database
             }
         }
         //$ll['resultado']=$rows;
-       // $ll['tiempo']=(microtime(true)*1000)-$t;
+        // $ll['tiempo']=(microtime(true)*1000)-$t;
         //$this->llamadas[]=$ll;
 
         return $rows;
@@ -144,15 +144,15 @@ class database
 
     public function get_last_insert_id()
     { //ultimo elemento insertado
-        return (int)$this->_connection->lastInsertId();
+        return (int) $this->_connection->lastInsertId();
     }
 
     public function get($table, $idname, $where, $condiciones = array(), $select = "")
     {
         if ($select == "") {
             $select = "*";
-        }elseif($select=='total'){
-            $select=$idname;
+        } elseif ($select == 'total') {
+            $select = $idname;
         }
 
         $sql = "SELECT " . $select . " FROM " . self::$_prefix . $table;
@@ -191,7 +191,7 @@ class database
         return $row;
     }
 
-    public function insert($table, $idname, $insert,$delete_cache=true)
+    public function insert($table, $idname, $insert, $delete_cache = true)
     { //consulta insert
         $valor_primario = "";
         $image          = array();
@@ -215,9 +215,9 @@ class database
             $sql .= ($value == "true" || $value == "false") ? $value : "'" . str_replace("'", "\\'", $value) . "'";
         }
         $sql .= ")";
-        $row = $this->consulta($sql, false,$delete_cache);
-        if($row){
-            $last_id=$this->get_last_insert_id();
+        $row = $this->consulta($sql, false, $delete_cache);
+        if ($row) {
+            $last_id = $this->get_last_insert_id();
             if (count($image) > 0) {
                 $this->process_image($image, $table, $idname, $last_id);
             }
@@ -229,7 +229,7 @@ class database
         return $row;
     }
 
-    public function update($table, $idname, $set, $where,$delete_cache=true)
+    public function update($table, $idname, $set, $where, $delete_cache = true)
     { //consulta update
         $set   = self::process_multiple($set);
         $image = array();
@@ -261,8 +261,8 @@ class database
         }
         $sql .= ") ";
         if (count($where) > 0) {
-            $row = $this->consulta($sql, false,$delete_cache);
-            if($row){
+            $row = $this->consulta($sql, false, $delete_cache);
+            if ($row) {
                 if (count($image) > 0) {
                     $this->process_image($image, $table, $idname, $where[$idname]);
                 }
@@ -277,7 +277,7 @@ class database
         }
     }
 
-    public function delete($table, $idname, $where,$delete_cache=true)
+    public function delete($table, $idname, $where, $delete_cache = true)
     { //consulta delete
         $sql = "DELETE FROM " . self::$_prefix . $table;
         $sql .= " WHERE (TRUE";
@@ -286,7 +286,7 @@ class database
         }
         $sql .= ")";
         if (count($where) > 0) {
-            $row = $this->consulta($sql, false,$delete_cache);
+            $row = $this->consulta($sql, false, $delete_cache);
             image::delete($table, '', $where[$idname]);
             file::delete($table, '', $where[$idname]);
             return $row;
