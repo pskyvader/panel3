@@ -6,6 +6,7 @@ defined("APPPATH") or die("Acceso denegado");
 use \core\database;
 
 //use \core\functions;
+
 /**
  * @class pedido
  * Esta tabla NO BORRA CACHE
