@@ -254,6 +254,7 @@ class sitemap extends base
                 }
             }
         }
+        print_r($respuesta);
         return $respuesta;
     }
     public function validar_url($sitio, $sitio_base)
