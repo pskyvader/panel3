@@ -229,25 +229,25 @@ class sitemap extends base
         }
         return $sublista;
     }
-    private function head($sitio, $sitio_base)
+    private function head($sitio, $sitio_base, $count=0)
     {
         $respuesta = array('exito' => true, 'mensaje' => $this->validar_url($sitio, $sitio_base));
         if ($respuesta['mensaje'] == '') {
             $headers = get_headers($sitio, 1);
+            echo "-----".$count."---";
+            var_dump($headers);
             if (stripos($headers[0], 'OK') === false) {
                 if (stripos($headers[0], 'Moved') !== false) {
-                    var_dump($headers);
                     if (is_array($headers['Location'])) {
                         $headers['Location'] = $headers['Location'][0];
                     }
-                    $location             = $this->head($headers['Location'], $sitio_base);
+                    $location             = $this->head($headers['Location'], $sitio_base,$count++);
                     $respuesta['new_url'] = ((isset($location['new_url'])) ? $location['new_url'] : $headers['Location']);
                     if (is_array($respuesta['new_url'])) {
                         $respuesta['new_url'] = $respuesta['new_url'][0];
                     }
 
                     $respuesta['mensaje'] = $location['mensaje'];
-                    echo $location['mensaje'];
                     $respuesta['exito']   = false;
                 } else {
                     $respuesta['mensaje'] = 'status: ' . $headers[0];
