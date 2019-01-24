@@ -12,8 +12,10 @@ defined("APPPATH") or die("Acceso denegado");
  */
 class pedidoproducto extends base_model
 {
-    public static $idname = 'idpedidoproducto',
-    $table                = 'pedidoproducto';
+    public static $idname        = 'idpedidoproducto',
+    $table                       = 'pedidoproducto';
+    private static $delete_cache = false;
+
     public static function update(array $set, bool $log = true)
     {
         $where = array(static::$idname => $set['id']);

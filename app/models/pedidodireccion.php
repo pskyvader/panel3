@@ -12,8 +12,8 @@ defined("APPPATH") or die("Acceso denegado");
  */
 class pedidodireccion extends base_model
 {
-    public static $idname = 'idpedidodireccion',
-    $table = 'pedidodireccion';
+    public static $idname        = 'idpedidodireccion',
+    $table                       = 'pedidodireccion';
     private static $delete_cache = false;
 
     public static function insert(array $data, bool $log = true)
@@ -22,7 +22,7 @@ class pedidodireccion extends base_model
         $insert     = database::create_data($fields, $data);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert, self::$delete_cache);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
@@ -40,7 +40,7 @@ class pedidodireccion extends base_model
         $connection = database::instance();
         $row        = $connection->update(static::$table, static::$idname, $set, $where, self::$delete_cache);
         if ($log) {
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set,$where));
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set, $where));
         }
         if (is_bool($row) && $row) {
             $row = $where[static::$idname];
@@ -61,7 +61,7 @@ class pedidodireccion extends base_model
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {
-            $foto_copy=$row['foto'];
+            $foto_copy = $row['foto'];
             unset($row['foto']);
         }
         if (isset($row['archivo'])) {
@@ -71,16 +71,16 @@ class pedidodireccion extends base_model
         $insert     = database::create_data($fields, $row);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert, self::$delete_cache);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
-            if(isset($foto_copy)){
-                $new_fotos=array();
+            if (isset($foto_copy)) {
+                $new_fotos = array();
                 foreach ($foto_copy as $key => $foto) {
-                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
-                    $new_fotos[]=$copiar['file'][0];
+                    $copiar      = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
+                    $new_fotos[] = $copiar['file'][0];
                     image::regenerar($copiar['file'][0]);
                 }
-                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
+                $update = array('id' => $last_id, 'foto' => functions::encode_json($new_fotos));
                 static::update($update);
             }
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
