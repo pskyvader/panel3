@@ -107,6 +107,7 @@ class sitemap extends base
                 $sitio = $row[0];
                 $depth = $sitio['depth'];
                 $url   = $sitio['url'];
+                var_dump($sitio);
                 if ($sitio['valid'] == '') {
                     $sub_sitios = $this->generar_url($url, $sitio_base);
                 } else {
@@ -118,7 +119,6 @@ class sitemap extends base
                     sitemap_model::update($update);
                     $id_padre = $sitio[0];
                     $depth++;
-                    var_dump($sub_sitios);
                     foreach ($sub_sitios as $key => $sitios) {
                         $existe = sitemap_model::getAll(array('url' => $sitios), array('limit' => 1));
                         if (count($existe) == 0) {
