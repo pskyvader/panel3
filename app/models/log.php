@@ -2,10 +2,8 @@
 namespace app\models;
 
 defined("APPPATH") or die("Acceso denegado");
-use \core\database;
 use \core\app;
-use \core\functions;
-
+use \core\database;
 
 /**
  * @class log
@@ -13,8 +11,8 @@ use \core\functions;
  */
 class log extends base_model
 {
-    public static $idname = 'idlog',
-    $table = 'log';
+    public static $idname        = 'idlog',
+    $table                       = 'log';
     private static $delete_cache = false;
 
     public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
@@ -24,19 +22,19 @@ class log extends base_model
         }
         if (isset($condiciones['palabra'])) {
             $condiciones['buscar'] = array(
-                'tabla' => $condiciones['palabra'],
-                'accion' => $condiciones['palabra'],
+                'tabla'         => $condiciones['palabra'],
+                'accion'        => $condiciones['palabra'],
                 'administrador' => $condiciones['palabra'],
             );
         }
 
         $connection = database::instance();
-        
-        if($select=='total'){
-            $return_total=true;
+
+        if ($select == 'total') {
+            $return_total = true;
         }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        if(isset($return_total)){
+        if (isset($return_total)) {
             return count($row);
         }
         return $row;
@@ -48,7 +46,7 @@ class log extends base_model
         $insert     = database::create_data($fields, $data);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert, self::$delete_cache);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
@@ -62,7 +60,7 @@ class log extends base_model
     public static function insert_log(string $tabla, string $idname, $funcion, $row)
     {
         if ($tabla != static::$table && !app::$_front) {
-            $administrador = $_SESSION['nombre' . app::$prefix_site].' ('.$_SESSION['email' . app::$prefix_site].')';
+            $administrador = $_SESSION['nombre' . app::$prefix_site] . ' (' . $_SESSION['email' . app::$prefix_site] . ')';
 
             $accion = 'metodo: ' . $funcion;
             if (isset($row['titulo'])) {
@@ -80,9 +78,9 @@ class log extends base_model
 
             $data = array(
                 'administrador' => $administrador,
-                'tabla' => $tabla,
-                'accion' => $accion,
-                'fecha' => date('Y-m-d H:i:s'),
+                'tabla'         => $tabla,
+                'accion'        => $accion,
+                'fecha'         => date('Y-m-d H:i:s'),
             );
             static::insert($data);
         }
