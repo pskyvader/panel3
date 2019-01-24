@@ -16,6 +16,7 @@ class cache
     protected static $cacheable_config = null;
     public static function set_cache(bool $cache)
     {
+        echo "no cache";
         self::$cacheable = $cache;
     }
     public static function is_cacheable()
