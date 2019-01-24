@@ -6,10 +6,16 @@ use \core\database;
 use \core\app;
 use \core\functions;
 
+
+/**
+ * @class log
+ * Esta tabla NO BORRA CACHE
+ */
 class log extends base_model
 {
     public static $idname = 'idlog',
     $table = 'log';
+    private static $delete_cache = false;
 
     public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
@@ -34,6 +40,23 @@ class log extends base_model
             return count($row);
         }
         return $row;
+    }
+
+    public static function insert(array $data, bool $log = true)
+    {
+        $fields     = table::getByname(static::$table);
+        $insert     = database::create_data($fields, $data);
+        $connection = database::instance();
+        $row        = $connection->insert(static::$table, static::$idname, $insert, self::$delete_cache);
+        if (is_int($row) && $row>0) {
+            $last_id = $row;
+            if ($log) {
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            }
+            return $last_id;
+        } else {
+            return $row;
+        }
     }
 
     public static function insert_log(string $tabla, string $idname, $funcion, $row)
