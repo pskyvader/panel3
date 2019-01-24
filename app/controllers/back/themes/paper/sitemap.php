@@ -84,7 +84,6 @@ class sitemap extends base
         if (count($row) == 0) {
             $r      = $this->head($sitio_base, $sitio_base);
             $valido = $r['mensaje'];
-            var_dump($r);
             $ready  = ($valido != '') ? true : false;
             if (isset($r['new_url']) && $r['new_url'] != '') {
                 $valido .= " redirect " . $r['new_url'];
@@ -123,6 +122,7 @@ class sitemap extends base
                         $existe = sitemap_model::getAll(array('url' => $sitios), array('limit' => 1));
                         if (count($existe) == 0) {
                             $r      = $this->head($sitios, $sitio_base);
+                            var_dump($r);
                             $valido = $r['mensaje'];
                             $ready  = ($valido != '') ? true : false;
                             if (isset($r['new_url']) && $r['new_url'] != '') {
