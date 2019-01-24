@@ -35,6 +35,7 @@ function generar_cart(data) {
             $(data.productos).each(function(k, v) {
                 cantidad += parseInt(v.cantidad);
                 var e = template_cart.clone();
+
                 e.html(
                     e.html().replace(/{url_producto}/ig, v.url)
                     .replace(/{imagen_producto}/ig, v.foto)
@@ -43,6 +44,7 @@ function generar_cart(data) {
                     .replace(/{cantidad_producto}/ig, v.cantidad)
                     .replace(/{id}/ig, v.idpedidoproducto)
                     .replace('data-src', 'src')
+                    .replace('data-href', 'href')
                 );
                 elementos.push(e);
             });

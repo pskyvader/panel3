@@ -63,7 +63,7 @@ class sitemap extends base
         view::set('progreso', $total);
         view::set('is_error', $is_error);
         view::set('mensaje_error', $mensaje_error);
-        view::set('url_sitemap', functions::generar_url(array('sitemap.xml'), array('time' => time()), false, true));
+        view::set('url_sitemap', functions::generar_url(array('sitemap.xml'), array(), false, true));
         view::render('sitemap');
 
         $footer = new footer();
@@ -94,7 +94,7 @@ class sitemap extends base
             if (!$r['exito'] && isset($r['new_url']) && $r['new_url'] != '') {
                 $existe = sitemap_model::getAll(array('url' => $r['new_url']), array('limit' => 1));
                 if (count($existe) == 0) {
-                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => 1, 'valid' => $valido, 'ready' => $ready);
+                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => 1, 'valid' => "", 'ready' => false);
                     $id     = sitemap_model::insert($insert);
                 }
             }
@@ -133,7 +133,7 @@ class sitemap extends base
                             if (!$r['exito'] && isset($r['new_url']) && $r['new_url'] != '') {
                                 $existe = sitemap_model::getAll(array('url' => $r['new_url']), array('limit' => 1));
                                 if (count($existe) == 0) {
-                                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => $depth + 1, 'valid' => $valido, 'ready' => $ready);
+                                    $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => $depth + 1, 'valid' => "", 'ready' => false);
                                     $id     = sitemap_model::insert($insert);
                                 }
                             }
@@ -160,7 +160,6 @@ class sitemap extends base
             $total = ($listos * 100) / ($listos + $pendientes);
         }
         $respuesta['progreso'] = $total;
-
         echo json_encode($respuesta);
     }
     public function generar_sitemap()
@@ -230,7 +229,7 @@ class sitemap extends base
         }
         return $sublista;
     }
-    public function head($sitio, $sitio_base)
+    private function head($sitio, $sitio_base, $count=0)
     {
         $respuesta = array('exito' => true, 'mensaje' => $this->validar_url($sitio, $sitio_base));
         if ($respuesta['mensaje'] == '') {
@@ -240,7 +239,7 @@ class sitemap extends base
                     if (is_array($headers['Location'])) {
                         $headers['Location'] = $headers['Location'][0];
                     }
-                    $location             = $this->head($headers['Location'], $sitio_base);
+                    $location             = $this->head($headers['Location'], $sitio_base,$count+1);
                     $respuesta['new_url'] = ((isset($location['new_url'])) ? $location['new_url'] : $headers['Location']);
                     if (is_array($respuesta['new_url'])) {
                         $respuesta['new_url'] = $respuesta['new_url'][0];
@@ -274,6 +273,5 @@ class sitemap extends base
         } else {
             return 'domain';
         }
-
     }
 }

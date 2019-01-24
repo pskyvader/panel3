@@ -1,6 +1,9 @@
 $('body').on('click', 'button.generar_sitemap,button.nuevo_sitemap', function() {
     generar_sitemap($(this));
 });
+if($("#ver_sitemap").length>0){
+    $("#ver_sitemap").prop("href",$("#ver_sitemap").data("href")+"?time="+Date.now());
+}
 
 function generar_sitemap(e) {
     var accion = $(e).data('action');
@@ -18,6 +21,7 @@ function sitemap(data) {
     } else {
         if (data.generado) {
             notificacion('SITEMAP', 'Sitemap generado correctamente', 'success');
+            $("#ver_sitemap").prop("href",$("#ver_sitemap").data("href")+"?time="+Date.now());
         } else {
             var total = data.progreso;
             $('#progreso_sitemap').val(total).trigger('change');

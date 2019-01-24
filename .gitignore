@@ -1,5 +1,5 @@
 app/config/config.json
-sitemap.xml*
+sitemap.xml
 upload/files/*
 upload/images/*
 uploads/img/*

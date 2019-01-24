@@ -101,13 +101,13 @@ function cargar_ajax(href, push, data_form) {
             $(location).prop('href', href);
             valido = false;
         } else {
-            $("body").prop("id", "module-" + data.class);
+            var an = $("meta[name='application-name']");
             document.title = data.title;
             $("meta[property='og\\:site_name']").prop("content", data.title);
             $("meta[property='og\\:title']").prop("content", data.title);
             $("meta[property='og\\:url']").prop("content", data.current_url);
-            $("meta[property='og\\:url']").prop("content", data.current_url);
-            $("meta[property='modulo']").prop("content", data.modulo);
+            an.data("modulo", data.modulo);
+            an.data("url", data.current_url);
             if (data.image) {
                 $("meta[property='og\\:image']").prop("content", data.image_url);
             } else {
