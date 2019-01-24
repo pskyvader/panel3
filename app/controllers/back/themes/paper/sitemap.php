@@ -236,6 +236,7 @@ class sitemap extends base
             $headers = get_headers($sitio, 1);
             if (stripos($headers[0], 'OK') === false) {
                 if (stripos($headers[0], 'Moved') !== false) {
+                    var_dump($headers);
                     if (is_array($headers['Location'])) {
                         $headers['Location'] = $headers['Location'][0];
                     }
