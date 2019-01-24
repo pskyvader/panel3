@@ -160,7 +160,6 @@ class sitemap extends base
             $total = ($listos * 100) / ($listos + $pendientes);
         }
         $respuesta['progreso'] = $total;
-echo "Asdfadsf";
         echo json_encode($respuesta);
     }
     public function generar_sitemap()
@@ -235,7 +234,6 @@ echo "Asdfadsf";
         $respuesta = array('exito' => true, 'mensaje' => $this->validar_url($sitio, $sitio_base));
         if ($respuesta['mensaje'] == '') {
             $headers = get_headers($sitio, 1);
-            var_dump($headers);
             if (stripos($headers[0], 'OK') === false) {
                 if (stripos($headers[0], 'Moved') !== false) {
                     if (is_array($headers['Location'])) {
@@ -258,8 +256,6 @@ echo "Asdfadsf";
     }
     public function validar_url($sitio, $sitio_base)
     {
-        var_dump($sitio);
-        var_dump($sitio_base);
         if (
             strpos($sitio, "#") !== false ||
             strpos($sitio, "../") !== false ||
@@ -277,6 +273,5 @@ echo "Asdfadsf";
         } else {
             return 'domain';
         }
-
     }
 }
