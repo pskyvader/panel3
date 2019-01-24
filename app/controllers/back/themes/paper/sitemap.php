@@ -118,11 +118,11 @@ class sitemap extends base
                     sitemap_model::update($update);
                     $id_padre = $sitio[0];
                     $depth++;
+                    var_dump($sub_sitios);
                     foreach ($sub_sitios as $key => $sitios) {
                         $existe = sitemap_model::getAll(array('url' => $sitios), array('limit' => 1));
                         if (count($existe) == 0) {
                             $r      = $this->head($sitios, $sitio_base);
-                            var_dump($r);
                             $valido = $r['mensaje'];
                             $ready  = ($valido != '') ? true : false;
                             if (isset($r['new_url']) && $r['new_url'] != '') {
