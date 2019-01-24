@@ -19,6 +19,8 @@ class base
     public function __construct(int $idseo,bool $cache=true)
     {
         if(!$cache){
+            echo "no cache";
+            exit;
             cache::set_cache(false);
         }
         $this->seo               = seo_model::getById($idseo);
