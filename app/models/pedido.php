@@ -4,12 +4,16 @@ namespace app\models;
 defined("APPPATH") or die("Acceso denegado");
 //use \core\app;
 use \core\database;
-//use \core\functions;
 
+//use \core\functions;
+/**
+ * Esta tabla NO BORRA CACHE
+ */
 class pedido extends base_model
 {
-    public static $idname = 'idpedido',
-    $table                = 'pedido';
+    public static $idname        = 'idpedido',
+    $table                       = 'pedido';
+    private static $delete_cache = false;
 
     public static function insert(array $data, bool $log = true)
     {
@@ -19,8 +23,8 @@ class pedido extends base_model
         $fields     = table::getByname(static::$table);
         $insert     = database::create_data($fields, $data);
         $connection = database::instance();
-        $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        $row        = $connection->insert(static::$table, static::$idname, $insert, self::$delete_cache);
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
@@ -30,6 +34,32 @@ class pedido extends base_model
             return $row;
         }
     }
+
+    public static function update(array $set, bool $log = true)
+    {
+        $where = array(static::$idname => $set['id']);
+        unset($set['id']);
+        $connection = database::instance();
+        $row        = $connection->update(static::$table, static::$idname, $set, $where, self::$delete_cache);
+        if ($log) {
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set, $where));
+        }
+        if (is_bool($row) && $row) {
+            $row = $where[static::$idname];
+        }
+
+        return $row;
+    }
+
+    public static function delete(int $id)
+    {
+        $where      = array(static::$idname => $id);
+        $connection = database::instance();
+        $row        = $connection->delete(static::$table, static::$idname, $where, self::$delete_cache);
+        log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
+        return $row;
+    }
+
     public static function getByCookie(string $cookie, bool $estado_carro = true)
     {
         $where = array("cookie_pedido" => $cookie);
