@@ -31,7 +31,6 @@ class cart extends base
 
         $banner = new banner();
         $banner->individual($this->seo['banner'], $this->metadata['title'], $this->seo['subtitulo']);
-        echo "asdfafdfsda";
 
         $footer = new footer();
         $footer->normal();

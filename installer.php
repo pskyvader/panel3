@@ -186,7 +186,7 @@ switch ($paso) {
                             if (strlen(strip_tags($nombre)) > 30) {
                                 $n .= "...";
                             }
-                            $log = array('mensaje' => 'Restaurando ' . $n . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
+                            $log = array('mensaje' => 'Instalando ' . $n . ' (' . ($i + 1) . '/' . $total . ')', 'porcentaje' => ((($i + 1) / $total) * 90));
                             file_put_contents($archivo_log, json_encode($log));
                         }
                         if (time() - $tiempo > 20) {

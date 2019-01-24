@@ -4824,8 +4824,8 @@
                     {
                         "tag": "social",
                         "titulo": "Redes sociales",
-                        "ancho": "350",
-                        "alto": "260",
+                        "ancho": "600",
+                        "alto": "315",
                         "calidad": "90",
                         "tipo": "centrar"
                     }
@@ -8314,7 +8314,7 @@
                 "tipo": "active"
             }
         ],
-        "orden": "20",
+        "orden": "21",
         "estado": "1",
         "aside": "1",
         "tipos": "1",
@@ -8929,7 +8929,7 @@
         "padre": "",
         "mostrar": [],
         "detalle": [],
-        "orden": "21",
+        "orden": "22",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -8993,7 +8993,7 @@
         "padre": "",
         "mostrar": [],
         "detalle": [],
-        "orden": "22",
+        "orden": "23",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -9094,7 +9094,7 @@
                 "tipo": "text"
             }
         ],
-        "orden": "23",
+        "orden": "24",
         "estado": "1",
         "aside": "1",
         "tipos": "0",
@@ -9271,7 +9271,7 @@
                 "tipo": "text"
             }
         ],
-        "orden": "24",
+        "orden": "25",
         "estado": "1",
         "aside": "1",
         "tipos": "0",

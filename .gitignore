@@ -9,3 +9,5 @@ backup/*
 cache/*
 !/cache/index.php
 .autogit
+resources-*.js
+resources-*.css
