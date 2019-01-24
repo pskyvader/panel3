@@ -78,7 +78,6 @@ class cache
     {
         $ruta    = functions::generar_url($url);
         $current = functions::current_url();
-        echo "ruta: ".$ruta." current:".$current;
         if ($ruta == $current && app::$_front && self::$cacheable) {
             $dir = app::get_dir(true) . 'cache/';
             if (is_writable($dir)) {
