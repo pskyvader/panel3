@@ -241,7 +241,7 @@ class sitemap extends base
                     if (is_array($headers['Location'])) {
                         $headers['Location'] = $headers['Location'][0];
                     }
-                    $location             = $this->head($headers['Location'], $sitio_base,$count++);
+                    $location             = $this->head($headers['Location'], $sitio_base,$count+1);
                     $respuesta['new_url'] = ((isset($location['new_url'])) ? $location['new_url'] : $headers['Location']);
                     if (is_array($respuesta['new_url'])) {
                         $respuesta['new_url'] = $respuesta['new_url'][0];
