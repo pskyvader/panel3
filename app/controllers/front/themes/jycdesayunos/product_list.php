@@ -5,8 +5,8 @@ defined("APPPATH") or die("Acceso denegado");
 use \app\models\configuracion as configuracion_model;
 use \app\models\producto as producto_model;
 use \app\models\productocategoria as productocategoria_model;
-use \core\image;
 use \core\functions;
+use \core\image;
 use \core\view;
 
 class product_list extends base
@@ -26,8 +26,9 @@ class product_list extends base
         $this->page   = (isset($_GET['page']) && $_GET['page'] != '') ? (int) trim(strip_tags($_GET['page'])) : 1;
         $this->limit  = (isset($_GET['limit']) && $_GET['limit'] != '') ? (int) trim(strip_tags($_GET['limit'])) : 6;
     }
-    public function is_search(){
-        $is_search=($this->search!='');
+    public function is_search()
+    {
+        $is_search = ($this->search != '');
         view::set('is_search', $is_search);
         view::set('search', $this->search);
     }
@@ -58,13 +59,13 @@ class product_list extends base
             $is_sidebar = false;
         }
 
-        if($is_sidebar){
+        if ($is_sidebar) {
             view::set('title', "Categorias");
             view::set('is_sidebar_category', $is_sidebar_categories);
             view::set('sidebar_categories', $sidebar_categories);
             view::set('is_sidebar_prices', $is_sidebar_prices);
             return view::render('product/sidebar', false, true);
-        }else{
+        } else {
             return "";
         }
     }
@@ -151,7 +152,7 @@ class product_list extends base
             $lista_productos = $this->lista_productos($productos, 'detail', 'foto2');
             view::set('lista_productos', $lista_productos);
             if ($this->view == 'grid') {
-                 // Comprobar si existe o no sidebar, para agrandar o achicar el tamaño del producto
+                // Comprobar si existe o no sidebar, para agrandar o achicar el tamaño del producto
                 $variables = array();
                 if ($this->seo['tipo_modulo'] != 0) {
                     $variables['tipo'] = $this->seo['tipo_modulo'];
@@ -204,10 +205,12 @@ class product_list extends base
             $sw = !$sw;
         }
 
+        $aux_page = (isset($_GET['page'])) ? $_GET['page'] : '';
+
         $_GET['page'] = $page - 1;
         $pagination[] = array(
             'class_page' => 'previous ' . (($page > 1) ? '' : 'disabled'),
-            'url_page'   => (($page > 1) ?  functions::generar_url($this->url) : functions::generar_url($this->url,false)),
+            'url_page'   => (($page > 1) ? functions::generar_url($this->url) : functions::generar_url($this->url, false)),
             'text_page'  => '<i class="fa fa-angle-left"> </i>',
         );
 
@@ -223,29 +226,34 @@ class product_list extends base
         $_GET['page'] = $page + 1;
         $pagination[] = array(
             'class_page' => 'next ' . (($page < $total) ? '' : 'disabled'),
-            'url_page'   => (($page < $total) ? functions::generar_url($this->url) : functions::generar_url($this->url,false)) ,
+            'url_page'   => (($page < $total) ? functions::generar_url($this->url) : functions::generar_url($this->url, false)),
             'text_page'  => '<i class="fa fa-angle-right"> </i> ',
         );
+
+        if ($aux_page != '') {
+            $_GET['page'] = $aux_page;
+        } else {
+            unset($_GET['page']);
+        }
         view::set('pagination', $pagination);
     }
 
-    
     public function lista_productos($row, $url = 'detail', $recorte = 'foto1')
     {
         $lista = array();
         foreach ($row as $key => $v) {
             $portada = image::portada($v['foto']);
             $c       = array(
-                'id'          => $v[0],
-                'title'       => $v['titulo'],
-                'is_descuento'       => ($v['precio_final']!=$v['precio']),
-                'price'       => functions::formato_precio($v['precio_final']),
-                'old_price'       => functions::formato_precio($v['precio']),
-                'is_stock'       => ($v['stock']>0),
-                'image'       => image::generar_url($portada, $recorte),
-                'description' => strip_tags($v['resumen']),
-                'srcset'      => array(),
-                'url'         => functions::url_seccion(array($this->url[0], $url), $v),
+                'id'           => $v[0],
+                'title'        => $v['titulo'],
+                'is_descuento' => ($v['precio_final'] != $v['precio']),
+                'price'        => functions::formato_precio($v['precio_final']),
+                'old_price'    => functions::formato_precio($v['precio']),
+                'is_stock'     => ($v['stock'] > 0),
+                'image'        => image::generar_url($portada, $recorte),
+                'description'  => strip_tags($v['resumen']),
+                'srcset'       => array(),
+                'url'          => functions::url_seccion(array($this->url[0], $url), $v),
             );
             $src = image::generar_url($portada, $recorte, 'webp');
             if ($src != '') {
