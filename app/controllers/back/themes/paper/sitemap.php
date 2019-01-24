@@ -235,6 +235,7 @@ class sitemap extends base
         $respuesta = array('exito' => true, 'mensaje' => $this->validar_url($sitio, $sitio_base));
         if ($respuesta['mensaje'] == '') {
             $headers = get_headers($sitio, 1);
+            var_dump($headers);
             if (stripos($headers[0], 'OK') === false) {
                 if (stripos($headers[0], 'Moved') !== false) {
                     if (is_array($headers['Location'])) {
