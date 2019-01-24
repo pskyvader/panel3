@@ -28,12 +28,12 @@
     <div id="template_cart-item" class="d-none">
         <li>
             <div class="media">
-                <a href="{url_producto}">
+                <a data-href="{url_producto}">
                     <img class="media-object" data-src="{imagen_producto}" width="50" alt="{titulo_producto}">
                 </a>
                 <div class="media-body">
                     <h4>
-                        <a href="{url_producto}">{titulo_producto}</a>
+                        <a data-href="{url_producto}">{titulo_producto}</a>
                     </h4>
                     <p>{precio_producto}<span>x {cantidad_producto}</span> <i onclick="remove_cart({id});" class="fa fa-remove"></i></p>
                 </div>
