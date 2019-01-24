@@ -10,6 +10,7 @@ use \core\functions;
 /**
  * @class Database
  */
+
 class database
 {
 
