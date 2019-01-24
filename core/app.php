@@ -3,26 +3,26 @@ namespace core;
 
 defined("APPPATH") or die("Acceso denegado");
 
-use \core\cache;
 use \app\models\seo as seo_model;
+use \core\cache;
 
 class app
 {
-    private $_controller    = "";
-    private $_method        = "index";
-    private $_params        = array();
-    public static $_title   = "";
-    public static $prefix_site   = "";
-    public static $_path    = "";
-    public static $_front   = true;
-    private static $_config = array();
-    private static $_url    = array();
-    private static $current_url    = "";
-    const NAMESPACE_FRONT   = "app\controllers\\front\\themes\\";
-    const NAMESPACE_BACK    = "app\controllers\\back\\themes\\";
-    const CONTROLLERS_PATH  = "controllers/";
-    const FRONT_PATH        = "front/themes/";
-    const BACK_PATH         = "back/themes/";
+    private $_controller        = "";
+    private $_method            = "index";
+    private $_params            = array();
+    public static $_title       = "";
+    public static $prefix_site  = "";
+    public static $_path        = "";
+    public static $_front       = true;
+    private static $_config     = array();
+    private static $_url        = array();
+    private static $current_url = "";
+    const NAMESPACE_FRONT       = "app\controllers\\front\\themes\\";
+    const NAMESPACE_BACK        = "app\controllers\\back\\themes\\";
+    const CONTROLLERS_PATH      = "controllers/";
+    const FRONT_PATH            = "front/themes/";
+    const BACK_PATH             = "back/themes/";
 
     /**
      * [__construct description]
@@ -35,10 +35,10 @@ class app
         }
 
         session_start();
-        $config       = self::getConfig();
-        self::$_title = $config['title'];
+        $config            = self::getConfig();
+        self::$_title      = $config['title'];
         self::$prefix_site = functions::url_amigable(self::$_title);
-        self::$_front = $front;
+        self::$_front      = $front;
 
         $site          = str_replace("www.", "", $_SERVER['HTTP_HOST']);
         $subdirectorio = $config['dir'];
@@ -72,9 +72,9 @@ class app
             $namespace = self::NAMESPACE_BACK . $config['theme_back'] . '\\';
         }
         //obtenemos la url parseada
-        $url =$this->parseUrl();
-        $cache=cache::get_cache(self::$current_url);
-        if($cache!=''){
+        $url   = $this->parseUrl();
+        $cache = cache::get_cache(self::$current_url);
+        if ($cache != '') {
             echo $cache;
             exit;
         }
@@ -131,17 +131,17 @@ class app
                     $_REQUEST['idseo'] = $seo[0][0];
                 }
             }
-            
-            self::$current_url= $_GET;
+
+            self::$current_url = $_GET;
             unset($_GET["url"]);
             return $url;
         } else {
-            $url=array('');
+            $url = array('');
             $seo = seo_model::getById(1);
             if (count($seo) > 0) {
                 $url[0]            = $seo['modulo_front'];
                 $_REQUEST['idseo'] = $seo[0];
-                self::$current_url= array('url'=>$url[0]);
+                self::$current_url = array('url' => $url[0]);
             }
             return $url;
         }
@@ -163,7 +163,9 @@ class app
         }
         setlocale(LC_ALL, 'spanish');
         setlocale(LC_ALL, "es_ES.UTF-8");
-        if (!ini_get('date.timezone')) {date_default_timezone_set('America/Santiago');}
+        if (!ini_get('date.timezone')) {
+            date_default_timezone_set('America/Santiago');
+        }
         if (function_exists('header_remove')) {
             header_remove('X-Powered-By');
         } else {
