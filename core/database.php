@@ -255,7 +255,6 @@ class database
             $sql .= ($value == "true" || $value == "false") ? $value : "'" . str_replace("'", "\\'", $value) . "'";
             $sql .= ($count < count($set)) ? ", " : "";
         }
-        $sql .= "";
         $sql .= " WHERE (TRUE";
         foreach ($where as $key => $value) {
             $sql .= " AND " . $key . "='" . $value . "'";
