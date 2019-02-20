@@ -312,7 +312,6 @@ class functions
     }
 
     public static function reArrayFiles(&$file_post) // multiples archivos, transformar array $_FILES
-
     {
         $file_ary = array();
         $multiple = is_array($file_post['name']);
