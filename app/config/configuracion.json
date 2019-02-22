@@ -1,7 +1,7 @@
 [
     {
         "variable": "version",
-        "valor": "0.29.0"
+        "valor": "0.30.0"
     },
     {
         "variable": "orden_producto",
@@ -17,10 +17,10 @@
     },
     {
         "variable": "cantidad_backup_lento",
-        "valor": "3"
+        "valor": "4"
     },
     {
         "variable": "tiempo_backup_lento",
-        "valor": "22,666666666667"
+        "valor": "34,25"
     }
 ]
