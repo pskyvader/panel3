@@ -1,5 +1,10 @@
 [
     {
+        "version": "0.30.0",
+        "descripcion": "Cambios menores, actualizacion de algoritmo de contraseñas",
+        "archivo":"v0.30.0.zip"
+    },
+    {
         "version": "0.29.0",
         "descripcion": "Cambios de cache, SDK Webpay operativo",
         "archivo":"v0.29.0.zip"
