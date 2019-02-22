@@ -37,7 +37,7 @@ class login
 
         $error_login=false;
         if(isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['token'])){
-            if($_SESSION['login_token']['token']==$_POST['token']){
+            if(isset($_SESSION['login_token']) && $_SESSION['login_token']['token']==$_POST['token']){
                 if(time()-$_SESSION['login_token']['time']<=120){
                     if(!isset($_POST['recordar'])) $_POST['recordar']='';
                     $logueado=administrador_model::login($_POST['email'],$_POST['pass'],$_POST['recordar']);

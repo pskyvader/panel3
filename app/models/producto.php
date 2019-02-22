@@ -4,13 +4,19 @@ namespace app\models;
 defined("APPPATH") or die("Acceso denegado");
 use \core\app;
 use \core\database;
-use \core\image;
 use \core\functions;
+use \core\image;
 
+/**
+ * @class producto
+ * Esta tabla NO BORRA CACHE al actualizar stock
+ */
 class producto extends base_model
 {
-    public static $idname = 'idproducto',
-    $table                = 'producto';
+    public static $idname        = 'idproducto',
+    $table                       = 'producto';
+    private static $delete_cache = false;
+
     public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
         $connection = database::instance();
@@ -131,7 +137,7 @@ class producto extends base_model
                             $precio_final = 1;
                         }
 
-                        $row[$key]['precio_final'] = (int)$precio_final;
+                        $row[$key]['precio_final'] = (int) $precio_final;
                     }
                 }
             }
@@ -193,7 +199,7 @@ class producto extends base_model
                             $precio_final = 1;
                         }
 
-                        $row[0]['precio_final'] = (int)$precio_final;
+                        $row[0]['precio_final'] = (int) $precio_final;
                     }
                 }
             }
@@ -202,11 +208,31 @@ class producto extends base_model
         return (count($row) == 1) ? $row[0] : $row;
     }
 
+    public static function update(array $set, bool $log = true)
+    {
+        $where = array(static::$idname => $set['id']);
+        unset($set['id']);
+        $connection = database::instance();
+        if (app::$_front) {
+            $row = $connection->update(static::$table, static::$idname, $set, $where, self::$delete_cache);
+        } else {
+            $row = $connection->update(static::$table, static::$idname, $set, $where);
+        }
+        if ($log) {
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set, $where));
+        }
+        if (is_bool($row) && $row) {
+            $row = $where[static::$idname];
+        }
+
+        return $row;
+    }
+
     public static function copy(int $id)
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {
-            $foto_copy=$row['foto'];
+            $foto_copy = $row['foto'];
             unset($row['foto']);
         }
         if (isset($row['archivo'])) {
@@ -217,16 +243,16 @@ class producto extends base_model
         $insert                     = database::create_data($fields, $row);
         $connection                 = database::instance();
         $row                        = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
-            if(isset($foto_copy)){
-                $new_fotos=array();
+            if (isset($foto_copy)) {
+                $new_fotos = array();
                 foreach ($foto_copy as $key => $foto) {
-                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
-                    $new_fotos[]=$copiar['file'][0];
+                    $copiar      = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
+                    $new_fotos[] = $copiar['file'][0];
                     image::regenerar($copiar['file'][0]);
                 }
-                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
+                $update = array('id' => $last_id, 'foto' => functions::encode_json($new_fotos));
                 static::update($update);
             }
             log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);

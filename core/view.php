@@ -368,7 +368,6 @@ class view
                 self::render('resources');
             }
         }
-
     }
 
     public static function get_theme()

@@ -235,7 +235,7 @@ class administrador extends base_model
                     $body_email = array(
                         'body'          => view::get_theme() . 'mail/recuperar_password.html',
                         'titulo'        => "Recuperación de contraseña",
-                        'cabecera'      => "Estimado " . $usuario["nombre"] . ", se ha solicitado la recuperación de contraseña en " . $nombre_sitio,
+                        'cabecera'      => "Estimado " . $admin["nombre"] . ", se ha solicitado la recuperación de contraseña en " . $nombre_sitio,
                         'campos'        => array('Contraseña (sin espacios)' => $pass),
                         'campos_largos' => array(),
                     );
