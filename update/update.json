@@ -1,7 +1,7 @@
 [
     {
         "version": "0.30.0",
-        "descripcion": "Cambios menores, actualizacion de algoritmo de password",
+        "descripcion": "Cambios menores, actualizacion de algoritmo de contraseñas",
         "archivo":"v0.30.0.zip"
     },
     {
