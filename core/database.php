@@ -520,9 +520,12 @@ class database
 
     public static function encript($password)
     {
-        $salt = sha1($password);
-        $p    = crypt($password, $salt);
-        return $salt . sha1($p);
+        $part1 = hash('sha256', $password);
+        $part2 = hash('sha256', $part1);
+        $password= $part1 . $part2;
+        echo $password;
+        exit();
+        return $password;
     }
 
     public static function create_data($model, $data)
