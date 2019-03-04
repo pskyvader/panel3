@@ -594,7 +594,7 @@ class detalle
 
         
         view::set_array($data);
-        $content=view::render('list/'.$campos['type'], false, true);
+        $content=view::render('detail/'.$campos['type'], false, true);
         return $content;
         //return view::render_template($data, $this->templates[$campos['type']]);
     }
