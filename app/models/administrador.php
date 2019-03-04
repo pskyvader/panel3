@@ -12,7 +12,6 @@ class administrador extends base_model
 {
     public static $idname = 'idadministrador',
     $table                = 'administrador';
-    public $cookie;
     public static function insert(array $data, bool $log = true)
     {
         if (isset($data['pass']) && $data['pass'] != '') {
@@ -143,7 +142,6 @@ class administrador extends base_model
                     $_SESSION["nombre" . $prefix_site]        = $admin['nombre'];
                     $_SESSION["estado" . $prefix_site]        = $admin['estado'];
                     $_SESSION["tipo" . $prefix_site]          = $admin['tipo'];
-                    $_SESSION['prefix_site']                  = $prefix_site;
                     log::insert_log(static::$table, static::$idname, __FUNCTION__, $admin);
                     if ($recordar == 'on') {
                         return static::update_cookie($admin[0]);
@@ -174,7 +172,6 @@ class administrador extends base_model
         unset($_SESSION["nombre" . $prefix_site]);
         unset($_SESSION["estado" . $prefix_site]);
         unset($_SESSION["tipo" . $prefix_site]);
-        unset($_SESSION['prefix_site']);
         functions::set_cookie('cookieadmin' . $prefix_site, 'aaa', time() + (31536000));
     }
 

@@ -14,7 +14,7 @@ class file extends image
     {
 
     }
-    public static function upload_tmp($modulo = '')
+    public static function upload_tmp()
     {
         $respuesta = array('exito' => false, 'mensaje' => '');
         if (isset($_FILES)) {

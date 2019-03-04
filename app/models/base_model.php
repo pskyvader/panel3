@@ -5,8 +5,8 @@ defined("APPPATH") or die("Acceso denegado");
 use \app\interfaces\crud;
 use \core\app;
 use \core\database;
-use \core\image;
 use \core\functions;
+use \core\image;
 
 class base_model implements crud
 {
@@ -60,7 +60,7 @@ class base_model implements crud
             if (isset($fields['metadescripcion'])) {
                 $condiciones['buscar']['metadescripcion'] = $condiciones['palabra'];
             }
-            
+
             if (isset($fields['cookie_pedido'])) {
                 $condiciones['buscar']['cookie_pedido'] = $condiciones['palabra'];
             }
@@ -120,6 +120,9 @@ class base_model implements crud
         $connection = database::instance();
         $row        = $connection->get(static::$table, static::$idname, $where);
         if (count($row) == 1) {
+            if (isset($row[0]['idpadre'])) {
+                $row[0]['idpadre'] = functions::decode_json($row[0]['idpadre']);
+            }
             if (isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
             }
@@ -136,7 +139,7 @@ class base_model implements crud
         $insert     = database::create_data($fields, $data);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
@@ -154,7 +157,7 @@ class base_model implements crud
         $connection = database::instance();
         $row        = $connection->update(static::$table, static::$idname, $set, $where);
         if ($log) {
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set,$where));
+            log::insert_log(static::$table, static::$idname, __FUNCTION__, array_merge($set, $where));
         }
         if (is_bool($row) && $row) {
             $row = $where[static::$idname];
@@ -171,33 +174,38 @@ class base_model implements crud
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
         return $row;
     }
-    public static function copy(int $id)
+    public static function copy(int $id, bool $log = true)
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {
-            $foto_copy=$row['foto'];
+            $foto_copy = $row['foto'];
             unset($row['foto']);
         }
         if (isset($row['archivo'])) {
             unset($row['archivo']);
         }
+        if (isset($row['idpadre'])) {
+            $row['idpadre'] = functions::encode_json($row['idpadre']);
+        }
         $fields     = table::getByname(static::$table);
         $insert     = database::create_data($fields, $row);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
-            if(isset($foto_copy)){
-                $new_fotos=array();
+            if (isset($foto_copy)) {
+                $new_fotos = array();
                 foreach ($foto_copy as $key => $foto) {
-                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
-                    $new_fotos[]=$copiar['file'][0];
+                    $copiar      = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
+                    $new_fotos[] = $copiar['file'][0];
                     image::regenerar($copiar['file'][0]);
                 }
-                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
+                $update = array('id' => $last_id, 'foto' => functions::encode_json($new_fotos));
                 static::update($update);
             }
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            if ($log) {
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            }
             return $last_id;
         } else {
             return $row;

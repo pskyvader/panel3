@@ -75,7 +75,7 @@ class modulo extends base_model
         return (count($row) == 1) ? $row[0] : $row;
     }
 
-    public static function copy(int $id)
+    public static function copy(int $id, bool $log = true)
     {
         $row             = static::getById($id);
         $row['menu']     = functions::encode_json($row['menu']);

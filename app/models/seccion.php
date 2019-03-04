@@ -108,9 +108,6 @@ class seccion extends base_model
         $row = $connection->get(static::$table, static::$idname, $where);
         if (count($row) == 1) {
             $row[0]['idseccioncategoria'] = functions::decode_json($row[0]['idseccioncategoria']);
-            if (isset($idseccioncategoria) && !in_array($idseccioncategoria, $row[0]['idseccioncategoria'])) {
-                unset($row[0]);
-            }
             if (isset($row[0]) && isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
             }

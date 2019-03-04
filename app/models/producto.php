@@ -159,17 +159,14 @@ class producto extends base_model
         $row        = $connection->get(static::$table, static::$idname, $where);
         if (count($row) == 1) {
             $row[0]['idproductocategoria'] = functions::decode_json($row[0]['idproductocategoria']);
-            if (isset($idproductocategoria) && !in_array($idproductocategoria, $row[0]['idproductocategoria'])) {
-                unset($row[0]);
-            }
-            if (isset($row[0]) && isset($row[0]['foto'])) {
+            if (isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
             }
-            if (isset($row[0]) && isset($row[0]['archivo'])) {
+            if (isset($row[0]['archivo'])) {
                 $row[0]['archivo'] = functions::decode_json($row[0]['archivo']);
             }
 
-            if (isset($row[0]) && isset($row[0]['precio'])) {
+            if (isset($row[0]['precio'])) {
 
                 $cat        = productocategoria::getById($row[0]['idproductocategoria'][0]);
                 $categorias = array();

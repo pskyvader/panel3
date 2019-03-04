@@ -29,8 +29,7 @@ class sitemap extends base_model
         
         $connection = database::instance();
         $respuesta['exito'] = $connection->truncate(array(static::$table));
-        if ($respuesta['exito']) {
-        } else {
+        if (!$respuesta['exito']) {
             $respuesta['mensaje'] = 'Error al vaciar tablas';
         }
         return $respuesta;
