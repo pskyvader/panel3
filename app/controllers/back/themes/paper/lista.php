@@ -12,22 +12,11 @@ use \core\view;
 class lista
 {
     private $metadata  = array('title' => '');
-    private $templates = array();
 
     public function __construct($metadata)
     {
         foreach ($metadata as $key => $value) {
             $this->metadata[$key] = $value;
-        }
-        $list_dir = view::get_theme() . 'list/';
-        $files    = scandir($list_dir);
-        foreach ($files as $file) {
-            $nombre    = explode(".", $file);
-            $extension = strtolower(array_pop($nombre));
-            if ('html' == $extension) {
-                $html                                   = file_get_contents($list_dir . $file);
-                $this->templates[implode('.', $nombre)] = $html;
-            }
         }
     }
     public function normal($data)
@@ -224,8 +213,6 @@ class lista
                 break;
         }
 
-        //$html    = $this->templates[$type];
-        //$content = view::render_template($data, $html);
         view::set_array($data);
         $content=view::render('list/'.$th['type'], false, true);
         return $content;
