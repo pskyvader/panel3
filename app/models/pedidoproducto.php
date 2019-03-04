@@ -57,7 +57,7 @@ class pedidoproducto extends base_model
         log::insert_log(static::$table, static::$idname, __FUNCTION__, $where);
         return $row;
     }
-    public static function copy(int $id)
+    public static function copy(int $id, bool $log = true)
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {
