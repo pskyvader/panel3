@@ -59,7 +59,7 @@ class view
         }
         $str = self::render_template(self::$data, $content);
         if ($minify && !$return && cache::is_cacheable()) {
-            $str = mini::html($str,array('collapse_whitespace'=>true));
+            $str = mini::html($str, array('collapse_whitespace' => true));
         }
 
         self::reset();
@@ -82,7 +82,7 @@ class view
      * IMPORTANTE: para evitar sobreescribir variables, se debe ingresar primero los arrays con mas profundidad primero
      * luego los arrays con menos profundidad
      * finalmente los if y datos planos
-     * 
+     *
      * @param  array $data
      * @param  string $content
      *
@@ -172,7 +172,7 @@ class view
     }
     public static function set_array($data)
     {
-        self::$data = (array)$data;
+        self::$data = (array) $data;
     }
     public static function reset()
     {
