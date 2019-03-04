@@ -118,7 +118,7 @@ class seccion extends base_model
         return (count($row) == 1) ? $row[0] : $row;
     }
 
-    public static function copy(int $id)
+    public static function copy(int $id, bool $log = true)
     {
         $row = static::getById($id);
         if (isset($row['foto'])) {
@@ -145,7 +145,9 @@ class seccion extends base_model
                 $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
                 static::update($update);
             }
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            if ($log) {
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            }
             return $last_id;
         } else {
             return $row;
