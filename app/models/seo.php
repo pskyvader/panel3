@@ -85,7 +85,7 @@ class seo extends base_model
         return (count($row) == 1) ? $row[0] : $row;
     }
 
-    public static function copy(int $id)
+    public static function copy(int $id, bool $log = true)
     {
         $row = static::getById($id);
         if (isset($row['banner'])) {
@@ -125,7 +125,9 @@ class seo extends base_model
                 $update=array('id'=>$last_id,'banner'=>functions::encode_json($new_banners));
                 static::update($update);
             }
-            log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            if ($log) {
+                log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
+            }
             return $last_id;
         } else {
             return $row;
