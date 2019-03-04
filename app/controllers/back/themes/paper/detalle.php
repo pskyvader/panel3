@@ -164,7 +164,6 @@ class detalle
                 $editor_count++;
                 break;
             case 'grupo_pedido':
-                $folder      = $this->metadata['modulo'];
                 $direcciones = array();
                 if (isset($fila[$campos['field']])) {
                     $count = count($fila[$campos['field']]);
@@ -329,7 +328,6 @@ class detalle
                 );
                 break;
             case 'multiple_active_array':
-                $array = array();
                 foreach ($campos['array'] as $key => $value) {
                     $campos['array'][$key]['active'] = (isset($fila[$campos['field']][$key])) ? (string) $fila[$campos['field']][$key] : 'true';
                     $campos['array'][$key]['class']  = (isset($fila[$campos['field']][$key])) ? (('true' == $fila[$campos['field']][$key]) ? 'btn-success' : 'btn-danger') : 'btn-success';

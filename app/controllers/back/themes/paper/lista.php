@@ -11,7 +11,7 @@ use \core\view;
 
 class lista
 {
-    private $metadata  = array('title' => '');
+    private $metadata = array('title' => '');
 
     public function __construct($metadata)
     {
@@ -213,7 +213,7 @@ class lista
         }
 
         view::set_array($data);
-        $content=view::render('list/'.$th['type'], false, true);
+        $content = view::render('list/' . $th['type'], false, true);
         return $content;
     }
     public static function configuracion($modulo)
