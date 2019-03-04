@@ -79,7 +79,7 @@ class table extends base_model
         }
     }
 
-    public static function copy(int $id)
+    public static function copy(int $id, bool $log = true)
     {
         $row           = static::getById($id);
         $row['fields'] = functions::encode_json($row['fields']);
