@@ -14,7 +14,6 @@ class detalle
 {
 
     private $metadata   = array('title' => '');
-    private $templates  = array();
     private $max_upload = -1;
 
     public function __construct($metadata)
@@ -23,16 +22,6 @@ class detalle
         $this->max_upload = ($size<0)?"Ilimitado":functions::file_size($size,true);
         foreach ($metadata as $key => $value) {
             $this->metadata[$key] = $value;
-        }
-        $list_dir = view::get_theme() . 'detail/';
-        $files    = scandir($list_dir);
-        foreach ($files as $file) {
-            $nombre    = explode(".", $file);
-            $extension = strtolower(array_pop($nombre));
-            if ('html' == $extension) {
-                $html                                   = file_get_contents($list_dir . $file);
-                $this->templates[implode('.', $nombre)] = $html;
-            }
         }
     }
     public function normal($data)
@@ -596,7 +585,6 @@ class detalle
         view::set_array($data);
         $content=view::render('detail/'.$campos['type'], false, true);
         return $content;
-        //return view::render_template($data, $this->templates[$campos['type']]);
     }
 
     public static function guardar($class)
