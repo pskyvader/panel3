@@ -5,15 +5,15 @@ defined("APPPATH") or die("Acceso denegado");
 
 use \core\app;
 use \core\database;
-use \core\image;
 use \core\functions;
+use \core\image;
 
 class seo extends base_model
 {
     public static $idname = 'idseo',
-    $table = 'seo';
+    $table                = 'seo';
 
-    public static function getAll(array $where = array(),array  $condiciones = array(), string $select = "")
+    public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
         $connection = database::instance();
         if (!isset($where['estado']) && app::$_front) {
@@ -25,7 +25,7 @@ class seo extends base_model
         }
 
         if (isset($condiciones['palabra'])) {
-            $fields = table::getByname(static::$table);
+            $fields                = table::getByname(static::$table);
             $condiciones['buscar'] = array();
             if (isset($fields['titulo'])) {
                 $condiciones['buscar']['titulo'] = $condiciones['palabra'];
@@ -45,8 +45,8 @@ class seo extends base_model
 
         }
 
-        if($select=='total'){
-            $return_total=true;
+        if ($select == 'total') {
+            $return_total = true;
         }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
         if ($select == '') {
@@ -59,7 +59,7 @@ class seo extends base_model
                 }
             }
         }
-        if(isset($return_total)){
+        if (isset($return_total)) {
             return count($row);
         }
         return $row;
@@ -70,10 +70,13 @@ class seo extends base_model
         $where = array(static::$idname => $id);
         if (app::$_front) {
             $fields = table::getByname(static::$table);
-            if(isset($fields['estado'])) $where['estado'] = true;
+            if (isset($fields['estado'])) {
+                $where['estado'] = true;
+            }
+
         }
         $connection = database::instance();
-        $row = $connection->get(static::$table, static::$idname, $where);
+        $row        = $connection->get(static::$table, static::$idname, $where);
         if (count($row) == 1) {
             if (isset($row[0]['foto'])) {
                 $row[0]['foto'] = functions::decode_json($row[0]['foto']);
@@ -89,11 +92,11 @@ class seo extends base_model
     {
         $row = static::getById($id);
         if (isset($row['banner'])) {
-            $banner_copy=$row['banner'];
+            $banner_copy = $row['banner'];
             unset($row['banner']);
         }
         if (isset($row['foto'])) {
-            $foto_copy=$row['foto'];
+            $foto_copy = $row['foto'];
             unset($row['foto']);
         }
         if (isset($row['archivo'])) {
@@ -103,26 +106,26 @@ class seo extends base_model
         $insert     = database::create_data($fields, $row);
         $connection = database::instance();
         $row        = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
-            if(isset($foto_copy)){
-                $new_fotos=array();
+            if (isset($foto_copy)) {
+                $new_fotos = array();
                 foreach ($foto_copy as $key => $foto) {
-                    $copiar = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
-                    $new_fotos[]=$copiar['file'][0];
+                    $copiar      = image::copy($foto, $last_id, $foto['folder'], $foto['subfolder'], $last_id, '');
+                    $new_fotos[] = $copiar['file'][0];
                     image::regenerar($copiar['file'][0]);
                 }
-                $update=array('id'=>$last_id,'foto'=>functions::encode_json($new_fotos));
+                $update = array('id' => $last_id, 'foto' => functions::encode_json($new_fotos));
                 static::update($update);
             }
-            if(isset($banner_copy)){
-                $new_banners=array();
+            if (isset($banner_copy)) {
+                $new_banners = array();
                 foreach ($banner_copy as $key => $banner) {
-                    $copiar = image::copy($banner, $last_id, $banner['folder'], $banner['subfolder'], $last_id, '');
-                    $new_banners[]=$copiar['file'][0];
+                    $copiar        = image::copy($banner, $last_id, $banner['folder'], $banner['subfolder'], $last_id, '');
+                    $new_banners[] = $copiar['file'][0];
                     image::regenerar($copiar['file'][0]);
                 }
-                $update=array('id'=>$last_id,'banner'=>functions::encode_json($new_banners));
+                $update = array('id' => $last_id, 'banner' => functions::encode_json($new_banners));
                 static::update($update);
             }
             if ($log) {

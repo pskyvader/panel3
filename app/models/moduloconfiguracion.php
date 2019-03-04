@@ -70,7 +70,7 @@ class moduloconfiguracion extends base_model
         }
         return (count($row) == 1) ? $row[0] : $row;
     }
-    public static function copy(int $id)
+    public static function copy(int $id, bool $log = true)
     {
         $row            = static::getById($id);
         $row['mostrar'] = functions::encode_json($row['mostrar']);
@@ -79,7 +79,7 @@ class moduloconfiguracion extends base_model
         $insert         = database::create_data($fields, $row);
         $connection     = database::instance();
         $row            = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);

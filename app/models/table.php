@@ -87,7 +87,7 @@ class table extends base_model
         $insert        = database::create_data($fields, $row);
         $connection    = database::instance();
         $row           = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
@@ -100,11 +100,11 @@ class table extends base_model
 
     public static function validate(int $id, bool $log = true)
     {
-        $respuesta = array('exito' => true, 'mensaje' => array());
-        $table_validate       = static::getById($id);
-        $idname    = $table_validate['idname'];
-        $tablename = $table_validate['tablename'];
-        $fields    = $table_validate['fields'];
+        $respuesta      = array('exito' => true, 'mensaje' => array());
+        $table_validate = static::getById($id);
+        $idname         = $table_validate['idname'];
+        $tablename      = $table_validate['tablename'];
+        $fields         = $table_validate['fields'];
         array_unshift($fields, array('titulo' => $idname, 'tipo' => 'int(11)', 'primary' => true));
 
         $check = array();
