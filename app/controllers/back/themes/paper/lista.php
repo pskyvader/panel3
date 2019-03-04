@@ -227,7 +227,7 @@ class lista
 
         //$html    = $this->templates[$type];
         //$content = view::render_template($data, $html);
-        $content=view::render('list/'.$type, false, true)
+        $content=view::render('list/'.$type, false, true);
         return $content;
     }
     public static function configuracion($modulo)
