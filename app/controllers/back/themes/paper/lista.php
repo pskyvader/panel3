@@ -43,7 +43,7 @@ class lista
 
         $data = $this->pagination($data);
 
-        $data['delete'] = (isset($th['delete'])) ? true : false;
+        $data['delete'] = isset($th['delete']);
 
         $head = new head($this->metadata);
         $head->normal();
@@ -75,7 +75,6 @@ class lista
         }
 
         $count = $class::getAll($where, $condiciones, 'total');
-        $count = $count;
         $total = (int) ($count / $limit);
         if ($total < ($count / $limit)) {
             $total++;
