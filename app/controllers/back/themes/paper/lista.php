@@ -176,8 +176,7 @@ class lista
 
     private function field($th, $fila)
     {
-        $type = $th['type'];
-        switch ($type) {
+        switch ($th['type']) {
             case 'active':
                 $data = array(
                     'field'  => $th['field'],
@@ -228,7 +227,7 @@ class lista
         //$html    = $this->templates[$type];
         //$content = view::render_template($data, $html);
         view::set_array($data);
-        $content=view::render('list/'.$type, false, true);
+        $content=view::render('list/'.$campos['type'], false, true);
         return $content;
     }
     public static function configuracion($modulo)
