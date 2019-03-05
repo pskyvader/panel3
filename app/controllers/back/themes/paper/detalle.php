@@ -345,7 +345,6 @@ class detalle
                 );
                 break;
             case 'image':
-                $folder    = $this->metadata['modulo'];
                 $image_url = (isset($fila[$campos['field']]) && isset($fila[$campos['field']][0])) ? (image::generar_url($fila[$campos['field']][0], 'thumb')) : '';
                 $data      = array(
                     'title_field'       => $campos['title_field'],
