@@ -364,7 +364,6 @@ class detalle
                 $data['help'] .= " (Tamaño máximo de archivo " . $this->max_upload . ")";
                 break;
             case 'multiple_image':
-                $folder = $this->metadata['modulo'];
                 $fields = array();
                 if (isset($fila[$campos['field']])) {
                     $count = count($fila[$campos['field']]);
@@ -393,7 +392,6 @@ class detalle
                 );
                 break;
             case 'file':
-                $folder   = $this->metadata['modulo'];
                 $file_url = (isset($fila[$campos['field']]) && isset($fila[$campos['field']][0])) ? (file::generar_url($fila[$campos['field']][0], '')) : '';
                 $data     = array(
                     'title_field'       => $campos['title_field'],
@@ -413,7 +411,6 @@ class detalle
                 $data['help'] .= " (Tamaño máximo de archivo " . $this->max_upload . ")";
                 break;
             case 'multiple_file':
-                $folder = $this->metadata['modulo'];
                 $fields = array();
                 if (isset($fila[$campos['field']])) {
                     foreach ($fila[$campos['field']] as $key => $campo) {
