@@ -340,7 +340,6 @@ class backup
         $largo     = strlen($source);
         if (extension_loaded('zip') === true) {
             if (file_exists($source) === true) {
-                $zip    = new \ZipArchive();
                 $source = realpath($source);
                 if (is_dir($source) === true) {
                     $files          = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST);
