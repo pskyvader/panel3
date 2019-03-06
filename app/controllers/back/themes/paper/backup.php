@@ -394,7 +394,6 @@ class backup
 
     public function continuar()
     {
-        $config    = app::getConfig();
         $respuesta = $this->zipData($this->dir, $_POST['archivo_backup'], functions::decode_json($_POST['lista']), $_POST['total']);
         echo json_encode($respuesta);
     }
