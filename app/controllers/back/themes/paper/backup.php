@@ -403,7 +403,6 @@ class backup
         ini_set('max_execution_time', '-1');
         $tiempo   = 0;
         $archivo  = $destination;
-        $partes[] = $archivo;
 
         $memory_limit = ini_get('memory_limit');
 
@@ -473,7 +472,6 @@ class backup
             $respuesta['lista']          = array_values($lista);
             $respuesta['archivo_backup'] = $destination;
             $respuesta['archivo_actual'] = $file;
-            $respuesta['partes']         = $partes;
         }
         return $respuesta;
     }
