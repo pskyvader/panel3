@@ -193,12 +193,11 @@ class image
                 $name_final = uniqid();
             } else {
                 $name_final = explode(".", $name_final);
-                $extension  = '.' . strtolower(array_pop($name_final));
+                array_pop($name_final);
                 $name_final = functions::url_amigable(implode($name_final, ''));
             }
             $name      = explode(".", $file['name']);
             $extension = '.' . strtolower(array_pop($name));
-            $name      = functions::url_amigable(implode($name, ''));
             if (!file_exists($folder)) {
                 $respuesta['exito'] = mkdir($folder, 0777, true);
                 if (!$respuesta['exito']) {
