@@ -398,7 +398,7 @@ class backup
         echo json_encode($respuesta);
     }
 
-    private function zipData($source, array $destination, $lista, $total = 1, $log = true)
+    private function zipData(string $source, string $destination, array $lista, $total = 1, $log = true)
     {
         ini_set('max_execution_time', '-1');
         $tiempo   = 0;
