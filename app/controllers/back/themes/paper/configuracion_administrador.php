@@ -121,9 +121,9 @@ class configuracion_administrador extends base
                 if (!$existe) {
                     $fields = $tabla['fields'];
                     array_unshift($fields, array('titulo' => $tabla['idname'], 'tipo' => 'int(11)', 'primary' => true));
-                    foreach ($fields as $key => $value) {
-                        if (!isset($fields[$key]['primary'])) {
-                            $fields[$key]['primary'] = false;
+                    foreach ($fields as $k => $value) {
+                        if (!isset($fields[$k]['primary'])) {
+                            $fields[$k]['primary'] = false;
                         }
                     }
                     $connection = database::instance();
@@ -193,7 +193,7 @@ class configuracion_administrador extends base
             if (count($row) == 1) {
                 $moduloconfiguracion['id'] = $row[0][0];
                 moduloconfiguracion_model::update($moduloconfiguracion, false);
-                foreach ($hijo as $key => $h) {
+                foreach ($hijo as $k => $h) {
                     $h['idmoduloconfiguracion'] = $moduloconfiguracion['id'];
                     $row2                       = modulo_model::getAll(array('idmoduloconfiguracion' => $h['idmoduloconfiguracion'], 'tipo' => $h['tipo']), array('limit' => 1));
 
