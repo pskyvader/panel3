@@ -13,7 +13,7 @@ use \app\models\mediopago as mediopago_model;
 class mediopago extends base
 {
     protected $url = array('mediopago');
-    protected $metadata = array('title' => 'mediopago','modulo'=>'mediopago');
+    protected $metadata = array('title' => 'Medios de pago','modulo'=>'mediopago');
     protected $breadcrumb = array();
     public function __construct()
     {
