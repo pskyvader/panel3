@@ -44,7 +44,6 @@ class modulo extends base
     public function index()
     {
         $class = $this->class; // Clase para enviar a controlador de lista
-        $parent_class = $this->parent_class; // Clase Padre
         $parent=$this->parent;
         
         if (!administrador_model::verificar_sesion()) {
@@ -90,7 +89,6 @@ class modulo extends base
     public function detail($var = array())
     {
         $class = $this->class; // Clase para enviar a controlador de detalle
-        $parent_class = $this->parent_class; // Clase Padre
         $parent = $this->parent; // Clase Padre
 
         $url_save = $url_list = $this->url;
