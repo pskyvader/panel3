@@ -30,11 +30,11 @@ class modulo extends base
         parent::__construct(new modulo_model);
         $this->parent_class = new moduloconfiguracion_model;
         $parent_class=$this->parent_class;
-        $this->parent = $parent_class::getById($_GET['idmoduloconfiguracion']);
 
         if (!isset($_GET['idmoduloconfiguracion'])) {
             $this->url = array('home');
         } else {
+            $this->parent = $parent_class::getById($_GET['idmoduloconfiguracion']);
             array_pop($this->breadcrumb);
             $this->breadcrumb[] = array('url' => functions::generar_url(array('moduloconfiguracion')), 'title' => $this->parent['titulo'], 'active' => '');
             $this->metadata['title'] = $this->parent['titulo'] . ' - ' . $this->metadata['title'];
