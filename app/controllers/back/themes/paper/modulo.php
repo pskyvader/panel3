@@ -12,7 +12,6 @@ class modulo extends base
 {
     protected $url = array('modulo');
     protected $metadata = array('title' => 'Modulos', 'modulo' => 'modulo');
-    protected $parent_class = null;
     protected $parent = null;
     protected $tipos_recortes = array(
         'recortar' => array('text' => 'Recortar', 'value' => 'recortar'),
@@ -28,8 +27,7 @@ class modulo extends base
     public function __construct()
     {
         parent::__construct(new modulo_model);
-        $this->parent_class = new moduloconfiguracion_model;
-        $parent_class=$this->parent_class;
+        $parent_class = new moduloconfiguracion_model;
 
         if (!isset($_GET['idmoduloconfiguracion'])) {
             $this->url = array('home');
