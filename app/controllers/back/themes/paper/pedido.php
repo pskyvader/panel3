@@ -333,7 +333,7 @@ class pedido extends base
             'list_url'    => functions::generar_url($url_list),
         );
 
-        $detalle->normal($data, $class);
+        $detalle->normal($data);
     }
     public function get_usuario()
     {
