@@ -382,6 +382,8 @@ class pedido extends base
         if (isset($campos['datos_direcciones'])) {
             $direcciones = $campos['datos_direcciones'];
             unset($campos['datos_direcciones']);
+        }else{
+            $direcciones = array();
         }
         $campos['total_original'] = $campos['total'];
 
