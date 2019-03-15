@@ -430,8 +430,6 @@ class pedido extends base
 
         $total_pedido = 0;
 
-        $fields_producto = table::getByname(producto_model::$table);
-
         //procesar direcciones
         foreach ($direcciones as $key => $d) {
             if (!isset($direcciones_usuario[$d['iddireccion']])) {
