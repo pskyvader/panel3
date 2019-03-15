@@ -379,6 +379,9 @@ class pedido extends base
         $class     = $this->class;
         $campos    = $_POST['campos'];
         $respuesta = array('exito' => false, 'mensaje' => '');
+        if (isset($campos['cookie_pedido_repetir'])){
+            unset($campos['cookie_pedido_repetir']);
+        }
         if (isset($campos['datos_direcciones'])) {
             $direcciones = $campos['datos_direcciones'];
             unset($campos['datos_direcciones']);
