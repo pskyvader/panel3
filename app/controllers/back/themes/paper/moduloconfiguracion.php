@@ -158,6 +158,6 @@ class moduloconfiguracion extends base
             'list_url' => functions::generar_url($url_list),
         );
 
-        $detalle->normal($data, $class);
+        $detalle->normal($data);
     }
 }
