@@ -64,7 +64,7 @@ class sitemap extends base
         view::set('progreso', $total);
         view::set('is_error', $is_error);
         view::set('mensaje_error', $mensaje_error);
-        view::set('url_sitemap', functions::generar_url(array('sitemap.xml'), array(), false, true));
+        view::set('url_sitemap', functions::generar_url(array('sitemap.xml'), array(), false));
         view::render('sitemap');
 
         $footer = new footer();
