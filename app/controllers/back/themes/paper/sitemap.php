@@ -16,10 +16,11 @@ class sitemap extends base
     protected $breadcrumb = array();
     public function __construct()
     {
-        parent::__construct(new sitemap_model());
+        parent::__construct(new sitemap_model);
     }
     public function index()
     {
+        $class = $this->class;
         if (!administrador_model::verificar_sesion()) {
             $this->url = array('login', 'index', 'sitemap');
         }
@@ -33,13 +34,13 @@ class sitemap extends base
         $aside = new aside();
         $aside->normal();
 
-        $row = sitemap_model::getAll(array('ready' => true, 'valid' => ''), array('order' => 'idsitemap DESC'));
+        $row = $class::getAll(array('ready' => true, 'valid' => ''), array('order' => 'idsitemap DESC'));
         $log = array();
         foreach ($row as $key => $r) {
             $log[] = array('url' => $r['url']);
         }
-        $listos     = sitemap_model::getAll(array('ready' => true), array(), 'total');
-        $pendientes = sitemap_model::getAll(array('ready' => false), array(), 'total');
+        $listos     = $class::getAll(array('ready' => true), array(), 'total');
+        $pendientes = $class::getAll(array('ready' => false), array(), 'total');
         if ($listos == 0 && $pendientes == 0) {
             $total = 0;
         } else {
@@ -71,15 +72,17 @@ class sitemap extends base
     }
     public function vaciar()
     {
-        $respuesta          = sitemap_model::truncate();
+        $class = $this->class;
+        $respuesta          = $class::truncate();
         $respuesta['vacio'] = true;
         echo json_encode($respuesta);
     }
 
     public function generar()
     {
+        $class = $this->class;
         $respuesta  = array('exito' => false, 'mensaje' => '');
-        $row        = sitemap_model::getAll();
+        $row        = $class::getAll();
         $sitio_base = app::get_url(true);
         if (count($row) == 0) {
             $r      = $this->head($sitio_base, $sitio_base);
@@ -90,17 +93,17 @@ class sitemap extends base
                 $ready = true;
             }
             $insert = array('idpadre' => 0, 'url' => $sitio_base, 'depth' => 0, 'valid' => $valido, 'ready' => $ready);
-            $id     = sitemap_model::insert($insert);
+            $id     = $class::insert($insert);
             if (!$r['exito'] && isset($r['new_url']) && $r['new_url'] != '') {
-                $existe = sitemap_model::getAll(array('url' => $r['new_url']), array('limit' => 1));
+                $existe = $class::getAll(array('url' => $r['new_url']), array('limit' => 1));
                 if (count($existe) == 0) {
                     $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => 1, 'valid' => "", 'ready' => false);
-                    $id     = sitemap_model::insert($insert);
+                    $id     = $class::insert($insert);
                 }
             }
             $respuesta['exito'] = true;
         } else {
-            $row = sitemap_model::getAll(array('ready' => false));
+            $row = $class::getAll(array('ready' => false));
             if (count($row) == 0) {
                 $respuesta = $this->generar_sitemap();
             } else {
@@ -115,11 +118,11 @@ class sitemap extends base
 
                 if (is_array($sub_sitios)) {
                     $update = array('id' => $sitio[0], 'idpadre' => $sitio['idpadre'], 'url' => $sitio['url'], 'depth' => $depth, 'valid' => $sitio['valid'], 'ready' => true);
-                    sitemap_model::update($update);
+                    $class::update($update);
                     $id_padre = $sitio[0];
                     $depth++;
                     foreach ($sub_sitios as $key => $sitios) {
-                        $existe = sitemap_model::getAll(array('url' => $sitios), array('limit' => 1));
+                        $existe = $class::getAll(array('url' => $sitios), array('limit' => 1));
                         if (count($existe) == 0) {
                             $r      = $this->head($sitios, $sitio_base);
                             $valido = $r['mensaje'];
@@ -129,31 +132,31 @@ class sitemap extends base
                                 $ready = true;
                             }
                             $insert = array('idpadre' => $id_padre, 'url' => $sitios, 'depth' => $depth, 'valid' => $valido, 'ready' => $ready);
-                            $id     = sitemap_model::insert($insert);
+                            $id     = $class::insert($insert);
                             if (!$r['exito'] && isset($r['new_url']) && $r['new_url'] != '') {
-                                $existe = sitemap_model::getAll(array('url' => $r['new_url']), array('limit' => 1));
+                                $existe = $class::getAll(array('url' => $r['new_url']), array('limit' => 1));
                                 if (count($existe) == 0) {
                                     $insert = array('idpadre' => $id, 'url' => $r['new_url'], 'depth' => $depth + 1, 'valid' => "", 'ready' => false);
-                                    $id     = sitemap_model::insert($insert);
+                                    $id     = $class::insert($insert);
                                 }
                             }
                         }
                     }
                 } else {
                     $update = array('id' => $sitio[0], 'idpadre' => $sitio['idpadre'], 'url' => $sitio['url'], 'depth' => $depth, 'valid' => $sitio['valid'], 'ready' => true);
-                    sitemap_model::update($update);
+                    $class::update($update);
                 }
                 $respuesta['exito'] = true;
             }
         }
-        $listos = sitemap_model::getAll(array('ready' => true), array(), 'total');
-        $row    = sitemap_model::getAll(array('ready' => true, 'valid' => ''), array('limit' => 1, 'order' => 'idsitemap DESC'));
+        $listos = $class::getAll(array('ready' => true), array(), 'total');
+        $row    = $class::getAll(array('ready' => true, 'valid' => ''), array('limit' => 1, 'order' => 'idsitemap DESC'));
         if (count($row) == 1) {
             $respuesta['ultimo'] = $row[0];
         } else {
             $respuesta['ultimo'] = null;
         }
-        $pendientes = sitemap_model::getAll(array('ready' => false), array(), 'total');
+        $pendientes = $class::getAll(array('ready' => false), array(), 'total');
         if ($listos == 0 && $pendientes == 0) {
             $total = 0;
         } else {
@@ -164,8 +167,9 @@ class sitemap extends base
     }
     public function generar_sitemap()
     {
+        $class = $this->class;
         $respuesta = array('exito' => true, 'mensaje' => '', 'generado' => true);
-        $lista     = sitemap_model::getAll(array('valid' => ''), array('order' => 'depth'));
+        $lista     = $class::getAll(array('valid' => ''), array('order' => 'depth'));
 
         $body = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $body .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
