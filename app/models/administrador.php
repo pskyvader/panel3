@@ -226,7 +226,7 @@ class administrador extends base_model
             } else {
                 $pass = functions::generar_pass();
                 $data = array('id' => $admin[0], 'pass' => $pass, 'pass_repetir' => $pass);
-                $row  = static::update($data);
+                $row  = static::update($data,false);
 
                 if ($row) {
                     $body_email = array(
