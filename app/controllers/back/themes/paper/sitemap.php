@@ -16,7 +16,7 @@ class sitemap extends base
     protected $breadcrumb = array();
     public function __construct()
     {
-        parent::__construct(null);
+        parent::__construct(sitemap_model);
     }
     public function index()
     {
