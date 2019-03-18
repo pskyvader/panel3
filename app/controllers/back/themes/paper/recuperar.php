@@ -11,7 +11,7 @@ use \app\models\logo as logo_model;
 
 class recuperar
 {
-    private $url = array('recuperar');
+    private $url = array('recuperar','index');
     private $metadata = array('title' => 'Recuperar Contraseña','modulo'=>'recuperar');
     public function index($url=array())
     {
