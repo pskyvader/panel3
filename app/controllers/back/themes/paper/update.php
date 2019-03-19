@@ -45,8 +45,8 @@ class update extends base
             if (!is_writable($this->dir_update)) {
                 $mensaje_error = 'Debes dar permisos de escritura al directorio ' . $this->dir_update;
             }
-        } elseif (!is_writable($dir)) {
-            $mensaje_error = 'Debes dar permisos de escritura en ' . $dir . ' o crear el directorio update/ con permisos de escritura';
+        } elseif (!is_writable($this->dir)) {
+            $mensaje_error = 'Debes dar permisos de escritura en ' . $this->dir . ' o crear el directorio update/ con permisos de escritura';
         }
 
         $is_error = ($mensaje_error != '');
