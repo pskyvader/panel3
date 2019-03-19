@@ -174,6 +174,8 @@ class update extends base
                     }
                     $zip->close();
                     if (count($respuesta['errores'])==0){
+                        $respuesta['mensaje'] = array('Error al abrir archivo');
+                        $respuesta['mensaje']=array_merge($respuesta['mensaje'],$respuesta['errores']);
                         $respuesta['exito'] = true;
                     }
                 } else {
