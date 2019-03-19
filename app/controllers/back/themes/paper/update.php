@@ -173,7 +173,9 @@ class update extends base
                         }
                     }
                     $zip->close();
-                    $respuesta['exito'] = true;
+                    if (count($respuesta['errores'])==0){
+                        $respuesta['exito'] = true;
+                    }
                 } else {
                     $respuesta['mensaje'] = 'Error al abrir archivo';
                 }
