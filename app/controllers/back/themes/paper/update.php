@@ -187,7 +187,7 @@ class update extends base
             $c->json_update(false);
             $c->json(false);
 
-            $log = array('mensaje' => 'Restauracion finalizada', 'porcentaje' => 100);
+            $log = array('mensaje' => 'Actualización finalizada', 'porcentaje' => 100);
             file_put_contents($this->archivo_log, functions::encode_json($log));
             cache::delete_cache();
         }
