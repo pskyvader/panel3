@@ -18,7 +18,7 @@ class update extends base
     protected $dir         = '';
     protected $dir_update  = '';
     protected $archivo_log = '';
-    protected $no_update   = array('app\\config\\config.json','app/config/config.json');
+    protected $no_update   = array('app\\config\\config.json', 'app/config/config.json');
     public function __construct()
     {
         $this->dir         = app::get_dir(true);
@@ -156,8 +156,8 @@ class update extends base
                             //$exito = true;
                             $exito = $zip->extractTo($this->dir, array($nombre));
                             /*if(is_writable($this->dir . "/" . $nombre)){
-                                $nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $this->dir . "/" . $nombre);
-                                rename($this->dir . "/" . $nombre, $nombre_final);
+                            $nombre_final = str_replace(array("/", "\\"), DIRECTORY_SEPARATOR, $this->dir . "/" . $nombre);
+                            rename($this->dir . "/" . $nombre, $nombre_final);
                             }*/
                             if (!$exito) {
                                 $respuesta['errores'][] = $nombre;
@@ -173,10 +173,11 @@ class update extends base
                         }
                     }
                     $zip->close();
-                    if (count($respuesta['errores'])==0){
-                        $respuesta['mensaje'] = array('Error al abrir archivo');
-                        $respuesta['mensaje']=array_merge($respuesta['mensaje'],$respuesta['errores']);
+                    if (count($respuesta['errores']) == 0) {
                         $respuesta['exito'] = true;
+                    } else {
+                        $respuesta['mensaje'] = array('Error al abrir archivo');
+                        $respuesta['mensaje'] = array_merge($respuesta['mensaje'], $respuesta['errores']);
                     }
                 } else {
                     $respuesta['mensaje'] = 'Error al abrir archivo';
