@@ -107,7 +107,7 @@ class update extends base
                 $respuesta['archivo'] = $_POST['file'];
             }
         } else {
-            $respuesta['mensaje'] = 'Debes dar permiso de escritura a ' . $path;
+            $respuesta['mensaje'] = 'Debes dar permiso de escritura a ' . $this->dir_update;
         }
 
         echo json_encode($respuesta);
