@@ -54,6 +54,7 @@ class update extends base
         view::set('breadcrumb', $this->breadcrumb);
         view::set('title', $this->metadata['title']);
         view::set('is_error', $is_error);
+        view::set('mensaje_error', $mensaje_error);
         view::set('progreso', 0);
         view::render('update');
 
