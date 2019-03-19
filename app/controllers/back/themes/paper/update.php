@@ -14,7 +14,7 @@ class update extends base
     protected $url         = array('update');
     protected $metadata    = array('title' => 'update', 'modulo' => 'update');
     protected $breadcrumb  = array();
-    protected $url_update  = "http://update.mysitio.cl/";
+    protected $url_update  = "https://update.mysitio.cl/";
     protected $dir         = '';
     protected $dir_update  = '';
     protected $archivo_log = '';
