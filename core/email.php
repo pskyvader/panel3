@@ -70,7 +70,6 @@ class email
     public static function enviar_email($email, $asunto, $body, $adjuntos = array(), $imagenes = array())
     {
         $config = app::getConfig();
-        $dominio = $config['domain'];
         $from = $config['email_from'];
         $nombre_sitio = $config['title'];
         require_once(PROJECTPATH.'/phpmailer/PHPMailerAutoload.php');
