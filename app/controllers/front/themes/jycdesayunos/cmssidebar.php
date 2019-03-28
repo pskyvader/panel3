@@ -7,7 +7,7 @@ use \core\file;
 use \core\functions;
 use \core\view;
 
-class cms extends base
+class cmssidebar extends base
 {
     public function __construct()
     {
