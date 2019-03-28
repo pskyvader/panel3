@@ -5,14 +5,13 @@ defined("APPPATH") or die("Acceso denegado");
 use \core\app;
 use \core\functions;
 use \core\view;
-use \app\models\seo;
+use \app\models\seo as seo_model;
 
 class breadcrumb
 {
     public function normal($breadcrumb=array())
     { 
-        //return false;
-        $seo=seo::getById(1);
+        $seo=seo_model::getById(1);
         $b = array(
             array('url' => functions::generar_url(array($seo['url'])), 'title' =>$seo['titulo']),
         );
