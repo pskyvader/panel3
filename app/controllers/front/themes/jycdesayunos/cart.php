@@ -447,7 +447,7 @@ class cart extends base
             if (isset($cart['productos'])) {
                 foreach ($cart['productos'] as $key => $p) {
                     if ($p['idpedidoproducto'] == $campos['idpedidoproducto']) {
-                        $update             = array('id' => $p['idpedidoproducto'], 'mensaje' => ($campos['mensaje']));
+                        $update             = array('id' => $p['idpedidoproducto'], 'mensaje' => $campos['mensaje']);
                         $idpedidoproducto   = pedidoproducto_model::update($update);
                         $respuesta['exito'] = true;
                         break;
