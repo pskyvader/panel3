@@ -56,8 +56,6 @@ class banner
         $foto_base = image::portada($foto_base);
         $foto      = image::generar_url($foto_base, 'foto1');
         if ($foto != '') {
-            $srcset = array();
-
             $srcset = $this->srcset($foto_base);
             $banner = array(
                 'srcset'     => $srcset,
