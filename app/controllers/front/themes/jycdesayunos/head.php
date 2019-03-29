@@ -57,13 +57,15 @@ class head
         $this->data['keywords']         = strip_tags($this->data['keywords_text'] != '');
         $this->data['description']      = strip_tags($this->data['description_text'] != '');
         $logo                           = logo_model::getById(5);
-        $this->data['logo']             = image::generar_url($logo['foto'][0], 'social');
+        $portada=image::portada($logo['foto']);
+        $this->data['logo']             = image::generar_url($portada, 'social');
         if (isset($metadata['image']) && $metadata['image'] != '') {
             $this->data['image_url'] = $metadata['image'];
             $this->data['image']     = true;
         }
         $logo                       = logo_model::getById(1);
-        $this->data['favicon']      = image::generar_url($logo['foto'][0], 'favicon');
+        $portada=image::portada($logo['foto']);
+        $this->data['favicon']      = image::generar_url($portada, 'favicon');
         $this->data['manifest_url'] = app::get_url() . 'manifest.js';
     }
     public function normal()
