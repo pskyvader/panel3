@@ -82,7 +82,6 @@ class contacto extends base
         $config = app::getConfig();
         view::set('googlemaps_key', $config['googlemaps_key']);
         view::set('google_captcha', $config['google_captcha']);
-        view::set('action', functions::generar_url(array('enviar')));
         view::render('contact');
 
         $footer = new footer();
