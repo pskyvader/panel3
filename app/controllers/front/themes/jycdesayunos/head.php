@@ -24,7 +24,7 @@ class head
         'color_primario'   => '',
         'manifest_url'     => '',
         'path'             => '',
-        'modulo'            => '',
+        'modulo'           => '',
     );
 
     public function __construct($metadata)
@@ -41,11 +41,9 @@ class head
         $this->data['googlemaps_key'] = $config['googlemaps_key'];
         $this->data['google_captcha'] = $config['google_captcha'];
 
-        $title       = $config['title'];
-        $short_title = $config['short_title'];
-        $titulo      = $this->data['title'] . ' - ' . $title;
+        $titulo = $this->data['title'] . ' - ' . $config['title'];
         if (strlen($titulo) > 75) {
-            $titulo = $this->data['title'] . ' - ' . $short_title;
+            $titulo = $this->data['title'] . ' - ' . $config['short_title'];
         }
         if (strlen($titulo) > 75) {
             $titulo = $this->data['title'];
