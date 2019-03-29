@@ -37,12 +37,13 @@ class application
         $imgs = array();
         foreach ($row_banner as $key => $b) {
             if (isset($b["foto"][0])) {
-                $foto = image::generar_url($b["foto"][0], 'foto1');
+                $portada=image::portada($b['foto']);
+                $foto = image::generar_url($portada, 'foto1');
             } else {
                 $foto = '';
             }
             if ($foto != '') {
-                $srcset = $banner->srcset($b["foto"][0]);
+                $srcset = $banner->srcset($portada);
                 $imgs = array_merge($imgs, $srcset);
             }
         }
