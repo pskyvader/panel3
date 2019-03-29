@@ -24,9 +24,10 @@ class application
         $header->normal();
         $config = app::getConfig();
         $logo = logo_model::getById(5);
+        $portada=image::portada($logo['foto']);
         view::set('color_primario', $config['color_primario']);
         view::set('color_secundario', $config['color_secundario']);
-        view::set('logo', image::generar_url($logo['foto'][0], 'sitio'));
+        view::set('logo', image::generar_url($portada, 'sitio'));
 
         $seo = seo_model::getById(1);
         view::set('path', functions::generar_url(array($seo['url'])));
