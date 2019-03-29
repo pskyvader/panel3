@@ -24,7 +24,8 @@ class header
             $data['menu']       = $this->menu();
             $config             = app::getConfig();
             $logo               = logo_model::getById(5);
-            $data['logo']       = image::generar_url($logo['foto'][0], 'sitio');
+            $portada=image::portada($logo['foto']);
+            $data['logo']       = image::generar_url($portada, 'sitio');
             $seo                = seo::getById(1);
             $data['path']       = functions::generar_url(array($seo['url']),false);
             $data['title']      = $config['title'];
