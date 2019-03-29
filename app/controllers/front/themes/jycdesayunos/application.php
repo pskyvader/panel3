@@ -16,7 +16,7 @@ class application
     private $metadata = array('title' => 'Home', 'modulo' => 'home');
     public function index()
     {
-        $this->metadata['class'] = (new \ReflectionClass($this))->getShortName();
+        $this->metadata['modulo'] = (new \ReflectionClass($this))->getShortName();
         $head = new head($this->metadata);
         $head->normal();
 
