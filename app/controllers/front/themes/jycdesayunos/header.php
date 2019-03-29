@@ -52,7 +52,6 @@ class header
 
         view::set('social', $redes_sociales);
         view::set('is_social', (count($redes_sociales) > 0));
-        view::set('is_social', false);
         return view::render('header-top', false, true);
     }
     private function header_cart()
