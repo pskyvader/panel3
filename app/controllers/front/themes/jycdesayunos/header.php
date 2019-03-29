@@ -116,7 +116,7 @@ class header
         $nivel_maximo_hijo = 2;
         foreach ($lista_menu as $key => $menu) {
             $data                  = array('hijos' => '');
-            $data['contiene_hijo'] = $data['contiene_hijoa'] = ($nivel < $nivel_maximo_hijo && !$simple && isset($menu['hijo']) && count($menu['hijo']) > 0);
+            $data['contiene_hijo'] = ($nivel < $nivel_maximo_hijo && !$simple && isset($menu['hijo']) && count($menu['hijo']) > 0);
             if ($data['contiene_hijo']) {
                 $data['hijos'] = $this->generar_menu($menu['hijo'], $nivel + 1, $simple);
             }
