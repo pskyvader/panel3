@@ -250,6 +250,7 @@ class product_list extends base
                 'price'        => functions::formato_precio($v['precio_final']),
                 'old_price'    => functions::formato_precio($v['precio']),
                 'is_stock'     => ($v['stock'] > 0),
+                'stock'        => $v['stock'],
                 'image'        => image::generar_url($portada, $recorte),
                 'description'  => strip_tags($v['resumen']),
                 'srcset'       => array(),
