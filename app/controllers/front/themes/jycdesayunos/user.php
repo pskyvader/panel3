@@ -466,7 +466,7 @@ class user extends base
                     $p['total']=functions::formato_precio($p['total']);
                     $p['foto']=$thumb_url;
                     $lista_productos[] = $p;
-                    unset($productos_pedido[$k]);
+                    #unset($productos_pedido[$k]);
                 }
             }
             $direcciones_pedido[$key]['lista_productos']=$lista_productos;
