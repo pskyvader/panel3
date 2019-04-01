@@ -620,7 +620,7 @@ class user extends base
         $campos    = functions::test_input($_POST['campos']);
 
         if(isset($campos['email']) && isset($campos['token'])){
-            if($_SESSION['recuperar_token']['token']==$campos['token']){
+            if( isset($_SESSION['recuperar_token']['token']) && $_SESSION['recuperar_token']['token']==$campos['token']){
                 if(time()-$_SESSION['recuperar_token']['time']<=120){
                     $respuesta=usuario_model::recuperar($campos['email']);
                     if($respuesta["exito"]){
