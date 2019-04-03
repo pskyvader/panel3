@@ -5,11 +5,11 @@
     },
     {
         "variable": "cantidad_backup_rapido",
-        "valor": "52.0"
+        "valor": "53"
     },
     {
         "variable": "tiempo_backup_rapido",
-        "valor": "6.461538461538462"
+        "valor": "7,6415094339623"
     },
     {
         "variable": "cantidad_backup_lento",
