@@ -196,7 +196,6 @@ class configuracion_administrador extends base
                 foreach ($hijo as $k => $h) {
                     $h['idmoduloconfiguracion'] = $moduloconfiguracion['id'];
                     $row2                       = modulo_model::getAll(array('idmoduloconfiguracion' => $h['idmoduloconfiguracion'], 'tipo' => $h['tipo']), array('limit' => 1));
-
                     $h['menu']     = functions::encode_json($h['menu']);
                     $h['mostrar']  = functions::encode_json($h['mostrar']);
                     $h['detalle']  = functions::encode_json($h['detalle']);
