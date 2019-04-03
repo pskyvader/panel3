@@ -4,7 +4,7 @@ $title       = "Instalacion";
 $name        = "installer.php";
 $folder      = dirname(__FILE__);
 $version_min = "7.0.0";
-$version_max = "7.3.0";
+$version_max = "7.4.0";
 $paso        = (isset($_GET['paso'])) ? (int) $_GET['paso'] : 1;
 $respuesta   = array('exito' => true, 'mensaje' => array());
 
