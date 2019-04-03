@@ -17,7 +17,7 @@ class instagram
         $photo_count     = 8;
         $json_link       = "https://api.instagram.com/v1/users/self/media/recent/?";
         $json_link .= http_build_query(array('access_token' => $instagram_token, 'count' => $photo_count));
-        $json = functions::decode_json(file_get_contents($json_link));
+        $json = functions::decode_json(functions::url_get_contents($json_link));
         $respuesta=array();
         foreach ($json['data'] as $key => $data) {
             $respuesta[]=array(
