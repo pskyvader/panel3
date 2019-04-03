@@ -100,253 +100,253 @@
                 "titulo": "Banner principal",
                 "menu": [
                     {
+                        "estado": {
+                            "1": "true",
+                            "3": "true",
+                            "2": "true"
+                        },
                         "field": "new",
-                        "titulo": "Nuevo",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Nuevo"
                     },
                     {
-                        "field": "excel",
-                        "titulo": "Exportar a excel",
                         "estado": {
-                            "1": "false",
                             "2": "false",
+                            "1": "false",
                             "3": "false"
-                        }
+                        },
+                        "field": "excel",
+                        "titulo": "Exportar a excel"
                     },
                     {
-                        "field": "regenerar",
-                        "titulo": "Regenerar imagenes",
                         "estado": {
                             "1": "true",
-                            "2": "true",
-                            "3": "false"
-                        }
+                            "3": "false",
+                            "2": "true"
+                        },
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes"
                     }
                 ],
                 "mostrar": [
                     {
-                        "field": "0",
+                        "estado": {
+                            "1": "false",
+                            "2": "false",
+                            "3": "false"
+                        },
                         "tipo": "text",
                         "titulo": "ID",
-                        "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
-                        }
+                        "field": "0"
                     },
                     {
-                        "field": "orden",
+                        "estado": {
+                            "3": "true",
+                            "2": "true",
+                            "1": "true"
+                        },
                         "tipo": "text",
                         "titulo": "Orden",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "field": "orden"
                     },
                     {
-                        "field": "titulo",
+                        "estado": {
+                            "2": "true",
+                            "1": "true",
+                            "3": "true"
+                        },
                         "tipo": "text",
                         "titulo": "Titulo",
+                        "field": "titulo"
+                    },
+                    {
                         "estado": {
                             "1": "true",
                             "2": "true",
                             "3": "true"
-                        }
-                    },
-                    {
-                        "field": "foto",
+                        },
                         "tipo": "image",
                         "titulo": "Foto",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "field": "foto"
                     },
                     {
-                        "field": "estado",
+                        "estado": {
+                            "2": "true",
+                            "3": "true",
+                            "1": "true"
+                        },
                         "tipo": "active",
                         "titulo": "Estado",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "field": "estado"
                     },
                     {
-                        "field": "copy",
+                        "estado": {
+                            "3": "false",
+                            "2": "false",
+                            "1": "false"
+                        },
                         "tipo": "action",
                         "titulo": "Copiar",
-                        "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
-                        }
+                        "field": "copy"
                     },
                     {
-                        "field": "url_detalle",
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
                         "tipo": "link",
                         "titulo": "Editar",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "field": "url_detalle"
                     },
                     {
-                        "field": "delete",
-                        "tipo": "delete",
-                        "titulo": "Eliminar",
                         "estado": {
                             "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                            "3": "true",
+                            "2": "true"
+                        },
+                        "tipo": "delete",
+                        "titulo": "Eliminar",
+                        "field": "delete"
                     }
                 ],
                 "detalle": [
                     {
+                        "tipo": "text",
+                        "estado": {
+                            "3": "true",
+                            "2": "true",
+                            "1": "true"
+                        },
+                        "required": "true",
                         "field": "titulo",
-                        "tipo": "text",
                         "titulo": "Titulo",
-                        "texto_ayuda": "",
-                        "required": "true",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "texto_ayuda": ""
                     },
                     {
-                        "field": "foto",
                         "tipo": "image",
-                        "titulo": "Foto",
-                        "texto_ayuda": "Imagen 1920x700 px, formato jpg o png",
+                        "estado": {
+                            "3": "true",
+                            "2": "true",
+                            "1": "true"
+                        },
                         "required": "true",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "field": "foto",
+                        "titulo": "Foto",
+                        "texto_ayuda": "Imagen 1920x700 px, formato jpg o png"
                     },
                     {
+                        "tipo": "text",
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
+                        "required": "false",
                         "field": "texto1",
-                        "tipo": "text",
                         "titulo": "Texto 1",
-                        "texto_ayuda": "",
-                        "required": "false",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "texto_ayuda": ""
                     },
                     {
-                        "field": "texto2",
                         "tipo": "text",
-                        "titulo": "Texto 2",
-                        "texto_ayuda": "",
-                        "required": "false",
                         "estado": {
-                            "1": "true",
+                            "3": "true",
                             "2": "true",
-                            "3": "true"
-                        }
+                            "1": "true"
+                        },
+                        "required": "false",
+                        "field": "texto2",
+                        "titulo": "Texto 2",
+                        "texto_ayuda": ""
                     },
                     {
-                        "field": "texto",
                         "tipo": "editor",
-                        "titulo": "Texto",
-                        "texto_ayuda": "",
-                        "required": "false",
                         "estado": {
                             "1": "false",
-                            "2": "false",
-                            "3": "false"
-                        }
-                    },
-                    {
-                        "field": "link",
-                        "tipo": "url",
-                        "titulo": "Link",
-                        "texto_ayuda": "",
+                            "3": "false",
+                            "2": "false"
+                        },
                         "required": "false",
+                        "field": "texto",
+                        "titulo": "Texto",
+                        "texto_ayuda": ""
+                    },
+                    {
+                        "tipo": "url",
                         "estado": {
                             "1": "true",
                             "2": "true",
                             "3": "true"
-                        }
+                        },
+                        "required": "false",
+                        "field": "link",
+                        "titulo": "Link",
+                        "texto_ayuda": ""
                     },
                     {
-                        "field": "orden",
                         "tipo": "number",
-                        "titulo": "Orden",
-                        "texto_ayuda": "",
-                        "required": "true",
                         "estado": {
                             "1": "true",
                             "2": "true",
                             "3": "true"
-                        }
+                        },
+                        "required": "true",
+                        "field": "orden",
+                        "titulo": "Orden",
+                        "texto_ayuda": ""
                     },
                     {
-                        "field": "estado",
                         "tipo": "active",
-                        "titulo": "Estado",
-                        "texto_ayuda": "",
-                        "required": "true",
                         "estado": {
                             "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                            "3": "true",
+                            "2": "true"
+                        },
+                        "required": "true",
+                        "field": "estado",
+                        "titulo": "Estado",
+                        "texto_ayuda": ""
                     }
                 ],
                 "recortes": [
                     {
+                        "alto": "700",
                         "tag": "foto1",
                         "titulo": "Foto 1",
-                        "ancho": "1900",
-                        "alto": "700",
+                        "tipo": "centrar",
                         "calidad": "90",
-                        "tipo": "centrar"
+                        "ancho": "1900"
                     },
                     {
+                        "alto": "600",
                         "tag": "foto2",
                         "titulo": "Foto 2",
-                        "ancho": "1200",
-                        "alto": "600",
+                        "tipo": "centrar",
                         "calidad": "90",
-                        "tipo": "centrar"
+                        "ancho": "1200"
                     },
                     {
+                        "alto": "500",
                         "tag": "foto3",
                         "titulo": "Foto 3",
-                        "ancho": "768",
-                        "alto": "500",
+                        "tipo": "centrar",
                         "calidad": "90",
-                        "tipo": "centrar"
+                        "ancho": "768"
                     },
                     {
+                        "alto": "400",
                         "tag": "foto4",
                         "titulo": "Foto 4",
-                        "ancho": "556",
-                        "alto": "400",
+                        "tipo": "centrar",
                         "calidad": "90",
-                        "tipo": "centrar"
+                        "ancho": "556"
                     }
                 ],
                 "orden": "1",
                 "estado": [
                     {
                         "estado": {
-                            "1": "true",
                             "2": "true",
+                            "1": "true",
                             "3": "true"
                         }
                     }
@@ -664,7 +664,7 @@
             },
             {
                 "field": "metadescripcion",
-                "titulo": "Meta Descripción",
+                "titulo": "Meta Descripciu00f3n",
                 "tipo": "textarea"
             },
             {
@@ -874,7 +874,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "",
                         "estado": {
@@ -1042,7 +1042,7 @@
             },
             {
                 "field": "metadescripcion",
-                "titulo": "Meta Descripción",
+                "titulo": "Meta Descripciu00f3n",
                 "tipo": "textarea"
             },
             {
@@ -1299,7 +1299,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "false",
                         "estado": {
@@ -1471,7 +1471,7 @@
             },
             {
                 "field": "metadescripcion",
-                "titulo": "Meta Descripción",
+                "titulo": "Meta Descripciu00f3n",
                 "tipo": "textarea"
             },
             {
@@ -1732,7 +1732,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "false",
                         "estado": {
@@ -2078,7 +2078,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "false",
                         "estado": {
@@ -2375,7 +2375,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "",
                         "estado": {
@@ -2548,7 +2548,7 @@
             },
             {
                 "field": "metadescripcion",
-                "titulo": "Meta Descripción",
+                "titulo": "Meta Descripciu00f3n",
                 "tipo": "textarea"
             },
             {
@@ -2834,7 +2834,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "false",
                         "estado": {
@@ -3928,7 +3928,7 @@
             },
             {
                 "field": "metadescripcion",
-                "titulo": "Meta Descripción",
+                "titulo": "Meta Descripciu00f3n",
                 "tipo": "textarea"
             },
             {
@@ -4209,7 +4209,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "",
                         "estado": {
@@ -4433,7 +4433,7 @@
             },
             {
                 "field": "metadescripcion",
-                "titulo": "Meta Descripción",
+                "titulo": "Meta Descripciu00f3n",
                 "tipo": "textarea"
             },
             {
@@ -4742,7 +4742,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "",
                         "estado": {
@@ -5128,7 +5128,7 @@
                     {
                         "field": "metadescripcion",
                         "tipo": "textarea",
-                        "titulo": "Meta Descripción",
+                        "titulo": "Meta Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "",
                         "estado": {
@@ -5682,7 +5682,7 @@
                         "field": "precio",
                         "tipo": "number",
                         "titulo": "Precio",
-                        "texto_ayuda": "Si el precio es 0 (cero) se utilizará el precio de la región",
+                        "texto_ayuda": "Si el precio es 0 (cero) se utilizaru00e1 el precio de la regiu00f3n",
                         "required": "true",
                         "estado": {
                             "1": "true",
@@ -5751,81 +5751,81 @@
         "padre": "",
         "mostrar": [
             {
-                "field": "0",
                 "titulo": "ID",
+                "field": "0",
                 "tipo": "text"
             },
             {
-                "field": "nombre",
                 "titulo": "Nombre",
+                "field": "nombre",
                 "tipo": "text"
             },
             {
-                "field": "email",
                 "titulo": "Email",
+                "field": "email",
                 "tipo": "text"
             },
             {
-                "field": "estado",
                 "titulo": "Estado",
+                "field": "estado",
                 "tipo": "active"
             },
             {
-                "field": "foto",
                 "titulo": "Foto",
+                "field": "foto",
                 "tipo": "image"
             },
             {
-                "field": "copy",
                 "titulo": "Copiar",
+                "field": "copy",
                 "tipo": "action"
             },
             {
-                "field": "url_detalle",
                 "titulo": "Editar",
+                "field": "url_detalle",
                 "tipo": "link"
             },
             {
-                "field": "url_sub",
                 "titulo": "Direcciones",
+                "field": "url_sub",
                 "tipo": "link"
             },
             {
-                "field": "delete",
                 "titulo": "Eliminar",
+                "field": "delete",
                 "tipo": "delete"
             }
         ],
         "detalle": [
             {
                 "field": "foto",
-                "titulo": "Foto",
-                "tipo": "image"
+                "tipo": "image",
+                "titulo": "Foto"
             },
             {
                 "field": "nombre",
-                "titulo": "Nombre",
-                "tipo": "text"
+                "tipo": "text",
+                "titulo": "Nombre"
             },
             {
                 "field": "telefono",
-                "titulo": "Telefono",
-                "tipo": "text"
+                "tipo": "text",
+                "titulo": "Telefono"
             },
             {
                 "field": "email",
-                "titulo": "Email",
-                "tipo": "email"
+                "tipo": "email",
+                "titulo": "Email"
             },
             {
                 "field": "pass",
-                "titulo": "Contraseña",
-                "tipo": "password"
+                "tipo": "password",
+                "titulo": "Contraseña"
             },
             {
                 "field": "estado",
-                "titulo": "Estado",
-                "tipo": "active"
+                "tipo": "active",
+                "titulo": "Estado"
             }
         ],
         "orden": "12",
@@ -5839,197 +5839,197 @@
                 "titulo": "Usuarios",
                 "menu": [
                     {
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
                         "field": "new",
-                        "titulo": "Nuevo",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Nuevo"
                     },
                     {
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
                         "field": "excel",
-                        "titulo": "Exportar a excel",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Exportar a excel"
                     },
                     {
-                        "field": "regenerar",
-                        "titulo": "Regenerar imagenes",
                         "estado": {
-                            "1": "false",
                             "2": "false",
-                            "3": "false"
-                        }
+                            "3": "false",
+                            "1": "false"
+                        },
+                        "field": "regenerar",
+                        "titulo": "Regenerar imagenes"
                     }
                 ],
                 "mostrar": [
                     {
+                        "estado": {
+                            "3": "false",
+                            "2": "false",
+                            "1": "false"
+                        },
                         "field": "0",
                         "tipo": "text",
-                        "titulo": "ID",
-                        "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
-                        }
+                        "titulo": "ID"
                     },
                     {
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
                         "field": "nombre",
                         "tipo": "text",
-                        "titulo": "Nombre",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Nombre"
                     },
                     {
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
                         "field": "email",
                         "tipo": "text",
-                        "titulo": "Email",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Email"
                     },
                     {
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
                         "field": "estado",
                         "tipo": "active",
-                        "titulo": "Estado",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Estado"
                     },
                     {
+                        "estado": {
+                            "2": "false",
+                            "3": "false",
+                            "1": "false"
+                        },
                         "field": "foto",
                         "tipo": "image",
-                        "titulo": "Foto",
-                        "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
-                        }
+                        "titulo": "Foto"
                     },
                     {
+                        "estado": {
+                            "3": "false",
+                            "1": "false",
+                            "2": "false"
+                        },
                         "field": "copy",
                         "tipo": "action",
-                        "titulo": "Copiar",
-                        "estado": {
-                            "1": "false",
-                            "2": "false",
-                            "3": "false"
-                        }
+                        "titulo": "Copiar"
                     },
                     {
+                        "estado": {
+                            "2": "true",
+                            "3": "true",
+                            "1": "true"
+                        },
                         "field": "url_detalle",
                         "tipo": "link",
-                        "titulo": "Editar",
+                        "titulo": "Editar"
+                    },
+                    {
                         "estado": {
                             "1": "true",
                             "2": "true",
                             "3": "true"
-                        }
-                    },
-                    {
+                        },
                         "field": "url_sub",
                         "tipo": "link",
-                        "titulo": "Direcciones",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Direcciones"
                     },
                     {
+                        "estado": {
+                            "2": "true",
+                            "1": "true",
+                            "3": "true"
+                        },
                         "field": "delete",
                         "tipo": "delete",
-                        "titulo": "Eliminar",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "titulo": "Eliminar"
                     }
                 ],
                 "detalle": [
                     {
-                        "field": "foto",
-                        "tipo": "image",
-                        "titulo": "Foto",
-                        "texto_ayuda": "",
-                        "required": "false",
                         "estado": {
+                            "3": "false",
                             "1": "false",
-                            "2": "false",
-                            "3": "false"
-                        }
+                            "2": "false"
+                        },
+                        "titulo": "Foto",
+                        "tipo": "image",
+                        "required": "false",
+                        "texto_ayuda": "",
+                        "field": "foto"
                     },
                     {
-                        "field": "nombre",
-                        "tipo": "text",
+                        "estado": {
+                            "3": "true",
+                            "1": "true",
+                            "2": "true"
+                        },
                         "titulo": "Nombre",
-                        "texto_ayuda": "",
-                        "required": "true",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
-                    },
-                    {
-                        "field": "telefono",
                         "tipo": "text",
+                        "required": "true",
+                        "texto_ayuda": "",
+                        "field": "nombre"
+                    },
+                    {
+                        "estado": {
+                            "3": "true",
+                            "2": "true",
+                            "1": "true"
+                        },
                         "titulo": "Telefono",
-                        "texto_ayuda": "",
+                        "tipo": "text",
                         "required": "true",
+                        "texto_ayuda": "",
+                        "field": "telefono"
+                    },
+                    {
                         "estado": {
                             "1": "true",
                             "2": "true",
                             "3": "true"
-                        }
-                    },
-                    {
-                        "field": "email",
-                        "tipo": "email",
+                        },
                         "titulo": "Email",
-                        "texto_ayuda": "",
+                        "tipo": "email",
                         "required": "true",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "texto_ayuda": "",
+                        "field": "email"
                     },
                     {
-                        "field": "pass",
-                        "tipo": "password",
+                        "estado": {
+                            "1": "true",
+                            "3": "true",
+                            "2": "true"
+                        },
                         "titulo": "Contraseña",
-                        "texto_ayuda": "",
+                        "tipo": "password",
                         "required": "true",
-                        "estado": {
-                            "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                        "texto_ayuda": "",
+                        "field": "pass"
                     },
                     {
-                        "field": "estado",
-                        "tipo": "active",
-                        "titulo": "Estado",
-                        "texto_ayuda": "",
-                        "required": "true",
                         "estado": {
                             "1": "true",
-                            "2": "true",
-                            "3": "true"
-                        }
+                            "3": "true",
+                            "2": "true"
+                        },
+                        "titulo": "Estado",
+                        "tipo": "active",
+                        "required": "true",
+                        "texto_ayuda": "",
+                        "field": "estado"
                     }
                 ],
                 "recortes": [],
@@ -6481,7 +6481,7 @@
             },
             {
                 "field": "telefono",
-                "titulo": "Teléfono",
+                "titulo": "Telu00e9fono",
                 "tipo": "text"
             },
             {
@@ -6690,7 +6690,7 @@
                     {
                         "field": "telefono",
                         "tipo": "text",
-                        "titulo": "Teléfono",
+                        "titulo": "Telu00e9fono",
                         "texto_ayuda": "",
                         "required": "true",
                         "estado": {
@@ -6763,7 +6763,7 @@
                         "field": "direcciones",
                         "tipo": "grupo_pedido",
                         "titulo": "Direcciones",
-                        "texto_ayuda": "Aquí puedes agregar tus direcciones de entrega y añadir productos",
+                        "texto_ayuda": "Aquu00ed puedes agregar tus direcciones de entrega y au00f1adir productos",
                         "required": "true",
                         "estado": {
                             "1": "true",
@@ -7320,7 +7320,7 @@
             },
             {
                 "field": "descripcion",
-                "titulo": "Descripción",
+                "titulo": "Descripciu00f3n",
                 "tipo": "editor"
             },
             {
@@ -7472,7 +7472,7 @@
                     {
                         "field": "descripcion",
                         "tipo": "editor",
-                        "titulo": "Descripción",
+                        "titulo": "Descripciu00f3n",
                         "texto_ayuda": "",
                         "required": "false",
                         "estado": {
@@ -7912,7 +7912,7 @@
                     },
                     {
                         "tag": "panel_min",
-                        "titulo": "Panel Pequeño",
+                        "titulo": "Panel Pequeu00f1o",
                         "ancho": "64",
                         "alto": "64",
                         "calidad": "90",
@@ -8305,7 +8305,7 @@
             },
             {
                 "field": "pass",
-                "titulo": "Contraseña",
+                "titulo": "Contraseu00f1a",
                 "tipo": "password"
             },
             {
@@ -8474,7 +8474,7 @@
                     {
                         "field": "pass",
                         "tipo": "password",
-                        "titulo": "Contraseña",
+                        "titulo": "Contraseu00f1a",
                         "texto_ayuda": "",
                         "required": "true",
                         "estado": {
@@ -8674,7 +8674,7 @@
                     {
                         "field": "pass",
                         "tipo": "password",
-                        "titulo": "Contraseña",
+                        "titulo": "Contraseu00f1a",
                         "texto_ayuda": "",
                         "required": "true",
                         "estado": {
@@ -8874,7 +8874,7 @@
                     {
                         "field": "pass",
                         "tipo": "password",
-                        "titulo": "Contraseña",
+                        "titulo": "Contraseu00f1a",
                         "texto_ayuda": "",
                         "required": "true",
                         "estado": {
