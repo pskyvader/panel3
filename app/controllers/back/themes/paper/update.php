@@ -72,7 +72,7 @@ class update extends base
         $respuesta = array('exito' => false);
         $url       = $this->url_update;
         #$file          = file_get_contents($url);
-        $file          = $this->url_get_contents($url);
+        $file          = functions::url_get_contents($url);
         $file          = functions::decode_json($file);
         $version_mayor = array('version' => '0.0.0');
 
