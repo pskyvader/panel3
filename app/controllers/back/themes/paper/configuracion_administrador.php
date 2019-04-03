@@ -192,6 +192,7 @@ class configuracion_administrador extends base
             $moduloconfiguracion['detalle'] = functions::encode_json($moduloconfiguracion['detalle']);
             if (count($row) == 1) {
                 $moduloconfiguracion['id'] = $row[0][0];
+                $moduloconfiguracion['estado'] = $row[0]['estado'];
                 moduloconfiguracion_model::update($moduloconfiguracion, false);
                 foreach ($hijo as $k => $h) {
                     $h['idmoduloconfiguracion'] = $moduloconfiguracion['id'];
@@ -203,12 +204,14 @@ class configuracion_administrador extends base
                     $h['estado']   = functions::encode_json($h['estado']);
                     if (count($row2) == 1) {
                         $h['id'] = $row2[0][0];
+                        $h['estado'] = functions::encode_json($row2[0]['estado']);
                         modulo_model::update($h, false);
                     } else {
                         modulo_model::insert($h, false);
                     }
                 }
             } else {
+                $moduloconfiguracion['estado'] = false;
                 $id = moduloconfiguracion_model::insert($moduloconfiguracion, false);
                 foreach ($hijo as $key => $h) {
                     $h['idmoduloconfiguracion'] = $id;
