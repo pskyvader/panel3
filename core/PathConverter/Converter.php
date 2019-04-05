@@ -180,7 +180,7 @@ class Converter implements ConverterInterface
         // no known file/dir, start making assumptions
 
         // ends in / = dir
-        if (mb_substr($path, -1) === '/') {
+        if (\mb_substr($path, -1) === '/') {
             return rtrim($path, '/');
         }
 
