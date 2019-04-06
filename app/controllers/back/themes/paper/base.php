@@ -174,7 +174,6 @@ class base
         $detalle       = new detalle($this->metadata); //controlador de detalle
         $configuracion = $detalle->configuracion($this->metadata['modulo']);
         $row           = ($id != 0) ? ($class::getById($id)) : array();
-        print_r($row);
         if ($this->contiene_tipos) {
             $configuracion['campos']['tipo'] = array('title_field' => 'tipo', 'field' => 'tipo', 'type' => 'hidden', 'required' => true);
             $row['tipo']                     = $_GET['tipo'];
