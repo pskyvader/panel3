@@ -485,9 +485,9 @@ class image
             return $name . '.' . $extension;
         }
     }
-    public static function generar_url($file, $tag = 'thumb', $extension = "", $folder = "", $subfolder = "")
+    public static function generar_url(array $file, $tag = 'thumb', $extension = "", $folder = "", $subfolder = "")
     {
-        if (empty($file) || $file=='') {
+        if (empty($file)) {
             return '';
         }
 
