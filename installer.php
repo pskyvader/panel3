@@ -523,7 +523,7 @@ switch ($paso) {
         $('input', $(this)).prop('disabled', false);
     });
 
-    $('.form-control#host,.form-control#database,.form-control#user,.form-control#password').on('blur change', function() {
+    $('.form-control#host,.form-control#database,.form-control#user,.form-control#password').on('blur change keyup', function() {
         if ($('.form-control#host').val() != '' &&
             $('.form-control#database').val() != '' &&
             $('.form-control#user').val() != '' &&
