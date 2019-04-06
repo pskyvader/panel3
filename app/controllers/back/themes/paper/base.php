@@ -31,21 +31,20 @@ class base
                 $tipo = 0;
             }
 
-
             $modulo                  = modulo_model::getAll(array('idmoduloconfiguracion' => $moduloconfiguracion[0], 'tipo' => $tipo));
             $this->contiene_hijos    = (isset($modulo[0]['hijos'])) ? $modulo[0]['hijos'] : false;
             $this->metadata['title'] = $modulo[0]['titulo'];
-            
+
             if ($this->padre != '') {
                 $parent             = '\app\models\\' . $this->padre;
                 $this->class_parent = new $parent();
                 if (isset($_GET[$this->class_parent::$idname])) {
-                    $p=$this->class_parent::getById($_GET[$this->class_parent::$idname]);
-                    if(count($p>0)){
-                        if(isset($p['titulo']) && $p['titulo']!=''){
-                            $this->metadata['title'].=' - '.$p['titulo'];
-                        }elseif(isset($p['nombre']) && $p['nombre']!=''){
-                            $this->metadata['title'].=' - '.$p['nombre'];
+                    $p = $this->class_parent::getById($_GET[$this->class_parent::$idname]);
+                    if (count($p > 0)) {
+                        if (isset($p['titulo']) && $p['titulo'] != '') {
+                            $this->metadata['title'] .= ' - ' . $p['titulo'];
+                        } elseif (isset($p['nombre']) && $p['nombre'] != '') {
+                            $this->metadata['title'] .= ' - ' . $p['nombre'];
                         }
                     }
 
@@ -197,6 +196,8 @@ class base
                 } else {
                     $row['idpadre'] = functions::encode_json(array('0'));
                 }
+            }else{
+                $row['idpadre'] = functions::encode_json($row['idpadre']);
             }
         } else {
             unset($configuracion['campos']['idpadre']);
@@ -212,7 +213,11 @@ class base
                 $is_array = false;
             }
             if (isset($configuracion['campos'][$idparent])) {
-                $categorias = $class_parent::getAll();
+                if ($this->contiene_tipos) {
+                    $categorias = $class_parent::getAll(array('tipo'=>$_GET['tipo']));
+                } else {
+                    $categorias = $class_parent::getAll();
+                }
                 if ($is_array) {
                     $configuracion['campos'][$idparent]['parent'] = functions::crear_arbol($categorias);
                 } else {
