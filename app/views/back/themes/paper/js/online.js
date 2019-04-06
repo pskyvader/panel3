@@ -7,7 +7,7 @@ var timer_online = setTimeout(online, tiempo);
 function online() {
     // Sólo hacer el fetch si navigator.onLine es true
     if (navigator.onLine) {
-        fetch(path + 'ping').then(function(response) {
+        fetch(create_url('ping')).then(function(response) {
             if (!response.ok) {
                 if (is_online) {
                     tiempo = tiempo_offline;
