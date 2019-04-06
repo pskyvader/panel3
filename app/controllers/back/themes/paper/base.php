@@ -178,7 +178,7 @@ class base
             $configuracion['campos']['tipo'] = array('title_field' => 'tipo', 'field' => 'tipo', 'type' => 'hidden', 'required' => true);
             $row['tipo']                     = $_GET['tipo'];
         }
-        if ($this->contiene_hijos && isset($configuracion['campos']['idpadre'])) {
+        if ($this->contiene_hijos && isset($configuracion['campos']['idpadre'])) {  
             $categorias = $class::getAll();
             foreach ($categorias as $key => $c) {
                 if ($c[0] == $id) {
@@ -191,6 +191,7 @@ class base
             $configuracion['campos']['idpadre']['parent'] = functions::crear_arbol($categorias, -1);
         } else if ($this->contiene_hijos || isset($configuracion['campos']['idpadre'])) {
             $configuracion['campos']['idpadre'] = array('title_field' => 'idpadre', 'field' => 'idpadre', 'type' => 'hidden', 'required' => true);
+            print_r($row);
             if ($id == 0) {
                 if (isset($_GET['idpadre'])) {
                     $row['idpadre'] = functions::encode_json(array((string) $_GET['idpadre']));
