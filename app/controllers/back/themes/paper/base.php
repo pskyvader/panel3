@@ -191,7 +191,7 @@ class base
             $configuracion['campos']['idpadre']['parent'] = functions::crear_arbol($categorias, -1);
         } else if ($this->contiene_hijos || isset($configuracion['campos']['idpadre'])) {
             $configuracion['campos']['idpadre'] = array('title_field' => 'idpadre', 'field' => 'idpadre', 'type' => 'hidden', 'required' => true);
-            print_r($row);
+            
             if ($id == 0) {
                 if (isset($_GET['idpadre'])) {
                     $row['idpadre'] = functions::encode_json(array((string) $_GET['idpadre']));
@@ -200,6 +200,7 @@ class base
                 }
             }
         } else {
+            print_r($row);
             unset($configuracion['campos']['idpadre']);
         }
 
