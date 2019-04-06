@@ -267,7 +267,7 @@ switch ($paso) {
                 $password= $part1 . $part2;
 
                 $sql = "INSERT INTO " . $_POST['prefix'] . "_administrador (idadministrador,tipo,email,pass,nombre,estado,foto)";
-                $sql .= " VALUES ('','2','" . $email . "','" . $password . "','" . $nombre . "',TRUE,".json_encode(array(array())).")";
+                $sql .= " VALUES ('','2','" . $email . "','" . $password . "','" . $nombre . "',TRUE,'".json_encode(array(array()))."')";
                 $query = $connection->prepare($sql);
                 $query->execute();
 
