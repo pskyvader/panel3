@@ -203,6 +203,7 @@ class base
         }
 
         if (isset($this->class_parent)) {
+            print_r($row);
             $class_parent = $this->class_parent;
             $idparent     = $class_parent::$idname;
 
