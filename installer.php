@@ -261,13 +261,13 @@ switch ($paso) {
                 $nombre = trim($_POST['nombre']);
                 $email  = strtolower(trim($_POST['email']));
 
-                $pass = trim($_POST['pass']);
-                $salt = sha1($pass);
-                $p    = crypt($pass, $salt);
-                $pass = $salt . sha1($p);
+                $password = trim($_POST['pass']);
+                $part1 = hash('sha256', $password);
+                $part2 = hash('sha256', $part1);
+                $password= $part1 . $part2;
 
-                $sql = "INSERT INTO " . $_POST['prefix'] . "_administrador (idadministrador,tipo,email,pass,nombre,estado)";
-                $sql .= " VALUES ('','2','" . $email . "','" . $pass . "','" . $nombre . "',TRUE)";
+                $sql = "INSERT INTO " . $_POST['prefix'] . "_administrador (idadministrador,tipo,email,pass,nombre,estado,foto)";
+                $sql .= " VALUES ('','2','" . $email . "','" . $password . "','" . $nombre . "',TRUE,".json_encode(array(array())).")";
                 $query = $connection->prepare($sql);
                 $query->execute();
 
