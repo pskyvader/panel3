@@ -55,7 +55,7 @@ function inicio() {
 function get_instagram() {
     var pictures = $('#footer-instagram .instagram-pics');
     if ($('li', pictures).length == 0) {
-        post_basic(path + 'instagram', {}, function(data) {
+        post_basic(create_url('instagram'), {}, function(data) {
             data = JSON.parse(data);
             $(data).each(function(k, v) {
                 var li = $('<li>');
