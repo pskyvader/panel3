@@ -53,9 +53,11 @@ class enviar
         if ($respuesta['exito']) {
             $cabecera="Estimado {nombre}, hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de {sitio}.";
             $texto_cabecera=texto_model::getById(15);
-            $texto_cabecera=$texto_cabecera['descripcion'];
-            if(strpos($texto_cabecera,"{nombre}")!== false && strpos($texto_cabecera,"{sitio}")!== false){
-                $cabecera=$texto_cabecera;
+            if (isset($texto_cabecera['descripcion'])){
+                $texto_cabecera=$texto_cabecera['descripcion'];
+                if(strpos($texto_cabecera,"{nombre}")!== false && strpos($texto_cabecera,"{sitio}")!== false){
+                    $cabecera=$texto_cabecera;
+                }
             }
 
             $cabecera=str_replace("{nombre}",$campos['nombre'],$cabecera);
