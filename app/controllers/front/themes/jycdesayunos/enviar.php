@@ -51,10 +51,20 @@ class enviar
         }
 
         if ($respuesta['exito']) {
+            $cabecera="Estimado {nombre}, hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de {sitio}.";
+            $texto_cabecera=texto_model::getById(15);
+            $texto_cabecera=$texto_cabecera['descripcion'];
+            if(strpos($texto_cabecera,"{nombre}")!== false && strpos($texto_cabecera,"{sitio}")!== false){
+                $cabecera=$texto_cabecera;
+            }
+
+            $cabecera=str_replace("{nombre}",$campos['nombre'],$cabecera);
+            $cabecera=str_replace("{sitio}",$nombre_sitio,$cabecera);
+
             $body_email = array(
                 'body'     => view::get_theme() . 'mail/contacto.html',
                 'titulo'   => "Formulario de " . $campos['titulo'],
-                'cabecera' => "Estimado " . $campos['nombre'] . ", hemos recibido su correo, el cual será respondido a la brevedad por el centro de atención al cliente de " . $nombre_sitio,
+                'cabecera' => $cabecera,
             );
             $titulo                      = $campos['titulo'];
             $body_email['campos_largos'] = array('Mensaje' => nl2br($campos['mensaje']));
