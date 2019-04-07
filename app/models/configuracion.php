@@ -4,6 +4,7 @@ namespace app\models;
 defined("APPPATH") or die("Acceso denegado");
 //use \core\app;
 use \core\database;
+
 //use \core\functions;
 
 class configuracion extends base_model
@@ -11,13 +12,22 @@ class configuracion extends base_model
     public static $idname = 'idconfiguracion',
     $table                = 'configuracion';
 
-    public static function getByVariable(string $variable)
+    public static function getByVariable(string $variable, $default = null)
     {
         $where      = array('variable' => $variable);
         $condicion  = array('limit' => 1);
         $connection = database::instance();
         $row        = $connection->get(static::$table, static::$idname, $where, $condicion);
-        return (count($row) == 1) ? $row[0]['valor'] : false;
+        if (count($row) == 1) {
+            return $row[0]['valor'];
+        } else {
+            if ($default == null) {
+                return false;
+            } else {
+                static::setByVariable($variable, $default);
+                return $default;
+            }
+        }
     }
 
     public static function setByVariable(string $variable, string $valor)
