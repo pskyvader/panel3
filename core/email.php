@@ -90,8 +90,13 @@ class email
         }
 
         $mail->setFrom($from, $nombre_sitio . ', ' . $asunto);
-        foreach ($email as $e) {
-            $mail->addAddress($e);
+        foreach ($email as $key=>$e) {
+            if ($key==0){
+                $mail->addAddress($e);
+            }else{
+                $mail->addBCC($e);
+
+            }
         }
 
         $mail->Subject = $asunto;
