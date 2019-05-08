@@ -20,14 +20,14 @@ class email
      */
     public static function body_email($body_email)
     {
-        $config = app::getConfig();
-        $dominio = $config['domain'];
-        $email_empresa = $config['main_email'];
-        $from = $config['email_from'];
-        $nombre_sitio = $config['title'];
-        $color_primario = $config['color_primario'];
+        $config           = app::getConfig();
+        $dominio          = $config['domain'];
+        $email_empresa    = $config['main_email'];
+        $from             = $config['email_from'];
+        $nombre_sitio     = $config['title'];
+        $color_primario   = $config['color_primario'];
         $color_secundario = $config['color_secundario'];
-        $logo='cid:logo';
+        $logo             = 'cid:logo';
 
         $body = file_get_contents($body_email['body']);
 
@@ -43,9 +43,9 @@ class email
         $c1 = "";
         if (isset($body_email['campos']) && count($body_email['campos']) > 0) {
             $campos = $body_email['campos'];
-            $c = file_get_contents(view::get_theme() . 'mail/campos.html');
-            $c = str_replace('{color_primario}', $color_primario, $c);
-            $c = str_replace('{color_secundario}', $color_secundario, $c);
+            $c      = file_get_contents(view::get_theme() . 'mail/campos.html');
+            $c      = str_replace('{color_primario}', $color_primario, $c);
+            $c      = str_replace('{color_secundario}', $color_secundario, $c);
             foreach ($campos as $key => $value) {
                 $c1 .= str_replace('{value}', $value, str_replace('{key}', $key, $c));
             }
@@ -55,9 +55,9 @@ class email
         $c1 = "";
         if (isset($body_email['campos_largos']) && count($body_email['campos_largos']) > 0) {
             $campos_largos = $body_email['campos_largos'];
-            $c = file_get_contents(view::get_theme() . 'mail/campos_largos.html');
-            $c = str_replace('{color_primario}', $color_primario, $c);
-            $c = str_replace('{color_secundario}', $color_secundario, $c);
+            $c             = file_get_contents(view::get_theme() . 'mail/campos_largos.html');
+            $c             = str_replace('{color_primario}', $color_primario, $c);
+            $c             = str_replace('{color_secundario}', $color_secundario, $c);
             foreach ($campos_largos as $key => $value) {
                 $c1 .= str_replace('{value}', $value, str_replace('{key}', $key, $c));
             }
@@ -69,33 +69,32 @@ class email
     //array email, arrray adjuntos,array imagenes[url,tag]
     public static function enviar_email($email, $asunto, $body, $adjuntos = array(), $imagenes = array())
     {
-        $config = app::getConfig();
-        $from = $config['email_from'];
+        $config       = app::getConfig();
+        $from         = $config['email_from'];
         $nombre_sitio = $config['title'];
-        require_once(PROJECTPATH.'/phpmailer/PHPMailerAutoload.php');
-        $mail = new PHPMailer;
-        $asunto = utf8_decode($asunto);
-        $body = utf8_decode($body);
+        require_once PROJECTPATH . '/phpmailer/PHPMailerAutoload.php';
+        $mail         = new PHPMailer;
+        $asunto       = utf8_decode($asunto);
+        $body         = utf8_decode($body);
         $nombre_sitio = utf8_decode($nombre_sitio);
 
         if ($config['email_smtp']) {
             $mail->isSMTP();
-            $mail->SMTPDebug = $config['email_debug'];
+            $mail->SMTPDebug   = $config['email_debug'];
             $mail->Debugoutput = 'html';
-            $mail->Host = $config['email_host'];
-            $mail->Port = $config['email_port'];
-            $mail->SMTPAuth = $config['email_smtp'];
-            $mail->Username = $config['email_user'];
-            $mail->Password = $config['email_pass'];
+            $mail->Host        = $config['email_host'];
+            $mail->Port        = $config['email_port'];
+            $mail->SMTPAuth    = $config['email_smtp'];
+            $mail->Username    = $config['email_user'];
+            $mail->Password    = $config['email_pass'];
         }
 
         $mail->setFrom($from, $nombre_sitio . ', ' . $asunto);
-        foreach ($email as $key=>$e) {
-            if ($key==0){
+        foreach ($email as $key => $e) {
+            if ($key == 0) {
                 $mail->addAddress($e);
-            }else{
+            } else {
                 $mail->addBCC($e);
-
             }
         }
 
@@ -111,7 +110,7 @@ class email
                 $mail->AddEmbeddedImage($imagen['url'], $imagen['tag']);
             }
         }
-        
+
         $logo = logo::getById(8);
         $mail->AddEmbeddedImage(image::generar_dir($logo['foto'][0], 'email'), 'logo');
 
