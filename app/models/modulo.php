@@ -55,7 +55,7 @@ class modulo extends base_model
         }
 
         if (isset($return_total)) {
-            return count($row);
+            return $row[0]['total'];
         }
         return $row;
     }
@@ -87,7 +87,7 @@ class modulo extends base_model
         $insert          = database::create_data($fields, $row);
         $connection      = database::instance();
         $row             = $connection->insert(static::$table, static::$idname, $insert);
-        if (is_int($row) && $row>0) {
+        if (is_int($row) && $row > 0) {
             $last_id = $row;
             if ($log) {
                 log::insert_log(static::$table, static::$idname, __FUNCTION__, $insert);
