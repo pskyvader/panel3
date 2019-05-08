@@ -100,7 +100,11 @@ class producto extends base_model
             }
         }
         if (isset($return_total)) {
-            return count($row);
+            if (isset($idproductocategoria)) {
+                return count($row);
+            } else {
+                return $row[0]['total'];
+            }
         }
 
         $variables = array();
