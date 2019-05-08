@@ -60,7 +60,7 @@ class seo extends base_model
             }
         }
         if (isset($return_total)) {
-            return count($row);
+            return $row[0]['total'];
         }
         return $row;
     }
