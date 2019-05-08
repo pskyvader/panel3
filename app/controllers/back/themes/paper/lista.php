@@ -19,6 +19,17 @@ class lista
             $this->metadata[$key] = $value;
         }
     }
+    
+    public function head()
+    {
+        if (!isset($_POST['ajax'])) {
+            if (isset($_POST['ajax_header'])) {
+                $head = new head($this->metadata);
+                $head->ajax();
+            }
+        }
+    }
+
     public function normal($data)
     {
         $th       = $data['th'];
