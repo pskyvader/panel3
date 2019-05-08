@@ -43,6 +43,7 @@ class table extends base
         );
 
         $list = new lista($this->metadata); //controlador de lista
+        $list->head();
 
         $where = array();
         $condiciones = array();

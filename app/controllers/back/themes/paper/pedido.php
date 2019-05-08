@@ -49,6 +49,7 @@ class pedido extends base
 
         $list          = new lista($this->metadata); //controlador de lista
         $configuracion = $list->configuracion($this->metadata['modulo']);
+        $list->head();
 
         $where = array();
         if ($this->contiene_tipos) {

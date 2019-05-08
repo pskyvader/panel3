@@ -64,6 +64,7 @@ class modulo extends base
         );
 
         $list = new lista($this->metadata); //controlador de lista
+        $list->head();
 
         $where = array('idmoduloconfiguracion' => $parent[0]);
         $condiciones = array();
