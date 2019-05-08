@@ -153,7 +153,7 @@ class database
         if ($select == "") {
             $select = "*";
         } elseif ($select == 'total') {
-            $select = $idname;
+            $select = "COUNT(" . $idname . ") as total";
         }
 
         $sql = "SELECT " . $select . " FROM " . self::$_prefix . $table;
