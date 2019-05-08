@@ -102,8 +102,13 @@ class base_model implements crud
                 $row = array_slice($row, $limit, $limit2);
             }
         }
+
         if (isset($return_total)) {
-            return count($row);
+            if (isset($idpadre)) {
+                return count($row);
+            } else {
+                return $row[0]['total'];
+            }
         }
         return $row;
     }
