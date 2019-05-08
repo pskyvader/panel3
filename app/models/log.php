@@ -35,7 +35,7 @@ class log extends base_model
         }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
         if (isset($return_total)) {
-            return count($row);
+            return $row[0]['total'];
         }
         return $row;
     }
