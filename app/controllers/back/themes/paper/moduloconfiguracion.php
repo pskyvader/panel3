@@ -73,7 +73,7 @@ class moduloconfiguracion extends base
         );
 
         $list = new lista($this->metadata); //controlador de lista
-        $list->head();
+        $list->head(); 
         $where = array();
         $condiciones = array();
         $url_detalle = $this->url;
