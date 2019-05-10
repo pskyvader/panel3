@@ -11,3 +11,4 @@ cache/*
 .autogit
 resources-*.js
 resources-*.css
+*/error_log
