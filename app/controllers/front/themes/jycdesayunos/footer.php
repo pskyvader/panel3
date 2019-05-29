@@ -16,6 +16,7 @@ class footer
 {
     public function normal()
     {
+        echo "asfdafdsafdsafd";
         if (!isset($_POST['ajax'])) {
             $data          = array();
             $config        = app::getConfig();
