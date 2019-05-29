@@ -34,6 +34,8 @@ class home extends base
         //$breadcrumb = new breadcrumb();
         //$breadcrumb->normal($this->breadcrumb);
 
+        echo "asdfadsf";
+
         $secciones_destacadas = seccion_model::getAll(array('tipo' => 3, 'destacado' => true));
         $seo                  = seo::getById(7);
         foreach ($secciones_destacadas as $key => $seccion) {
@@ -45,6 +47,8 @@ class home extends base
             view::render('home-text');
         }
 
+        
+        echo "asdfadsf";
         $productos_destacados = producto_model::getAll(array('tipo' => 1, 'destacado' => true),array('limit'=>6));
         if (count($productos_destacados)>0) {
             //$seo_productos          = seo::getById(8);
@@ -62,6 +66,7 @@ class home extends base
             view::render('home-products');
         }
 
+        echo "asdfadsf";
         $footer = new footer();
         $footer->normal();
     }
