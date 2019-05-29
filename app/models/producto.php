@@ -73,7 +73,6 @@ class producto extends base_model
             }
         }
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
-        echo "asdf";
         foreach ($row as $key => $value) {
             if (isset($row[$key]['idproductocategoria'])) {
                 $row[$key]['idproductocategoria'] = functions::decode_json($row[$key]['idproductocategoria']);
@@ -88,7 +87,6 @@ class producto extends base_model
                 $row[$key]['archivo'] = functions::decode_json($row[$key]['archivo']);
             }
         }
-        echo "asdf";
 
         if (isset($idproductocategoria)) {
             $row = array_values($row);
@@ -108,7 +106,6 @@ class producto extends base_model
                 return $row[0]['total'];
             }
         }
-        echo "asdf";
 
         $variables = array();
         if (isset($where['tipo'])) {
@@ -119,7 +116,6 @@ class producto extends base_model
         foreach ($cat as $key => $c) {
             $categorias[$c[0]] = array('descuento' => $c['descuento'], 'descuento_fecha' => $c['descuento_fecha']);
         }
-        echo "asdf";
 
         foreach ($row as $key => $v) {
             if (isset($row[$key]['precio'])) {
@@ -150,7 +146,6 @@ class producto extends base_model
                 }
             }
         }
-        echo "asdf";
         return $row;
     }
 
