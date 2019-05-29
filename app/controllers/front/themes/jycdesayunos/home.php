@@ -45,11 +45,8 @@ class home extends base
             view::render('home-text');
         }
 
-        echo "asdf";
         $productos_destacados = producto_model::getAll(array('tipo' => 1, 'destacado' => true),array('limit'=>6));
-        echo "asdf";
         if (count($productos_destacados)>0) {
-            echo "asdf";
             //$seo_productos          = seo::getById(8);
             //$this->url[0] = $seo_productos['url'];
             $_REQUEST['idseo']=8;
@@ -64,7 +61,6 @@ class home extends base
             view::set('title', "Nuestros productos destacados");
             view::render('home-products');
         }
-        echo "ASDF";
 
         $footer = new footer();
         $footer->normal();
