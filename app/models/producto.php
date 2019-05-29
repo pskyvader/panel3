@@ -19,6 +19,7 @@ class producto extends base_model
 
     public static function getAll(array $where = array(), array $condiciones = array(), string $select = "")
     {
+        echo "ASdf";
         $connection = database::instance();
         if (!isset($where['estado']) && app::$_front) {
             $where['estado'] = true;
@@ -72,7 +73,11 @@ class producto extends base_model
                 $select = '';
             }
         }
+        
+        echo "ASdf";
         $row = $connection->get(static::$table, static::$idname, $where, $condiciones, $select);
+        
+        echo "ASdf";
         foreach ($row as $key => $value) {
             if (isset($row[$key]['idproductocategoria'])) {
                 $row[$key]['idproductocategoria'] = functions::decode_json($row[$key]['idproductocategoria']);
@@ -146,6 +151,8 @@ class producto extends base_model
                 }
             }
         }
+        
+        echo "ASdf";
         return $row;
     }
 
